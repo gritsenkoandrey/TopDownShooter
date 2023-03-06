@@ -1,10 +1,13 @@
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace AndreyGritsenko.ECSCore
 {
     public abstract class Entity : MonoBehaviour
     {
+        public readonly CompositeDisposable LifetimeDisposable = new();
+        
         public static Action<Entity> OnRegistered;
         public static Action<Entity> OnUnregistered;
 

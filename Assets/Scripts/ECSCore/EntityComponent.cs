@@ -18,6 +18,8 @@
         {
             OnEntityDisable();
             
+            LifetimeDisposable.Clear();
+
             OnUnregistered?.Invoke(this);
         }
     }

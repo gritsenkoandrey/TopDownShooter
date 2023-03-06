@@ -21,7 +21,20 @@
         protected virtual void OnEnableComponent(T component) => Entities.Add(component);
         protected virtual void OnDisableComponent(T component) => Entities.Remove(component);
 
-        private void Register(Entity entity) => OnEnableComponent((T)entity);
-        private void Unregister(Entity entity) => OnDisableComponent((T)entity);
+        private void Register(Entity entity)
+        {
+            if (entity as T)
+            {
+                OnEnableComponent((T)entity);
+            }
+        }
+
+        private void Unregister(Entity entity)
+        {
+            if (entity as T)
+            {
+                OnDisableComponent((T)entity);
+            }
+        }
     }
 }
