@@ -1,8 +1,7 @@
 ﻿using AndreyGritsenko.ECSCore;
 using AndreyGritsenko.Game.Components;
+using AndreyGritsenko.Game.StateMachine;
 using UniRx;
-using UniRx.Triggers;
-using UnityEngine;
 
 namespace AndreyGritsenko.Game.Systems
 {
@@ -29,23 +28,12 @@ namespace AndreyGritsenko.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Agent
-                .UpdateAsObservable()
-                .Subscribe(_ =>
-                {
-                    if (Vector3.Distance(component.Agent.transform.position, _character.transform.position) >
-                        component.Agent.stoppingDistance)
-                    {
-                        component.Agent.SetDestination(_character.transform.position);
-                    }
-                    else
-                    {
-                        if (component.Agent.hasPath)
-                        {
-                            component.Agent.ResetPath();
-                        }
-                    }
-                })
+            EnemyStateMachine sm = new EnemyStateMachine(component, component.Radar, _character);
+            
+            sm.Init();
+
+            Observable.EveryUpdate()
+                .Subscribe(_ => { sm.Execute(); })
                 .AddTo(component.LifetimeDisposable);
         }
 

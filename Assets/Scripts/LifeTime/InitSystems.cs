@@ -39,6 +39,7 @@ namespace AndreyGritsenko.LifeTime
                 new SGroundBuildNavMesh(),
                 new SSpawnerPrefab(),
                 new SEnemyMovement(_character),
+                new SRadarDraw(),
             };
         }
 
