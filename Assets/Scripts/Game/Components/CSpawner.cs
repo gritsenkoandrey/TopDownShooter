@@ -1,5 +1,4 @@
-﻿using System;
-using AndreyGritsenko.ECSCore;
+﻿using AndreyGritsenko.ECSCore;
 using UnityEngine;
 
 namespace AndreyGritsenko.Game.Components
@@ -8,7 +7,7 @@ namespace AndreyGritsenko.Game.Components
     {
         [SerializeField] private GameObject _prefab;
 
-        public GameObject Prefab => _prefab;
+        public void CreatePrefab() => Instantiate(_prefab, transform.position, Quaternion.identity);
 
         private void OnDrawGizmos()
         {

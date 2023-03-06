@@ -1,6 +1,5 @@
 ﻿using AndreyGritsenko.ECSCore;
 using AndreyGritsenko.Game.Components;
-using UnityEngine;
 
 namespace AndreyGritsenko.Game.Systems
 {
@@ -20,7 +19,7 @@ namespace AndreyGritsenko.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            Object.Instantiate(component.Prefab, component.transform.position, Quaternion.identity);
+            component.CreatePrefab();
         }
 
         protected override void OnDisableComponent(CSpawner component)

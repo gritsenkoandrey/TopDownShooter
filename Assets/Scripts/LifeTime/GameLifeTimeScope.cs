@@ -3,7 +3,7 @@ using SimpleInputNamespace;
 using VContainer;
 using VContainer.Unity;
 
-namespace AndreyGritsenko.Infrastructure
+namespace AndreyGritsenko.LifeTime
 {
     public class GameLifeTimeScope : LifetimeScope
     {

@@ -5,7 +5,7 @@ using AndreyGritsenko.Game.Systems;
 using SimpleInputNamespace;
 using VContainer.Unity;
 
-namespace AndreyGritsenko.Infrastructure
+namespace AndreyGritsenko.LifeTime
 {
     public sealed class InitSystems : IInitializable, IDisposable
     {
