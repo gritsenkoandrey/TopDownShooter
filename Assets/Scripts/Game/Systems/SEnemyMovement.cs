@@ -28,12 +28,12 @@ namespace AndreyGritsenko.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            EnemyStateMachine sm = new EnemyStateMachine(component, component.Radar, _character);
+            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, component.Radar, _character);
             
-            sm.Init();
+            enemyStateMachine.Init();
 
             Observable.EveryUpdate()
-                .Subscribe(_ => { sm.Execute(); })
+                .Subscribe(_ => { enemyStateMachine.Tick(); })
                 .AddTo(component.LifetimeDisposable);
         }
 

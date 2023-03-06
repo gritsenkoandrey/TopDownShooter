@@ -13,10 +13,13 @@ namespace AndreyGritsenko.Game.StateMachine
         private readonly CRadar _radar;
 
         private Dictionary<State, Action> _actions;
-        private State _state = State.None;
+        
+        private State _state;
+        
         private Vector3 _patrolPosition;
         private float _maxDelay;
         private float _delay;
+        private float _minDistance;
 
         public EnemyStateMachine(CEnemy enemy, CRadar radar, CCharacter character)
         {
@@ -27,12 +30,13 @@ namespace AndreyGritsenko.Game.StateMachine
 
         public void Init()
         {
-            _patrolPosition = _enemy.transform.position;
             _state = State.Idle;
+            _patrolPosition = _enemy.transform.position;
             _maxDelay = 1f;
-            _delay = 0f;
+            _delay = 2.5f;
+            _minDistance = 1f;
 
-            _actions = new Dictionary<State, Action>()
+            _actions = new Dictionary<State, Action>
             {
                 { State.Idle, Idle },
                 { State.Patrol, Patrol },
@@ -40,48 +44,32 @@ namespace AndreyGritsenko.Game.StateMachine
             };
         }
 
-        public void Execute() => _actions[_state].Invoke();
+        public void Tick() => _actions[_state].Invoke();
 
         private void Idle()
         {
-            if (DistanceTo(_character.Position) < _radar.Radius)
+            if (_delay > 0f)
             {
-                _enemy.Agent.ResetPath();
-                _radar.Clear.Execute();
-                _state = State.Pursuit;
-            }
-            else if (DistanceTo(_patrolPosition) > _enemy.Agent.stoppingDistance)
-            {
-                _enemy.Agent.ResetPath();
-                _radar.Draw.Execute();
-                _state = State.Patrol;
+                _delay -= Time.deltaTime;
             }
             else
             {
-                if (_enemy.Agent.hasPath)
+                if (Distance() < _radar.Radius)
                 {
-                    return;
-                }
-                
-                if (_delay > 0f)
-                {
-                    _delay -= Time.deltaTime;
+                    PursuitState();
                 }
                 else
                 {
-                    _delay = _maxDelay;
-                    _enemy.Agent.SetDestination(_patrolPosition);
+                    PatrolState();
                 }
             }
         }
 
         private void Patrol()
         {
-            if (DistanceTo(_character.Position) < _radar.Radius)
+            if (Distance() < _radar.Radius)
             {
-                _enemy.Agent.ResetPath();
-                _radar.Clear.Execute();
-                _state = State.Pursuit;
+                PursuitState();
             }
             else
             {
@@ -89,7 +77,7 @@ namespace AndreyGritsenko.Game.StateMachine
                 {
                     return;
                 }
-                
+
                 if (_delay > 0f)
                 {
                     _delay -= Time.deltaTime;
@@ -104,15 +92,13 @@ namespace AndreyGritsenko.Game.StateMachine
 
         private void Pursuit()
         {
-            if (DistanceTo(_character.Position) > _radar.Radius)
+            if (Distance() > _radar.Radius)
             {
-                _enemy.Agent.ResetPath();
-                _radar.Draw.Execute();
-                _state = State.Idle;
+                PatrolState();
             }
             else
             {
-                if (DistanceTo(_character.Position) < _enemy.Agent.stoppingDistance)
+                if (Distance() < _minDistance)
                 {
                     if (_enemy.Agent.hasPath)
                     {
@@ -151,6 +137,20 @@ namespace AndreyGritsenko.Game.StateMachine
             return new Vector3(x, 0f, z);
         }
 
-        private float DistanceTo(Vector3 position) => Vector3.Distance(_enemy.Position, position);
+        private float Distance() => Vector3.Distance(_enemy.Position, _character.Position);
+
+        private void PursuitState()
+        {
+            _enemy.Agent.ResetPath();
+            _radar.Clear.Execute();
+            _state = State.Pursuit;
+        }
+
+        private void PatrolState()
+        {
+            _enemy.Agent.ResetPath();
+            _radar.Draw.Execute();
+            _state = State.Patrol;
+        }
     }
 }
