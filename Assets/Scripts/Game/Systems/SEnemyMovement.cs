@@ -17,6 +17,16 @@ namespace AndreyGritsenko.Game.Systems
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
+            
+            Observable.EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    foreach (CEnemy entity in Entities)
+                    {
+                        entity.UpdateStateMachine.Execute();
+                    }
+                })
+                .AddTo(LifetimeDisposable);
         }
 
         protected override void OnDisableSystem()
@@ -28,12 +38,12 @@ namespace AndreyGritsenko.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, component.Radar, _character);
+            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, _character);
             
             enemyStateMachine.Init();
 
-            Observable.EveryUpdate()
-                .Subscribe(_ => { enemyStateMachine.Tick(); })
+            component.UpdateStateMachine
+                .Subscribe(_ => enemyStateMachine.Tick())
                 .AddTo(component.LifetimeDisposable);
         }
 

@@ -10,7 +10,6 @@ namespace AndreyGritsenko.Game.StateMachine
     {
         private readonly CEnemy _enemy;
         private readonly CCharacter _character;
-        private readonly CRadar _radar;
 
         private Dictionary<State, Action> _actions;
         
@@ -20,11 +19,11 @@ namespace AndreyGritsenko.Game.StateMachine
         private float _maxDelay;
         private float _delay;
         private float _minDistance;
+        private float _patrolRadius;
 
-        public EnemyStateMachine(CEnemy enemy, CRadar radar, CCharacter character)
+        public EnemyStateMachine(CEnemy enemy, CCharacter character)
         {
             _enemy = enemy;
-            _radar = radar;
             _character = character;
         }
 
@@ -33,8 +32,9 @@ namespace AndreyGritsenko.Game.StateMachine
             _state = State.Idle;
             _patrolPosition = _enemy.transform.position;
             _maxDelay = 1f;
-            _delay = 2.5f;
+            _delay = _maxDelay;
             _minDistance = 1f;
+            _patrolRadius = 5f;
 
             _actions = new Dictionary<State, Action>
             {
@@ -54,7 +54,9 @@ namespace AndreyGritsenko.Game.StateMachine
             }
             else
             {
-                if (Distance() < _radar.Radius)
+                _enemy.Agent.enabled = true;
+
+                if (Distance() < _enemy.Radar.Radius)
                 {
                     PursuitState();
                 }
@@ -67,7 +69,7 @@ namespace AndreyGritsenko.Game.StateMachine
 
         private void Patrol()
         {
-            if (Distance() < _radar.Radius)
+            if (Distance() < _enemy.Radar.Radius)
             {
                 PursuitState();
             }
@@ -92,7 +94,7 @@ namespace AndreyGritsenko.Game.StateMachine
 
         private void Pursuit()
         {
-            if (Distance() > _radar.Radius)
+            if (Distance() > _enemy.Radar.Radius)
             {
                 PatrolState();
             }
@@ -116,7 +118,7 @@ namespace AndreyGritsenko.Game.StateMachine
         {
             for (int i = 0; i < 10; i++)
             {
-                Vector3 center = _patrolPosition + GenerateRandomPoint(5f);
+                Vector3 center = _patrolPosition + GenerateRandomPoint(_patrolRadius);
 
                 if (NavMesh.SamplePosition(center, out NavMeshHit hit, 1f, 1))
                 {
@@ -142,14 +144,14 @@ namespace AndreyGritsenko.Game.StateMachine
         private void PursuitState()
         {
             _enemy.Agent.ResetPath();
-            _radar.Clear.Execute();
+            _enemy.Radar.Clear.Execute();
             _state = State.Pursuit;
         }
 
         private void PatrolState()
         {
             _enemy.Agent.ResetPath();
-            _radar.Draw.Execute();
+            _enemy.Radar.Draw.Execute();
             _state = State.Patrol;
         }
     }
