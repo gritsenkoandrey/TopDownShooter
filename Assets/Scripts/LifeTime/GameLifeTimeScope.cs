@@ -1,5 +1,5 @@
 ﻿using AndreyGritsenko.Game.Components;
-using SimpleInputNamespace;
+using AndreyGritsenko.Infrastructure.Input;
 using VContainer;
 using VContainer.Unity;
 

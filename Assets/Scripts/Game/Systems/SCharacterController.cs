@@ -1,7 +1,7 @@
 ﻿using AndreyGritsenko.ECSCore;
 using AndreyGritsenko.Game.Components;
+using AndreyGritsenko.Infrastructure.Input;
 using AndreyGritsenko.Utils;
-using SimpleInputNamespace;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -10,11 +10,11 @@ namespace AndreyGritsenko.Game.Systems
 {
     public sealed class SCharacterController : SystemComponent<CCharacter>
     {
-        private readonly Joystick _joystick;
+        private readonly IInputService _inputService;
         
-        public SCharacterController(Joystick joystick)
+        public SCharacterController(IInputService inputService)
         {
-            _joystick = joystick;
+            _inputService = inputService;
         }
         
         protected override void OnEnableSystem()
@@ -42,9 +42,9 @@ namespace AndreyGritsenko.Game.Systems
                 {
                     Vector3 move = Vector3.zero;
 
-                    if (_joystick.Value.magnitude > 0.1f)
+                    if (_inputService.Value.magnitude > 0.1f)
                     {
-                        float angle = Mathf.Atan2(_joystick.Value.x, _joystick.Value.y) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+                        float angle = Mathf.Atan2(_inputService.Value.x, _inputService.Value.y) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
                         float smoothAngle = Mathf.SmoothDampAngle(component.transform.eulerAngles.y, angle, ref currentVelocity, 0.05f);
                         
                         component.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
