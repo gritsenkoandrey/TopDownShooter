@@ -1,9 +1,9 @@
-﻿using AndreyGritsenko.ECSCore;
+﻿using CodeBase.ECSCore;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace AndreyGritsenko.Game.Components
+namespace CodeBase.Game.Components
 {
     public sealed class CEnemy : EntityComponent<CEnemy>
     {

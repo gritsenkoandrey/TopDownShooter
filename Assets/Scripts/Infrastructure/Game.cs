@@ -1,7 +1,7 @@
-﻿using AndreyGritsenko.Infrastructure.Services;
-using AndreyGritsenko.Infrastructure.States;
+﻿using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.States;
 
-namespace AndreyGritsenko.Infrastructure
+namespace CodeBase.Infrastructure
 {
     public sealed class Game
     {

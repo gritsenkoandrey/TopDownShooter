@@ -1,7 +1,8 @@
-﻿using AndreyGritsenko.ECSCore;
+﻿using CodeBase.ECSCore;
+using UniRx;
 using UnityEngine;
 
-namespace AndreyGritsenko.Game.Components
+namespace CodeBase.Game.Components
 {
     public sealed class CCharacter : EntityComponent<CCharacter>
     {
@@ -9,6 +10,7 @@ namespace AndreyGritsenko.Game.Components
 
         public CharacterController CharacterController => _characterController;
         public Vector3 Position => transform.position;
+        public ReactiveCommand Move { get; } = new();
 
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

@@ -1,11 +1,11 @@
-﻿using AndreyGritsenko.Game.Components;
-using AndreyGritsenko.Infrastructure.Input;
+﻿using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Input;
 using VContainer;
 using VContainer.Unity;
 
-namespace AndreyGritsenko.LifeTime
+namespace CodeBase.LifeTime
 {
-    public class GameLifeTimeScope : LifetimeScope
+    public sealed class LevelScope : LifetimeScope
     {
         protected override void Configure(IContainerBuilder builder)
         {

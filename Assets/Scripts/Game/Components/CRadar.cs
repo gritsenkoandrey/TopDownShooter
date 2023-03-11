@@ -1,8 +1,8 @@
-﻿using AndreyGritsenko.ECSCore;
+﻿using CodeBase.ECSCore;
 using UniRx;
 using UnityEngine;
 
-namespace AndreyGritsenko.Game.Components
+namespace CodeBase.Game.Components
 {
     public sealed class CRadar : EntityComponent<CRadar>
     {

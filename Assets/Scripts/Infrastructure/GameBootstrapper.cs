@@ -1,7 +1,7 @@
-﻿using AndreyGritsenko.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 using UnityEngine;
 
-namespace AndreyGritsenko.Infrastructure
+namespace CodeBase.Infrastructure
 {
     public sealed class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {

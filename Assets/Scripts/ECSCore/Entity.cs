@@ -1,7 +1,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace AndreyGritsenko.ECSCore
+namespace CodeBase.ECSCore
 {
     public abstract class Entity : MonoBehaviour
     {

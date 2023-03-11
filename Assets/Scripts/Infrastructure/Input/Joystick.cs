@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace AndreyGritsenko.Infrastructure.Input
+namespace CodeBase.Infrastructure.Input
 {
     public sealed class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInputService
     {

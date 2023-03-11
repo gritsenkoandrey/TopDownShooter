@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AndreyGritsenko.ECSCore
+namespace CodeBase.ECSCore
 {
     public static class EntityContainer<T> where T : Entity
     {

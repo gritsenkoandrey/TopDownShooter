@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AndreyGritsenko.Infrastructure.Input
+namespace CodeBase.Infrastructure.Input
 {
     public sealed class InputService : IInputService
     {

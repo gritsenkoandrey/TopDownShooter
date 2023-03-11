@@ -1,7 +1,7 @@
-﻿using AndreyGritsenko.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
-namespace AndreyGritsenko.Infrastructure.Input
+namespace CodeBase.Infrastructure.Input
 {
     public interface IInputService : IService
     {

@@ -1,7 +1,7 @@
-﻿using AndreyGritsenko.ECSCore;
-using AndreyGritsenko.Game.Components;
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.Components;
 
-namespace AndreyGritsenko.Game.Systems
+namespace CodeBase.Game.Systems
 {
     public sealed class SSpawnerPrefab : SystemComponent<CSpawner>
     {
@@ -13,6 +13,11 @@ namespace AndreyGritsenko.Game.Systems
         protected override void OnDisableSystem()
         {
             base.OnDisableSystem();
+        }
+        
+        protected override void OnTick()
+        {
+            base.OnTick();
         }
 
         protected override void OnEnableComponent(CSpawner component)

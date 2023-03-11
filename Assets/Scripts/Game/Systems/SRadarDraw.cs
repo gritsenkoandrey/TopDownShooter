@@ -1,9 +1,9 @@
-﻿using AndreyGritsenko.ECSCore;
-using AndreyGritsenko.Game.Components;
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.Components;
 using UniRx;
 using UnityEngine;
 
-namespace AndreyGritsenko.Game.Systems
+namespace CodeBase.Game.Systems
 {
     public sealed class SRadarDraw : SystemComponent<CRadar>
     {
@@ -15,6 +15,11 @@ namespace AndreyGritsenko.Game.Systems
         protected override void OnDisableSystem()
         {
             base.OnDisableSystem();
+        }
+
+        protected override void OnTick()
+        {
+            base.OnTick();
         }
 
         protected override void OnEnableComponent(CRadar component)

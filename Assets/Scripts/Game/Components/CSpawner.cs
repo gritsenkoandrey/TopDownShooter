@@ -1,13 +1,13 @@
-﻿using AndreyGritsenko.ECSCore;
+﻿using CodeBase.ECSCore;
 using UnityEngine;
 
-namespace AndreyGritsenko.Game.Components
+namespace CodeBase.Game.Components
 {
     public sealed class CSpawner : EntityComponent<CSpawner>
     {
         [SerializeField] private GameObject _prefab;
 
-        public void CreatePrefab() => Instantiate(_prefab, transform.position, Quaternion.identity);
+        public void CreatePrefab() => Instantiate(_prefab, transform.position, Quaternion.identity, transform.parent);
 
         private void OnDrawGizmos()
         {

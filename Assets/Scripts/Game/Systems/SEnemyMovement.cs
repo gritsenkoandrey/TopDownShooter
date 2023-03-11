@@ -1,9 +1,9 @@
-﻿using AndreyGritsenko.ECSCore;
-using AndreyGritsenko.Game.Components;
-using AndreyGritsenko.Game.StateMachine;
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.Components;
+using CodeBase.Game.StateMachine;
 using UniRx;
 
-namespace AndreyGritsenko.Game.Systems
+namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyMovement : SystemComponent<CEnemy>
     {
@@ -17,21 +17,21 @@ namespace AndreyGritsenko.Game.Systems
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-            
-            Observable.EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    foreach (CEnemy entity in Entities)
-                    {
-                        entity.UpdateStateMachine.Execute();
-                    }
-                })
-                .AddTo(LifetimeDisposable);
         }
 
         protected override void OnDisableSystem()
         {
             base.OnDisableSystem();
+        }
+
+        protected override void OnTick()
+        {
+            base.OnTick();
+            
+            foreach (CEnemy entity in Entities)
+            {
+                entity.UpdateStateMachine.Execute();
+            }
         }
 
         protected override void OnEnableComponent(CEnemy component)

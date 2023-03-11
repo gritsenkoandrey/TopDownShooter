@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using AndreyGritsenko.Game.Components;
+using CodeBase.Game.Components;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace AndreyGritsenko.Game.StateMachine
+namespace CodeBase.Game.StateMachine
 {
     public sealed class EnemyStateMachine
     {
@@ -54,8 +54,6 @@ namespace AndreyGritsenko.Game.StateMachine
             }
             else
             {
-                _enemy.Agent.enabled = true;
-
                 if (Distance() < _enemy.Radar.Radius)
                 {
                     PursuitState();

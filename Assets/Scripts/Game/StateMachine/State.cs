@@ -1,4 +1,4 @@
-﻿namespace AndreyGritsenko.Game.StateMachine
+﻿namespace CodeBase.Game.StateMachine
 {
     [System.Serializable]
     public enum State : byte

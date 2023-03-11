@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AndreyGritsenko.Utils
+namespace CodeBase.Utils
 {
     public static class Layers
     {
@@ -13,7 +13,6 @@ namespace AndreyGritsenko.Utils
         static Layers()
         {
             Ground = LayerMask.GetMask(LayerGround);
-            
             Character = LayerMask.NameToLayer(LayerCharacter);
         }
     }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using AndreyGritsenko.Infrastructure.Services;
+using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Services;
 
-namespace AndreyGritsenko.Infrastructure.States
+namespace CodeBase.Infrastructure.States
 {
-    public sealed class GameStateMachine
+    public sealed class GameStateMachine : IGameStateMachine
     {
         private readonly Dictionary<Type, IExitState> _states;
         
@@ -16,7 +17,7 @@ namespace AndreyGritsenko.Infrastructure.States
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
                 [typeof(LoadProgressState)] = new LoadProgressState(this),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

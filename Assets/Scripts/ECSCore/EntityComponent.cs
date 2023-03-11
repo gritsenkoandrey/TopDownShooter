@@ -1,4 +1,4 @@
-﻿namespace AndreyGritsenko.ECSCore
+﻿namespace CodeBase.ECSCore
 {
     public abstract class EntityComponent<T> : Entity where T : Entity
     {

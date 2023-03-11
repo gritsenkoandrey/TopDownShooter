@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AndreyGritsenko.Game.LevelData
+namespace CodeBase.Game.LevelData
 {
-    public sealed class Level : MonoBehaviour
-    {
-    }
+    public sealed class Level : MonoBehaviour { }
 }

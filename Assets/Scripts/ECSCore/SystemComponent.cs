@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace AndreyGritsenko.ECSCore
+namespace CodeBase.ECSCore
 {
-    public abstract class SystemComponent<T> : System where T : Entity
+    public abstract class SystemComponent<T> : SystemBase where T : Entity
     {
         protected readonly HashSet<T> Entities;
         

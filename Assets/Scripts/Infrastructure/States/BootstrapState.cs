@@ -1,7 +1,9 @@
-﻿using AndreyGritsenko.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Data;
+using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
-namespace AndreyGritsenko.Infrastructure.States
+namespace CodeBase.Infrastructure.States
 {
     public sealed class BootstrapState : IState
     {
@@ -16,6 +18,8 @@ namespace AndreyGritsenko.Infrastructure.States
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
+            
+            RegisterService();
         }
         
         public void Enter()
@@ -33,6 +37,13 @@ namespace AndreyGritsenko.Infrastructure.States
         private void EnterLoadLevel()
         {
             _stateMachine.Enter<LoadProgressState>();
+        }
+
+        private void RegisterService()
+        {
+            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
+            _services.RegisterSingle<IAsset>(new AssetProvider());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAsset>()));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace AndreyGritsenko.Infrastructure.States
+﻿namespace CodeBase.Infrastructure.States
 {
     public interface ILoadState<in TLoad> : IExitState
     {

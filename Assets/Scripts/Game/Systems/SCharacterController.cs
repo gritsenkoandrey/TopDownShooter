@@ -1,12 +1,11 @@
-﻿using AndreyGritsenko.ECSCore;
-using AndreyGritsenko.Game.Components;
-using AndreyGritsenko.Infrastructure.Input;
-using AndreyGritsenko.Utils;
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Input;
+using CodeBase.Utils;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
-namespace AndreyGritsenko.Game.Systems
+namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterController : SystemComponent<CCharacter>
     {
@@ -27,6 +26,16 @@ namespace AndreyGritsenko.Game.Systems
             base.OnDisableSystem();
         }
 
+        protected override void OnTick()
+        {
+            base.OnTick();
+
+            foreach (CCharacter character in Entities)
+            {
+                character.Move.Execute();
+            }
+        }
+
         protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);
@@ -35,9 +44,8 @@ namespace AndreyGritsenko.Game.Systems
             float currentVelocity = default;
             float gravity = Physics.gravity.y * 10f;
             float speed = 10f;
-            
-            component.CharacterController
-                .UpdateAsObservable()
+
+            component.Move
                 .Subscribe(_ =>
                 {
                     Vector3 move = Vector3.zero;

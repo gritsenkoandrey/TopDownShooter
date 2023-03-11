@@ -1,8 +1,8 @@
-﻿using AndreyGritsenko.ECSCore;
+﻿using CodeBase.ECSCore;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace AndreyGritsenko.Game.Components
+namespace CodeBase.Game.Components
 {
     public sealed class CGround : EntityComponent<CGround>
     {

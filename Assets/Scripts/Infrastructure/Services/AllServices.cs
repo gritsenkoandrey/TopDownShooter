@@ -1,4 +1,4 @@
-﻿namespace AndreyGritsenko.Infrastructure.Services
+﻿namespace CodeBase.Infrastructure.Services
 {
     public sealed class AllServices
     {
