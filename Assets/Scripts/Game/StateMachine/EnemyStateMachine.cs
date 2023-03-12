@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Game.Components;
+using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,6 +21,11 @@ namespace CodeBase.Game.StateMachine
         private float _delay;
         private float _minDistance;
         private float _patrolRadius;
+        private float _pursuitDistance;
+        private float _normalSpeed;
+        private float _pursuitSpeed;
+        private float _attackDelay;
+        private float _maxAttackDelay;
 
         public EnemyStateMachine(CEnemy enemy, CCharacter character)
         {
@@ -33,8 +39,13 @@ namespace CodeBase.Game.StateMachine
             _patrolPosition = _enemy.transform.position;
             _maxDelay = 1f;
             _delay = _maxDelay;
-            _minDistance = 1f;
+            _minDistance = 1.5f;
             _patrolRadius = 5f;
+            _pursuitDistance = _enemy.Radar.Radius * 2f;
+            _normalSpeed = _enemy.Agent.speed;
+            _pursuitSpeed = _normalSpeed * 2.5f;
+            _maxAttackDelay = 2f;
+            _attackDelay = _maxAttackDelay;
 
             _actions = new Dictionary<State, Action>
             {
@@ -92,7 +103,7 @@ namespace CodeBase.Game.StateMachine
 
         private void Pursuit()
         {
-            if (Distance() > _enemy.Radar.Radius)
+            if (Distance() > _pursuitDistance)
             {
                 PatrolState();
             }
@@ -104,11 +115,25 @@ namespace CodeBase.Game.StateMachine
                     {
                         _enemy.Agent.ResetPath();
                     }
+                    
+                    Attack();
                 }
                 else
                 {
                     _enemy.Agent.SetDestination(_character.Position);
                 }
+
+                _attackDelay -= Time.deltaTime;
+            }
+        }
+
+        private void Attack()
+        {
+            if (_attackDelay < 0f)
+            {
+                _attackDelay = _maxAttackDelay;
+                
+                _enemy.Attack.Attack.Execute(_character);
             }
         }
         
@@ -142,6 +167,8 @@ namespace CodeBase.Game.StateMachine
         private void PursuitState()
         {
             _enemy.Agent.ResetPath();
+            _enemy.Agent.speed = _pursuitSpeed;
+            _enemy.Animator.SetFloat(Animations.RunBlend, 1f);
             _enemy.Radar.Clear.Execute();
             _state = State.Pursuit;
         }
@@ -149,6 +176,8 @@ namespace CodeBase.Game.StateMachine
         private void PatrolState()
         {
             _enemy.Agent.ResetPath();
+            _enemy.Agent.speed = _normalSpeed;
+            _enemy.Animator.SetFloat(Animations.RunBlend, 0f);
             _enemy.Radar.Draw.Execute();
             _state = State.Patrol;
         }

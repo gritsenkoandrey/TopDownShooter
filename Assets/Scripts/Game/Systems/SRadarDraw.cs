@@ -20,6 +20,11 @@ namespace CodeBase.Game.Systems
         protected override void OnTick()
         {
             base.OnTick();
+
+            foreach (CRadar radar in Entities)
+            {
+                radar.transform.rotation = Quaternion.identity;
+            }
         }
 
         protected override void OnEnableComponent(CRadar component)

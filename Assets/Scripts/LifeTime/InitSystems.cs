@@ -36,12 +36,17 @@ namespace CodeBase.LifeTime
         {
             _systems = new List<SystemBase>
             {
-                new SCharacterController(_inputService),
                 new SGroundBuildNavMesh(),
+                new SCharacterStateMachine(_inputService),
+                new SCharacterAnimationController(),
                 new SSpawnerPrefab(),
-                new SEnemyMovement(_character),
+                new SEnemyInitialize(_character),
+                new SEnemyStateMachine(_character),
+                new SEnemyAnimationController(),
                 new SRadarDraw(),
                 new SVirtualCamera(_character),
+                new SSelectMesh(),
+                new SAttack(),
             };
         }
 
