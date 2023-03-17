@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CodeBase.UI;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.Data
 {
@@ -6,5 +7,8 @@ namespace CodeBase.Infrastructure.Data
     public sealed class UiAssetData : ScriptableObject
     {
         public GameObject Canvas;
+        public BaseScreen LobbyScreen;
+        public BaseScreen GameScreen;
+        public BaseScreen ResultScreen;
     }
 }

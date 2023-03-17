@@ -11,6 +11,8 @@ namespace CodeBase.Infrastructure
         [SerializeField] private TextMeshProUGUI _loadingText;
         [SerializeField] private TextMeshProUGUI _dotsText;
 
+        public Transform Root => _canvasGroup.transform;
+
         public void Show()
         {
             gameObject.SetActive(true);
@@ -21,16 +23,15 @@ namespace CodeBase.Infrastructure
         public void Hide()
         {
             StartCoroutine(FadeIn());
-            StartCoroutine(PrintDots());
         }
 
-        private IEnumerator PrintDots()
+        private IEnumerator FadeIn()
         {
             _loadingText.text = "Loading";
             
             int i = 0;
             
-            while (_canvasGroup.alpha > 0.9f)
+            while (i < 6)
             {
                 string dots = ".";
                 
@@ -50,22 +51,9 @@ namespace CodeBase.Infrastructure
                 yield return new WaitForSeconds(0.2f);
             }
 
+            _canvasGroup.alpha = 0f;
             _loadingText.text = "";
             _dotsText.text = "";
-        }
-
-        private IEnumerator FadeIn()
-        {
-            yield return new WaitForSeconds(1.5f);
-            
-            while (_canvasGroup.alpha > 0f)
-            {
-                _canvasGroup.alpha -= 0.02f;
-                
-                yield return new WaitForSeconds(0.02f);
-            }
-            
-            gameObject.SetActive(false);
         }
     }
 }

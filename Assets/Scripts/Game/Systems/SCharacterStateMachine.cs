@@ -1,20 +1,12 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
-using CodeBase.Infrastructure.Input;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterStateMachine : SystemComponent<CCharacter>
     {
-        private readonly IInputService _inputService;
-
-        public SCharacterStateMachine(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
-        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -39,7 +31,7 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            CharacterStateMachine stateMachine = new CharacterStateMachine(component, _inputService);
+            CharacterStateMachine stateMachine = new CharacterStateMachine(component);
             
             stateMachine.Init();
 

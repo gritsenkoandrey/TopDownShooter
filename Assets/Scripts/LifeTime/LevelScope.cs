@@ -1,6 +1,4 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Infrastructure.Input;
-using VContainer;
+﻿using VContainer;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
@@ -9,10 +7,7 @@ namespace CodeBase.LifeTime
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterComponentInHierarchy<Joystick>();
-            builder.RegisterComponentInHierarchy<CCharacter>();
-            
-            builder.RegisterEntryPoint<InitSystems>();
+            builder.RegisterEntryPoint<SystemEntryPoint>(Lifetime.Scoped);
         }
     }
 }

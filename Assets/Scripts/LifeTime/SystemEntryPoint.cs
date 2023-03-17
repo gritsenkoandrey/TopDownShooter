@@ -1,35 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.ECSCore;
-using CodeBase.Game.Components;
 using CodeBase.Game.Systems;
-using CodeBase.Infrastructure.Input;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
 {
-    public sealed class InitSystems : IInitializable, IDisposable, ITickable
+    public sealed class SystemEntryPoint : IInitializable, IDisposable, ITickable
     {
         private List<SystemBase> _systems;
-
-        private readonly CCharacter _character;
-        private readonly IInputService _inputService;
-
-        public InitSystems(Joystick joystick, CCharacter character)
-        {
-            _character = character;
-            _inputService = new InputService(joystick);
-        }
 
         public void Initialize()
         {
             CreateSystems();
-            EnableSystem();
+            EnableSystems();
         }
 
         public void Dispose()
         {
-            DisableSystem();
+            DisableSystems();
+            Clear();
+        }
+
+        public void Tick()
+        {
+            UpdateSystems();
         }
 
         private void CreateSystems()
@@ -37,20 +32,22 @@ namespace CodeBase.LifeTime
             _systems = new List<SystemBase>
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_inputService),
+                new SCharacterStateMachine(),
                 new SCharacterAnimationController(),
                 new SSpawnerPrefab(),
-                new SEnemyInitialize(_character),
-                new SEnemyStateMachine(_character),
+                new SEnemyInitialize(),
+                new SEnemyStateMachine(),
                 new SEnemyAnimationController(),
                 new SRadarDraw(),
-                new SVirtualCamera(_character),
+                new SVirtualCamera(),
                 new SSelectMesh(),
                 new SAttack(),
+                new SUIUpdateHealth(),
+                new SInput(),
             };
         }
 
-        private void EnableSystem()
+        private void EnableSystems()
         {
             foreach (SystemBase system in _systems)
             {
@@ -58,7 +55,7 @@ namespace CodeBase.LifeTime
             }
         }
 
-        private void DisableSystem()
+        private void DisableSystems()
         {
             foreach (SystemBase system in _systems)
             {
@@ -66,12 +63,17 @@ namespace CodeBase.LifeTime
             }
         }
 
-        public void Tick()
+        private void UpdateSystems()
         {
             foreach (SystemBase system in _systems)
             {
                 system.Tick();
             }
+        }
+
+        private void Clear()
+        {
+            _systems.Clear();
         }
     }
 }

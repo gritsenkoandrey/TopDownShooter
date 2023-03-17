@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace CodeBase.Infrastructure.Input
 {
-    public sealed class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInputService
+    public sealed class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInput
     {
         [SerializeField] private RectTransform _movementArea;
         [SerializeField] private RectTransform _handle;
@@ -19,7 +19,8 @@ namespace CodeBase.Infrastructure.Input
         private float _movementAreaRadiusSqr;
         private float _deadZoneAreaRadiusSqr;
 
-        public Vector2 Value { get; private set; }
+        public Vector2 Value { get; set; }
+        public GameObject Object => gameObject;
 
         private void Awake()
         {

@@ -1,20 +1,19 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Services;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyInitialize : SystemComponent<CEnemy>
     {
-        private readonly CCharacter _character;
-
-        public SEnemyInitialize(CCharacter character)
-        {
-            _character = character;
-        }
+        private IGameFactory _gameFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
+
+            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -31,14 +30,14 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
             
-            _character.Enemies.Add(component);
+            _gameFactory.CurrentCharacter.Enemies.Add(component);
         }
 
         protected override void OnDisableComponent(CEnemy component)
         {
             base.OnDisableComponent(component);
 
-            _character.Enemies.Remove(component);
+            _gameFactory.CurrentCharacter.Enemies.Remove(component);
         }
     }
 }

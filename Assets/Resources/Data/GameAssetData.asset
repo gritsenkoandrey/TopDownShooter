@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea77a534b6d84354998cb584205c1175, type: 3}
   m_Name: GameAssetData
   m_EditorClassIdentifier: 
-  Level: {fileID: 3495192746181472548, guid: 8b37044fc561cdc41a38b4f1035c3300, type: 3}
+  Level: {fileID: 3495192746181472546, guid: 8b37044fc561cdc41a38b4f1035c3300, type: 3}
+  Character: {fileID: 879267955218250750, guid: bb0dd454804f7be4a94f189e78732829, type: 3}

@@ -1,22 +1,21 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
+using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Services;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyStateMachine : SystemComponent<CEnemy>
     {
-        private readonly CCharacter _character;
-
-        public SEnemyStateMachine(CCharacter character)
-        {
-            _character = character;
-        }
+        private IGameFactory _gameFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
+
+            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -38,7 +37,7 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, _character);
+            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, _gameFactory.CurrentCharacter);
             
             enemyStateMachine.Init();
 

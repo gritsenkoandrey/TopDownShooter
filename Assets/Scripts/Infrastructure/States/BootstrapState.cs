@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.Data;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
+using CodeBase.UI.Factories;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -44,6 +45,7 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle<IAsset>(new AssetProvider());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAsset>()));
+            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAsset>(), _stateMachine));
         }
     }
 }

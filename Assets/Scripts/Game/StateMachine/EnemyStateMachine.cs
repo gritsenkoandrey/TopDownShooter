@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,7 +11,7 @@ namespace CodeBase.Game.StateMachine
     public sealed class EnemyStateMachine
     {
         private readonly CEnemy _enemy;
-        private readonly CCharacter _character;
+        private readonly ICharacter _character;
 
         private Dictionary<State, Action> _actions;
         
@@ -27,7 +28,7 @@ namespace CodeBase.Game.StateMachine
         private float _attackDelay;
         private float _maxAttackDelay;
 
-        public EnemyStateMachine(CEnemy enemy, CCharacter character)
+        public EnemyStateMachine(CEnemy enemy, ICharacter character)
         {
             _enemy = enemy;
             _character = character;
@@ -55,7 +56,10 @@ namespace CodeBase.Game.StateMachine
             };
         }
 
-        public void Tick() => _actions[_state].Invoke();
+        public void Tick()
+        {
+            _actions[_state].Invoke();
+        }
 
         private void Idle()
         {
@@ -133,10 +137,19 @@ namespace CodeBase.Game.StateMachine
             {
                 _attackDelay = _maxAttackDelay;
                 
+                LockAt();
+
                 _enemy.Attack.Attack.Execute(_character);
             }
         }
-        
+
+        private void LockAt()
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(_character.Position - _enemy.Position);
+
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, lookRotation, 1f);
+        }
+
         private Vector3 GeneratePointOnNavmesh()
         {
             for (int i = 0; i < 10; i++)
