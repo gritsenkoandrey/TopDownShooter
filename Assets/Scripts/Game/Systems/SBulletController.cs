@@ -1,10 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SAttack : SystemComponent<CAttack>
+    public sealed class SBulletController : SystemComponent<CBullet>
     {
         protected override void OnEnableSystem()
         {
@@ -21,21 +20,12 @@ namespace CodeBase.Game.Systems
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CAttack component)
+        protected override void OnEnableComponent(CBullet component)
         {
             base.OnEnableComponent(component);
-
-            component.Attack
-                .Subscribe(health =>
-                {
-                    health.Health.Health -= component.Damage;
-
-                    health.Health.Hit.Execute();
-                })
-                .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CAttack component)
+        protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
         }

@@ -2,6 +2,7 @@
 using CodeBase.Game.Interfaces;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CodeBase.Game.Components
 {
@@ -10,15 +11,15 @@ namespace CodeBase.Game.Components
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Animator _animator;
         [SerializeField] private CHealth _health;
-        [SerializeField] private CAttack _attack;
+        [FormerlySerializedAs("_attack")] [SerializeField] private CWeapon weapon;
         
         public CharacterController CharacterController => _characterController;
         public Animator Animator => _animator;
         public CHealth Health => _health;
-        public CAttack Attack => _attack;
+        public CWeapon Weapon => weapon;
         public Vector3 Position => transform.position;
         public GameObject Object => gameObject;
-        public Vector2 Input { get; set; }
+        public Vector2 Value { get; set; }
 
         public ReactiveCollection<CEnemy> Enemies { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();

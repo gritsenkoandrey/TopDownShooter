@@ -36,7 +36,7 @@ namespace CodeBase.Game.Systems
                 .Subscribe(_ => component.Animator.SetTrigger(Animations.Hit))
                 .AddTo(component.LifetimeDisposable);
 
-            component.Attack.Attack
+            component.Melee.Attack
                 .Subscribe(_ =>
                 {
                     component.Animator.SetTrigger(Animations.Shoot);

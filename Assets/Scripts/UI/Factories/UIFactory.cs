@@ -1,5 +1,7 @@
-﻿using CodeBase.Infrastructure.Data;
+﻿using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.States;
+using CodeBase.Infrastructure.StaticData;
+using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
 namespace CodeBase.UI.Factories
@@ -8,14 +10,16 @@ namespace CodeBase.UI.Factories
     {
         private readonly IAsset _asset;
         private readonly IGameStateMachine _gameStateMachine;
+        private readonly IStaticDataService _staticDataService;
         
-        public BaseScreen CurrentScreen { get; private set; }
-        public GameObject CurrentCanvas { get; private set; }
+        private BaseScreen CurrentScreen { get; set; }
+        private GameObject CurrentCanvas { get; set; }
 
-        public UIFactory(IAsset asset, IGameStateMachine gameStateMachine)
+        public UIFactory(IAsset asset, IGameStateMachine gameStateMachine, IStaticDataService staticDataService)
         {
             _asset = asset;
             _gameStateMachine = gameStateMachine;
+            _staticDataService = staticDataService;
         }
 
         public GameObject CreateCanvas()
@@ -30,23 +34,11 @@ namespace CodeBase.UI.Factories
                 Object.Destroy(CurrentScreen.gameObject);
             }
 
-            CurrentScreen = null;
+            ScreenData screenData = _staticDataService.ScreenData(type);
 
-            switch (type)
-            {
-                case ScreenType.Lobby:
-                    CurrentScreen = Object.Instantiate(_asset.UiAssetData.LobbyScreen, CurrentCanvas.transform);
-                    CurrentScreen.Construct(this, _gameStateMachine);
-                    break;
-                case ScreenType.Game:
-                    CurrentScreen = Object.Instantiate(_asset.UiAssetData.GameScreen, CurrentCanvas.transform);
-                    CurrentScreen.Construct(this, _gameStateMachine);
-                    break;
-                case ScreenType.Result:
-                    CurrentScreen = Object.Instantiate(_asset.UiAssetData.ResultScreen, CurrentCanvas.transform);
-                    CurrentScreen.Construct(this, _gameStateMachine);
-                    break;
-            }
+            CurrentScreen = Object.Instantiate(screenData.Prefab, CurrentCanvas.transform);
+            
+            CurrentScreen.Construct(this, _gameStateMachine);
 
             return CurrentScreen;
         }

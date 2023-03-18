@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using CodeBase.Infrastructure.AssetData.Data;
+using UnityEngine;
 
-namespace CodeBase.Infrastructure.Data
+namespace CodeBase.Infrastructure.AssetData
 {
     public sealed class AssetProvider : IAsset
     {

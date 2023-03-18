@@ -2,17 +2,19 @@
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
+using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyInitialize : SystemComponent<CEnemy>
+    public sealed class SEnemyMeleeAttack : SystemComponent<CMelee>
     {
         private IGameFactory _gameFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
+            
             _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
@@ -26,18 +28,28 @@ namespace CodeBase.Game.Systems
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CEnemy component)
+        protected override void OnEnableComponent(CMelee component)
         {
             base.OnEnableComponent(component);
-            
-            _gameFactory.CurrentCharacter.Enemies.Add(component);
+
+            component.OnAttack
+                .Subscribe(_ =>
+                {
+                    float distance = Vector3.Distance(component.transform.position, _gameFactory.CurrentCharacter.Position);
+
+                    if (distance > 1.5f)
+                    {
+                        return;
+                    }
+
+                    _gameFactory.CurrentCharacter.Health.Hit.Execute(component.Damage);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CEnemy component)
+        protected override void OnDisableComponent(CMelee component)
         {
             base.OnDisableComponent(component);
-
-            _gameFactory.CurrentCharacter.Enemies.Remove(component);
         }
     }
 }

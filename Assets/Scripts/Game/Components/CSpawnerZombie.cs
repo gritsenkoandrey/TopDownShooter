@@ -1,13 +1,16 @@
 ﻿using CodeBase.ECSCore;
+using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CSpawner : EntityComponent<CSpawner>
+    public sealed class CSpawnerZombie : EntityComponent<CSpawnerZombie>, IPosition
     {
-        [SerializeField] private GameObject _prefab;
+        [SerializeField] private ZombieType _zombieType;
 
-        public void CreatePrefab() => Instantiate(_prefab, transform.position, Quaternion.identity, transform.parent);
+        public ZombieType ZombieType => _zombieType;
+        public Vector3 Position => transform.position;
 
         private void OnDrawGizmos()
         {

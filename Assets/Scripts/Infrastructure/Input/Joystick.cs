@@ -24,6 +24,8 @@ namespace CodeBase.Infrastructure.Input
 
         private void Awake()
         {
+            Value = Vector2.zero;
+            
             _canvasGroup.alpha = 0f;
             _startPosition = _handle.position;
             _loverMovementAreaRadius = 1f / _movementAreaRadius;

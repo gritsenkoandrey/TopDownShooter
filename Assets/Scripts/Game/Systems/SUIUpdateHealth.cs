@@ -39,17 +39,22 @@ namespace CodeBase.Game.Systems
             InstantiateHealth(component);
 
             _gameFactory.CurrentCharacter.Health.Hit
-                .Subscribe(_ =>
+                .Subscribe(damage =>
                 {
-                    if (component.Healths.Count > 0)
+                    for (int i = 0; i < damage; i++)
                     {
-                        GameObject hp = component.Healths.Pop();
+                        if (component.Healths.Count > 0)
+                        {
+                            GameObject hp = component.Healths.Pop();
                         
-                        Object.Destroy(hp);
-                    }
-                    else
-                    {
-                        _uiFactory.CreateScreen(ScreenType.Result);
+                            Object.Destroy(hp);
+                        }
+                        else
+                        {
+                            _uiFactory.CreateScreen(ScreenType.Result);
+                            
+                            break;
+                        }
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

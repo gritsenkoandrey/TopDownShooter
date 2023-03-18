@@ -13,6 +13,6 @@ namespace CodeBase.ECSCore
 
         protected virtual void OnEnableSystem() { }
         protected virtual void OnDisableSystem() => LifetimeDisposable.Clear();
-        protected virtual void OnTick(){ }
+        protected virtual void OnTick() { }
     }
 }

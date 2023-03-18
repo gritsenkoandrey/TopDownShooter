@@ -1,6 +1,7 @@
-﻿using CodeBase.Infrastructure.Data;
+﻿using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.StaticData;
 using CodeBase.UI.Factories;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace CodeBase.Infrastructure.States
             _services = services;
             
             RegisterService();
+            LoadResources();
         }
         
         public void Enter()
@@ -44,8 +46,14 @@ namespace CodeBase.Infrastructure.States
         {
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle<IAsset>(new AssetProvider());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAsset>()));
-            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAsset>(), _stateMachine));
+            _services.RegisterSingle<IStaticDataService>(new StaticDataService());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAsset>(), _services.Single<IStaticDataService>()));
+            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAsset>(), _stateMachine, _services.Single<IStaticDataService>()));
+        }
+
+        private void LoadResources()
+        {
+            _services.Single<IStaticDataService>().Load();
         }
     }
 }

@@ -113,6 +113,8 @@ namespace CodeBase.Game.StateMachine
             }
             else
             {
+                LockAt();
+                
                 if (Distance() < _minDistance)
                 {
                     if (_enemy.Agent.hasPath)
@@ -136,10 +138,8 @@ namespace CodeBase.Game.StateMachine
             if (_attackDelay < 0f)
             {
                 _attackDelay = _maxAttackDelay;
-                
-                LockAt();
 
-                _enemy.Attack.Attack.Execute(_character);
+                _enemy.Melee.Attack.Execute();
             }
         }
 
@@ -147,7 +147,7 @@ namespace CodeBase.Game.StateMachine
         {
             Quaternion lookRotation = Quaternion.LookRotation(_character.Position - _enemy.Position);
 
-            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, lookRotation, 1f);
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, lookRotation, 0.5f);
         }
 
         private Vector3 GeneratePointOnNavmesh()

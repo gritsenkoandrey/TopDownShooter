@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Level: {fileID: 3495192746181472546, guid: 8b37044fc561cdc41a38b4f1035c3300, type: 3}
   Character: {fileID: 879267955218250750, guid: bb0dd454804f7be4a94f189e78732829, type: 3}
+  Bullet: {fileID: 1917473867606836831, guid: b6f99cbfc0dc24f459f1f2bf9280bc4b, type: 3}

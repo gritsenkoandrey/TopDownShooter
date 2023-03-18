@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf80a4c35204bfabefbf13a7ef1ad6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 879267955218250749}
 --- !u!114 &2612034460069448307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnBulletPoint: {fileID: 4362219188250157871}
+  _speed: 20
+  _damage: 1
 --- !u!114 &879267955218250750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +218,38 @@ MonoBehaviour:
   _characterController: {fileID: 879267955218250749}
   _animator: {fileID: 8337342951033286356}
   _health: {fileID: 6043445981113736475}
-  _attack: {fileID: 2612034460069448307}
+  weapon: {fileID: 2612034460069448307}
+--- !u!1 &4457226780056431821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4362219188250157871}
+  m_Layer: 0
+  m_Name: SpawnBulletPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4362219188250157871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457226780056431821}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.08, y: -0, z: 0.85}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7289580385317488474}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7289580385317852228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1206,8 @@ Transform:
   m_LocalPosition: {x: -0.073909394, y: 0.009959373, z: 0.092282094}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4362219188250157871}
   m_Father: {fileID: 7289580385317488336}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

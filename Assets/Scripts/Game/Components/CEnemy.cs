@@ -12,14 +12,19 @@ namespace CodeBase.Game.Components
         [SerializeField] private Animator _animator;
         [SerializeField] private CRadar _radar;
         [SerializeField] private CHealth _health;
-        [SerializeField] private CAttack _attack;
+        [SerializeField] private CMelee _melee;
 
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
         public CRadar Radar => _radar;
         public CHealth Health => _health;
-        public CAttack Attack => _attack;
+        public CMelee Melee => _melee;
         public Vector3 Position => transform.position;
+
+        public void OnAttack()
+        {
+            _melee.OnAttack.Execute();
+        }
 
         public ReactiveCommand UpdateStateMachine { get; } = new();
         

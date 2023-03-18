@@ -1,9 +1,10 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SSpawnerPrefab : SystemComponent<CSpawner>
+    public sealed class SHealthProvider : SystemComponent<CHealth>
     {
         protected override void OnEnableSystem()
         {
@@ -14,20 +15,25 @@ namespace CodeBase.Game.Systems
         {
             base.OnDisableSystem();
         }
-        
+
         protected override void OnTick()
         {
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CSpawner component)
+        protected override void OnEnableComponent(CHealth component)
         {
             base.OnEnableComponent(component);
 
-            component.CreatePrefab();
+            component.Hit
+                .Subscribe(damage =>
+                {
+                    component.Health -= damage;
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CSpawner component)
+        protected override void OnDisableComponent(CHealth component)
         {
             base.OnDisableComponent(component);
         }

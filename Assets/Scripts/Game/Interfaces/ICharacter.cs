@@ -1,12 +1,11 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Input;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface ICharacter : IHealth, IObject, IPosition
+    public interface ICharacter : IHealth, IObject, IPosition, IInput
     {
-        public Vector2 Input { get; set; }
         public ReactiveCollection<CEnemy> Enemies { get; }
     }
 }

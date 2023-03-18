@@ -32,7 +32,7 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
             
-            component.Attack.Attack
+            component.Weapon.Shoot
                 .Subscribe(_ =>
                 {
                     component.Animator.SetTrigger(Animations.Shoot);

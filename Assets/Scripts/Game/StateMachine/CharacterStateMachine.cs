@@ -30,9 +30,9 @@ namespace CodeBase.Game.StateMachine
         {
             _camera = Camera.main;
             
-            _maxDelay = 1f;
+            _maxDelay = 0.5f;
             _delay = _maxDelay;
-            _attackRadius = 4f;
+            _attackRadius = 10f;
             _gravity = Physics.gravity.y * 10f;
             _speed = 7.5f;
         }
@@ -48,9 +48,9 @@ namespace CodeBase.Game.StateMachine
 
         private void Input()
         {
-            if (_character.Input.magnitude > 0.1f)
+            if (_character.Value.magnitude > 0.1f)
             {
-                _angle = Mathf.Atan2(_character.Input.x, _character.Input.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+                _angle = Mathf.Atan2(_character.Value.x, _character.Value.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
             }
         }
 
@@ -58,7 +58,7 @@ namespace CodeBase.Game.StateMachine
         {
             Vector3 move = Vector3.zero;
 
-            if (_character.Input.magnitude > 0.1f)
+            if (_character.Value.magnitude > 0.1f)
             {
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
@@ -116,7 +116,7 @@ namespace CodeBase.Game.StateMachine
             {
                 if (_delay < 0f)
                 {
-                    _character.Attack.Attack.Execute(_target);
+                    _character.Weapon.Shoot.Execute();
                     
                     _delay = _maxDelay;
                 }

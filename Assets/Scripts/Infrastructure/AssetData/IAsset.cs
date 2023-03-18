@@ -1,6 +1,7 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.AssetData.Data;
+using CodeBase.Infrastructure.Services;
 
-namespace CodeBase.Infrastructure.Data
+namespace CodeBase.Infrastructure.AssetData
 {
     public interface IAsset : IService
     {

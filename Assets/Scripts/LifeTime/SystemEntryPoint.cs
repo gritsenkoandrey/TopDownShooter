@@ -34,16 +34,18 @@ namespace CodeBase.LifeTime
                 new SGroundBuildNavMesh(),
                 new SCharacterStateMachine(),
                 new SCharacterAnimationController(),
-                new SSpawnerPrefab(),
-                new SEnemyInitialize(),
+                new SCharacterShoot(),
+                new SSpawnerZombie(),
                 new SEnemyStateMachine(),
                 new SEnemyAnimationController(),
+                new SEnemyCollision(),
+                new SEnemyMeleeAttack(),
                 new SRadarDraw(),
                 new SVirtualCamera(),
                 new SSelectMesh(),
-                new SAttack(),
                 new SUIUpdateHealth(),
                 new SInput(),
+                new SHealthProvider(),
             };
         }
 

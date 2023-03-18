@@ -1,14 +1,13 @@
 ﻿using CodeBase.ECSCore;
-using CodeBase.Game.Interfaces;
 using UniRx;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CAttack : EntityComponent<CAttack>
+    public sealed class CMelee : EntityComponent<CMelee>
     {
         public int Damage { get; set; }
-        
-        public ReactiveCommand<IHealth> Attack { get; } = new();
+        public ReactiveCommand Attack { get; } = new();
+        public ReactiveCommand OnAttack { get; } = new();
         
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }
