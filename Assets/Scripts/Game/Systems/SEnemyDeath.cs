@@ -1,18 +1,20 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
-using CodeBase.Utils;
+using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Services;
 using UniRx;
-using UniRx.Triggers;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyCollision : SystemComponent<CEnemy>
+    public sealed class SEnemyDeath : SystemComponent<CEnemy>
     {
+        private IGameFactory _gameFactory;
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
+
+            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -28,19 +30,20 @@ namespace CodeBase.Game.Systems
         protected override void OnEnableComponent(CEnemy component)
         {
             base.OnEnableComponent(component);
-
-            component.Health.Collider
-                .OnTriggerEnterAsObservable()
-                .Where(collider => collider.gameObject.layer.Equals(Layers.Bullet))
-                .Subscribe(collider =>
+            
+            component.Health.Health
+                .SkipLatestValueOnSubscribe()
+                .ObserveOnMainThread()
+                .Subscribe(health =>
                 {
-                    if (collider.TryGetComponent(out IBullet bullet))
+                    if (health <= 0)
                     {
-                        component.Health.Health.Value -= bullet.Damage;
+                        component.Agent.ResetPath();
+                        component.Radar.Clear.Execute();
 
-                        component.IsAggro = true;
+                        _gameFactory.CurrentCharacter.Enemies.Remove(component);
                         
-                        Object.Destroy(bullet.Object);
+                        component.LifetimeDisposable.Clear();
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

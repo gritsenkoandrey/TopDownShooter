@@ -1,21 +1,19 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterShoot : SystemComponent<CWeapon>
+    public sealed class SCharacterInput : SystemComponent<CInput>
     {
         private IGameFactory _gameFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-            
+
             _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
@@ -27,24 +25,23 @@ namespace CodeBase.Game.Systems
         protected override void OnTick()
         {
             base.OnTick();
+
+            foreach (CInput input in Entities)
+            {
+                input.UpdateInput.Execute();
+            }
         }
 
-        protected override void OnEnableComponent(CWeapon weapon)
+        protected override void OnEnableComponent(CInput component)
         {
-            base.OnEnableComponent(weapon);
+            base.OnEnableComponent(component);
 
-            weapon.Shoot
-                .Subscribe(_ =>
-                {
-                    IBullet bullet = _gameFactory.CreateBullet(weapon.SpawnBulletPoint.position);
-
-                    bullet.Damage = weapon.Damage;
-                    bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Speed, ForceMode.Impulse);
-                })
-                .AddTo(weapon.LifetimeDisposable);
+            component.UpdateInput
+                .Subscribe(_ => _gameFactory.CurrentCharacter.Input = component.Input.Value)
+                .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CWeapon component)
+        protected override void OnDisableComponent(CInput component)
         {
             base.OnDisableComponent(component);
         }

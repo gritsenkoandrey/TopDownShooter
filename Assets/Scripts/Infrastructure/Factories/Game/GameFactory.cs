@@ -32,7 +32,12 @@ namespace CodeBase.Infrastructure.Factories.Game
         {
             CharacterData characterData = _staticDataService.CharacterData();
             
-            return CurrentCharacter = Object.Instantiate(characterData.Prefab, _asset.GameAssetData.Level.CharacterSpawnPosition, Quaternion.identity);
+            CurrentCharacter = Object.Instantiate(characterData.Prefab, _asset.GameAssetData.Level.CharacterSpawnPosition, Quaternion.identity);
+
+            CurrentCharacter.Health.MaxHealth = characterData.Health;
+            CurrentCharacter.Health.Health.Value = characterData.Health;
+
+            return CurrentCharacter;
         }
 
         public IBullet CreateBullet(Vector3 position)
@@ -46,7 +51,8 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             CEnemy zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
 
-            zombie.Health.Health = data.Health;
+            zombie.Health.MaxHealth = data.Health;
+            zombie.Health.Health.Value = data.Health;
             zombie.Melee.Damage = data.Damage;
             
             CurrentCharacter.Enemies.Add(zombie);

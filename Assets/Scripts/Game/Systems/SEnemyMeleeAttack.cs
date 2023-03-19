@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyMeleeAttack : SystemComponent<CMelee>
+    public sealed class SEnemyMeleeAttack : SystemComponent<CEnemy>
     {
         private IGameFactory _gameFactory;
         
@@ -28,26 +28,26 @@ namespace CodeBase.Game.Systems
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CMelee component)
+        protected override void OnEnableComponent(CEnemy component)
         {
             base.OnEnableComponent(component);
 
-            component.OnAttack
+            component.Melee.OnAttack
                 .Subscribe(_ =>
                 {
                     float distance = Vector3.Distance(component.transform.position, _gameFactory.CurrentCharacter.Position);
 
-                    if (distance > 1.5f)
+                    if (distance > 1.5f || component.Health.Health.Value <= 0)
                     {
                         return;
                     }
 
-                    _gameFactory.CurrentCharacter.Health.Hit.Execute(component.Damage);
+                    _gameFactory.CurrentCharacter.Health.Health.Value -= component.Melee.Damage;
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CMelee component)
+        protected override void OnDisableComponent(CEnemy component)
         {
             base.OnDisableComponent(component);
         }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZombieType: 0
   Health: 5
-  Damage: 1
+  Damage: 2
   WalkSpeed: 2
   RunSpeed: 5
   AttackDelay: 1

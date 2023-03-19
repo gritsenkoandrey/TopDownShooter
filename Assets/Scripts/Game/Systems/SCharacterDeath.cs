@@ -1,16 +1,21 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Utils;
+using CodeBase.Infrastructure.Services;
+using CodeBase.UI;
+using CodeBase.UI.Factories;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterAnimationController : SystemComponent<CCharacter>
+    public sealed class SCharacterDeath : SystemComponent<CCharacter>
     {
+        private IUIFactory _uiFactory;
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
+
+            _uiFactory = AllServices.Container.Single<IUIFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -21,22 +26,22 @@ namespace CodeBase.Game.Systems
         protected override void OnTick()
         {
             base.OnTick();
-
-            foreach (CCharacter animator in Entities)
-            {
-                UpdateAnimation(animator);
-            }
         }
 
         protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);
-            
-            component.Weapon.Shoot
-                .Subscribe(_ =>
+
+            component.Health.Health
+                .SkipLatestValueOnSubscribe()
+                .Subscribe(health =>
                 {
-                    component.Animator.SetTrigger(Animations.Shoot);
-                    component.Animator.SetFloat(Animations.ShootBlend, Random.Range(0, 2));
+                    if (health <= 0)
+                    {
+                        _uiFactory.CreateScreen(ScreenType.Result);
+                        
+                        component.LifetimeDisposable.Clear();
+                    }
                 })
                 .AddTo(component.LifetimeDisposable);
         }
@@ -44,11 +49,6 @@ namespace CodeBase.Game.Systems
         protected override void OnDisableComponent(CCharacter component)
         {
             base.OnDisableComponent(component);
-        }
-
-        private void UpdateAnimation(CCharacter character)
-        {
-            character.Animator.SetFloat(Animations.Velocity, character.CharacterController.velocity.sqrMagnitude, 0.05f, Time.deltaTime);
         }
     }
 }

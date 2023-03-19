@@ -33,19 +33,21 @@ namespace CodeBase.LifeTime
             {
                 new SGroundBuildNavMesh(),
                 new SCharacterStateMachine(),
-                new SCharacterAnimationController(),
-                new SCharacterShoot(),
+                new SCharacterAnimator(),
+                new SCharacterWeapon(),
+                new SCharacterDeath(),
                 new SSpawnerZombie(),
                 new SEnemyStateMachine(),
-                new SEnemyAnimationController(),
+                new SEnemyAnimator(),
                 new SEnemyCollision(),
                 new SEnemyMeleeAttack(),
+                new SEnemyDeath(),
+                new SEnemyHealthViewUpdate(),
                 new SRadarDraw(),
                 new SVirtualCamera(),
                 new SSelectMesh(),
-                new SUIUpdateHealth(),
-                new SInput(),
-                new SHealthProvider(),
+                new SCharacterHealthViewUpdate(),
+                new SCharacterInput(),
             };
         }
 

@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
 using UniRx;
@@ -7,14 +8,14 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SInput : SystemComponent<CInput>
+    public sealed class SCharacterWeapon : SystemComponent<CWeapon>
     {
         private IGameFactory _gameFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
+            
             _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
@@ -26,27 +27,26 @@ namespace CodeBase.Game.Systems
         protected override void OnTick()
         {
             base.OnTick();
-
-            foreach (CInput input in Entities)
-            {
-                input.UpdateInput.Execute();
-            }
         }
 
-        protected override void OnEnableComponent(CInput component)
+        protected override void OnEnableComponent(CWeapon weapon)
         {
-            base.OnEnableComponent(component);
+            base.OnEnableComponent(weapon);
 
-            component.UpdateInput
-                .Subscribe(_ => _gameFactory.CurrentCharacter.Value = component.Input.Value)
-                .AddTo(component.LifetimeDisposable);
+            weapon.Shoot
+                .Subscribe(_ =>
+                {
+                    IBullet bullet = _gameFactory.CreateBullet(weapon.SpawnBulletPoint.position);
+
+                    bullet.Damage = weapon.Damage;
+                    bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Speed, ForceMode.Impulse);
+                })
+                .AddTo(weapon.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CInput component)
+        protected override void OnDisableComponent(CWeapon component)
         {
             base.OnDisableComponent(component);
-            
-            component.Input.Value = Vector2.zero;
         }
     }
 }

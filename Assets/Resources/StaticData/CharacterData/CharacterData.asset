@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d93f79281db45989b1d7513246ef42f, type: 3}
   m_Name: CharacterData
   m_EditorClassIdentifier: 
+  Health: 20
+  Damage: 1
+  Speed: 4
   Prefab: {fileID: 879267955218250750, guid: bb0dd454804f7be4a94f189e78732829, type: 3}

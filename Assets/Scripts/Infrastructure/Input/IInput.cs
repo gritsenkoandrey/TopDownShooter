@@ -1,10 +1,9 @@
-﻿using CodeBase.Game.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Infrastructure.Input
 {
-    public interface IInput : IObject
+    public interface IInput
     {
-        public Vector2 Value { get; set; }
+        public Vector2 Value { get; }
     }
 }

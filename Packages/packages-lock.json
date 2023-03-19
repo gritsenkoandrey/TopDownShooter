@@ -98,7 +98,7 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.5",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -236,16 +236,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.visualscripting": {
-      "version": "1.7.8",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
     },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.10.0",

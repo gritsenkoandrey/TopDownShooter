@@ -20,6 +20,7 @@ namespace CodeBase.Game.StateMachine
         private Vector3 _patrolPosition;
         private float _maxDelay;
         private float _delay;
+        private float _startDelay;
         private float _minDistance;
         private float _patrolRadius;
         private float _pursuitDistance;
@@ -40,9 +41,10 @@ namespace CodeBase.Game.StateMachine
             _patrolPosition = _enemy.transform.position;
             _maxDelay = 1f;
             _delay = _maxDelay;
+            _startDelay = 3.5f;
             _minDistance = 1.5f;
             _patrolRadius = 5f;
-            _pursuitDistance = _enemy.Radar.Radius * 2f;
+            _pursuitDistance = _enemy.Radar.Radius * 4f;
             _normalSpeed = _enemy.Agent.speed;
             _pursuitSpeed = _normalSpeed * 2.5f;
             _maxAttackDelay = 2f;
@@ -63,13 +65,13 @@ namespace CodeBase.Game.StateMachine
 
         private void Idle()
         {
-            if (_delay > 0f)
+            if (_startDelay > 0f)
             {
-                _delay -= Time.deltaTime;
+                _startDelay -= Time.deltaTime;
             }
             else
             {
-                if (Distance() < _enemy.Radar.Radius)
+                if (Distance() < _enemy.Radar.Radius || _enemy.IsAggro)
                 {
                     PursuitState();
                 }
@@ -82,7 +84,7 @@ namespace CodeBase.Game.StateMachine
 
         private void Patrol()
         {
-            if (Distance() < _enemy.Radar.Radius)
+            if (Distance() < _enemy.Radar.Radius || _enemy.IsAggro)
             {
                 PursuitState();
             }
@@ -109,6 +111,8 @@ namespace CodeBase.Game.StateMachine
         {
             if (Distance() > _pursuitDistance)
             {
+                _enemy.IsAggro = false;
+                
                 PatrolState();
             }
             else
@@ -181,7 +185,7 @@ namespace CodeBase.Game.StateMachine
         {
             _enemy.Agent.ResetPath();
             _enemy.Agent.speed = _pursuitSpeed;
-            _enemy.Animator.SetFloat(Animations.RunBlend, 1f);
+            _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 1f);
             _enemy.Radar.Clear.Execute();
             _state = State.Pursuit;
         }
@@ -190,7 +194,7 @@ namespace CodeBase.Game.StateMachine
         {
             _enemy.Agent.ResetPath();
             _enemy.Agent.speed = _normalSpeed;
-            _enemy.Animator.SetFloat(Animations.RunBlend, 0f);
+            _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
             _enemy.Radar.Draw.Execute();
             _state = State.Patrol;
         }

@@ -9,9 +9,8 @@ namespace CodeBase.Game.Components
         [SerializeField] private Collider _collider;
 
         public Collider Collider => _collider;
-        public int Health { get; set; }
-
-        public ReactiveCommand<int> Hit { get; } = new();
+        public int MaxHealth { get; set; }
+        public ReactiveProperty<int> Health { get; } = new();
         
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

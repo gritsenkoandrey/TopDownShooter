@@ -19,8 +19,7 @@ namespace CodeBase.Infrastructure.Input
         private float _movementAreaRadiusSqr;
         private float _deadZoneAreaRadiusSqr;
 
-        public Vector2 Value { get; set; }
-        public GameObject Object => gameObject;
+        public Vector2 Value { get; private set; }
 
         private void Awake()
         {

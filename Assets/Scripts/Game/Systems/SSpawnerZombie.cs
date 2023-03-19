@@ -2,7 +2,6 @@
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.StaticData;
 
 namespace CodeBase.Game.Systems
 {
