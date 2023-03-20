@@ -1,20 +1,26 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Progress;
+using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.Services;
 using CodeBase.UI;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterDeath : SystemComponent<CCharacter>
+    public sealed class SCharacterKillEnemy : SystemComponent<CCharacter>
     {
+        private IProgressService _progressService;
+        private ISaveLoadService _saveLoadService;
         private IUIFactory _uiFactory;
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
 
+            _progressService = AllServices.Container.Single<IProgressService>();
+            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
             _uiFactory = AllServices.Container.Single<IUIFactory>();
         }
 
@@ -32,23 +38,16 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Health.Health
-                .SkipLatestValueOnSubscribe()
-                .ObserveOnMainThread()
-                .Subscribe(health =>
+            component.Enemies
+                .ObserveRemove()
+                .Subscribe(enemy =>
                 {
-                    if (health <= 0)
-                    {
-                        _uiFactory.CreateScreen(ScreenType.Lose);
-                        
-                        component.LifetimeDisposable.Clear();
+                    _progressService.PlayerProgress.Money.Value += enemy.Value.Stats.Money;
+                    _saveLoadService.SaveProgress();
 
-                        foreach (CEnemy enemy in component.Enemies)
-                        {
-                            enemy.Agent.ResetPath();
-                            enemy.Radar.Clear.Execute();
-                            enemy.LifetimeDisposable.Clear();
-                        }
+                    if (component.Enemies.Count == 0)
+                    {
+                        _uiFactory.CreateScreen(ScreenType.Win);
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

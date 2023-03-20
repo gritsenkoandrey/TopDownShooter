@@ -20,7 +20,7 @@ namespace CodeBase.Game.Components
         
         public void Read(PlayerProgress progress)
         {
-            Damage = progress.Stats.Speed + BaseDamage;
+            Damage = progress.Stats.Damage * BaseDamage;
         }
 
         protected override void OnEntityCreate() { }

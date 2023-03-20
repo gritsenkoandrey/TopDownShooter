@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.UI
 {
-    public sealed class ResultScreen : BaseScreen
+    public sealed class WinScreen : BaseScreen
     {
         [SerializeField] private Button _button;
 
@@ -12,17 +12,17 @@ namespace CodeBase.UI
         {
             base.OnEnable();
             
-            _button.onClick.AddListener(RestartGame);
+            _button.onClick.AddListener(NextGame);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
             
-            _button.onClick.RemoveListener(RestartGame);
+            _button.onClick.RemoveListener(NextGame);
         }
 
-        private void RestartGame()
+        private void NextGame()
         {
             GameStateMachine.Enter<LoadProgressState>();
         }

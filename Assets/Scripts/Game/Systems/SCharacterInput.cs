@@ -3,6 +3,7 @@ using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
 using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -44,6 +45,8 @@ namespace CodeBase.Game.Systems
         protected override void OnDisableComponent(CInput component)
         {
             base.OnDisableComponent(component);
+            
+            _gameFactory.CurrentCharacter.Move.Input = Vector2.zero;
         }
     }
 }

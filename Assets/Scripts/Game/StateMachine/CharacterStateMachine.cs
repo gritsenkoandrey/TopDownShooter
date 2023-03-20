@@ -23,7 +23,6 @@ namespace CodeBase.Game.StateMachine
         public void Init()
         {
             _camera = Camera.main;
-            
             _delay = _character.Weapon.AttackRecharge;
             _gravity = Physics.gravity.y * 10f;
         }

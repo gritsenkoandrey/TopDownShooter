@@ -28,7 +28,7 @@ namespace CodeBase.Game.ComponentsUi
 
         private void ButtonInteractable(PlayerProgress progress)
         {
-            _buyButton.interactable = progress.Money >= Cost;
+            _buyButton.interactable = progress.Money.Value >= Cost;
         }
 
         public void Read(PlayerProgress progress)

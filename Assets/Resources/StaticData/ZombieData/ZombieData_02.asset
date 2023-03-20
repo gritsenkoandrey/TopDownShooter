@@ -16,6 +16,7 @@ MonoBehaviour:
   Health: 50
   Damage: 5
   Stats:
+    Money: 50
     WalkSpeed: 2
     RunSpeed: 5
     AttackDelay: 1

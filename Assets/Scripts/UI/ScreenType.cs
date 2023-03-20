@@ -7,6 +7,7 @@
         
         Lobby  = 0,
         Game   = 1,
-        Result = 2,
+        Win    = 2,
+        Lose   = 4,
     }
 }

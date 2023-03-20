@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
@@ -9,7 +8,7 @@ namespace CodeBase.LifeTime
 {
     public sealed class SystemEntryPoint : IInitializable, IDisposable, ITickable
     {
-        private List<SystemBase> _systems;
+        private SystemBase[] _systems;
 
         public void Initialize()
         {
@@ -30,13 +29,15 @@ namespace CodeBase.LifeTime
 
         private void CreateSystems()
         {
-            _systems = new List<SystemBase>
+            _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
                 new SCharacterStateMachine(),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(),
                 new SCharacterDeath(),
+                new SCharacterKillEnemy(),
+                new SCharacterInput(),
                 new SSpawnerZombie(),
                 new SEnemyStateMachine(),
                 new SEnemyAnimator(),
@@ -47,40 +48,40 @@ namespace CodeBase.LifeTime
                 new SRadarDraw(),
                 new SVirtualCamera(),
                 new SSelectMesh(),
-                new SCharacterInput(),
-                
                 new SUpgradeShop(),
                 new SUpgradeButton(),
+                new SLevelGoal(),
+                new SMoneyUpdate(),
             };
         }
 
         private void EnableSystems()
         {
-            foreach (SystemBase system in _systems)
+            for (int i = 0; i < _systems.Length; i++)
             {
-                system.EnableSystem();
+                _systems[i].EnableSystem();
             }
         }
 
         private void DisableSystems()
         {
-            foreach (SystemBase system in _systems)
+            for (int i = 0; i < _systems.Length; i++)
             {
-                system.DisableSystem();
+                _systems[i].DisableSystem();
             }
         }
 
         private void UpdateSystems()
         {
-            foreach (SystemBase system in _systems)
+            for (int i = 0; i < _systems.Length; i++)
             {
-                system.Tick();
+                _systems[i].Tick();
             }
         }
 
         private void Clear()
         {
-            _systems.Clear();
+            _systems = Array.Empty<SystemBase>();
         }
     }
 }

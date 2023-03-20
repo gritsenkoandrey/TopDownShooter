@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.Progress.Data;
+using UniRx;
 
 namespace CodeBase.Infrastructure.Progress
 {
@@ -6,12 +7,12 @@ namespace CodeBase.Infrastructure.Progress
     public sealed class PlayerProgress
     {
         public Stats Stats;
-        public int Money;
+        public IntReactiveProperty Money;
 
         public PlayerProgress()
         {
             Stats = new Stats();
-            Money = 1000;
+            Money = new IntReactiveProperty(0);
         }
     }
 }

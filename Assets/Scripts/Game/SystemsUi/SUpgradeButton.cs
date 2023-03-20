@@ -45,8 +45,8 @@ namespace CodeBase.Game.SystemsUi
                 .Subscribe(_ =>
                 {
                     component.Level++;
-                    _progressService.PlayerProgress.Money -= component.Cost;
                     
+                    _progressService.PlayerProgress.Money.Value -= component.Cost;
                     _saveLoadService.SaveProgress();
                     
                     UpdateProgress();
