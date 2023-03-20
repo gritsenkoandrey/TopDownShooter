@@ -8,17 +8,11 @@ namespace CodeBase.Game.StateMachine
     {
         private readonly CCharacter _character;
         private CEnemy _target;
-        
         private Camera _camera;
-
-        private float _maxDelay;
         private float _delay;
-        private float _attackRadius;
         private float _gravity;
-        private float _speed;
         private float _velocity;
         private float _angle;
-        
         private bool _isAttack;
 
         public CharacterStateMachine(CCharacter character)
@@ -30,11 +24,8 @@ namespace CodeBase.Game.StateMachine
         {
             _camera = Camera.main;
             
-            _maxDelay = 0.5f;
-            _delay = _maxDelay;
-            _attackRadius = 10f;
+            _delay = _character.Weapon.AttackRecharge;
             _gravity = Physics.gravity.y * 10f;
-            _speed = 7.5f;
         }
 
         public void Tick()
@@ -48,9 +39,9 @@ namespace CodeBase.Game.StateMachine
 
         private void Input()
         {
-            if (_character.Input.magnitude > 0.1f)
+            if (_character.Move.Input.sqrMagnitude > 0.1f)
             {
-                _angle = Mathf.Atan2(_character.Input.x, _character.Input.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+                _angle = Mathf.Atan2(_character.Move.Input.x, _character.Move.Input.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
             }
         }
 
@@ -58,11 +49,11 @@ namespace CodeBase.Game.StateMachine
         {
             Vector3 move = Vector3.zero;
 
-            if (_character.Input.magnitude > 0.1f)
+            if (_character.Move.Input.sqrMagnitude > 0.1f)
             {
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
-                Vector3 next = _character.transform.position + move * _speed * Time.deltaTime;
+                Vector3 next = _character.transform.position + move * _character.Move.Speed * Time.deltaTime;
                         
                 Ray ray = new Ray { origin = next, direction = Vector3.down };
 
@@ -72,9 +63,9 @@ namespace CodeBase.Game.StateMachine
                 }
             }
 
-            move.y = _character.CharacterController.isGrounded ? 0f : _gravity;
+            move.y = _character.Move.CharacterController.isGrounded ? 0f : _gravity;
 
-            _character.CharacterController.Move(move * _speed * Time.deltaTime);
+            _character.Move.CharacterController.Move(move * _character.Move.Speed * Time.deltaTime);
         }
 
         private void Target()
@@ -88,7 +79,7 @@ namespace CodeBase.Game.StateMachine
             
             foreach (CEnemy enemy in _character.Enemies)
             {
-                if (Vector3.Distance(enemy.Position, _character.Position) < _attackRadius)
+                if (Vector3.Distance(enemy.Position, _character.Position) < _character.Weapon.AttackDistance)
                 {
                     _target = enemy;
                     
@@ -125,7 +116,7 @@ namespace CodeBase.Game.StateMachine
                 {
                     _character.Weapon.Shoot.Execute();
                     
-                    _delay = _maxDelay;
+                    _delay = _character.Weapon.AttackRecharge;
                 }
             }
 

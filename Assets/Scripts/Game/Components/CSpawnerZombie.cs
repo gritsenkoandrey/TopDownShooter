@@ -1,11 +1,10 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Interfaces;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CSpawnerZombie : EntityComponent<CSpawnerZombie>, IPosition
+    public sealed class CSpawnerZombie : EntityComponent<CSpawnerZombie>
     {
         [SerializeField] private ZombieType _zombieType;
 

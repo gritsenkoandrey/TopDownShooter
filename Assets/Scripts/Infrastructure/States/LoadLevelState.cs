@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.UI;
-using CodeBase.UI.Factories;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -10,18 +11,21 @@ namespace CodeBase.Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
+        
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
+        private readonly IProgressService _progressService;
 
         public LoadLevelState(GameStateMachine stateMachine, 
             SceneLoader sceneLoader, LoadingCurtain curtain, 
-            IGameFactory gameFactory, IUIFactory uiFactory)
+            IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
+            _progressService = progressService;
         }
 
         public void Enter(string sceneName)
@@ -45,6 +49,7 @@ namespace CodeBase.Infrastructure.States
         private void OnLoaded()
         {
             CreateWorld();
+            ReadProgress();
 
             _stateMachine.Enter<GameLoopState>();
         }
@@ -61,6 +66,19 @@ namespace CodeBase.Infrastructure.States
             _uiFactory.CreateScreen(ScreenType.Lobby);
             _gameFactory.CreateCharacter();
             _gameFactory.CreateLevel();
+        }
+
+        private void ReadProgress()
+        {
+            foreach (IProgressReader progress in _uiFactory.ProgressReaders)
+            {
+                progress.Read(_progressService.PlayerProgress);
+            }
+
+            foreach (IProgressReader progress in _gameFactory.ProgressReaders)
+            {
+                progress.Read(_progressService.PlayerProgress);
+            }
         }
     }
 }

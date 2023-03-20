@@ -3,6 +3,7 @@ using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -37,6 +38,18 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
+            InitializeStateMachine(component);
+        }
+
+        protected override void OnDisableComponent(CEnemy component)
+        {
+            base.OnDisableComponent(component);
+        }
+
+        private async void InitializeStateMachine(CEnemy component)
+        {
+            await UniTask.DelayFrame(1);
+            
             EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, _gameFactory.CurrentCharacter);
             
             enemyStateMachine.Init();
@@ -44,11 +57,6 @@ namespace CodeBase.Game.Systems
             component.UpdateStateMachine
                 .Subscribe(_ => enemyStateMachine.Tick())
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CEnemy component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Progress;
+using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.Services;
-using CodeBase.UI.Factories;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -17,10 +19,13 @@ namespace CodeBase.Infrastructure.States
             _states = new Dictionary<Type, IExitState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadProgressState)] = new LoadProgressState(this),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, 
+                    services.Single<IProgressService>(), 
+                    services.Single<ISaveLoadService>()),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, 
                     services.Single<IGameFactory>(), 
-                    services.Single<IUIFactory>()),
+                    services.Single<IUIFactory>(),
+                    services.Single<IProgressService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

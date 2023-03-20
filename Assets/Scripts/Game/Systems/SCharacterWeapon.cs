@@ -39,7 +39,7 @@ namespace CodeBase.Game.Systems
                     IBullet bullet = _gameFactory.CreateBullet(weapon.SpawnBulletPoint.position);
 
                     bullet.Damage = weapon.Damage;
-                    bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Speed, ForceMode.Impulse);
+                    bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Force, ForceMode.Impulse);
                 })
                 .AddTo(weapon.LifetimeDisposable);
         }

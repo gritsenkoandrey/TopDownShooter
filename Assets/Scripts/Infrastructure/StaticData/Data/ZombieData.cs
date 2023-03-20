@@ -7,12 +7,10 @@ namespace CodeBase.Infrastructure.StaticData.Data
     [CreateAssetMenu(fileName = "ZombieData", menuName = "Data/ZombieData")]
     public sealed class ZombieData : ScriptableObject
     {
-        public ZombieType ZombieType;
-        [Range(1, 20)] public int Health;
-        [Range(1, 5)] public int Damage;
-        [Range(1f, 5f)] public float WalkSpeed;
-        [Range(1, 10f)] public float RunSpeed;
-        [Range(0.1f, 2f)] public float AttackDelay;
-        public CEnemy Prefab;
+        [Space] public ZombieType ZombieType;
+        [Range(1, 100)] public int Health;
+        [Range(1, 10)] public int Damage;
+        public ZombieStats Stats;
+        [Space] public CEnemy Prefab;
     }
 }

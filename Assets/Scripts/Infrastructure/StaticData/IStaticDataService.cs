@@ -10,6 +10,7 @@ namespace CodeBase.Infrastructure.StaticData
         public void Load();
         public ZombieData ZombieData(ZombieType type);
         public ScreenData ScreenData(ScreenType type);
+        public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
         public CharacterData CharacterData();
     }
 }

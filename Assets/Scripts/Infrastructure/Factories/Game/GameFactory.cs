@@ -1,8 +1,10 @@
-﻿using CodeBase.Game.Components;
+﻿using System.Collections.Generic;
+using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.LevelData;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
@@ -13,9 +15,11 @@ namespace CodeBase.Infrastructure.Factories.Game
     {
         private readonly IAsset _asset;
         private readonly IStaticDataService _staticDataService;
-
+        
+        public List<IProgressReader> ProgressReaders { get; } = new();
+        public List<IProgressWriter> ProgressWriters { get; } = new();
         public Level CurrentLevel { get; private set; }
-        public ICharacter CurrentCharacter { get; private set; }
+        public CCharacter CurrentCharacter { get; private set; }
 
         public GameFactory(IAsset asset, IStaticDataService staticDataService)
         {
@@ -28,14 +32,21 @@ namespace CodeBase.Infrastructure.Factories.Game
             return CurrentLevel = Object.Instantiate(_asset.GameAssetData.Level);
         }
 
-        public ICharacter CreateCharacter()
+        public CCharacter CreateCharacter()
         {
             CharacterData characterData = _staticDataService.CharacterData();
             
             CurrentCharacter = Object.Instantiate(characterData.Prefab, _asset.GameAssetData.Level.CharacterSpawnPosition, Quaternion.identity);
 
-            CurrentCharacter.Health.MaxHealth = characterData.Health;
-            CurrentCharacter.Health.Health.Value = characterData.Health;
+            CurrentCharacter.Health.BaseHealth = characterData.Health;
+            CurrentCharacter.Weapon.BaseDamage = characterData.Damage;
+            CurrentCharacter.Weapon.AttackDistance = characterData.AttackDistance;
+            CurrentCharacter.Weapon.AttackRecharge = characterData.AttackRecharge;
+            CurrentCharacter.Move.BaseSpeed = characterData.Speed;
+                
+            Registered(CurrentCharacter.Health);
+            Registered(CurrentCharacter.Weapon);
+            Registered(CurrentCharacter.Move);
 
             return CurrentCharacter;
         }
@@ -54,17 +65,31 @@ namespace CodeBase.Infrastructure.Factories.Game
             zombie.Health.MaxHealth = data.Health;
             zombie.Health.Health.Value = data.Health;
             zombie.Melee.Damage = data.Damage;
+            zombie.Stats = data.Stats;
             
             CurrentCharacter.Enemies.Add(zombie);
 
             return zombie;
         }
 
+        private void Registered(IProgress progress)
+        {
+            if (progress is IProgressWriter writer)
+            {
+                ProgressWriters.Add(writer);
+            }
+
+            if (progress is IProgressReader reader)
+            {
+                ProgressReaders.Add(reader);
+            }
+        }
+
         public void CleanUp()
         {
             if (CurrentCharacter != null)
             {
-                Object.Destroy(CurrentCharacter.Object);
+                Object.Destroy(CurrentCharacter.gameObject);
             }
             
             if (CurrentLevel != null)
@@ -74,6 +99,9 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             CurrentLevel = null;
             CurrentCharacter = null;
+            
+            ProgressReaders.Clear();
+            ProgressWriters.Clear();
         }
     }
 }

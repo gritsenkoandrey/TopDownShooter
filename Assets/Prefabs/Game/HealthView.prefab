@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902ed703f58a4a17a87b788f0162b786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: {fileID: 0}
   _background: {fileID: 7998846514085865044}
   _fill: {fileID: 6551774214094314841}
   _text: {fileID: 8932888984452062705}

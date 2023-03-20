@@ -30,7 +30,7 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.SetTarget(_gameFactory.CurrentCharacter.Object.transform);
+            component.SetTarget(_gameFactory.CurrentCharacter.gameObject.transform);
         }
 
         protected override void OnDisableComponent(CVirtualCamera component)

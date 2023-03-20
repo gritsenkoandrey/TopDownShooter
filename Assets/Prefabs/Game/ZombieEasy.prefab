@@ -5713,6 +5713,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthView
       objectReference: {fileID: 0}
+    - target: {fileID: 8115566595309724973, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
+      propertyPath: _health
+      value: 
+      objectReference: {fileID: 8209875914142552308}
     - target: {fileID: 8783008320166627618, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
       propertyPath: m_RootOrder
       value: 2

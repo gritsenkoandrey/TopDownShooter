@@ -1,8 +1,8 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Services;
 using CodeBase.UI;
-using CodeBase.UI.Factories;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -39,6 +39,11 @@ namespace CodeBase.Game.Systems
                     if (health <= 0)
                     {
                         _uiFactory.CreateScreen(ScreenType.Result);
+
+                        foreach (CEnemy enemy in component.Enemies)
+                        {
+                            enemy.LifetimeDisposable.Clear();
+                        }
                         
                         component.LifetimeDisposable.Clear();
                     }

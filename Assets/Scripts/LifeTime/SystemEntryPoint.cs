@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
+using CodeBase.Game.SystemsUi;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
@@ -42,12 +43,14 @@ namespace CodeBase.LifeTime
                 new SEnemyCollision(),
                 new SEnemyMeleeAttack(),
                 new SEnemyDeath(),
-                new SEnemyHealthViewUpdate(),
+                new SHealthViewUpdate(),
                 new SRadarDraw(),
                 new SVirtualCamera(),
                 new SSelectMesh(),
-                new SCharacterHealthViewUpdate(),
                 new SCharacterInput(),
+                
+                new SUpgradeShop(),
+                new SUpgradeButton(),
             };
         }
 

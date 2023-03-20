@@ -8,13 +8,12 @@ namespace CodeBase.Game.Components
     {
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private float _scale = 0.02f;
-        [SerializeField] private float _radius = 5f;
         [SerializeField] private float _width = 0.2f;
 
         public LineRenderer LineRenderer => _lineRenderer;
         public float Scale => _scale;
         public float Width => _width;
-        public float Radius => _radius;
+        public float Radius { get; set; }
         
         public ReactiveCommand Draw { get; } = new();
         public ReactiveCommand Clear { get; } = new();

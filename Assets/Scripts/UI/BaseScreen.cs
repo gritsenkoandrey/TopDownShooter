@@ -1,5 +1,5 @@
-﻿using CodeBase.Infrastructure.States;
-using CodeBase.UI.Factories;
+﻿using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.States;
 using UnityEngine;
 
 namespace CodeBase.UI

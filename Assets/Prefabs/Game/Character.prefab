@@ -111,9 +111,10 @@ GameObject:
   - component: {fileID: 879267955218250751}
   - component: {fileID: 879267955218250749}
   - component: {fileID: 8337342951033286356}
+  - component: {fileID: 3370878225350002132}
   - component: {fileID: 6043445981113736475}
   - component: {fileID: 2612034460069448307}
-  - component: {fileID: 3370878225350002132}
+  - component: {fileID: 5152373867274854575}
   - component: {fileID: 879267955218250750}
   m_Layer: 6
   m_Name: Character
@@ -177,6 +178,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3370878225350002132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879267955218250739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7ede4c720b45af9a0dd5a283bf5523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8337342951033286356}
 --- !u!114 &6043445981113736475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,9 +217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnBulletPoint: {fileID: 4362219188250157871}
-  _speed: 30
-  _damage: 1
---- !u!114 &3370878225350002132
+  _force: 30
+--- !u!114 &5152373867274854575
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,10 +227,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 879267955218250739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7ede4c720b45af9a0dd5a283bf5523, type: 3}
+  m_Script: {fileID: 11500000, guid: e0309af5b22f4b3684b028da528df2e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 8337342951033286356}
+  _characterController: {fileID: 879267955218250749}
 --- !u!114 &879267955218250750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,10 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805062db86ca496c91c75d1350de628d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 879267955218250749}
   _animator: {fileID: 3370878225350002132}
   _health: {fileID: 6043445981113736475}
   _weapon: {fileID: 2612034460069448307}
+  _move: {fileID: 5152373867274854575}
   _healthView: {fileID: 576931306408275141}
 --- !u!1 &4457226780056431821
 GameObject:
@@ -1238,6 +1251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthView
       objectReference: {fileID: 0}
+    - target: {fileID: 8115566595309724973, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
+      propertyPath: _health
+      value: 
+      objectReference: {fileID: 6043445981113736475}
     - target: {fileID: 8783008320166627618, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
       propertyPath: m_RootOrder
       value: 1

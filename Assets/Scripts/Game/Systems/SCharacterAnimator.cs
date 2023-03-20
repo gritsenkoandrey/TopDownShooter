@@ -24,7 +24,7 @@ namespace CodeBase.Game.Systems
 
             foreach (CCharacter character in Entities)
             {
-                character.Animator.UpdateAnimator.Execute(character.CharacterController.velocity.sqrMagnitude);
+                character.Animator.UpdateAnimator.Execute(character.Move.CharacterController.velocity.sqrMagnitude);
             }
         }
 

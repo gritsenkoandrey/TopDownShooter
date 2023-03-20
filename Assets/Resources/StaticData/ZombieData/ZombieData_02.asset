@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: ZombieData_02
   m_EditorClassIdentifier: 
   ZombieType: 1
-  Health: 10
-  Damage: 3
-  WalkSpeed: 2
-  RunSpeed: 5
-  AttackDelay: 1
+  Health: 50
+  Damage: 5
+  Stats:
+    WalkSpeed: 2
+    RunSpeed: 5
+    AttackDelay: 1
+    AliveDelay: 3.5
+    StayDelay: 1
+    AggroRadius: 5
+    PursuitRadius: 12.5
+    PatrolRadius: 7
+    MinDistanceToTarget: 2
   Prefab: {fileID: 3522537617868912392, guid: 48c5591f64bfe8341b05269663b11831, type: 3}

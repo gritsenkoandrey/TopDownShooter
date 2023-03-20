@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +10,7 @@ namespace CodeBase.Game.StateMachine
     public sealed class EnemyStateMachine
     {
         private readonly CEnemy _enemy;
-        private readonly ICharacter _character;
+        private readonly CCharacter _character;
 
         private Dictionary<State, Action> _actions;
         
@@ -29,7 +28,7 @@ namespace CodeBase.Game.StateMachine
         private float _attackDelay;
         private float _maxAttackDelay;
 
-        public EnemyStateMachine(CEnemy enemy, ICharacter character)
+        public EnemyStateMachine(CEnemy enemy, CCharacter character)
         {
             _enemy = enemy;
             _character = character;
@@ -39,16 +38,17 @@ namespace CodeBase.Game.StateMachine
         {
             _state = State.Idle;
             _patrolPosition = _enemy.transform.position;
-            _maxDelay = 1f;
+            _maxDelay = _enemy.Stats.StayDelay;
             _delay = _maxDelay;
-            _startDelay = 3.5f;
-            _minDistance = 1.5f;
-            _patrolRadius = 5f;
-            _pursuitDistance = _enemy.Radar.Radius * 4f;
-            _normalSpeed = _enemy.Agent.speed;
-            _pursuitSpeed = _normalSpeed * 2.5f;
-            _maxAttackDelay = 2f;
+            _startDelay = _enemy.Stats.AliveDelay;
+            _minDistance = _enemy.Stats.MinDistanceToTarget;
+            _patrolRadius = _enemy.Stats.PatrolRadius;
+            _pursuitDistance = _enemy.Stats.PursuitRadius;
+            _normalSpeed = _enemy.Stats.WalkSpeed;
+            _pursuitSpeed = _enemy.Stats.RunSpeed;
+            _maxAttackDelay = _enemy.Stats.AttackDelay;
             _attackDelay = _maxAttackDelay;
+            _enemy.Radar.Radius = _enemy.Stats.AggroRadius;
 
             _actions = new Dictionary<State, Action>
             {

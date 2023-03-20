@@ -1,7 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
+using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -31,8 +33,15 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            CharacterStateMachine stateMachine = new CharacterStateMachine(component);
+            InitializeStateMachine(component);
+        }
+
+        private async void InitializeStateMachine(CCharacter component)
+        {
+            await UniTask.DelayFrame(1);
             
+            CharacterStateMachine stateMachine = new CharacterStateMachine(component);
+
             stateMachine.Init();
 
             component.UpdateStateMachine

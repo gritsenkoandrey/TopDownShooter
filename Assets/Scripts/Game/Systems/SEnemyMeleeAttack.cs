@@ -32,12 +32,12 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Melee.OnAttack
+            component.Melee.OnCheckDamage
                 .Subscribe(_ =>
                 {
                     float distance = Vector3.Distance(component.transform.position, _gameFactory.CurrentCharacter.Position);
 
-                    if (distance > 1.5f || component.Health.Health.Value <= 0)
+                    if (distance > component.Stats.MinDistanceToTarget || component.Health.Health.Value <= 0)
                     {
                         return;
                     }

@@ -12,9 +12,11 @@ namespace CodeBase.Infrastructure.StaticData
         private const string ZombieDataPath = "StaticData/ZombieData";
         private const string ScreenDataPath = "StaticData/ScreenData";
         private const string CharacterDataPath = "StaticData/CharacterData/CharacterData";
+        private const string UpgradeButtonDataPath = "StaticData/UpgradeButtonData";
 
         private Dictionary<ZombieType, ZombieData> _monsters;
         private Dictionary<ScreenType, ScreenData> _screens;
+        private Dictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
         private CharacterData _character;
 
         public void Load()
@@ -27,6 +29,10 @@ namespace CodeBase.Infrastructure.StaticData
                 .LoadAll<ScreenData>(ScreenDataPath)
                 .ToDictionary(data => data.ScreenType, data => data);
 
+            _upgradeButtons = Resources
+                .LoadAll<UpgradeButtonData>(UpgradeButtonDataPath)
+                .ToDictionary(data => data.UpgradeButtonType, data => data);
+
             _character = Resources.Load<CharacterData>(CharacterDataPath);
         }
 
@@ -35,6 +41,9 @@ namespace CodeBase.Infrastructure.StaticData
         
         public ScreenData ScreenData(ScreenType type) => 
             _screens.TryGetValue(type, out ScreenData staticData) ? staticData : null;
+
+        public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type) =>
+            _upgradeButtons.TryGetValue(type, out UpgradeButtonData staticData) ? staticData : null;
 
         public CharacterData CharacterData() => _character;
     }
