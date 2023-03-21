@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Enums;
+﻿using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
@@ -12,5 +13,8 @@ namespace CodeBase.Infrastructure.StaticData
         public ScreenData ScreenData(ScreenType type);
         public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
         public CharacterData CharacterData();
+        public CLevel LevelData();
+        public CBullet BulletData();
+        public StaticCanvas StaticCanvasData();
     }
 }

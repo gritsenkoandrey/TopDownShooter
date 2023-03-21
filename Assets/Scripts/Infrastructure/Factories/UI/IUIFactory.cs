@@ -12,7 +12,7 @@ namespace CodeBase.Infrastructure.Factories.UI
     {
         public List<IProgressReader> ProgressReaders { get; }
         public List<IProgressWriter> ProgressWriters { get; }
-        public GameObject CreateCanvas();
+        public StaticCanvas CreateCanvas();
         public BaseScreen CreateScreen(ScreenType type);
         public CUpgradeButton CreateUpgradeButton(UpgradeButtonType type, Transform parent);
         public void CleanUp();

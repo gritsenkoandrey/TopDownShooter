@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Interfaces;
-using CodeBase.Game.LevelData;
-using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -13,30 +10,29 @@ namespace CodeBase.Infrastructure.Factories.Game
 {
     public sealed class GameFactory : IGameFactory
     {
-        private readonly IAsset _asset;
         private readonly IStaticDataService _staticDataService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
-        public Level CurrentLevel { get; private set; }
+        public CLevel CurrentLevel { get; private set; }
         public CCharacter CurrentCharacter { get; private set; }
+        
 
-        public GameFactory(IAsset asset, IStaticDataService staticDataService)
+        public GameFactory(IStaticDataService staticDataService)
         {
-            _asset = asset;
             _staticDataService = staticDataService;
         }
         
-        public Level CreateLevel()
+        public CLevel CreateLevel()
         {
-            return CurrentLevel = Object.Instantiate(_asset.GameAssetData.Level);
+            return CurrentLevel = Object.Instantiate(_staticDataService.LevelData());
         }
 
         public CCharacter CreateCharacter()
         {
             CharacterData characterData = _staticDataService.CharacterData();
             
-            CurrentCharacter = Object.Instantiate(characterData.Prefab, _asset.GameAssetData.Level.CharacterSpawnPosition, Quaternion.identity);
+            CurrentCharacter = Object.Instantiate(characterData.Prefab, _staticDataService.LevelData().CharacterSpawnPosition, Quaternion.identity);
 
             CurrentCharacter.Health.BaseHealth = characterData.Health;
             CurrentCharacter.Weapon.BaseDamage = characterData.Damage;
@@ -51,9 +47,9 @@ namespace CodeBase.Infrastructure.Factories.Game
             return CurrentCharacter;
         }
 
-        public IBullet CreateBullet(Vector3 position)
+        public CBullet CreateBullet(Vector3 position)
         {
-            return Object.Instantiate(_asset.GameAssetData.Bullet, position, Quaternion.identity);
+            return Object.Instantiate(_staticDataService.BulletData(), position, Quaternion.identity);
         }
 
         public CEnemy CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)

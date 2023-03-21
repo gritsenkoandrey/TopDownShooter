@@ -47,18 +47,12 @@ namespace CodeBase.Infrastructure.States
         private void RegisterService()
         {
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-            _services.RegisterSingle<IAsset>(
-                new AssetProvider());
-            _services.RegisterSingle<IStaticDataService>(
-                new StaticDataService());
-            _services.RegisterSingle<IProgressService>(
-                new ProgressService());
-            _services.RegisterSingle<IGameFactory>(
-                new GameFactory(_services.Single<IAsset>(), _services.Single<IStaticDataService>()));
-            _services.RegisterSingle<IUIFactory>(
-                new UIFactory(_services.Single<IAsset>(), _stateMachine, _services.Single<IStaticDataService>()));
-            _services.RegisterSingle<ISaveLoadService>(
-                new SaveLoadService(_services.Single<IProgressService>(),_services.Single<IUIFactory>(),_services.Single<IGameFactory>()));
+            _services.RegisterSingle<IAsset>(new AssetProvider());
+            _services.RegisterSingle<IStaticDataService>(new StaticDataService(_services.Single<IAsset>()));
+            _services.RegisterSingle<IProgressService>(new ProgressService());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IStaticDataService>()));
+            _services.RegisterSingle<IUIFactory>(new UIFactory(_stateMachine, _services.Single<IStaticDataService>()));
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IProgressService>(),_services.Single<IUIFactory>(),_services.Single<IGameFactory>()));
         }
 
         private void LoadResources()

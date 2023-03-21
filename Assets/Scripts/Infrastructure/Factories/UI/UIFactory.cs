@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
-using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
@@ -13,25 +12,23 @@ namespace CodeBase.Infrastructure.Factories.UI
 {
     public sealed class UIFactory : IUIFactory
     {
-        private readonly IAsset _asset;
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IStaticDataService _staticDataService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         private BaseScreen CurrentScreen { get; set; }
-        private GameObject CurrentCanvas { get; set; }
+        private StaticCanvas CurrentCanvas { get; set; }
 
-        public UIFactory(IAsset asset, IGameStateMachine gameStateMachine, IStaticDataService staticDataService)
+        public UIFactory(IGameStateMachine gameStateMachine, IStaticDataService staticDataService)
         {
-            _asset = asset;
             _gameStateMachine = gameStateMachine;
             _staticDataService = staticDataService;
         }
 
-        public GameObject CreateCanvas()
+        public StaticCanvas CreateCanvas()
         {
-            return CurrentCanvas = Object.Instantiate(_asset.UiAssetData.Canvas);
+            return CurrentCanvas = Object.Instantiate(_staticDataService.StaticCanvasData());
         }
 
         public BaseScreen CreateScreen(ScreenType type)

@@ -40,10 +40,9 @@ namespace CodeBase.Game.Systems
                     {
                         component.Agent.ResetPath();
                         component.Radar.Clear.Execute();
-
-                        _gameFactory.CurrentCharacter.Enemies.Remove(component);
-                        
                         component.LifetimeDisposable.Clear();
+                        
+                        _gameFactory.CurrentCharacter.Enemies.Remove(component);
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
