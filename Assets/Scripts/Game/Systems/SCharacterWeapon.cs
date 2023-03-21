@@ -2,7 +2,6 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Services;
 using UniRx;
 using UnityEngine;
 
@@ -10,13 +9,16 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterWeapon : SystemComponent<CWeapon>
     {
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
+
+        public SCharacterWeapon(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-            
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()

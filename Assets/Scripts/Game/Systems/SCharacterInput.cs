@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Services;
 using UniRx;
 using UnityEngine;
 
@@ -9,13 +8,16 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterInput : SystemComponent<CInput>
     {
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
+
+        public SCharacterInput(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()

@@ -3,7 +3,6 @@ using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
 using Cysharp.Threading.Tasks;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {

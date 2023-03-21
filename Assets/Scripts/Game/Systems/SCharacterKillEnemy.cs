@@ -3,7 +3,6 @@ using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
-using CodeBase.Infrastructure.Services;
 using CodeBase.UI.Screens;
 using UniRx;
 
@@ -11,17 +10,20 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterKillEnemy : SystemComponent<CCharacter>
     {
-        private IProgressService _progressService;
-        private ISaveLoadService _saveLoadService;
-        private IUIFactory _uiFactory;
+        private readonly IProgressService _progressService;
+        private readonly ISaveLoadService _saveLoadService;
+        private readonly IUIFactory _uiFactory;
+
+        public SCharacterKillEnemy(IProgressService progressService, ISaveLoadService saveLoadService, IUIFactory uiFactory)
+        {
+            _progressService = progressService;
+            _saveLoadService = saveLoadService;
+            _uiFactory = uiFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _progressService = AllServices.Container.Single<IProgressService>();
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-            _uiFactory = AllServices.Container.Single<IUIFactory>();
         }
 
         protected override void OnDisableSystem()

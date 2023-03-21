@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.Services;
 using CodeBase.UI.Screens;
 using UniRx;
 
@@ -9,13 +8,16 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterDeath : SystemComponent<CCharacter>
     {
-        private IUIFactory _uiFactory;
+        private readonly IUIFactory _uiFactory;
+
+        public SCharacterDeath(IUIFactory uiFactory)
+        {
+            _uiFactory = uiFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _uiFactory = AllServices.Container.Single<IUIFactory>();
         }
 
         protected override void OnDisableSystem()

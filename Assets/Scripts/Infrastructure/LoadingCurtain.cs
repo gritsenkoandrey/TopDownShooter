@@ -11,8 +11,6 @@ namespace CodeBase.Infrastructure
         [SerializeField] private TextMeshProUGUI _loadingText;
         [SerializeField] private TextMeshProUGUI _dotsText;
 
-        public Transform Root => _canvasGroup.transform;
-
         public void Show()
         {
             gameObject.SetActive(true);

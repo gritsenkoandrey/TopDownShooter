@@ -1,19 +1,21 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Services;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SVirtualCamera : SystemComponent<CVirtualCamera>
     {
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
+
+        public SVirtualCamera(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-            
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
