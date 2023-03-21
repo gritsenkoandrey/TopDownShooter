@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI
+namespace CodeBase.UI.Screens
 {
     public sealed class LobbyScreen : BaseScreen
     {

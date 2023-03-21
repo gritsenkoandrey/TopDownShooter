@@ -13,14 +13,12 @@ namespace CodeBase.Game.Components
         [SerializeField] private CRadar _radar;
         [SerializeField] private CHealth _health;
         [SerializeField] private CMelee _melee;
-        [SerializeField] private CHealthView _healthView;
 
         public NavMeshAgent Agent => _agent;
         public CAnimator Animator => _animator;
         public CRadar Radar => _radar;
         public CHealth Health => _health;
         public CMelee Melee => _melee;
-        public CHealthView HealthView => _healthView;
         public ZombieStats Stats { get; set; }
         public bool IsAggro { get; set; }
         public Vector3 Position => transform.position;

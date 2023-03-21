@@ -1,7 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.UI;
+using CodeBase.UI.Screens;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States

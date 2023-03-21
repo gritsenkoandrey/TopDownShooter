@@ -4,7 +4,7 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.Services;
-using CodeBase.UI;
+using CodeBase.UI.Screens;
 using UniRx;
 
 namespace CodeBase.Game.Systems

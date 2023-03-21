@@ -3,7 +3,7 @@ using CodeBase.Infrastructure.States;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CodeBase.UI
+namespace CodeBase.UI.Screens
 {
     public sealed class LoseScreen : BaseScreen
     {

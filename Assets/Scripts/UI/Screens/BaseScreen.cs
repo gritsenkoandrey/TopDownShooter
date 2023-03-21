@@ -2,7 +2,7 @@
 using CodeBase.Infrastructure.States;
 using UnityEngine;
 
-namespace CodeBase.UI
+namespace CodeBase.UI.Screens
 {
     public abstract class BaseScreen : MonoBehaviour
     {

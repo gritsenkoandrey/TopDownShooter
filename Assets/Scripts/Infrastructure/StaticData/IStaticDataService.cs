@@ -3,6 +3,7 @@ using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
+using CodeBase.UI.Screens;
 
 namespace CodeBase.Infrastructure.StaticData
 {

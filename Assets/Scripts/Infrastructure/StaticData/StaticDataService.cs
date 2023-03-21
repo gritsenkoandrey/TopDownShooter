@@ -5,6 +5,7 @@ using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
+using CodeBase.UI.Screens;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData

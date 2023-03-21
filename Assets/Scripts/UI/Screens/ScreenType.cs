@@ -1,4 +1,4 @@
-﻿namespace CodeBase.UI
+﻿namespace CodeBase.UI.Screens
 {
     [System.Serializable]
     public enum ScreenType : byte

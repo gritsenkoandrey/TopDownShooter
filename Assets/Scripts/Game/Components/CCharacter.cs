@@ -10,12 +10,10 @@ namespace CodeBase.Game.Components
         [SerializeField] private CHealth _health;
         [SerializeField] private CWeapon _weapon;
         [SerializeField] private CMove _move;
-        [SerializeField] private CHealthView _healthView;
         
         public CAnimator Animator => _animator;
         public CHealth Health => _health;
         public CWeapon Weapon => _weapon;
-        public CHealthView HealthView => _healthView;
         public CMove Move => _move;
         public Vector3 Position => transform.position;
 

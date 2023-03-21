@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
+using CodeBase.UI.Screens;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.UI
