@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
-using CodeBase.Infrastructure.Factories.Game;
 using Cysharp.Threading.Tasks;
 using UniRx;
 
@@ -9,13 +8,6 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyStateMachine : SystemComponent<CEnemy>
     {
-        private readonly IGameFactory _gameFactory;
-
-        public SEnemyStateMachine(IGameFactory gameFactory)
-        {
-            _gameFactory = gameFactory;
-        }
-        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -52,7 +44,7 @@ namespace CodeBase.Game.Systems
         {
             await UniTask.DelayFrame(1);
             
-            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component, _gameFactory.CurrentCharacter);
+            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component);
             
             enemyStateMachine.Init();
 

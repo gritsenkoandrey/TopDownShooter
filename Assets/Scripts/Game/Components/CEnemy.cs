@@ -19,9 +19,12 @@ namespace CodeBase.Game.Components
         public CRadar Radar => _radar;
         public CHealth Health => _health;
         public CMelee Melee => _melee;
+        public CCharacter Character { get; private set; }
         public ZombieStats Stats { get; set; }
         public bool IsAggro { get; set; }
         public Vector3 Position => transform.position;
+        public void Construct(CCharacter character) => Character = character;
+
         public ReactiveCommand UpdateStateMachine { get; } = new();
         
         protected override void OnEntityCreate() { }

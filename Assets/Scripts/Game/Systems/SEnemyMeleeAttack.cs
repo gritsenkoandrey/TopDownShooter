@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Infrastructure.Factories.Game;
 using UniRx;
 using UnityEngine;
 
@@ -8,13 +7,6 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyMeleeAttack : SystemComponent<CEnemy>
     {
-        private readonly IGameFactory _gameFactory;
-
-        public SEnemyMeleeAttack(IGameFactory gameFactory)
-        {
-            _gameFactory = gameFactory;
-        }
-        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -37,14 +29,14 @@ namespace CodeBase.Game.Systems
             component.Melee.OnCheckDamage
                 .Subscribe(_ =>
                 {
-                    float distance = Vector3.Distance(component.transform.position, _gameFactory.CurrentCharacter.Position);
+                    float distance = Vector3.Distance(component.transform.position, component.Character.Position);
 
                     if (distance > component.Stats.MinDistanceToTarget || component.Health.Health.Value <= 0)
                     {
                         return;
                     }
 
-                    _gameFactory.CurrentCharacter.Health.Health.Value -= component.Melee.Damage;
+                    component.Character.Health.Health.Value -= component.Melee.Damage;
                 })
                 .AddTo(component.LifetimeDisposable);
         }

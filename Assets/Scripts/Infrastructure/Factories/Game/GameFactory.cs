@@ -51,6 +51,8 @@ namespace CodeBase.Infrastructure.Factories.Game
             ZombieData data = _staticDataService.ZombieData(zombieType);
             
             CEnemy zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
+            
+            zombie.Construct(CurrentCharacter);
 
             zombie.Health.MaxHealth = data.Health;
             zombie.Health.Health.Value = data.Health;

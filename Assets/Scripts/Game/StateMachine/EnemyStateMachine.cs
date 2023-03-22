@@ -10,7 +10,6 @@ namespace CodeBase.Game.StateMachine
     public sealed class EnemyStateMachine
     {
         private readonly CEnemy _enemy;
-        private readonly CCharacter _character;
 
         private Dictionary<State, Action> _actions;
         
@@ -28,10 +27,9 @@ namespace CodeBase.Game.StateMachine
         private float _attackDelay;
         private float _maxAttackDelay;
 
-        public EnemyStateMachine(CEnemy enemy, CCharacter character)
+        public EnemyStateMachine(CEnemy enemy)
         {
             _enemy = enemy;
-            _character = character;
         }
 
         public void Init()
@@ -130,7 +128,7 @@ namespace CodeBase.Game.StateMachine
                 }
                 else
                 {
-                    _enemy.Agent.SetDestination(_character.Position);
+                    _enemy.Agent.SetDestination(_enemy.Character.Position);
                 }
 
                 _attackDelay -= Time.deltaTime;
@@ -149,7 +147,7 @@ namespace CodeBase.Game.StateMachine
 
         private void LockAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(_character.Position - _enemy.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(_enemy.Character.Position - _enemy.Position);
 
             _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, lookRotation, 0.5f);
         }
@@ -179,7 +177,7 @@ namespace CodeBase.Game.StateMachine
             return new Vector3(x, 0f, z);
         }
 
-        private float Distance() => Vector3.Distance(_enemy.Position, _character.Position);
+        private float Distance() => Vector3.Distance(_enemy.Position, _enemy.Character.Position);
 
         private void PursuitState()
         {
