@@ -6,7 +6,6 @@ using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
 using CodeBase.UI.Screens;
-using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData
 {
@@ -21,6 +20,7 @@ namespace CodeBase.Infrastructure.StaticData
         private const string BulletPath = "Data/Bulets/Bullet";
         private const string LevelPath = "Data/Levels/Level";
         private const string StaticCanvasPath = "Data/Canvas/StaticCanvas";
+        private const string FxDataPath = "Data/FX/FxData";
 
         private Dictionary<ZombieType, ZombieData> _monsters;
         private Dictionary<ScreenType, ScreenData> _screens;
@@ -29,6 +29,7 @@ namespace CodeBase.Infrastructure.StaticData
         private CBullet _bullet;
         private CLevel _level;
         private StaticCanvas _staticCanvas;
+        private FxData _fxData;
 
         public StaticDataService(IAsset asset)
         {
@@ -37,15 +38,15 @@ namespace CodeBase.Infrastructure.StaticData
 
         public void Load()
         {
-            _monsters = Resources
+            _monsters = _asset
                 .LoadAll<ZombieData>(ZombieDataPath)
                 .ToDictionary(data => data.ZombieType, data => data);
 
-            _screens = Resources
+            _screens = _asset
                 .LoadAll<ScreenData>(ScreenDataPath)
                 .ToDictionary(data => data.ScreenType, data => data);
 
-            _upgradeButtons = Resources
+            _upgradeButtons = _asset
                 .LoadAll<UpgradeButtonData>(UpgradeButtonDataPath)
                 .ToDictionary(data => data.UpgradeButtonType, data => data);
 
@@ -53,6 +54,7 @@ namespace CodeBase.Infrastructure.StaticData
             _bullet = _asset.Load<CBullet>(BulletPath);
             _level = _asset.Load<CLevel>(LevelPath);
             _staticCanvas = _asset.Load<StaticCanvas>(StaticCanvasPath);
+            _fxData = _asset.Load<FxData>(FxDataPath);
         }
 
         public ZombieData ZombieData(ZombieType type) => 
@@ -65,6 +67,7 @@ namespace CodeBase.Infrastructure.StaticData
             _upgradeButtons.TryGetValue(type, out UpgradeButtonData staticData) ? staticData : null;
 
         public CharacterData CharacterData() => _character;
+        public FxData FxData() => _fxData;
         public CLevel LevelData() => _level;
         public CBullet BulletData() => _bullet;
         public StaticCanvas StaticCanvasData() => _staticCanvas;

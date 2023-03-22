@@ -16,7 +16,6 @@ namespace CodeBase.Infrastructure.Factories.Game
         public List<IProgressWriter> ProgressWriters { get; } = new();
         public CLevel CurrentLevel { get; private set; }
         public CCharacter CurrentCharacter { get; private set; }
-        
 
         public GameFactory(IStaticDataService staticDataService)
         {
@@ -47,11 +46,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             return CurrentCharacter;
         }
 
-        public CBullet CreateBullet(Vector3 position)
-        {
-            return Object.Instantiate(_staticDataService.BulletData(), position, Quaternion.identity);
-        }
-
         public CEnemy CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
         {
             ZombieData data = _staticDataService.ZombieData(zombieType);
@@ -66,6 +60,21 @@ namespace CodeBase.Infrastructure.Factories.Game
             CurrentCharacter.Enemies.Add(zombie);
 
             return zombie;
+        }
+
+        public CBullet CreateBullet(Vector3 position)
+        {
+            return Object.Instantiate(_staticDataService.BulletData(), position, Quaternion.identity);
+        }
+
+        public Transform CreateHitFx(Vector3 position)
+        {
+            return Object.Instantiate(_staticDataService.FxData().HitFx, position, Quaternion.identity);
+        }
+
+        public Transform CreateDeathFx(Vector3 position)
+        {
+            return Object.Instantiate(_staticDataService.FxData().DeatFx, position, Quaternion.identity);
         }
 
         private void Registered(IProgress progress)

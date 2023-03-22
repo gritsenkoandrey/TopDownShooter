@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +16,7 @@ namespace CodeBase.UI.Screens
             
             _button.onClick.AddListener(RestartGame);
 
-            StartCoroutine(ShowLoseScreen());
+            ShowLoseScreen();
         }
 
         protected override void OnDisable()
@@ -31,23 +31,20 @@ namespace CodeBase.UI.Screens
             GameStateMachine.Enter<LoadProgressState>();
         }
 
-        private IEnumerator ShowLoseScreen()
+        private void ShowLoseScreen()
         {
-            float scale = 0f;
-            
             _button.gameObject.SetActive(false);
-            _splat.localScale = Vector3.one * scale;
+            _splat.localScale = Vector3.zero;
+            _splat
+                .DOScale(Vector3.one * 2f, 1f)
+                .SetEase(Ease.OutBack)
+                .OnComplete(PunchButton);
+        }
 
-            while (scale < 2f)
-            {
-                yield return null;
-
-                scale += Time.deltaTime * 2.5f;
-
-                _splat.localScale = Vector3.one * scale;
-            }
-            
+        private void PunchButton()
+        {
             _button.gameObject.SetActive(true);
+            _button.transform.DOPunchScale(Vector3.one * 0.15f, 0.25f, 5);
         }
     }
 }

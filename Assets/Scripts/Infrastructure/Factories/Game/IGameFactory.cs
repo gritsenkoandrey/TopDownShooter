@@ -17,6 +17,8 @@ namespace CodeBase.Infrastructure.Factories.Game
         public CCharacter CreateCharacter();
         public CEnemy CreateZombie(ZombieType zombieType, Vector3 position, Transform parent);
         public CBullet CreateBullet(Vector3 position);
+        public Transform CreateHitFx(Vector3 position);
+        public Transform CreateDeathFx(Vector3 position);
         public void CleanUp();
     }
 }

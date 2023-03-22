@@ -1,7 +1,7 @@
-﻿using System;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using UniRx;
+using DG.Tweening;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -26,16 +26,14 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            Observable
-                .Interval(TimeSpan.FromSeconds(5f))
-                .First()
-                .Subscribe(_ => UnityEngine.Object.Destroy(component.Object))
-                .AddTo(component.LifetimeDisposable);
+            component.Tween = DOVirtual.DelayedCall(2.5f, () => Object.Destroy(component.Object));
         }
 
         protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
+            
+            component.Tween?.Kill();
         }
     }
 }

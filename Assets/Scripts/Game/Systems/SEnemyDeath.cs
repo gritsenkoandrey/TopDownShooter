@@ -1,7 +1,10 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Utils;
+using DG.Tweening;
 using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -43,8 +46,12 @@ namespace CodeBase.Game.Systems
                         component.Agent.ResetPath();
                         component.Radar.Clear.Execute();
                         component.LifetimeDisposable.Clear();
-                        
+
                         _gameFactory.CurrentCharacter.Enemies.Remove(component);
+                        
+                        Transform prefab = _gameFactory.CreateDeathFx(component.transform.position.AddY(1f));
+                        
+                        DOVirtual.DelayedCall(2f, () => Object.Destroy(prefab.gameObject));
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

@@ -59,7 +59,7 @@ namespace CodeBase.LifeTime
                 new SSpawnerZombie(_gameFactory),
                 new SEnemyStateMachine(_gameFactory),
                 new SEnemyAnimator(),
-                new SEnemyCollision(),
+                new SEnemyCollision(_gameFactory),
                 new SEnemyMeleeAttack(_gameFactory),
                 new SEnemyDeath(_gameFactory),
                 new SHealthViewUpdate(),

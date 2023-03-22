@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -11,6 +12,7 @@ namespace CodeBase.Game.Components
         public Rigidbody Rigidbody => _rigidbody;
         public int Damage { get; set; }
         public GameObject Object => gameObject;
+        public Tween Tween { get; set; }
 
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

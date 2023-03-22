@@ -1,7 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Utils;
+using DG.Tweening;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -10,6 +12,13 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SEnemyCollision : SystemComponent<CEnemy>
     {
+        private readonly IGameFactory _gameFactory;
+
+        public SEnemyCollision(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -39,6 +48,10 @@ namespace CodeBase.Game.Systems
                         component.Health.Health.Value -= bullet.Damage;
 
                         component.IsAggro = true;
+
+                        Transform prefab = _gameFactory.CreateHitFx(bullet.Object.transform.position);
+
+                        DOVirtual.DelayedCall(1f, () => Object.Destroy(prefab.gameObject));
                         
                         Object.Destroy(bullet.Object);
                     }
