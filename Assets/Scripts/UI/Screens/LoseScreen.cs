@@ -1,5 +1,7 @@
 ﻿using CodeBase.Infrastructure.States;
+using CodeBase.Utils;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,10 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.onClick.AddListener(RestartGame);
+            _button
+                .OnClickAsObservable()
+                .Subscribe(RestartGame)
+                .AddTo(this);
 
             ShowLoseScreen();
         }
@@ -22,12 +27,12 @@ namespace CodeBase.UI.Screens
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            _button.onClick.RemoveListener(RestartGame);
         }
 
-        private void RestartGame()
+        private async void RestartGame(Unit _)
         {
+            await _button.transform.PunchTransform().AsyncWaitForCompletion();
+            
             GameStateMachine.Enter<LoadProgressState>();
         }
 
@@ -38,13 +43,13 @@ namespace CodeBase.UI.Screens
             _splat
                 .DOScale(Vector3.one * 2f, 1f)
                 .SetEase(Ease.OutBack)
-                .OnComplete(PunchButton);
+                .OnComplete(ShowButton);
         }
 
-        private void PunchButton()
+        private void ShowButton()
         {
             _button.gameObject.SetActive(true);
-            _button.transform.DOPunchScale(Vector3.one * 0.15f, 0.25f, 5);
+            _button.transform.PunchTransform();
         }
     }
 }

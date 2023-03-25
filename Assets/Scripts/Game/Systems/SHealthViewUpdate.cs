@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Utils;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
@@ -45,7 +46,8 @@ namespace CodeBase.Game.Systems
                         float x =  Mathematics.Remap(0, component.Health.MaxHealth, 0f, 1f, health);
 
                         component.Text.text = $"{health}/{component.Health.MaxHealth}";
-                        component.Fill.localScale = new Vector3(x, 1f, 1f);
+                        component.Tween?.Kill();
+                        component.Tween = component.Fill.DOScale(new Vector3(x, 1f, 1f), 0.1f).SetEase(Ease.Linear);
                     }
                     else
                     {

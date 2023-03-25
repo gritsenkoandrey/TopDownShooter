@@ -4,26 +4,29 @@ using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
-using CodeBase.Infrastructure.Services;
+using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SUpgradeButton : SystemComponent<CUpgradeButton>
     {
-        private ISaveLoadService _saveLoadService;
-        private IProgressService _progressService;
-        private IUIFactory _uiFactory;
-        private IGameFactory _gameFactory;
+        private readonly ISaveLoadService _saveLoadService;
+        private readonly IProgressService _progressService;
+        private readonly IUIFactory _uiFactory;
+        private readonly IGameFactory _gameFactory;
+
+        public SUpgradeButton(ISaveLoadService saveLoadService, IProgressService progressService, IUIFactory uiFactory, IGameFactory gameFactory)
+        {
+            _saveLoadService = saveLoadService;
+            _progressService = progressService;
+            _uiFactory = uiFactory;
+            _gameFactory = gameFactory;
+        }
 
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-            _progressService = AllServices.Container.Single<IProgressService>();
-            _uiFactory = AllServices.Container.Single<IUIFactory>();
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -45,6 +48,7 @@ namespace CodeBase.Game.SystemsUi
                 .Subscribe(_ =>
                 {
                     component.Level++;
+                    component.BuyButton.transform.PunchTransform();
                     
                     _progressService.PlayerProgress.Money.Value -= component.Cost;
                     _saveLoadService.SaveProgress();

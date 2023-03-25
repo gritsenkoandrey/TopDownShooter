@@ -14,27 +14,40 @@ namespace CodeBase.Infrastructure.Input
         [SerializeField] private float _deadZoneRadius = 0f;
         [SerializeField] private bool _isStatick = false;
 
+        private const float Offset = 4f;
+        
         private Vector3 _startPosition;
         private float _loverMovementAreaRadius;
         private float _movementAreaRadiusSqr;
         private float _deadZoneAreaRadiusSqr;
+        private float _opacity;
+        private bool _joystickHeld;
 
-        public Vector2 Value { get; private set; }
+        public Vector2 Vector { get; private set; }
 
         private void Awake()
         {
-            Value = Vector2.zero;
-            
-            _canvasGroup.alpha = 0f;
+            Vector = Vector2.zero;
+
+            _opacity = 1f;
             _startPosition = _handle.position;
             _loverMovementAreaRadius = 1f / _movementAreaRadius;
             _movementAreaRadiusSqr = Mathf.Pow(_movementAreaRadius, 2f);
             _deadZoneAreaRadiusSqr = Mathf.Pow(_deadZoneRadius, 2f);
         }
 
+        public void OnUpdate()
+        {
+            _opacity = _joystickHeld ? 
+                Mathf.Min(1f, _opacity + Time.deltaTime * Offset) : 
+                Mathf.Max(0f, _opacity - Time.deltaTime * Offset);
+
+            _canvasGroup.alpha = _opacity;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            _canvasGroup.alpha = 1f;
+            _joystickHeld = true;
 
             if (_isStatick)
             {
@@ -56,7 +69,7 @@ namespace CodeBase.Infrastructure.Input
 
             if (direction.sqrMagnitude < _deadZoneAreaRadiusSqr)
             {
-                Value = Vector2.zero;
+                Vector = Vector2.zero;
             }
             else
             {
@@ -65,7 +78,7 @@ namespace CodeBase.Infrastructure.Input
                     direction = direction.normalized * _movementAreaRadius;
                 }
 
-                Value = direction * _loverMovementAreaRadius * _valueMultiplier;
+                Vector = direction * _loverMovementAreaRadius * _valueMultiplier;
             }
             
             _thumb.localPosition = direction;
@@ -73,11 +86,11 @@ namespace CodeBase.Infrastructure.Input
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            _canvasGroup.alpha = 0f;
+            _joystickHeld = false;
             _handle.position = _startPosition;
             _thumb.localPosition = Vector3.zero;
 
-            Value = Vector2.zero;
+            Vector = Vector2.zero;
         }
     }
 }

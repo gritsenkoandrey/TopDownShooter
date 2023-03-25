@@ -101,7 +101,7 @@ namespace CodeBase.Game.StateMachine
             }
             else
             {
-                float smoothAngle = Mathf.SmoothDampAngle(_character.transform.eulerAngles.y, _angle, ref _velocity, 0.05f);
+                float smoothAngle = Mathf.SmoothDampAngle(_character.transform.eulerAngles.y, _angle, ref _velocity, 0.1f);
 
                 _character.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
             }

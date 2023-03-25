@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
@@ -25,7 +26,8 @@ namespace CodeBase.Infrastructure.States
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, 
                     services.Single<IGameFactory>(), 
                     services.Single<IUIFactory>(),
-                    services.Single<IProgressService>()),
+                    services.Single<IProgressService>(),
+                    services.Single<IAsset>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

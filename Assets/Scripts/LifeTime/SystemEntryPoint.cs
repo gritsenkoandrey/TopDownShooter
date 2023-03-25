@@ -66,10 +66,10 @@ namespace CodeBase.LifeTime
                 new SRadarDraw(),
                 new SVirtualCamera(_gameFactory),
                 new SSelectMesh(),
-                new SUpgradeShop(),
-                new SUpgradeButton(),
-                new SLevelGoal(),
-                new SMoneyUpdate(),
+                new SUpgradeShop(_uiFactory),
+                new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),
+                new SLevelGoal(_gameFactory),
+                new SMoneyUpdate(_progressService),
                 new SBulletLifeTime(),
             };
         }

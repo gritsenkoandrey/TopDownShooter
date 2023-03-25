@@ -40,7 +40,11 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             component.UpdateInput
-                .Subscribe(_ => _gameFactory.CurrentCharacter.Move.Input = component.Input.Value)
+                .Subscribe(_ =>
+                {
+                    _gameFactory.CurrentCharacter.Move.Input = component.Input.Vector;
+                    component.Input.OnUpdate();
+                })
                 .AddTo(component.LifetimeDisposable);
         }
 

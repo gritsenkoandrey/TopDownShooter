@@ -1,4 +1,7 @@
 ﻿using CodeBase.Infrastructure.States;
+using CodeBase.Utils;
+using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,18 +15,18 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.onClick.AddListener(NextGame);
+            _button.OnClickAsObservable().Subscribe(NextGame).AddTo(this);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            _button.onClick.RemoveListener(NextGame);
         }
 
-        private void NextGame()
+        private async void NextGame(Unit _)
         {
+            await _button.transform.PunchTransform().AsyncWaitForCompletion();
+            
             GameStateMachine.Enter<LoadProgressState>();
         }
     }

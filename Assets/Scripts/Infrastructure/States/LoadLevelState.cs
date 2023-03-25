@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Factories.Game;
+﻿using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
@@ -15,10 +16,11 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
         private readonly IProgressService _progressService;
+        private readonly IAsset _asset;
 
         public LoadLevelState(GameStateMachine stateMachine, 
             SceneLoader sceneLoader, LoadingCurtain curtain, 
-            IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService)
+            IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, IAsset asset)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -26,6 +28,7 @@ namespace CodeBase.Infrastructure.States
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
             _progressService = progressService;
+            _asset = asset;
         }
 
         public void Enter(string sceneName)
@@ -58,6 +61,7 @@ namespace CodeBase.Infrastructure.States
         {
             _uiFactory.CleanUp();
             _gameFactory.CleanUp();
+            _asset.Unload();
         }
 
         private void CreateWorld()

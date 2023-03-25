@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CodeBase.UI.Screens
@@ -10,18 +11,19 @@ namespace CodeBase.UI.Screens
         protected override void OnEnable()
         {
             base.OnEnable();
-            
-            _button.onClick.AddListener(StartGame);
+
+            _button
+                .OnClickAsObservable()
+                .Subscribe(StartGame)
+                .AddTo(this);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            _button.onClick.RemoveListener(StartGame);
         }
 
-        private void StartGame()
+        private void StartGame(Unit _)
         {
             UIFactory.CreateScreen(ScreenType.Game);
         }

@@ -1,20 +1,22 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.Services;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SMoneyUpdate : SystemComponent<CMoneyUpdate>
     {
-        private IProgressService _progressService;
+        private readonly IProgressService _progressService;
+
+        public SMoneyUpdate(IProgressService progressService)
+        {
+            _progressService = progressService;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _progressService = AllServices.Container.Single<IProgressService>();
         }
 
         protected override void OnDisableSystem()

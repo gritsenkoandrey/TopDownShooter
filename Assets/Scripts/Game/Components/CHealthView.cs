@@ -1,4 +1,5 @@
 ﻿using CodeBase.ECSCore;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace CodeBase.Game.Components
         public GameObject Background => _background;
         public Transform Fill => _fill;
         public TextMeshPro Text => _text;
+        public Tween Tween { get; set; }
         
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

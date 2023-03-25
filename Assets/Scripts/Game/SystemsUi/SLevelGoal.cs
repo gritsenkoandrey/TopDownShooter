@@ -1,20 +1,23 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Services;
+using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelGoal : SystemComponent<CLevelGoal>
     {
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
+
+        public SLevelGoal(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
         
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
         }
 
         protected override void OnDisableSystem()
@@ -33,7 +36,7 @@ namespace CodeBase.Game.SystemsUi
 
             int max = _gameFactory.CurrentCharacter.Enemies.Count;
             
-            component.TextLevelGoal.text = $"{max}/{max}";
+            component.TextLevelGoal.text = max.ToString();
 
             _gameFactory.CurrentCharacter.Enemies
                 .ObserveCountChanged()
@@ -41,7 +44,8 @@ namespace CodeBase.Game.SystemsUi
                 {
                     if (count > 0)
                     {
-                        component.TextLevelGoal.text = $"{count}/{max}";
+                        component.Background.transform.PunchTransform();
+                        component.TextLevelGoal.text = count.ToString();
                     }
                     else
                     {
