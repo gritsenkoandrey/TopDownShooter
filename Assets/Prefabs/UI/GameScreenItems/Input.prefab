@@ -201,7 +201,7 @@ MonoBehaviour:
   _canvasGroup: {fileID: 2615129396211314522}
   _valueMultiplier: 1
   _movementAreaRadius: 75
-  _deadZoneRadius: 0
+  _deadZoneRadius: 0.1
   _isStatick: 1
 --- !u!1 &2615129396434036025
 GameObject:

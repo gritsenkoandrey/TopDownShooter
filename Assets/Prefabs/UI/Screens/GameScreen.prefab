@@ -82,6 +82,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7060742050469915397}
     m_Modifications:
+    - target: {fileID: 2615129396255760631, guid: 44c41d73255897142a97001d36f6e565, type: 3}
+      propertyPath: _movementAreaRadius
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2735372842547894915, guid: 44c41d73255897142a97001d36f6e565, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

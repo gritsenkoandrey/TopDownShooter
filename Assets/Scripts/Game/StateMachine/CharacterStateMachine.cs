@@ -38,7 +38,7 @@ namespace CodeBase.Game.StateMachine
 
         private void Input()
         {
-            if (_character.Move.Input.sqrMagnitude > 0.1f)
+            if (_character.Move.Input.sqrMagnitude > 0.5f)
             {
                 _angle = Mathf.Atan2(_character.Move.Input.x, _character.Move.Input.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
             }
@@ -48,7 +48,7 @@ namespace CodeBase.Game.StateMachine
         {
             Vector3 move = Vector3.zero;
 
-            if (_character.Move.Input.sqrMagnitude > 0.1f)
+            if (_character.Move.Input.sqrMagnitude > 0.5f)
             {
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
@@ -101,7 +101,7 @@ namespace CodeBase.Game.StateMachine
             }
             else
             {
-                float smoothAngle = Mathf.SmoothDampAngle(_character.transform.eulerAngles.y, _angle, ref _velocity, 0.1f);
+                float smoothAngle = Mathf.SmoothDampAngle(_character.transform.eulerAngles.y, _angle, ref _velocity, 0.05f);
 
                 _character.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
             }
