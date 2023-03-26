@@ -16,10 +16,7 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button
-                .OnClickAsObservable()
-                .Subscribe(RestartGame)
-                .AddTo(this);
+            _button.OnClickAsObservable().Subscribe(RestartGame).AddTo(this);
 
             ShowLoseScreen();
         }
@@ -41,7 +38,7 @@ namespace CodeBase.UI.Screens
             _button.gameObject.SetActive(false);
             _splat.localScale = Vector3.zero;
             _splat
-                .DOScale(Vector3.one * 2f, 1f)
+                .DOScale(Vector3.one * 1.5f, 1f)
                 .SetEase(Ease.OutBack)
                 .OnComplete(ShowButton);
         }

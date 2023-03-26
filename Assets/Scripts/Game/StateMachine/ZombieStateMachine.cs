@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace CodeBase.Game.StateMachine
 {
-    public sealed class EnemyStateMachine
+    public sealed class ZombieStateMachine
     {
-        private readonly CEnemy _enemy;
+        private readonly CZombie _enemy;
 
-        private Dictionary<State, Action> _actions;
-        
-        private State _state;
+        private Dictionary<ZombieState, Action> _actions;
         
         private Vector3 _patrolPosition;
         private float _maxDelay;
@@ -27,14 +26,14 @@ namespace CodeBase.Game.StateMachine
         private float _attackDelay;
         private float _maxAttackDelay;
 
-        public EnemyStateMachine(CEnemy enemy)
+        public ZombieStateMachine(CZombie enemy)
         {
             _enemy = enemy;
         }
 
         public void Init()
         {
-            _state = State.Idle;
+            _enemy.State = ZombieState.Idle;
             _patrolPosition = _enemy.transform.position;
             _maxDelay = _enemy.Stats.StayDelay;
             _delay = _maxDelay;
@@ -48,17 +47,23 @@ namespace CodeBase.Game.StateMachine
             _attackDelay = _maxAttackDelay;
             _enemy.Radar.Radius = _enemy.Stats.AggroRadius;
 
-            _actions = new Dictionary<State, Action>
+            _actions = new Dictionary<ZombieState, Action>
             {
-                { State.Idle, Idle },
-                { State.Patrol, Patrol },
-                { State.Pursuit, Pursuit },
+                { ZombieState.None, None },
+                { ZombieState.Idle, Idle },
+                { ZombieState.Patrol, Patrol },
+                { ZombieState.Pursuit, Pursuit },
             };
         }
 
         public void Tick()
         {
-            _actions[_state].Invoke();
+            _actions[_enemy.State].Invoke();
+        }
+
+        private void None()
+        {
+            
         }
 
         private void Idle()
@@ -185,7 +190,7 @@ namespace CodeBase.Game.StateMachine
             _enemy.Agent.speed = _pursuitSpeed;
             _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 1f);
             _enemy.Radar.Clear.Execute();
-            _state = State.Pursuit;
+            _enemy.State = ZombieState.Pursuit;
         }
 
         private void PatrolState()
@@ -194,7 +199,7 @@ namespace CodeBase.Game.StateMachine
             _enemy.Agent.speed = _normalSpeed;
             _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
             _enemy.Radar.Draw.Execute();
-            _state = State.Patrol;
+            _enemy.State = ZombieState.Patrol;
         }
     }
 }

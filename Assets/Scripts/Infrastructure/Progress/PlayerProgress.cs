@@ -8,11 +8,13 @@ namespace CodeBase.Infrastructure.Progress
     {
         public Stats Stats;
         public IntReactiveProperty Money;
+        public int Level;
 
         public PlayerProgress()
         {
             Stats = new Stats();
             Money = new IntReactiveProperty(0);
+            Level = 1;
         }
     }
 }

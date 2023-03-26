@@ -17,7 +17,7 @@ namespace CodeBase.Game.Components
         public CMove Move => _move;
         public Vector3 Position => transform.position;
 
-        public ReactiveCollection<CEnemy> Enemies { get; } = new();
+        public ReactiveCollection<CZombie> Enemies { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
 
         protected override void OnEntityCreate() { }

@@ -46,6 +46,16 @@ namespace CodeBase.Game.Systems
                     component.Animator.Animator.SetFloat(Animations.Velocity, velocity, 0.05f, Time.deltaTime);
                 })
                 .AddTo(component.LifetimeDisposable);
+            
+            component.Health.Health
+                .SkipLatestValueOnSubscribe()
+                .Where(health => health <= 0)
+                .Subscribe(_ =>
+                {
+                    component.Animator.Animator.SetFloat(Animations.DeathBlend, Random.Range(0, 5));
+                    component.Animator.Animator.SetTrigger(Animations.Death);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CCharacter component)

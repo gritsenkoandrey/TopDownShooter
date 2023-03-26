@@ -50,7 +50,7 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle<IAsset>(new AssetProvider());
             _services.RegisterSingle<IStaticDataService>(new StaticDataService(_services.Single<IAsset>()));
             _services.RegisterSingle<IProgressService>(new ProgressService());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IStaticDataService>()));
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IStaticDataService>(), _services.Single<IProgressService>()));
             _services.RegisterSingle<IUIFactory>(new UIFactory(_stateMachine, _services.Single<IStaticDataService>()));
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IProgressService>(),_services.Single<IUIFactory>(),_services.Single<IGameFactory>()));
         }

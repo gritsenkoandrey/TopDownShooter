@@ -37,7 +37,7 @@ namespace CodeBase.Game.Systems
 
         private async void InitializeStateMachine(CCharacter component)
         {
-            await UniTask.DelayFrame(1);
+            await UniTask.NextFrame();
             
             CharacterStateMachine stateMachine = new CharacterStateMachine(component);
 

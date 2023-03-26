@@ -15,7 +15,7 @@ namespace CodeBase.Infrastructure.Factories.Game
         public List<IProgressWriter> ProgressWriters { get; }
         public CLevel CreateLevel();
         public CCharacter CreateCharacter();
-        public CEnemy CreateZombie(ZombieType zombieType, Vector3 position, Transform parent);
+        public CZombie CreateZombie(ZombieType zombieType, Vector3 position, Transform parent);
         public CBullet CreateBullet(Vector3 position);
         public Transform CreateHitFx(Vector3 position);
         public Transform CreateDeathFx(Vector3 position);

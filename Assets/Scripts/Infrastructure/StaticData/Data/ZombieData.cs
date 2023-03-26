@@ -8,9 +8,9 @@ namespace CodeBase.Infrastructure.StaticData.Data
     public sealed class ZombieData : ScriptableObject
     {
         [Space] public ZombieType ZombieType;
-        [Range(1, 100)] public int Health;
-        [Range(1, 10)] public int Damage;
+        [Range(1, 250)] public int Health;
+        [Range(1, 25)] public int Damage;
         public ZombieStats Stats;
-        [Space] public CEnemy Prefab;
+        [Space] public CZombie Prefab;
     }
 }

@@ -4,11 +4,11 @@ using CodeBase.Infrastructure.Factories.Game;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SSpawnerZombie : SystemComponent<CSpawnerZombie>
+    public sealed class SZombieSpawner : SystemComponent<CSpawnerZombie>
     {
         private readonly IGameFactory _gameFactory;
 
-        public SSpawnerZombie(IGameFactory gameFactory)
+        public SZombieSpawner(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
         }

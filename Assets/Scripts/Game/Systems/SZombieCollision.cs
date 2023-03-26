@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyCollision : SystemComponent<CEnemy>
+    public sealed class SZombieCollision : SystemComponent<CZombie>
     {
         private readonly IGameFactory _gameFactory;
 
-        public SEnemyCollision(IGameFactory gameFactory)
+        public SZombieCollision(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
         }
@@ -34,7 +34,7 @@ namespace CodeBase.Game.Systems
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CEnemy component)
+        protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
 
@@ -59,7 +59,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CEnemy component)
+        protected override void OnDisableComponent(CZombie component)
         {
             base.OnDisableComponent(component);
         }

@@ -19,7 +19,7 @@ namespace CodeBase.LifeTime
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
-        
+
         public SystemEntryPoint()
         {
             _uiFactory = AllServices.Container.Single<IUIFactory>();
@@ -56,12 +56,12 @@ namespace CodeBase.LifeTime
                 new SCharacterDeath(_uiFactory),
                 new SCharacterKillEnemy(_progressService, _saveLoadService, _uiFactory),
                 new SCharacterInput(_gameFactory),
-                new SSpawnerZombie(_gameFactory),
-                new SEnemyStateMachine(),
-                new SEnemyAnimator(),
-                new SEnemyCollision(_gameFactory),
-                new SEnemyMeleeAttack(),
-                new SEnemyDeath(_gameFactory),
+                new SZombieSpawner(_gameFactory),
+                new SZombieStateMachine(),
+                new SZombieAnimator(),
+                new SZombieCollision(_gameFactory),
+                new SZombieMeleeAttack(),
+                new SZombieDeath(_gameFactory),
                 new SHealthViewUpdate(),
                 new SRadarDraw(),
                 new SVirtualCamera(_gameFactory),
@@ -71,6 +71,7 @@ namespace CodeBase.LifeTime
                 new SLevelGoal(_gameFactory),
                 new SMoneyUpdate(_progressService),
                 new SBulletLifeTime(),
+                new SCurrentLevel(_progressService),
             };
         }
 

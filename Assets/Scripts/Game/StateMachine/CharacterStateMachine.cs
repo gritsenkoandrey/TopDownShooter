@@ -7,7 +7,7 @@ namespace CodeBase.Game.StateMachine
     public sealed class CharacterStateMachine
     {
         private readonly CCharacter _character;
-        private CEnemy _target;
+        private CZombie _target;
         private Camera _camera;
         private float _delay;
         private float _gravity;
@@ -76,7 +76,7 @@ namespace CodeBase.Game.StateMachine
                 return;
             }
             
-            foreach (CEnemy enemy in _character.Enemies)
+            foreach (CZombie enemy in _character.Enemies)
             {
                 if (Vector3.Distance(enemy.Position, _character.Position) < _character.Weapon.AttackDistance)
                 {

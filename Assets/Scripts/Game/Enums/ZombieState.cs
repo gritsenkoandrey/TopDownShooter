@@ -1,7 +1,7 @@
-﻿namespace CodeBase.Game.StateMachine
+﻿namespace CodeBase.Game.Enums
 {
     [System.Serializable]
-    public enum State : byte
+    public enum ZombieState : byte
     {
         None    = byte.MaxValue,
         Idle    = 0,

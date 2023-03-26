@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyAnimator : SystemComponent<CEnemy>
+    public sealed class SZombieAnimator : SystemComponent<CZombie>
     {
         protected override void OnEnableSystem()
         {
@@ -22,13 +22,13 @@ namespace CodeBase.Game.Systems
         {
             base.OnTick();
 
-            foreach (CEnemy enemy in Entities)
+            foreach (CZombie enemy in Entities)
             {
                 enemy.Animator.UpdateAnimator.Execute(enemy.Agent.velocity.sqrMagnitude);
             }
         }
 
-        protected override void OnEnableComponent(CEnemy component)
+        protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
 
@@ -64,7 +64,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CEnemy component)
+        protected override void OnDisableComponent(CZombie component)
         {
             base.OnDisableComponent(component);
         }

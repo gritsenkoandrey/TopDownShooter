@@ -5,7 +5,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     [System.Serializable]
     public struct ZombieStats
     {
-        [Range(1, 100)] public int Money;
+        [Range(1, 500)] public int Money;
         [Range(1f, 5f)] public float WalkSpeed;
         [Range(1, 10f)] public float RunSpeed;
         [Range(0.1f, 2f)] public float AttackDelay;

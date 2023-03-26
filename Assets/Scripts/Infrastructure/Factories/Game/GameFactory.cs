@@ -11,27 +11,33 @@ namespace CodeBase.Infrastructure.Factories.Game
     public sealed class GameFactory : IGameFactory
     {
         private readonly IStaticDataService _staticDataService;
+        private readonly IProgressService _progressService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         public CLevel CurrentLevel { get; private set; }
         public CCharacter CurrentCharacter { get; private set; }
 
-        public GameFactory(IStaticDataService staticDataService)
+        public GameFactory(IStaticDataService staticDataService, IProgressService progressService)
         {
             _staticDataService = staticDataService;
+            _progressService = progressService;
         }
         
         public CLevel CreateLevel()
         {
-            return CurrentLevel = Object.Instantiate(_staticDataService.LevelData());
+            LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+            
+            return CurrentLevel = Object.Instantiate(_staticDataService.LevelData(levelType).Prefab);
         }
 
         public CCharacter CreateCharacter()
         {
             CharacterData characterData = _staticDataService.CharacterData();
             
-            CurrentCharacter = Object.Instantiate(characterData.Prefab, _staticDataService.LevelData().CharacterSpawnPosition, Quaternion.identity);
+            LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+
+            CurrentCharacter = Object.Instantiate(characterData.Prefab, _staticDataService.LevelData(levelType).Prefab.CharacterSpawnPosition, Quaternion.identity);
 
             CurrentCharacter.Health.BaseHealth = characterData.Health;
             CurrentCharacter.Weapon.BaseDamage = characterData.Damage;
@@ -46,11 +52,11 @@ namespace CodeBase.Infrastructure.Factories.Game
             return CurrentCharacter;
         }
 
-        public CEnemy CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
+        public CZombie CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
         {
             ZombieData data = _staticDataService.ZombieData(zombieType);
             
-            CEnemy zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
+            CZombie zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
             
             zombie.Construct(CurrentCharacter);
 

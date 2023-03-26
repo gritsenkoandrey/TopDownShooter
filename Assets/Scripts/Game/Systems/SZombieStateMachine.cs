@@ -6,7 +6,7 @@ using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyStateMachine : SystemComponent<CEnemy>
+    public sealed class SZombieStateMachine : SystemComponent<CZombie>
     {
         protected override void OnEnableSystem()
         {
@@ -22,29 +22,29 @@ namespace CodeBase.Game.Systems
         {
             base.OnTick();
             
-            foreach (CEnemy entity in Entities)
+            foreach (CZombie entity in Entities)
             {
                 entity.UpdateStateMachine.Execute();
             }
         }
 
-        protected override void OnEnableComponent(CEnemy component)
+        protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
 
             InitializeStateMachine(component);
         }
 
-        protected override void OnDisableComponent(CEnemy component)
+        protected override void OnDisableComponent(CZombie component)
         {
             base.OnDisableComponent(component);
         }
 
-        private async void InitializeStateMachine(CEnemy component)
+        private async void InitializeStateMachine(CZombie component)
         {
-            await UniTask.DelayFrame(1);
+            await UniTask.NextFrame();
             
-            EnemyStateMachine enemyStateMachine = new EnemyStateMachine(component);
+            ZombieStateMachine enemyStateMachine = new ZombieStateMachine(component);
             
             enemyStateMachine.Init();
 

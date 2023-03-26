@@ -7,7 +7,6 @@ namespace CodeBase.Infrastructure
     public sealed class LoadingCurtain : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _canvasGroup;
-
         [SerializeField] private TextMeshProUGUI _loadingText;
         [SerializeField] private TextMeshProUGUI _dotsText;
 
@@ -52,6 +51,8 @@ namespace CodeBase.Infrastructure
             _canvasGroup.alpha = 0f;
             _loadingText.text = "";
             _dotsText.text = "";
+            
+            gameObject.SetActive(false);
         }
     }
 }

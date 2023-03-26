@@ -1,4 +1,6 @@
-﻿using UniRx;
+﻿using CodeBase.Utils;
+using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +9,13 @@ namespace CodeBase.UI.Screens
     public sealed class LobbyScreen : BaseScreen
     {
         [SerializeField] private Button _button;
+        [SerializeField] private Transform _text;
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
-            _button
-                .OnClickAsObservable()
-                .Subscribe(StartGame)
-                .AddTo(this);
+            _button.OnClickAsObservable().Subscribe(StartGame).AddTo(this);
         }
 
         protected override void OnDisable()
@@ -23,8 +23,10 @@ namespace CodeBase.UI.Screens
             base.OnDisable();
         }
 
-        private void StartGame(Unit _)
+        private async void StartGame(Unit _)
         {
+            await _text.PunchTransform().AsyncWaitForCompletion();
+            
             UIFactory.CreateScreen(ScreenType.Game);
         }
     }

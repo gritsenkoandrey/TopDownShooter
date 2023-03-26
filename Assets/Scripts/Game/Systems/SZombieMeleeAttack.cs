@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SEnemyMeleeAttack : SystemComponent<CEnemy>
+    public sealed class SZombieMeleeAttack : SystemComponent<CZombie>
     {
         protected override void OnEnableSystem()
         {
@@ -22,7 +22,7 @@ namespace CodeBase.Game.Systems
             base.OnTick();
         }
 
-        protected override void OnEnableComponent(CEnemy component)
+        protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
 
@@ -41,7 +41,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CEnemy component)
+        protected override void OnDisableComponent(CZombie component)
         {
             base.OnDisableComponent(component);
         }

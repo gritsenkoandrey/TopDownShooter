@@ -50,6 +50,8 @@ namespace CodeBase.Game.Systems
                     if (component.Enemies.Count == 0)
                     {
                         _uiFactory.CreateScreen(ScreenType.Win);
+                        _progressService.PlayerProgress.Level++;
+                        _saveLoadService.SaveProgress();
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

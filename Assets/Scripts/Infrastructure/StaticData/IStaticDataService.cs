@@ -13,9 +13,9 @@ namespace CodeBase.Infrastructure.StaticData
         public ZombieData ZombieData(ZombieType type);
         public ScreenData ScreenData(ScreenType type);
         public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
+        public LevelData LevelData(LevelType type);
         public CharacterData CharacterData();
         public FxData FxData();
-        public CLevel LevelData();
         public CBullet BulletData();
         public StaticCanvas StaticCanvasData();
     }

@@ -1,5 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
+using CodeBase.Game.StateMachine;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.UI.Screens;
 using UniRx;
@@ -45,11 +47,11 @@ namespace CodeBase.Game.Systems
                         
                         component.LifetimeDisposable.Clear();
 
-                        foreach (CEnemy enemy in component.Enemies)
+                        foreach (CZombie enemy in component.Enemies)
                         {
                             enemy.Agent.ResetPath();
                             enemy.Radar.Clear.Execute();
-                            enemy.LifetimeDisposable.Clear();
+                            enemy.State = ZombieState.None;
                         }
                     }
                 })

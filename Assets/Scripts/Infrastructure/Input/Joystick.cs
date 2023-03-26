@@ -29,7 +29,8 @@ namespace CodeBase.Infrastructure.Input
         {
             Vector = Vector2.zero;
 
-            _opacity = 1f;
+            _opacity = 0f;
+            _canvasGroup.alpha = _opacity;
             _startPosition = _handle.position;
             _loverMovementAreaRadius = 1f / _movementAreaRadius;
             _movementAreaRadiusSqr = Mathf.Pow(_movementAreaRadius, 2f);
