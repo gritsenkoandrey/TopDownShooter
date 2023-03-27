@@ -13,7 +13,7 @@ namespace CodeBase.Game.Components
         public float BaseSpeed { get; set; }
         public float Speed { get; private set; }
         
-        public void Read(PlayerProgress progress)
+        void IProgressReader.Read(PlayerProgress progress)
         {
             Speed = progress.Stats.Speed + BaseSpeed;
         }

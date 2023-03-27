@@ -31,7 +31,7 @@ namespace CodeBase.Game.ComponentsUi
             _buyButton.interactable = progress.Money.Value >= Cost;
         }
 
-        public void Read(PlayerProgress progress)
+        void IProgressReader.Read(PlayerProgress progress)
         {
             switch (UpgradeButtonType)
             {
@@ -50,7 +50,7 @@ namespace CodeBase.Game.ComponentsUi
             ButtonInteractable(progress);
         }
 
-        public void Write(PlayerProgress progress)
+        void IProgressWriter.Write(PlayerProgress progress)
         {
             switch (UpgradeButtonType)
             {

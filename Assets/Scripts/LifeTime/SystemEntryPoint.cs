@@ -28,19 +28,19 @@ namespace CodeBase.LifeTime
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         }
 
-        public void Initialize()
+        void IInitializable.Initialize()
         {
             CreateSystems();
             EnableSystems();
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             DisableSystems();
             Clear();
         }
 
-        public void Tick()
+        void ITickable.Tick()
         {
             UpdateSystems();
         }

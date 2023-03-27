@@ -18,7 +18,7 @@ namespace CodeBase.Game.Components
         public int Damage { get; private set; }
         public ReactiveCommand Shoot { get; } = new();
         
-        public void Read(PlayerProgress progress)
+        void IProgressReader.Read(PlayerProgress progress)
         {
             Damage = progress.Stats.Damage * BaseDamage;
         }

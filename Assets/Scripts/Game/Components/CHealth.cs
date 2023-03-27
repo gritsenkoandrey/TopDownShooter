@@ -14,7 +14,7 @@ namespace CodeBase.Game.Components
         public int BaseHealth { get; set; }
         public ReactiveProperty<int> Health { get; } = new();
 
-        public void Read(PlayerProgress progress)
+        void IProgressReader.Read(PlayerProgress progress)
         {
             MaxHealth = BaseHealth * progress.Stats.Health;
             Health.SetValueAndForceNotify(MaxHealth);

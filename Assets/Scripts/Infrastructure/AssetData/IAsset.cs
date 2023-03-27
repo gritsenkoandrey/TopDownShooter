@@ -1,6 +1,5 @@
 ﻿using CodeBase.Infrastructure.Services;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace CodeBase.Infrastructure.AssetData
 {
