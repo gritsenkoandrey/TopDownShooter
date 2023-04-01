@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure
+namespace CodeBase.Infrastructure.Curtain
 {
     public sealed class LoadingCurtain : MonoBehaviour
     {

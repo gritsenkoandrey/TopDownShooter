@@ -28,11 +28,6 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CUpgradeShop component)
         {
             base.OnEnableComponent(component);

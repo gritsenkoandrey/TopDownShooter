@@ -1,6 +1,6 @@
 ﻿namespace CodeBase.Infrastructure.States
 {
-    public interface IState : IExitState
+    public interface IEnterState : IExitState
     {
         public void Enter();
     }

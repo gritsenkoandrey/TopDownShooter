@@ -9,13 +9,9 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SHealthViewUpdate : SystemComponent<CHealthView>
     {
-        private Camera _camera;
-        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-            
-            _camera = Camera.main;
         }
 
         protected override void OnDisableSystem()
@@ -23,19 +19,21 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
+        protected override void OnUpdate()
         {
-            base.OnTick();
+            base.OnUpdate();
 
             foreach (CHealthView component in Entities)
             {
-                LookAtCamera(component);
+                component.UpdateRotation.Execute();
             }
         }
 
         protected override void OnEnableComponent(CHealthView component)
         {
             base.OnEnableComponent(component);
+
+            Camera camera = Camera.main;
 
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
@@ -55,6 +53,13 @@ namespace CodeBase.Game.Systems
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
+
+            component.UpdateRotation
+                .Subscribe(_ =>
+                {
+                    LookAtCamera(component, camera);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CHealthView component)
@@ -62,9 +67,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableComponent(component);
         }
         
-        private void LookAtCamera(CHealthView component)
+        private void LookAtCamera(CHealthView component, Camera camera)
         {
-            Quaternion rotation = _camera.transform.rotation;
+            Quaternion rotation = camera.transform.rotation;
 
             component.Background.transform.LookAt(component.Background.transform.position + rotation * Vector3.back, rotation * Vector3.up);
         }

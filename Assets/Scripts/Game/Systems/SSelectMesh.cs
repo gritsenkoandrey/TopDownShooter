@@ -16,11 +16,6 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CSelectMesh component)
         {
             base.OnEnableComponent(component);

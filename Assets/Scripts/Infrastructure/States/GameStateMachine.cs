@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.AssetData;
-using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.SaveLoad;
-using CodeBase.Infrastructure.Services;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -13,33 +8,27 @@ namespace CodeBase.Infrastructure.States
     {
         private readonly Dictionary<Type, IExitState> _states;
         
-        private IExitState _activeState;
-
-        public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, AllServices services)
+        private IExitState _activeState;   
+        
+        public GameStateMachine(IObjectResolver container)
         {
             _states = new Dictionary<Type, IExitState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadProgressState)] = new LoadProgressState(this, 
-                    services.Single<IProgressService>(), 
-                    services.Single<ISaveLoadService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, 
-                    services.Single<IGameFactory>(), 
-                    services.Single<IUIFactory>(),
-                    services.Single<IProgressService>(),
-                    services.Single<IAsset>()),
-                [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(StateBootstrap)] = new StateBootstrap(this, container),
+                [typeof(StateLoadProgress)] = new StateLoadProgress(this, container),
+                [typeof(StateLoadLevel)] = new StateLoadLevel(this, container),
+                [typeof(StateGameLoop)] = new StateGameLoop(this)
             };
         }
         
-        public void Enter<TState>() where TState : class, IState
+        public void Enter<TState>() where TState : class, IEnterState
         {
             TState state = ChangeState<TState>();
 
             state.Enter();
         }
 
-        public void Enter<TState, TLoad>(TLoad load) where TState : class, ILoadState<TLoad>
+        public void Enter<TState, TLoad>(TLoad load) where TState : class, IEnterLoadState<TLoad>
         {
             TState state = ChangeState<TState>();
             

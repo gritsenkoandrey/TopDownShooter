@@ -18,9 +18,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
+        protected override void OnUpdate()
         {
-            base.OnTick();
+            base.OnUpdate();
             
             foreach (CZombie entity in Entities)
             {

@@ -22,11 +22,6 @@ namespace CodeBase.Game.Systems
         {
             base.OnDisableSystem();
         }
-        
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
 
         protected override void OnEnableComponent(CVirtualCamera component)
         {

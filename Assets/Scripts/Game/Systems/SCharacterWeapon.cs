@@ -26,11 +26,6 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CWeapon weapon)
         {
             base.OnEnableComponent(weapon);

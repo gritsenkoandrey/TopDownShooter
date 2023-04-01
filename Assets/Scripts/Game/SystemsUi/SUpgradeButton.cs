@@ -34,11 +34,6 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CUpgradeButton component)
         {
             base.OnEnableComponent(component);

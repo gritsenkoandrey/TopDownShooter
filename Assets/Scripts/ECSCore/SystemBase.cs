@@ -9,10 +9,14 @@ namespace CodeBase.ECSCore
 
         public void EnableSystem() => OnEnableSystem();
         public void DisableSystem() => OnDisableSystem();
-        public void Tick() => OnTick();
+        public void Update() => OnUpdate();
+        public void FixedUpdate() => OnFixedUpdate();
+        public void LateUpdate() => OnLateUpdate();
 
         protected virtual void OnEnableSystem() { }
         protected virtual void OnDisableSystem() => LifetimeDisposable.Clear();
-        protected virtual void OnTick() { }
+        protected virtual void OnUpdate() { }
+        protected virtual void OnFixedUpdate() { }
+        protected virtual void OnLateUpdate() { }
     }
 }

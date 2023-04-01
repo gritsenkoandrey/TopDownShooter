@@ -17,11 +17,6 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CBullet component)
         {
             base.OnEnableComponent(component);

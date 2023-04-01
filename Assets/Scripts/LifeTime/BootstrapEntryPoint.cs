@@ -6,32 +6,38 @@ using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
-using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.States;
+using VContainer;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
 {
-    public sealed class SystemEntryPoint : IInitializable, IDisposable, ITickable
+    public sealed class BootstrapEntryPoint : IInitializable, IStartable, ITickable, IFixedTickable, ILateTickable, IDisposable
     {
         private SystemBase[] _systems;
 
+        private readonly IGameStateMachine _gameStateMachine;
         private readonly IUIFactory _uiFactory;
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
-        public SystemEntryPoint()
+        public BootstrapEntryPoint(IObjectResolver container)
         {
-            _uiFactory = AllServices.Container.Single<IUIFactory>();
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
-            _progressService = AllServices.Container.Single<IProgressService>();
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+            _gameStateMachine = container.Resolve<IGameStateMachine>();
+            _uiFactory = container.Resolve<IUIFactory>();
+            _gameFactory = container.Resolve<IGameFactory>();
+            _progressService = container.Resolve<IProgressService>();
+            _saveLoadService = container.Resolve<ISaveLoadService>();
         }
 
-        void IInitializable.Initialize()
+        void IInitializable.Initialize() => CreateSystems();
+
+        void IStartable.Start()
         {
-            CreateSystems();
             EnableSystems();
+            
+            _gameStateMachine.Enter<StateBootstrap>();
         }
 
         void IDisposable.Dispose()
@@ -40,10 +46,9 @@ namespace CodeBase.LifeTime
             Clear();
         }
 
-        void ITickable.Tick()
-        {
-            UpdateSystems();
-        }
+        void ITickable.Tick() => UpdateSystems();
+        void IFixedTickable.FixedTick() => FixedUpdateSystems();
+        void ILateTickable.LateTick() => LateUpdateSystems();
 
         private void CreateSystems()
         {
@@ -95,13 +100,26 @@ namespace CodeBase.LifeTime
         {
             for (int i = 0; i < _systems.Length; i++)
             {
-                _systems[i].Tick();
+                _systems[i].Update();
+            }
+        }
+        
+        private void FixedUpdateSystems()
+        {
+            for (int i = 0; i < _systems.Length; i++)
+            {
+                _systems[i].FixedUpdate();
+            }
+        }
+        
+        private void LateUpdateSystems()
+        {
+            for (int i = 0; i < _systems.Length; i++)
+            {
+                _systems[i].LateUpdate();
             }
         }
 
-        private void Clear()
-        {
-            _systems = Array.Empty<SystemBase>();
-        }
+        private void Clear() => _systems = Array.Empty<SystemBase>();
     }
 }

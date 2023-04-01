@@ -31,11 +31,6 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);

@@ -25,11 +25,6 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnEnableComponent(CLevelGoal component)
         {
             base.OnEnableComponent(component);

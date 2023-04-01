@@ -25,9 +25,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnTick()
+        protected override void OnUpdate()
         {
-            base.OnTick();
+            base.OnUpdate();
 
             foreach (CInput input in Entities)
             {
