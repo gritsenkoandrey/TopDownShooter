@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using DG.Tweening;
 using TMPro;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -18,8 +17,6 @@ namespace CodeBase.Game.Components
         public Transform Fill => _fill;
         public TextMeshPro Text => _text;
         public Tween Tween { get; set; }
-
-        public ReactiveCommand UpdateRotation { get; } = new();
         
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

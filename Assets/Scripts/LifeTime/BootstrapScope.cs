@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
@@ -25,6 +26,7 @@ namespace CodeBase.LifeTime
         protected override void Configure(IContainerBuilder builder)
         {
             RegisterLoadingCurtain(builder);
+            RegisterCamera(builder);
             RegisterPool(builder);
             RegisterSceneLoader(builder);
             RegisterGameState(builder);
@@ -39,6 +41,7 @@ namespace CodeBase.LifeTime
         }
 
         private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
+        private void RegisterCamera(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
         private void RegisterPool(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
         private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
         private void RegisterGameState(IContainerBuilder builder) => builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);

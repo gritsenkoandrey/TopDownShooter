@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
 {
-    public class ObjectPoolService : MonoBehaviour, IObjectPoolService
+    public sealed class ObjectPoolService : MonoBehaviour, IObjectPoolService
     {
         [SerializeField] private bool _logStatus = false;
 	    

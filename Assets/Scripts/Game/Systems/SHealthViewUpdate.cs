@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Utils;
 using DG.Tweening;
 using UniRx;
@@ -9,6 +10,13 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SHealthViewUpdate : SystemComponent<CHealthView>
     {
+        private ICameraService _cameraService;
+
+        public SHealthViewUpdate(ICameraService cameraService)
+        {
+            _cameraService = cameraService;
+        }
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -25,15 +33,13 @@ namespace CodeBase.Game.Systems
 
             foreach (CHealthView component in Entities)
             {
-                component.UpdateRotation.Execute();
+                LookAtCamera(component);
             }
         }
 
         protected override void OnEnableComponent(CHealthView component)
         {
             base.OnEnableComponent(component);
-
-            Camera camera = Camera.main;
 
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
@@ -53,13 +59,6 @@ namespace CodeBase.Game.Systems
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
-
-            component.UpdateRotation
-                .Subscribe(_ =>
-                {
-                    LookAtCamera(component, camera);
-                })
-                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CHealthView component)
@@ -67,9 +66,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableComponent(component);
         }
         
-        private void LookAtCamera(CHealthView component, Camera camera)
+        private void LookAtCamera(CHealthView component)
         {
-            Quaternion rotation = camera.transform.rotation;
+            Quaternion rotation = _cameraService.Camera.transform.rotation;
 
             component.Background.transform.LookAt(component.Background.transform.position + rotation * Vector3.back, rotation * Vector3.up);
         }

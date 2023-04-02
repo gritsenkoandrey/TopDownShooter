@@ -2,6 +2,7 @@
 using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Pool;
@@ -22,9 +23,11 @@ namespace CodeBase.LifeTime
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IObjectPoolService _objectPoolService;
+        private readonly ICameraService _cameraService;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
-            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, IObjectPoolService objectPoolService)
+            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
+            IObjectPoolService objectPoolService, ICameraService cameraService)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -32,6 +35,7 @@ namespace CodeBase.LifeTime
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _objectPoolService = objectPoolService;
+            _cameraService = cameraService;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -71,7 +75,7 @@ namespace CodeBase.LifeTime
                 new SZombieCollision(_gameFactory, _objectPoolService),
                 new SZombieMeleeAttack(),
                 new SZombieDeath(_gameFactory, _objectPoolService),
-                new SHealthViewUpdate(),
+                new SHealthViewUpdate(_cameraService),
                 new SRadarDraw(),
                 new SVirtualCamera(_gameFactory),
                 new SSelectMesh(),
