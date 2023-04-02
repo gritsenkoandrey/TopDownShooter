@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
@@ -24,6 +25,7 @@ namespace CodeBase.LifeTime
         protected override void Configure(IContainerBuilder builder)
         {
             RegisterLoadingCurtain(builder);
+            RegisterPool(builder);
             RegisterSceneLoader(builder);
             RegisterGameState(builder);
             RegisterAssetProvider(builder);
@@ -32,11 +34,12 @@ namespace CodeBase.LifeTime
             RegisterGameFactory(builder);
             RegisterUiFactory(builder);
             RegisterSaveLoad(builder);
-            
+
             builder.RegisterEntryPoint<BootstrapEntryPoint>().Build();
         }
 
         private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
+        private void RegisterPool(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
         private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
         private void RegisterGameState(IContainerBuilder builder) => builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
         private void RegisterAssetProvider(IContainerBuilder builder) => builder.Register<IAssetService, AssetService>(Lifetime.Singleton);

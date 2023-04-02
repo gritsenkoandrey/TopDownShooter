@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Utils;
 using DG.Tweening;
 using UniRx;
@@ -11,10 +12,12 @@ namespace CodeBase.Game.Systems
     public sealed class SZombieDeath : SystemComponent<CZombie>
     {
         private readonly IGameFactory _gameFactory;
+        private readonly IObjectPoolService _objectPoolService;
 
-        public SZombieDeath(IGameFactory gameFactory)
+        public SZombieDeath(IGameFactory gameFactory, IObjectPoolService objectPoolService)
         {
             _gameFactory = gameFactory;
+            _objectPoolService = objectPoolService;
         }
         
         protected override void OnEnableSystem()
@@ -44,9 +47,9 @@ namespace CodeBase.Game.Systems
 
                         _gameFactory.CurrentCharacter.Enemies.Remove(component);
                         
-                        Transform prefab = _gameFactory.CreateDeathFx(component.transform.position.AddY(1f));
+                        GameObject prefab = _gameFactory.CreateDeathFx(component.transform.position.AddY(1f));
                         
-                        DOVirtual.DelayedCall(2f, () => Object.Destroy(prefab.gameObject));
+                        DOVirtual.DelayedCall(2f, () => _objectPoolService.ReleaseObject(prefab));
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

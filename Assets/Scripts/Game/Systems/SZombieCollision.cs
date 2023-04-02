@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Utils;
 using DG.Tweening;
 using UniRx;
@@ -13,10 +14,12 @@ namespace CodeBase.Game.Systems
     public sealed class SZombieCollision : SystemComponent<CZombie>
     {
         private readonly IGameFactory _gameFactory;
+        private readonly IObjectPoolService _objectPoolService;
 
-        public SZombieCollision(IGameFactory gameFactory)
+        public SZombieCollision(IGameFactory gameFactory, IObjectPoolService objectPoolService)
         {
             _gameFactory = gameFactory;
+            _objectPoolService = objectPoolService;
         }
         
         protected override void OnEnableSystem()
@@ -44,11 +47,12 @@ namespace CodeBase.Game.Systems
 
                         component.IsAggro = true;
 
-                        Transform prefab = _gameFactory.CreateHitFx(bullet.Object.transform.position);
+                        GameObject prefab = _gameFactory.CreateHitFx(bullet.Object.transform.position);
 
-                        DOVirtual.DelayedCall(1f, () => Object.Destroy(prefab.gameObject));
-                        
-                        Object.Destroy(bullet.Object);
+                        DOVirtual.DelayedCall(1f, () => _objectPoolService.ReleaseObject(prefab));
+
+                        bullet.Rigidbody.isKinematic = true;
+                        _objectPoolService.ReleaseObject(bullet.Object);
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

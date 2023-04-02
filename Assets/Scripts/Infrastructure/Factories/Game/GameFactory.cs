@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -12,16 +13,18 @@ namespace CodeBase.Infrastructure.Factories.Game
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IProgressService _progressService;
+        private readonly IObjectPoolService _objectPoolService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         public CLevel CurrentLevel { get; private set; }
         public CCharacter CurrentCharacter { get; private set; }
 
-        public GameFactory(IStaticDataService staticDataService, IProgressService progressService)
+        public GameFactory(IStaticDataService staticDataService, IProgressService progressService, IObjectPoolService objectPoolService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
+            _objectPoolService = objectPoolService;
         }
         
         CLevel IGameFactory.CreateLevel()
@@ -72,17 +75,17 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         CBullet IGameFactory.CreateBullet(Vector3 position)
         {
-            return Object.Instantiate(_staticDataService.BulletData(), position, Quaternion.identity);
+            return _objectPoolService.SpawnObject(_staticDataService.BulletData().gameObject, position, Quaternion.identity).GetComponent<CBullet>();
         }
 
-        Transform IGameFactory.CreateHitFx(Vector3 position)
+        GameObject IGameFactory.CreateHitFx(Vector3 position)
         {
-            return Object.Instantiate(_staticDataService.FxData().HitFx, position, Quaternion.identity);
+            return _objectPoolService.SpawnObject(_staticDataService.FxData().HitFx, position, Quaternion.identity);
         }
 
-        Transform IGameFactory.CreateDeathFx(Vector3 position)
+        GameObject IGameFactory.CreateDeathFx(Vector3 position)
         {
-            return Object.Instantiate(_staticDataService.FxData().DeatFx, position, Quaternion.identity);
+            return _objectPoolService.SpawnObject(_staticDataService.FxData().DeatFx, position, Quaternion.identity);
         }
 
         void IGameFactory.CleanUp()

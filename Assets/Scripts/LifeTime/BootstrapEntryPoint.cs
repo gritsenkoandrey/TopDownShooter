@@ -4,6 +4,7 @@ using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
@@ -20,15 +21,17 @@ namespace CodeBase.LifeTime
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
+        private readonly IObjectPoolService _objectPoolService;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
-            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService)
+            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, IObjectPoolService objectPoolService)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
             _gameFactory = gameFactory;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _objectPoolService = objectPoolService;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -65,9 +68,9 @@ namespace CodeBase.LifeTime
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),
-                new SZombieCollision(_gameFactory),
+                new SZombieCollision(_gameFactory, _objectPoolService),
                 new SZombieMeleeAttack(),
-                new SZombieDeath(_gameFactory),
+                new SZombieDeath(_gameFactory, _objectPoolService),
                 new SHealthViewUpdate(),
                 new SRadarDraw(),
                 new SVirtualCamera(_gameFactory),
@@ -76,7 +79,7 @@ namespace CodeBase.LifeTime
                 new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),
                 new SLevelGoal(_gameFactory),
                 new SMoneyUpdate(_progressService),
-                new SBulletLifeTime(),
+                new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
             };
         }

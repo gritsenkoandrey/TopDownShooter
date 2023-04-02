@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2660d25e0da3434e9f91346a46f99b20, type: 3}
   m_Name: FxData
   m_EditorClassIdentifier: 
-  HitFx: {fileID: 493160, guid: fdac75e990da47649b31f10049c400b0, type: 3}
-  DeatFx: {fileID: 477522, guid: cca79b260878071418290367024a6716, type: 3}
+  HitFx: {fileID: 167524, guid: fdac75e990da47649b31f10049c400b0, type: 3}
+  DeatFx: {fileID: 153568, guid: cca79b260878071418290367024a6716, type: 3}

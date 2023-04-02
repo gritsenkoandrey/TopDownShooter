@@ -1,12 +1,19 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Infrastructure.Pool;
 using DG.Tweening;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SBulletLifeTime : SystemComponent<CBullet>
     {
+        private readonly IObjectPoolService _objectPoolService;
+
+        public SBulletLifeTime(IObjectPoolService objectPoolService)
+        {
+            _objectPoolService = objectPoolService;
+        }
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -21,7 +28,12 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Tween = DOVirtual.DelayedCall(2.5f, () => Object.Destroy(component.Object));
+            component.Tween = DOVirtual.DelayedCall(2.5f, () =>
+            {
+                component.Rigidbody.isKinematic = true;
+                
+                _objectPoolService.ReleaseObject(component.Object);
+            });
         }
 
         protected override void OnDisableComponent(CBullet component)
