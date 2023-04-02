@@ -37,7 +37,7 @@ namespace CodeBase.LifeTime
         {
             EnableSystems();
             
-            _gameStateService.RegisterState();
+            _gameStateService.Register();
             _gameStateService.Enter<StateBootstrap>();
         }
 

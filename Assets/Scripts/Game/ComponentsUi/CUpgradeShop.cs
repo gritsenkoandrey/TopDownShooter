@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
-using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +19,6 @@ namespace CodeBase.Game.ComponentsUi
         public GameObject Show => _show;
         public GameObject Hide => _hide;
         public UpgradeButtonType[] UpgradeButtonType => _upgradeButtonType;
-        public Tween Tween { get; set; }
         public ReactiveProperty<bool> IsShowUpgradeShop { get; } = new(false);
 
         protected override void OnEntityCreate() { }

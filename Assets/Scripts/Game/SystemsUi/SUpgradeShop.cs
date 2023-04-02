@@ -3,7 +3,6 @@ using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Utils;
-using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ namespace CodeBase.Game.SystemsUi
                 {
                     component.Show.SetActive(!value);
                     component.Hide.SetActive(value);
-                    DisplayUpgradeShop(component, value);
+                    component.Root.transform.localScale = value ? Vector3.one : Vector3.zero;
                 })
                 .AddTo(component.LifetimeDisposable);
 
@@ -57,36 +56,8 @@ namespace CodeBase.Game.SystemsUi
         protected override void OnDisableComponent(CUpgradeShop component)
         {
             base.OnDisableComponent(component);
-            
-            component.Tween?.Kill();
-        }
-
-        private void DisplayUpgradeShop(CUpgradeShop component, bool value)
-        {
-            if (value)
-            {
-                ShowUpgradeShop(component);
-            }
-            else
-            {
-                HideUpgradeShop(component);
-            }
-        }
-
-        private void ShowUpgradeShop(CUpgradeShop component)
-        {
-            component.Tween?.Kill();
-            component.Root.transform.localScale = Vector3.zero;
-            component.Tween = component.Root.transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
         }
         
-        private void HideUpgradeShop(CUpgradeShop component)
-        {
-            component.Tween?.Kill();
-            component.Root.transform.localScale = Vector3.one;
-            component.Tween = component.Root.transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.InBack);
-        }
-
         private void CreateUpgradeButtons(CUpgradeShop component)
         {
             for (int i = 0; i < component.UpgradeButtonType.Length; i++)

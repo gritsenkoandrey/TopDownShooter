@@ -36,7 +36,7 @@ namespace CodeBase.LifeTime
             builder.RegisterEntryPoint<BootstrapEntryPoint>().Build();
         }
 
-        private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>();
+        private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
         private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
         private void RegisterGameState(IContainerBuilder builder) => builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
         private void RegisterAssetProvider(IContainerBuilder builder) => builder.Register<IAssetService, AssetService>(Lifetime.Singleton);

@@ -25,7 +25,7 @@ namespace CodeBase.Infrastructure.States
             _container = container;
         }
 
-        void IGameStateService.RegisterState()
+        void IGameStateService.Register()
         {
             _states = new Dictionary<Type, IExitState>
             {
@@ -41,7 +41,7 @@ namespace CodeBase.Infrastructure.States
                     _container.Resolve<IUIFactory>(), 
                     _container.Resolve<IProgressService>(), 
                     _container.Resolve<IAssetService>(), 
-                    _container.Resolve<LoadingCurtain>()),
+                    _container.Resolve<ILoadingCurtainService>()),
                 [typeof(StateGameLoop)] = new StateGameLoop(this)
             };
         }

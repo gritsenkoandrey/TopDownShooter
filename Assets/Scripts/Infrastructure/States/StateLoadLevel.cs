@@ -16,11 +16,11 @@ namespace CodeBase.Infrastructure.States
         private readonly IUIFactory _uiFactory;
         private readonly IProgressService _progressService;
         private readonly IAssetService _assetService;
-        private readonly LoadingCurtain _curtain;
+        private readonly ILoadingCurtainService _curtain;
 
         public StateLoadLevel(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, 
-            IAssetService assetService, LoadingCurtain curtain)
+            IAssetService assetService, ILoadingCurtainService curtain)
         {
             _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
@@ -39,7 +39,10 @@ namespace CodeBase.Infrastructure.States
             _sceneLoaderService.Load(sceneName, Next);
         }
 
-        void IExitState.Exit() => _curtain.Hide();
+        async void IExitState.Exit()
+        {
+            await _curtain.Hide();
+        }
 
         private void Next()
         {

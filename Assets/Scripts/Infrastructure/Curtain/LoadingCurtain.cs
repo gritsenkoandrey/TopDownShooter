@@ -1,56 +1,35 @@
-﻿using System.Collections;
-using TMPro;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CodeBase.Infrastructure.Curtain
 {
-    public sealed class LoadingCurtain : MonoBehaviour
+    public sealed class LoadingCurtain : MonoBehaviour, ILoadingCurtainService
     {
         [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private TextMeshProUGUI _loadingText;
-        [SerializeField] private TextMeshProUGUI _dotsText;
+        [SerializeField] private Image _loading;
 
-        public void Show()
+        void ILoadingCurtainService.Show()
         {
             gameObject.SetActive(true);
-
+            
             _canvasGroup.alpha = 1f;
         }
 
-        public void Hide()
+        async UniTask ILoadingCurtainService.Hide()
         {
-            StartCoroutine(FadeIn());
-        }
+            await _loading
+                .DOFillAmount(1f, 1f)
+                .From(0f)
+                .SetEase(Ease.Linear)
+                .AsyncWaitForCompletion();
 
-        private IEnumerator FadeIn()
-        {
-            _loadingText.text = "Loading";
-            
-            int i = 0;
-            
-            while (i < 6)
-            {
-                string dots = ".";
-                
-                if (i % 3 == 1)
-                {
-                    dots += ".";
-                }
-                else if (i % 3 == 2)
-                {
-                    dots += "..";
-                }
-            
-                _dotsText.text = dots;
-                
-                i++;
-                
-                yield return new WaitForSeconds(0.2f);
-            }
-
-            _canvasGroup.alpha = 0f;
-            _loadingText.text = "";
-            _dotsText.text = "";
+            await _canvasGroup
+                .DOFade(0f, 0.1f)
+                .From(1f)
+                .SetEase(Ease.Linear)
+                .AsyncWaitForCompletion();
             
             gameObject.SetActive(false);
         }
