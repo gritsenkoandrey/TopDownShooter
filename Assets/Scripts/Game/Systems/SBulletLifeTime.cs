@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Pool;
 using DG.Tweening;
+using UniRx;
 
 namespace CodeBase.Game.Systems
 {
@@ -28,10 +29,17 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Tween = DOVirtual.DelayedCall(2.5f, () =>
+            component.Rigidbody.isKinematic = false;
+
+            component.OnDestroy
+                .Subscribe(_ =>
+                {
+                    _objectPoolService.ReleaseObject(component.Object);
+                })
+                .AddTo(component.LifetimeDisposable);
+
+            component.Tween = DOVirtual.DelayedCall(2f, () =>
             {
-                component.Rigidbody.isKinematic = true;
-                
                 _objectPoolService.ReleaseObject(component.Object);
             });
         }
@@ -39,6 +47,8 @@ namespace CodeBase.Game.Systems
         protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
+            
+            component.Rigidbody.isKinematic = true;
             
             component.Tween?.Kill();
         }

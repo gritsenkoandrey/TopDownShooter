@@ -200,7 +200,7 @@ MonoBehaviour:
   _thumb: {fileID: 2615129396434036030}
   _canvasGroup: {fileID: 2615129396211314522}
   _valueMultiplier: 1
-  _movementAreaRadius: 75
+  _movementAreaRadius: 50
   _deadZoneRadius: 0.1
   _isStatick: 1
 --- !u!1 &2615129396434036025

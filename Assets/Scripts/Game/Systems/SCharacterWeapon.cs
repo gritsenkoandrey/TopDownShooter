@@ -35,7 +35,6 @@ namespace CodeBase.Game.Systems
                 {
                     IBullet bullet = _gameFactory.CreateBullet(weapon.SpawnBulletPoint.position);
 
-                    bullet.Rigidbody.isKinematic = false;
                     bullet.Damage = weapon.Damage;
                     bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Force, ForceMode.Impulse);
                 })

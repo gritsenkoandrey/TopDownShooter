@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
@@ -17,6 +19,8 @@ namespace CodeBase.Infrastructure.Pool
 	    private readonly Dictionary<GameObject, ObjectPool<GameObject>> _prefabLookup = new ();
 	    private readonly Dictionary<GameObject, ObjectPool<GameObject>> _instanceLookup = new ();
 
+	    private CancellationToken _token;
+
 	    private void Awake()
 	    {
 		    _root = new GameObject().transform;
@@ -24,6 +28,8 @@ namespace CodeBase.Infrastructure.Pool
 		    _root.SetParent(transform);
 		    
 		    _root.name = "Pool";
+
+		    _token = this.GetCancellationTokenOnDestroy();
 	    }
 
 	    private void Start()
@@ -151,6 +157,13 @@ namespace CodeBase.Infrastructure.Pool
 
 	    void IObjectPoolService.ReleaseObject(GameObject clone)
 	    {
+		    Release(clone);
+	    }
+
+	    async void IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
+	    {
+		    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
+		    
 		    Release(clone);
 	    }
     }
