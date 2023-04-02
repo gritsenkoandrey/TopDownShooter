@@ -24,14 +24,14 @@ namespace CodeBase.Infrastructure.Factories.Game
             _progressService = progressService;
         }
         
-        public CLevel CreateLevel()
+        CLevel IGameFactory.CreateLevel()
         {
             LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
             
             return CurrentLevel = Object.Instantiate(_staticDataService.LevelData(levelType).Prefab);
         }
 
-        public CCharacter CreateCharacter()
+        CCharacter IGameFactory.CreateCharacter()
         {
             CharacterData characterData = _staticDataService.CharacterData();
             
@@ -52,7 +52,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             return CurrentCharacter;
         }
 
-        public CZombie CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
+        CZombie IGameFactory.CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
         {
             ZombieData data = _staticDataService.ZombieData(zombieType);
             
@@ -70,35 +70,22 @@ namespace CodeBase.Infrastructure.Factories.Game
             return zombie;
         }
 
-        public CBullet CreateBullet(Vector3 position)
+        CBullet IGameFactory.CreateBullet(Vector3 position)
         {
             return Object.Instantiate(_staticDataService.BulletData(), position, Quaternion.identity);
         }
 
-        public Transform CreateHitFx(Vector3 position)
+        Transform IGameFactory.CreateHitFx(Vector3 position)
         {
             return Object.Instantiate(_staticDataService.FxData().HitFx, position, Quaternion.identity);
         }
 
-        public Transform CreateDeathFx(Vector3 position)
+        Transform IGameFactory.CreateDeathFx(Vector3 position)
         {
             return Object.Instantiate(_staticDataService.FxData().DeatFx, position, Quaternion.identity);
         }
 
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-        }
-
-        public void CleanUp()
+        void IGameFactory.CleanUp()
         {
             if (CurrentCharacter != null)
             {
@@ -115,6 +102,19 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             ProgressReaders.Clear();
             ProgressWriters.Clear();
+        }
+
+        private void Registered(IProgress progress)
+        {
+            if (progress is IProgressWriter writer)
+            {
+                ProgressWriters.Add(writer);
+            }
+
+            if (progress is IProgressReader reader)
+            {
+                ProgressReaders.Add(reader);
+            }
         }
     }
 }

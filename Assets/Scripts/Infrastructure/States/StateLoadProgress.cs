@@ -1,36 +1,31 @@
 ﻿using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
-using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
     public sealed class StateLoadProgress : IEnterState
     {
-        private readonly IGameStateMachine _stateMachine;
-        private readonly IObjectResolver _container;
-        
-        private IProgressService _progressService;
-        private ISaveLoadService _saveLoadService;
+        private readonly IGameStateService _stateService;
+        private readonly IProgressService _progressService;
+        private readonly ISaveLoadService _saveLoadService;
 
         private const string Main = "Main";
 
-        public StateLoadProgress(IGameStateMachine stateMachine, IObjectResolver container)
+        public StateLoadProgress(IGameStateService stateService, IProgressService progressService, ISaveLoadService saveLoadService)
         {
-            _stateMachine = stateMachine;
-            _container = container;
+            _stateService = stateService;
+            _progressService = progressService;
+            _saveLoadService = saveLoadService;
         }
         
-        public void Enter()
+        void IEnterState.Enter()
         {
-            _progressService = _container.Resolve<IProgressService>();
-            _saveLoadService = _container.Resolve<ISaveLoadService>();
-
             LoadProgress();
             
-            _stateMachine.Enter<StateLoadLevel, string>(Main);
+            _stateService.Enter<StateLoadLevel, string>(Main);
         }
 
-        public void Exit() { }
+        void IExitState.Exit() { }
 
         private void LoadProgress()
         {

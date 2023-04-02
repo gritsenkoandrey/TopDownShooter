@@ -2,8 +2,9 @@
 
 namespace CodeBase.Infrastructure.States
 {
-    public interface IGameStateMachine : IService
+    public interface IGameStateService : IService
     {
+        void RegisterState();
         void Enter<TState>() where TState : class, IEnterState;
         void Enter<TState, TLoad>(TLoad load) where TState : class, IEnterLoadState<TLoad>;
     }

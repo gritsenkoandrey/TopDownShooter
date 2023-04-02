@@ -2,14 +2,14 @@
 {
     public sealed class StateGameLoop : IEnterState
     {
-        private readonly IGameStateMachine _stateMachine;
+        private readonly IGameStateService _stateService;
 
-        public StateGameLoop(IGameStateMachine stateMachine)
+        public StateGameLoop(IGameStateService stateService)
         {
-            _stateMachine = stateMachine;
+            _stateService = stateService;
         }
 
-        public void Enter() { }
-        public void Exit() { }
+        void IEnterState.Enter() { }
+        void IExitState.Exit() { }
     }
 }

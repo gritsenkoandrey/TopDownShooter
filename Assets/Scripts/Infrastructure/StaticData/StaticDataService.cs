@@ -11,7 +11,7 @@ namespace CodeBase.Infrastructure.StaticData
 {
     public sealed class StaticDataService : IStaticDataService
     {
-        private readonly IAsset _asset;
+        private readonly IAssetService _assetService;
         
         private const string ZombieDataPath = "StaticData/ZombieData";
         private const string ScreenDataPath = "StaticData/ScreenData";
@@ -31,50 +31,50 @@ namespace CodeBase.Infrastructure.StaticData
         private StaticCanvas _staticCanvas;
         private FxData _fxData;
 
-        public StaticDataService(IAsset asset)
+        public StaticDataService(IAssetService assetService)
         {
-            _asset = asset;
+            _assetService = assetService;
         }
 
-        public void Load()
+        void IStaticDataService.Load()
         {
-            _monsters = _asset
+            _monsters = _assetService
                 .LoadAll<ZombieData>(ZombieDataPath)
                 .ToDictionary(data => data.ZombieType, data => data);
 
-            _screens = _asset
+            _screens = _assetService
                 .LoadAll<ScreenData>(ScreenDataPath)
                 .ToDictionary(data => data.ScreenType, data => data);
 
-            _upgradeButtons = _asset
+            _upgradeButtons = _assetService
                 .LoadAll<UpgradeButtonData>(UpgradeButtonDataPath)
                 .ToDictionary(data => data.UpgradeButtonType, data => data);
 
-            _levels = _asset
+            _levels = _assetService
                 .LoadAll<LevelData>(LevelDataPath)
                 .ToDictionary(data => data.LevelType, data => data);
 
-            _character = _asset.Load<CharacterData>(CharacterDataPath);
-            _bullet = _asset.Load<CBullet>(BulletPath);
-            _staticCanvas = _asset.Load<StaticCanvas>(StaticCanvasPath);
-            _fxData = _asset.Load<FxData>(FxDataPath);
+            _character = _assetService.Load<CharacterData>(CharacterDataPath);
+            _bullet = _assetService.Load<CBullet>(BulletPath);
+            _staticCanvas = _assetService.Load<StaticCanvas>(StaticCanvasPath);
+            _fxData = _assetService.Load<FxData>(FxDataPath);
         }
 
-        public ZombieData ZombieData(ZombieType type) => 
+        ZombieData IStaticDataService.ZombieData(ZombieType type) => 
             _monsters.TryGetValue(type, out ZombieData staticData) ? staticData : null;
         
-        public ScreenData ScreenData(ScreenType type) => 
+        ScreenData IStaticDataService.ScreenData(ScreenType type) => 
             _screens.TryGetValue(type, out ScreenData staticData) ? staticData : null;
 
-        public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type) =>
+        UpgradeButtonData IStaticDataService.UpgradeButtonData(UpgradeButtonType type) =>
             _upgradeButtons.TryGetValue(type, out UpgradeButtonData staticData) ? staticData : null;
 
-        public LevelData LevelData(LevelType type) =>
+        LevelData IStaticDataService.LevelData(LevelType type) =>
             _levels.TryGetValue(type, out LevelData staticData) ? staticData : null; 
 
-        public CharacterData CharacterData() => _character;
-        public FxData FxData() => _fxData;
-        public CBullet BulletData() => _bullet;
-        public StaticCanvas StaticCanvasData() => _staticCanvas;
+        CharacterData IStaticDataService.CharacterData() => _character;
+        FxData IStaticDataService.FxData() => _fxData;
+        CBullet IStaticDataService.BulletData() => _bullet;
+        StaticCanvas IStaticDataService.StaticCanvasData() => _staticCanvas;
     }
 }

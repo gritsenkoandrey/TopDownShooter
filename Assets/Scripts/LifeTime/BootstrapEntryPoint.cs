@@ -7,7 +7,6 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
-using VContainer;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
@@ -16,19 +15,20 @@ namespace CodeBase.LifeTime
     {
         private SystemBase[] _systems;
 
-        private readonly IGameStateMachine _gameStateMachine;
+        private readonly IGameStateService _gameStateService;
         private readonly IUIFactory _uiFactory;
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
-        public BootstrapEntryPoint(IObjectResolver container)
+        public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
+            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService)
         {
-            _gameStateMachine = container.Resolve<IGameStateMachine>();
-            _uiFactory = container.Resolve<IUIFactory>();
-            _gameFactory = container.Resolve<IGameFactory>();
-            _progressService = container.Resolve<IProgressService>();
-            _saveLoadService = container.Resolve<ISaveLoadService>();
+            _gameStateService = gameStateService;
+            _uiFactory = uiFactory;
+            _gameFactory = gameFactory;
+            _progressService = progressService;
+            _saveLoadService = saveLoadService;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -37,7 +37,8 @@ namespace CodeBase.LifeTime
         {
             EnableSystems();
             
-            _gameStateMachine.Enter<StateBootstrap>();
+            _gameStateService.RegisterState();
+            _gameStateService.Enter<StateBootstrap>();
         }
 
         void IDisposable.Dispose()

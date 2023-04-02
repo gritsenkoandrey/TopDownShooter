@@ -20,7 +20,7 @@ namespace CodeBase.Infrastructure.SaveLoad
             _gameFactory = gameFactory;
         }
         
-        public void SaveProgress()
+        void ISaveLoadService.SaveProgress()
         {
             foreach (IProgressWriter writer in _uiFactory.ProgressWriters)
             {
@@ -35,7 +35,7 @@ namespace CodeBase.Infrastructure.SaveLoad
             PlayerPrefs.SetString(Key, _progressService.PlayerProgress.ToSerialize());
         }
 
-        public PlayerProgress LoadProgress()
+        PlayerProgress ISaveLoadService.LoadProgress()
         {
             return PlayerPrefs.GetString(Key)?.ToDeserialize<PlayerProgress>();
         }

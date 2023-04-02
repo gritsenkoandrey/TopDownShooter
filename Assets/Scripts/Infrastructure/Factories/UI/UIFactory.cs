@@ -13,7 +13,7 @@ namespace CodeBase.Infrastructure.Factories.UI
 {
     public sealed class UIFactory : IUIFactory
     {
-        private readonly IGameStateMachine _gameStateMachine;
+        private readonly IGameStateService _gameStateService;
         private readonly IStaticDataService _staticDataService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
@@ -21,18 +21,18 @@ namespace CodeBase.Infrastructure.Factories.UI
         private BaseScreen CurrentScreen { get; set; }
         private StaticCanvas CurrentCanvas { get; set; }
 
-        public UIFactory(IGameStateMachine gameStateMachine, IStaticDataService staticDataService)
+        public UIFactory(IGameStateService gameStateService, IStaticDataService staticDataService)
         {
-            _gameStateMachine = gameStateMachine;
+            _gameStateService = gameStateService;
             _staticDataService = staticDataService;
         }
 
-        public StaticCanvas CreateCanvas()
+        StaticCanvas IUIFactory.CreateCanvas()
         {
             return CurrentCanvas = Object.Instantiate(_staticDataService.StaticCanvasData());
         }
 
-        public BaseScreen CreateScreen(ScreenType type)
+        BaseScreen IUIFactory.CreateScreen(ScreenType type)
         {
             if (CurrentScreen != null)
             {
@@ -43,12 +43,12 @@ namespace CodeBase.Infrastructure.Factories.UI
 
             CurrentScreen = Object.Instantiate(screenData.Prefab, CurrentCanvas.transform);
             
-            CurrentScreen.Construct(this, _gameStateMachine);
+            CurrentScreen.Construct(this, _gameStateService);
 
             return CurrentScreen;
         }
 
-        public CUpgradeButton CreateUpgradeButton(UpgradeButtonType type, Transform parent)
+        CUpgradeButton IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
         {
             UpgradeButtonData data = _staticDataService.UpgradeButtonData(type);
 
@@ -62,20 +62,7 @@ namespace CodeBase.Infrastructure.Factories.UI
             return button;
         }
 
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-        }
-
-        public void CleanUp()
+        void IUIFactory.CleanUp()
         {
             if (CurrentScreen != null)
             {
@@ -93,6 +80,19 @@ namespace CodeBase.Infrastructure.Factories.UI
             
             ProgressReaders.Clear();
             ProgressWriters.Clear();
+        }
+
+        private void Registered(IProgress progress)
+        {
+            if (progress is IProgressWriter writer)
+            {
+                ProgressWriters.Add(writer);
+            }
+
+            if (progress is IProgressReader reader)
+            {
+                ProgressReaders.Add(reader);
+            }
         }
     }
 }

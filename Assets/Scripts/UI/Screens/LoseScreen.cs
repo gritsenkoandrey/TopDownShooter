@@ -30,7 +30,7 @@ namespace CodeBase.UI.Screens
         {
             await _button.transform.PunchTransform().AsyncWaitForCompletion();
             
-            GameStateMachine.Enter<StateLoadProgress>();
+            GameStateService.Enter<StateLoadProgress>();
         }
 
         private void ShowLoseScreen()

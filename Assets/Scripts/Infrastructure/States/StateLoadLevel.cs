@@ -5,59 +5,55 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
-using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
     public sealed class StateLoadLevel : IEnterLoadState<string>
     {
-        private readonly IGameStateMachine _stateMachine;
-        private readonly IObjectResolver _container;
-        
-        private ISceneLoader _sceneLoader;
-        private IGameFactory _gameFactory;
-        private IUIFactory _uiFactory;
-        private IProgressService _progressService;
-        private IAsset _asset;
-        private LoadingCurtain _curtain;
+        private readonly IGameStateService _stateService;
+        private readonly ISceneLoaderService _sceneLoaderService;
+        private readonly IGameFactory _gameFactory;
+        private readonly IUIFactory _uiFactory;
+        private readonly IProgressService _progressService;
+        private readonly IAssetService _assetService;
+        private readonly LoadingCurtain _curtain;
 
-        public StateLoadLevel(IGameStateMachine stateMachine, IObjectResolver container)
+        public StateLoadLevel(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
+            IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, 
+            IAssetService assetService, LoadingCurtain curtain)
         {
-            _stateMachine = stateMachine;
-            _container = container;
+            _stateService = stateService;
+            _sceneLoaderService = sceneLoaderService;
+            _gameFactory = gameFactory;
+            _uiFactory = uiFactory;
+            _progressService = progressService;
+            _assetService = assetService;
+            _curtain = curtain;
         }
 
-        public void Enter(string sceneName)
+        void IEnterLoadState<string>.Enter(string sceneName)
         {
-            _sceneLoader = _container.Resolve<ISceneLoader>();
-            _curtain = _container.Resolve<LoadingCurtain>();
-            _gameFactory = _container.Resolve<IGameFactory>();
-            _uiFactory = _container.Resolve<IUIFactory>();
-            _progressService = _container.Resolve<IProgressService>();;
-            _asset = _container.Resolve<IAsset>();
-
             CleanUpWorld();
 
             _curtain.Show();
-            
-            _sceneLoader.Load(sceneName, Next);
+            _sceneLoaderService.Load(sceneName, Next);
         }
 
-        public void Exit() => _curtain.Hide();
+        void IExitState.Exit() => _curtain.Hide();
 
         private void Next()
         {
             CreateWorld();
             ReadProgress();
 
-            _stateMachine.Enter<StateGameLoop>();
+            _stateService.Enter<StateGameLoop>();
         }
 
         private void CleanUpWorld()
         {
             _uiFactory.CleanUp();
             _gameFactory.CleanUp();
-            _asset.Unload();
+            _assetService.Unload();
         }
 
         private void CreateWorld()

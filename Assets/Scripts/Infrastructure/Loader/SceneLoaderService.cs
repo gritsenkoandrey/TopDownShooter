@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.Loader
 {
-    public sealed class SceneLoader : ISceneLoader
+    public sealed class SceneLoaderService : ISceneLoaderService
     {
-        public void Load(string name, Action onLoaded = null)
+        void ISceneLoaderService.Load(string name, Action onLoaded)
         {
             LoadScene(name, onLoaded);
         }
         
-        private async void LoadScene(string name, Action onLoaded = null)
+        private async void LoadScene(string name, Action onLoaded)
         {
             if (SceneManager.GetActiveScene().name == name)
             {

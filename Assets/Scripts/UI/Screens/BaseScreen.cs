@@ -7,12 +7,12 @@ namespace CodeBase.UI.Screens
     public abstract class BaseScreen : MonoBehaviour
     {
         protected IUIFactory UIFactory { get; private set; }
-        protected IGameStateMachine GameStateMachine { get; private set; }
+        protected IGameStateService GameStateService { get; private set; }
 
-        public virtual void Construct(IUIFactory uiFactory, IGameStateMachine gameStateMachine)
+        public virtual void Construct(IUIFactory uiFactory, IGameStateService gameStateService)
         {
             UIFactory = uiFactory;
-            GameStateMachine = gameStateMachine;
+            GameStateService = gameStateService;
         }
 
         protected virtual void OnEnable() { }

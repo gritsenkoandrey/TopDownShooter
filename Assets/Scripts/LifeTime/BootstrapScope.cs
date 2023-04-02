@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure;
-using CodeBase.Infrastructure.AssetData;
+﻿using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
@@ -26,7 +25,7 @@ namespace CodeBase.LifeTime
         {
             RegisterLoadingCurtain(builder);
             RegisterSceneLoader(builder);
-            RegisterGameStateMachine(builder);
+            RegisterGameState(builder);
             RegisterAssetProvider(builder);
             RegisterStaticData(builder);
             RegisterProgress(builder);
@@ -38,9 +37,9 @@ namespace CodeBase.LifeTime
         }
 
         private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>();
-        private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoader, SceneLoader>(Lifetime.Singleton);
-        private void RegisterGameStateMachine(IContainerBuilder builder) => builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
-        private void RegisterAssetProvider(IContainerBuilder builder) => builder.Register<IAsset, AssetProvider>(Lifetime.Singleton);
+        private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
+        private void RegisterGameState(IContainerBuilder builder) => builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
+        private void RegisterAssetProvider(IContainerBuilder builder) => builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
         private void RegisterStaticData(IContainerBuilder builder) => builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
         private void RegisterProgress(IContainerBuilder builder) => builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
         private void RegisterGameFactory(IContainerBuilder builder) => builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
