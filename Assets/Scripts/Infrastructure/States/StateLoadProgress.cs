@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Progress;
+﻿using CodeBase.App;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 
 namespace CodeBase.Infrastructure.States
@@ -8,8 +9,6 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateService _stateService;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
-
-        private const string Main = "Main";
 
         public StateLoadProgress(IGameStateService stateService, IProgressService progressService, ISaveLoadService saveLoadService)
         {
@@ -22,7 +21,7 @@ namespace CodeBase.Infrastructure.States
         {
             LoadProgress();
             
-            _stateService.Enter<StateLoadLevel, string>(Main);
+            _stateService.Enter<StateLoadLevel, string>(SceneName.Main);
         }
 
         void IExitState.Exit() { }

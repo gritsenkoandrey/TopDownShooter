@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.AssetData;
+﻿using CodeBase.App;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
@@ -19,6 +20,10 @@ namespace CodeBase.LifeTime
         protected override void Awake()
         {
             base.Awake();
+
+            AppSettings app = new AppSettings();
+            
+            app.SetSettings();
             
             DontDestroyOnLoad(this);
         }

@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Loader;
+﻿using CodeBase.App;
+using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.StaticData;
 
 namespace CodeBase.Infrastructure.States
@@ -8,8 +9,6 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateService _stateService;
         private readonly ISceneLoaderService _sceneLoaderService;
         private readonly IStaticDataService _staticDataService;
-        
-        private const string Initial = "Initial";
 
         public StateBootstrap(IGameStateService stateService, ISceneLoaderService sceneLoaderService, IStaticDataService staticDataService)
         {
@@ -22,7 +21,7 @@ namespace CodeBase.Infrastructure.States
         {
             LoadResources();
             
-            _sceneLoaderService.Load(Initial, Next);
+            _sceneLoaderService.Load(SceneName.Initial, Next);
         }
 
         void IExitState.Exit() { }
