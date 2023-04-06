@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.States;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.UI.Screens
 {
@@ -9,7 +10,8 @@ namespace CodeBase.UI.Screens
         protected IUIFactory UIFactory { get; private set; }
         protected IGameStateService GameStateService { get; private set; }
 
-        public virtual void Construct(IUIFactory uiFactory, IGameStateService gameStateService)
+        [Inject]
+        public void Construct(IUIFactory uiFactory, IGameStateService gameStateService)
         {
             UIFactory = uiFactory;
             GameStateService = gameStateService;

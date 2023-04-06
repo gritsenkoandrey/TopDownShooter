@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
@@ -17,10 +18,11 @@ namespace CodeBase.Infrastructure.States
         private readonly IProgressService _progressService;
         private readonly IAssetService _assetService;
         private readonly ILoadingCurtainService _curtain;
+        private readonly ICameraService _cameraService;
 
         public StateLoadLevel(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, 
-            IAssetService assetService, ILoadingCurtainService curtain)
+            IAssetService assetService, ILoadingCurtainService curtain, ICameraService cameraService)
         {
             _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
@@ -29,6 +31,7 @@ namespace CodeBase.Infrastructure.States
             _progressService = progressService;
             _assetService = assetService;
             _curtain = curtain;
+            _cameraService = cameraService;
         }
 
         void IEnterLoadState<string>.Enter(string sceneName)
@@ -57,6 +60,7 @@ namespace CodeBase.Infrastructure.States
             _uiFactory.CleanUp();
             _gameFactory.CleanUp();
             _assetService.Unload();
+            _cameraService.CleanUp();
         }
 
         private void CreateWorld()

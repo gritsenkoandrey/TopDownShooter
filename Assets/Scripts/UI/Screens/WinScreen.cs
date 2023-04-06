@@ -10,7 +10,6 @@ namespace CodeBase.UI.Screens
     public sealed class WinScreen : BaseScreen
     {
         [SerializeField] private Button _button;
-        [SerializeField] private Transform _splat;
 
         protected override void OnEnable()
         {
@@ -18,7 +17,7 @@ namespace CodeBase.UI.Screens
             
             _button.OnClickAsObservable().Subscribe(NextGame).AddTo(this);
             
-            ShowWinScreen();
+            ShowButton();
         }
 
         protected override void OnDisable()
@@ -31,16 +30,6 @@ namespace CodeBase.UI.Screens
             await _button.transform.PunchTransform().AsyncWaitForCompletion();
             
             GameStateService.Enter<StateLoadProgress>();
-        }
-        
-        private void ShowWinScreen()
-        {
-            _button.gameObject.SetActive(false);
-            _splat.localScale = Vector3.zero;
-            _splat
-                .DOScale(Vector3.one * 1.5f, 1f)
-                .SetEase(Ease.OutBack)
-                .OnComplete(ShowButton);
         }
 
         private void ShowButton()

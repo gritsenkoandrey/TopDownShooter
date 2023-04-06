@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 8
@@ -40,7 +52,6 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: cfc5ea7037e30f04ea076cfd71eba05f, type: 3}
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
-  - {fileID: 21300000, guid: 662428f52cd8cc1408c83a63841a2d08, type: 3}
   - {fileID: 21300000, guid: 2079b87688256f748be41055895c942b, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: d6b37fbb16ed53143a98fe1213354685, type: 3}
@@ -51,7 +62,6 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - shop_hide
   - shop_weapon
-  - splat_three
   - money
   - shop_speedometer
   - splat_two

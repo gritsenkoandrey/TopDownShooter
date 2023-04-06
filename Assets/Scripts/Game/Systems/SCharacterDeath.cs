@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.StateMachine;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.UI.Screens;
 using UniRx;

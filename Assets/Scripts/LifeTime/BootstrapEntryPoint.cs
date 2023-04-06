@@ -77,7 +77,6 @@ namespace CodeBase.LifeTime
                 new SZombieDeath(_gameFactory),
                 new SHealthViewUpdate(_cameraService),
                 new SRadarDraw(),
-                new SVirtualCamera(_gameFactory),
                 new SSelectMesh(),
                 new SUpgradeShop(_uiFactory),
                 new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),

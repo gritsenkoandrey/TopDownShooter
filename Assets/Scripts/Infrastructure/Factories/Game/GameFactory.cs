@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
@@ -14,17 +15,19 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IStaticDataService _staticDataService;
         private readonly IProgressService _progressService;
         private readonly IObjectPoolService _objectPoolService;
+        private readonly ICameraService _cameraService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         public CLevel CurrentLevel { get; private set; }
         public CCharacter CurrentCharacter { get; private set; }
 
-        public GameFactory(IStaticDataService staticDataService, IProgressService progressService, IObjectPoolService objectPoolService)
+        public GameFactory(IStaticDataService staticDataService, IProgressService progressService, IObjectPoolService objectPoolService, ICameraService cameraService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
             _objectPoolService = objectPoolService;
+            _cameraService = cameraService;
         }
         
         CLevel IGameFactory.CreateLevel()
@@ -51,6 +54,8 @@ namespace CodeBase.Infrastructure.Factories.Game
             Registered(CurrentCharacter.Health);
             Registered(CurrentCharacter.Weapon);
             Registered(CurrentCharacter.Move);
+            
+            _cameraService.SetTarget(CurrentCharacter.transform);
 
             return CurrentCharacter;
         }

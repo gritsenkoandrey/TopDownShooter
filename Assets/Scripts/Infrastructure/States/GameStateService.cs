@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
@@ -41,7 +42,8 @@ namespace CodeBase.Infrastructure.States
                     _container.Resolve<IUIFactory>(), 
                     _container.Resolve<IProgressService>(), 
                     _container.Resolve<IAssetService>(), 
-                    _container.Resolve<ILoadingCurtainService>()),
+                    _container.Resolve<ILoadingCurtainService>(),
+                    _container.Resolve<ICameraService>()),
                 [typeof(StateGameLoop)] = new StateGameLoop(this)
             };
         }

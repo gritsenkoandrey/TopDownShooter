@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
@@ -13,18 +14,20 @@ namespace CodeBase.Infrastructure.Factories.UI
 {
     public sealed class UIFactory : IUIFactory
     {
-        private readonly IGameStateService _gameStateService;
         private readonly IStaticDataService _staticDataService;
+        private readonly ICameraService _cameraService;
+        private readonly IGameStateService _gameStateService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         private BaseScreen CurrentScreen { get; set; }
         private StaticCanvas CurrentCanvas { get; set; }
 
-        public UIFactory(IGameStateService gameStateService, IStaticDataService staticDataService)
+        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGameStateService gameStateService)
         {
-            _gameStateService = gameStateService;
             _staticDataService = staticDataService;
+            _cameraService = cameraService;
+            _gameStateService = gameStateService;
         }
 
         StaticCanvas IUIFactory.CreateCanvas()
@@ -44,6 +47,8 @@ namespace CodeBase.Infrastructure.Factories.UI
             CurrentScreen = Object.Instantiate(screenData.Prefab, CurrentCanvas.transform);
             
             CurrentScreen.Construct(this, _gameStateService);
+            
+            _cameraService.ActivateCamera(type);
 
             return CurrentScreen;
         }

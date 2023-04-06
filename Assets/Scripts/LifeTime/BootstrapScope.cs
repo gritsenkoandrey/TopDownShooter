@@ -30,31 +30,19 @@ namespace CodeBase.LifeTime
 
         protected override void Configure(IContainerBuilder builder)
         {
-            RegisterLoadingCurtain(builder);
-            RegisterCamera(builder);
-            RegisterPool(builder);
-            RegisterSceneLoader(builder);
-            RegisterGameState(builder);
-            RegisterAssetProvider(builder);
-            RegisterStaticData(builder);
-            RegisterProgress(builder);
-            RegisterGameFactory(builder);
-            RegisterUiFactory(builder);
-            RegisterSaveLoad(builder);
+            builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
+            builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
+            builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
+            builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
+            builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
+            builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
+            builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
+            builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
+            builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
+            builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<BootstrapEntryPoint>().Build();
         }
-
-        private void RegisterLoadingCurtain(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
-        private void RegisterCamera(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
-        private void RegisterPool(IContainerBuilder builder) => builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
-        private void RegisterSceneLoader(IContainerBuilder builder) => builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
-        private void RegisterGameState(IContainerBuilder builder) => builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
-        private void RegisterAssetProvider(IContainerBuilder builder) => builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
-        private void RegisterStaticData(IContainerBuilder builder) => builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
-        private void RegisterProgress(IContainerBuilder builder) => builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
-        private void RegisterGameFactory(IContainerBuilder builder) => builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
-        private void RegisterUiFactory(IContainerBuilder builder) => builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
-        private void RegisterSaveLoad(IContainerBuilder builder) => builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
     }
 }
