@@ -3,12 +3,12 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI;
 using CodeBase.UI.Screens;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Infrastructure.Factories.UI
 {
@@ -16,18 +16,18 @@ namespace CodeBase.Infrastructure.Factories.UI
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICameraService _cameraService;
-        private readonly IGameStateService _gameStateService;
+        private readonly IObjectResolver _objectResolver;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
         private BaseScreen CurrentScreen { get; set; }
         private StaticCanvas CurrentCanvas { get; set; }
 
-        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGameStateService gameStateService)
+        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _cameraService = cameraService;
-            _gameStateService = gameStateService;
+            _objectResolver = objectResolver;
         }
 
         StaticCanvas IUIFactory.CreateCanvas()
@@ -46,7 +46,7 @@ namespace CodeBase.Infrastructure.Factories.UI
 
             CurrentScreen = Object.Instantiate(screenData.Prefab, CurrentCanvas.transform);
             
-            CurrentScreen.Construct(this, _gameStateService);
+            _objectResolver.Inject(CurrentScreen);
             
             _cameraService.ActivateCamera(type);
 

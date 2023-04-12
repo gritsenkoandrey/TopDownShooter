@@ -37,11 +37,12 @@ namespace CodeBase.LifeTime
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
-            builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
             builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
-
+            
+            builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
+            
             builder.RegisterEntryPoint<BootstrapEntryPoint>().Build();
         }
     }

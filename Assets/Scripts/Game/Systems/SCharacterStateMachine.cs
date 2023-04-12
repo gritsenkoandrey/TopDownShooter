@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
-using Cysharp.Threading.Tasks;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -35,10 +34,8 @@ namespace CodeBase.Game.Systems
             InitializeStateMachine(component);
         }
 
-        private async void InitializeStateMachine(CCharacter component)
+        private void InitializeStateMachine(CCharacter component)
         {
-            await UniTask.NextFrame();
-            
             CharacterStateMachine stateMachine = new CharacterStateMachine(component);
 
             stateMachine.Init();

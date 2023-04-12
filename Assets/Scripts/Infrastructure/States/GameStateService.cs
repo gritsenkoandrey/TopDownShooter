@@ -9,41 +9,36 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.StaticData;
-using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
     public sealed class GameStateService : IGameStateService
     {
-        private Dictionary<Type, IExitState> _states;
+        private readonly Dictionary<Type, IExitState> _states;
 
-        private readonly IObjectResolver _container;
+        private IExitState _activeState;
         
-        private IExitState _activeState;   
-        
-        public GameStateService(IObjectResolver container)
-        {
-            _container = container;
-        }
-
-        void IGameStateService.Register()
+        public GameStateService(ISceneLoaderService sceneLoaderService, IStaticDataService staticDataService, 
+            IProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, 
+            IUIFactory uiFactory, IAssetService assetService, ILoadingCurtainService loadingCurtainService, 
+            ICameraService cameraService)
         {
             _states = new Dictionary<Type, IExitState>
             {
                 [typeof(StateBootstrap)] = new StateBootstrap(this, 
-                    _container.Resolve<ISceneLoaderService>(), 
-                    _container.Resolve<IStaticDataService>()),
+                    sceneLoaderService, 
+                    staticDataService),
                 [typeof(StateLoadProgress)] = new StateLoadProgress(this, 
-                    _container.Resolve<IProgressService>(), 
-                    _container.Resolve<ISaveLoadService>()),
+                    progressService, 
+                    saveLoadService),
                 [typeof(StateLoadLevel)] = new StateLoadLevel(this, 
-                    _container.Resolve<ISceneLoaderService>(), 
-                    _container.Resolve<IGameFactory>(), 
-                    _container.Resolve<IUIFactory>(), 
-                    _container.Resolve<IProgressService>(), 
-                    _container.Resolve<IAssetService>(), 
-                    _container.Resolve<ILoadingCurtainService>(),
-                    _container.Resolve<ICameraService>()),
+                    sceneLoaderService, 
+                    gameFactory, 
+                    uiFactory, 
+                    progressService, 
+                    assetService, 
+                    loadingCurtainService,
+                    cameraService),
                 [typeof(StateGameLoop)] = new StateGameLoop(this)
             };
         }
