@@ -162,9 +162,19 @@ namespace CodeBase.Infrastructure.Pool
 
 	    async void IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
 	    {
-		    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
-		    
-		    Release(clone);
+		    try
+		    {
+			    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
+			    
+			    Release(clone);
+		    }
+		    catch (OperationCanceledException exception)
+		    {
+			    if (exception.CancellationToken == _token)
+			    {
+				    Debug.Log("Destroy");
+			    }
+		    }
 	    }
     }
 }

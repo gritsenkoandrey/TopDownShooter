@@ -9,6 +9,7 @@ using CodeBase.UI;
 using CodeBase.UI.Screens;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.Factories.UI
 {
@@ -20,8 +21,9 @@ namespace CodeBase.Infrastructure.Factories.UI
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
-        private BaseScreen CurrentScreen { get; set; }
-        private StaticCanvas CurrentCanvas { get; set; }
+        
+        private BaseScreen _currentScreen;
+        private StaticCanvas _currentCanvas;
 
         public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IObjectResolver objectResolver)
         {
@@ -32,25 +34,23 @@ namespace CodeBase.Infrastructure.Factories.UI
 
         StaticCanvas IUIFactory.CreateCanvas()
         {
-            return CurrentCanvas = Object.Instantiate(_staticDataService.StaticCanvasData());
+            return _currentCanvas = Object.Instantiate(_staticDataService.StaticCanvasData());
         }
 
         BaseScreen IUIFactory.CreateScreen(ScreenType type)
         {
-            if (CurrentScreen != null)
+            if (_currentScreen != null)
             {
-                Object.Destroy(CurrentScreen.gameObject);
+                Object.Destroy(_currentScreen.gameObject);
             }
 
             ScreenData screenData = _staticDataService.ScreenData(type);
 
-            CurrentScreen = Object.Instantiate(screenData.Prefab, CurrentCanvas.transform);
-            
-            _objectResolver.Inject(CurrentScreen);
+            _currentScreen = _objectResolver.Instantiate(screenData.Prefab, _currentCanvas.transform);
             
             _cameraService.ActivateCamera(type);
 
-            return CurrentScreen;
+            return _currentScreen;
         }
 
         CUpgradeButton IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
@@ -69,18 +69,18 @@ namespace CodeBase.Infrastructure.Factories.UI
 
         void IUIFactory.CleanUp()
         {
-            if (CurrentScreen != null)
+            if (_currentScreen != null)
             {
-                Object.Destroy(CurrentScreen.gameObject);
+                Object.Destroy(_currentScreen.gameObject);
                 
-                CurrentScreen = null;
+                _currentScreen = null;
             }
 
-            if (CurrentCanvas != null)
+            if (_currentCanvas != null)
             {
-                Object.Destroy(CurrentCanvas.gameObject);
+                Object.Destroy(_currentCanvas.gameObject);
                 
-                CurrentCanvas = null;
+                _currentCanvas = null;
             }
             
             ProgressReaders.Clear();
