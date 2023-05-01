@@ -1,19 +1,18 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.UI.Screens;
+using CodeBase.Infrastructure.States;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterDeath : SystemComponent<CCharacter>
     {
-        private readonly IUIFactory _uiFactory;
+        private readonly IGameStateService _gameStateService;
 
-        public SCharacterDeath(IUIFactory uiFactory)
+        public SCharacterDeath(IGameStateService gameStateService)
         {
-            _uiFactory = uiFactory;
+            _gameStateService = gameStateService;
         }
         
         protected override void OnEnableSystem()
@@ -32,12 +31,11 @@ namespace CodeBase.Game.Systems
 
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
-                .ObserveOnMainThread()
                 .Subscribe(health =>
                 {
                     if (health <= 0)
                     {
-                        _uiFactory.CreateScreen(ScreenType.Lose);
+                        _gameStateService.Enter<StateFail>();
                         
                         component.LifetimeDisposable.Clear();
 

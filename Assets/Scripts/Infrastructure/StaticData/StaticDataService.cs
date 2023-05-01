@@ -4,7 +4,6 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
-using CodeBase.UI;
 using CodeBase.UI.Screens;
 
 namespace CodeBase.Infrastructure.StaticData
@@ -19,7 +18,6 @@ namespace CodeBase.Infrastructure.StaticData
         private const string UpgradeButtonDataPath = "StaticData/UpgradeButtonData";
         private const string BulletPath = "Data/Bulets/Bullet";
         private const string LevelDataPath = "StaticData/LevelData";
-        private const string StaticCanvasPath = "Data/Canvas/StaticCanvas";
         private const string FxDataPath = "Data/FX/FxData";
 
         private Dictionary<ZombieType, ZombieData> _monsters;
@@ -28,7 +26,6 @@ namespace CodeBase.Infrastructure.StaticData
         private Dictionary<LevelType, LevelData> _levels;
         private CharacterData _character;
         private CBullet _bullet;
-        private StaticCanvas _staticCanvas;
         private FxData _fxData;
 
         public StaticDataService(IAssetService assetService)
@@ -56,7 +53,6 @@ namespace CodeBase.Infrastructure.StaticData
 
             _character = _assetService.Load<CharacterData>(CharacterDataPath);
             _bullet = _assetService.Load<CBullet>(BulletPath);
-            _staticCanvas = _assetService.Load<StaticCanvas>(StaticCanvasPath);
             _fxData = _assetService.Load<FxData>(FxDataPath);
         }
 
@@ -75,6 +71,5 @@ namespace CodeBase.Infrastructure.StaticData
         CharacterData IStaticDataService.CharacterData() => _character;
         FxData IStaticDataService.FxData() => _fxData;
         CBullet IStaticDataService.BulletData() => _bullet;
-        StaticCanvas IStaticDataService.StaticCanvasData() => _staticCanvas;
     }
 }

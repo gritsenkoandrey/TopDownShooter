@@ -5,6 +5,7 @@ using CodeBase.Game.SystemsUi;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -24,10 +25,11 @@ namespace CodeBase.LifeTime
         private readonly ISaveLoadService _saveLoadService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
+        private readonly IJoystickService _joystickService;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
             IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService)
+            IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -36,6 +38,7 @@ namespace CodeBase.LifeTime
             _saveLoadService = saveLoadService;
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
+            _joystickService = joystickService;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -65,9 +68,9 @@ namespace CodeBase.LifeTime
                 new SCharacterStateMachine(),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
-                new SCharacterDeath(_uiFactory),
-                new SCharacterKillEnemy(_progressService, _saveLoadService, _uiFactory),
-                new SCharacterInput(_gameFactory),
+                new SCharacterDeath(_gameStateService),
+                new SCharacterKillEnemy(_progressService, _saveLoadService, _gameStateService),
+                new SCharacterInput(_joystickService),
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),

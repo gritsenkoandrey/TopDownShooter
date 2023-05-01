@@ -3,31 +3,31 @@ using UnityEngine.EventSystems;
 
 namespace CodeBase.Infrastructure.Input
 {
-    public sealed class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInput
+    public sealed class JoystickService : MonoBehaviour, IJoystickService, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
         [SerializeField] private RectTransform _movementArea;
         [SerializeField] private RectTransform _handle;
         [SerializeField] private RectTransform _thumb;
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private float _valueMultiplier = 1f;
-        [SerializeField] private float _movementAreaRadius = 75f;
-        [SerializeField] private float _deadZoneRadius = 0f;
+        [SerializeField] private float _movementAreaRadius = 50f;
+        [SerializeField] private float _deadZoneRadius = 0.1f;
+        [SerializeField] private float _fadeTime = 4f;
         [SerializeField] private bool _isStatick = false;
 
-        private const float Offset = 4f;
-        
         private Vector3 _startPosition;
         private float _loverMovementAreaRadius;
         private float _movementAreaRadiusSqr;
         private float _deadZoneAreaRadiusSqr;
         private float _opacity;
         private bool _joystickHeld;
+        private bool _isEnable;
 
-        public Vector2 Vector { get; private set; }
+        public Vector2 Value { get; private set; }
 
         private void Awake()
         {
-            Vector = Vector2.zero;
+            Value = Vector2.zero;
 
             _opacity = 0f;
             _canvasGroup.alpha = _opacity;
@@ -37,17 +37,38 @@ namespace CodeBase.Infrastructure.Input
             _deadZoneAreaRadiusSqr = Mathf.Pow(_deadZoneRadius, 2f);
         }
 
-        public void OnUpdate()
+        public void Enable(bool isEnable)
+        {
+            _isEnable = isEnable;
+
+            if (!isEnable)
+            {
+                _joystickHeld = false;
+            
+                if (_isStatick)
+                {
+                    _handle.position = _startPosition;
+                }
+            
+                _thumb.localPosition = Vector3.zero;
+            
+                Value = Vector2.zero;
+            }
+        }
+
+        public void Execute()
         {
             _opacity = _joystickHeld ? 
-                Mathf.Min(1f, _opacity + Time.deltaTime * Offset) : 
-                Mathf.Max(0f, _opacity - Time.deltaTime * Offset);
+                Mathf.Min(1f, _opacity + Time.deltaTime * _fadeTime) : 
+                Mathf.Max(0f, _opacity - Time.deltaTime * _fadeTime);
 
             _canvasGroup.alpha = _opacity;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!_isEnable) return;
+            
             _joystickHeld = true;
 
             if (_isStatick)
@@ -62,15 +83,16 @@ namespace CodeBase.Infrastructure.Input
                 _handle.position = position;
             }
         }
-
         public void OnDrag(PointerEventData eventData)
         {
+            if (!_isEnable) return;
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle
                 (_handle, eventData.position, eventData.pressEventCamera, out Vector2 direction);
 
             if (direction.sqrMagnitude < _deadZoneAreaRadiusSqr)
             {
-                Vector = Vector2.zero;
+                Value = Vector2.zero;
             }
             else
             {
@@ -79,19 +101,25 @@ namespace CodeBase.Infrastructure.Input
                     direction = direction.normalized * _movementAreaRadius;
                 }
 
-                Vector = direction * _loverMovementAreaRadius * _valueMultiplier;
+                Value = direction * _loverMovementAreaRadius * _valueMultiplier;
             }
             
             _thumb.localPosition = direction;
         }
-
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!_isEnable) return;
+            
             _joystickHeld = false;
-            _handle.position = _startPosition;
+            
+            if (_isStatick)
+            {
+                _handle.position = _startPosition;
+            }
+            
             _thumb.localPosition = Vector3.zero;
 
-            Vector = Vector2.zero;
+            Value = Vector2.zero;
         }
     }
 }

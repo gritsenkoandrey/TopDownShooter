@@ -2,6 +2,7 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -18,6 +19,7 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly IStaticDataService _staticDataService;
         private readonly ICameraService _cameraService;
         private readonly IObjectResolver _objectResolver;
+        private readonly IGuiService _guiService;
         
         public List<IProgressReader> ProgressReaders { get; } = new();
         public List<IProgressWriter> ProgressWriters { get; } = new();
@@ -25,16 +27,13 @@ namespace CodeBase.Infrastructure.Factories.UI
         private BaseScreen _currentScreen;
         private StaticCanvas _currentCanvas;
 
-        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IObjectResolver objectResolver)
+        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, 
+            IObjectResolver objectResolver, IGuiService guiService)
         {
             _staticDataService = staticDataService;
             _cameraService = cameraService;
             _objectResolver = objectResolver;
-        }
-
-        StaticCanvas IUIFactory.CreateCanvas()
-        {
-            return _currentCanvas = Object.Instantiate(_staticDataService.StaticCanvasData());
+            _guiService = guiService;
         }
 
         BaseScreen IUIFactory.CreateScreen(ScreenType type)
@@ -46,7 +45,7 @@ namespace CodeBase.Infrastructure.Factories.UI
 
             ScreenData screenData = _staticDataService.ScreenData(type);
 
-            _currentScreen = _objectResolver.Instantiate(screenData.Prefab, _currentCanvas.transform);
+            _currentScreen = _objectResolver.Instantiate(screenData.Prefab, _guiService.StaticCanvas.transform);
             
             _cameraService.ActivateCamera(type);
 

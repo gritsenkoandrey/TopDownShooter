@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CharacterData
   m_EditorClassIdentifier: 
   Health: 10
-  Damage: 1
+  Damage: 2
   Speed: 5
   AttackDistance: 7.5
   AttackRecharge: 1

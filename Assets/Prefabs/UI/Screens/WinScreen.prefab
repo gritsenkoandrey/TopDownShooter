@@ -145,8 +145,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2816436683870373457}
   - component: {fileID: 2816436683870373460}
-  - component: {fileID: 4690015988357690889}
   - component: {fileID: 2816436683870373459}
+  - component: {fileID: 4690015988357690889}
   - component: {fileID: 2816436683870373461}
   m_Layer: 5
   m_Name: WinScreen
@@ -184,6 +184,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2816436683870373456}
   m_CullTransparentMesh: 0
+--- !u!225 &2816436683870373459
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816436683870373456}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &4690015988357690889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,18 +226,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &2816436683870373459
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2816436683870373456}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &2816436683870373461
 MonoBehaviour:
   m_ObjectHideFlags: 0

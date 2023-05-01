@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 using UnityEngine;
 using VContainer;
 
@@ -7,13 +6,11 @@ namespace CodeBase.UI.Screens
 {
     public abstract class BaseScreen : MonoBehaviour
     {
-        protected IUIFactory UIFactory { get; private set; }
         protected IGameStateService GameStateService { get; private set; }
 
         [Inject]
-        public void Construct(IUIFactory uiFactory, IGameStateService gameStateService)
+        public void Construct(IGameStateService gameStateService)
         {
-            UIFactory = uiFactory;
             GameStateService = gameStateService;
         }
 

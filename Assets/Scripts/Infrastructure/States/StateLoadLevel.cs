@@ -52,7 +52,7 @@ namespace CodeBase.Infrastructure.States
             CreateWorld();
             ReadProgress();
 
-            _stateService.Enter<StateGameLoop>();
+            _stateService.Enter<StateLobby>();
         }
 
         private void CleanUpWorld()
@@ -65,7 +65,6 @@ namespace CodeBase.Infrastructure.States
 
         private void CreateWorld()
         {
-            _uiFactory.CreateCanvas();
             _uiFactory.CreateScreen(ScreenType.Lobby);
             _gameFactory.CreateCharacter();
             _gameFactory.CreateLevel();

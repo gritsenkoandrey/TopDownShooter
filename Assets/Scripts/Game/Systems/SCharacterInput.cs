@@ -1,18 +1,16 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Infrastructure.Factories.Game;
-using UniRx;
-using UnityEngine;
+using CodeBase.Infrastructure.Input;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterInput : SystemComponent<CInput>
+    public sealed class SCharacterInput : SystemComponent<CCharacter>
     {
-        private readonly IGameFactory _gameFactory;
+        private readonly IJoystickService _joystickService;
 
-        public SCharacterInput(IGameFactory gameFactory)
+        public SCharacterInput(IJoystickService joystickService)
         {
-            _gameFactory = gameFactory;
+            _joystickService = joystickService;
         }
         
         protected override void OnEnableSystem()
@@ -25,34 +23,26 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnUpdate()
+        protected override void OnLateUpdate()
         {
-            base.OnUpdate();
-
-            foreach (CInput input in Entities)
+            base.OnLateUpdate();
+            
+            foreach (CCharacter character in Entities)
             {
-                input.UpdateInput.Execute();
+                character.Move.Input = _joystickService.Value;
+                
+                _joystickService.Execute();
             }
         }
 
-        protected override void OnEnableComponent(CInput component)
+        protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);
-
-            component.UpdateInput
-                .Subscribe(_ =>
-                {
-                    _gameFactory.CurrentCharacter.Move.Input = component.Input.Vector;
-                    component.Input.OnUpdate();
-                })
-                .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CInput component)
+        protected override void OnDisableComponent(CCharacter component)
         {
             base.OnDisableComponent(component);
-            
-            _gameFactory.CurrentCharacter.Move.Input = Vector2.zero;
         }
     }
 }

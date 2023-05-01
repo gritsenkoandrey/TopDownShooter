@@ -1,9 +1,8 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
-using CodeBase.UI.Screens;
+using CodeBase.Infrastructure.States;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -12,13 +11,13 @@ namespace CodeBase.Game.Systems
     {
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IUIFactory _uiFactory;
+        private readonly IGameStateService _gameStateService;
 
-        public SCharacterKillEnemy(IProgressService progressService, ISaveLoadService saveLoadService, IUIFactory uiFactory)
+        public SCharacterKillEnemy(IProgressService progressService, ISaveLoadService saveLoadService, IGameStateService gameStateService)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
-            _uiFactory = uiFactory;
+            _gameStateService = gameStateService;
         }
         
         protected override void OnEnableSystem()
@@ -44,9 +43,7 @@ namespace CodeBase.Game.Systems
 
                     if (component.Enemies.Count == 0)
                     {
-                        _uiFactory.CreateScreen(ScreenType.Win);
-                        _progressService.PlayerProgress.Level++;
-                        _saveLoadService.SaveProgress();
+                        _gameStateService.Enter<StateWin>();
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

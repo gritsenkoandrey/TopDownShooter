@@ -4,6 +4,8 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.GUI;
+using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
@@ -33,6 +35,9 @@ namespace CodeBase.LifeTime
             builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
             builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
             builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
+            builder.RegisterComponentInHierarchy<GuiService>().As<IGuiService>();
+            builder.RegisterComponentInHierarchy<JoystickService>().As<IJoystickService>();
+            
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);

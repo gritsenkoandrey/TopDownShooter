@@ -21,7 +21,7 @@ namespace CodeBase.Infrastructure.States
         {
             LoadResources();
             
-            _sceneLoaderService.Load(SceneName.Initial, Next);
+            _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
 
         void IExitState.Exit() { }

@@ -1,10 +1,10 @@
 ﻿namespace CodeBase.Infrastructure.States
 {
-    public sealed class StateGameLoop : IEnterState
+    public sealed class StateLobby : IEnterState
     {
         private readonly IGameStateService _stateService;
 
-        public StateGameLoop(IGameStateService stateService)
+        public StateLobby(IGameStateService stateService)
         {
             _stateService = stateService;
         }

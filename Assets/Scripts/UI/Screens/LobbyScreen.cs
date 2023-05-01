@@ -1,4 +1,5 @@
-﻿using CodeBase.Utils;
+﻿using CodeBase.Infrastructure.States;
+using CodeBase.Utils;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace CodeBase.UI.Screens
         {
             await _text.PunchTransform().AsyncWaitForCompletion();
             
-            UIFactory.CreateScreen(ScreenType.Game);
+            GameStateService.Enter<StateGame>();
         }
     }
 }
