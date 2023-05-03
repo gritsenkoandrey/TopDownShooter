@@ -44,7 +44,7 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 84d5a7d504bc8934bb6ef371957c8d66, type: 3}
+    - {fileID: 102900000, guid: 3627eeb159e4c1344933f99bd0999f63, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -54,21 +54,27 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: 2079b87688256f748be41055895c942b, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
+  - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
+  - {fileID: 21300000, guid: 87d71d1a200c09846b2f4a83c9cf29ac, type: 3}
   - {fileID: 21300000, guid: d6b37fbb16ed53143a98fe1213354685, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
   - {fileID: 21300000, guid: a3788f6eda275bb4c844456f85f9fff3, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
+  - {fileID: 21300000, guid: b3ee4aafec0ec2d4084afb64faad54d1, type: 3}
   m_PackedSpriteNamesToIndex:
   - shop_hide
   - shop_weapon
   - money
   - shop_speedometer
+  - square
+  - circle_two
   - splat_two
   - shop_medical_pack
   - target
   - splat_one
   - shop_show
+  - circle_one
   m_RenderDataMap: {}
   m_Tag: ScreenAtlas
   m_IsVariant: 0
