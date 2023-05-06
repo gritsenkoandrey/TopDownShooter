@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006987074591796814}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &1221604689654746739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2816436683870373456}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!225 &2816436683870373459
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0, g: 0.5764706, b: 0, a: 0.101960786}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -286,7 +286,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5419935717507835634}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &8150473713259461421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 8150473713259461421}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

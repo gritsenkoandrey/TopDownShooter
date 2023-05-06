@@ -40,12 +40,12 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254550687831949999}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
@@ -1266,6 +1266,10 @@ PrefabInstance:
       propertyPath: _health
       value: 
       objectReference: {fileID: 6043445981113736475}
+    - target: {fileID: 8287385969323109401, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8783008320166627618, guid: bbcfff9a31c1af44bb0802a87bb32ba4, type: 3}
       propertyPath: m_RootOrder
       value: 1

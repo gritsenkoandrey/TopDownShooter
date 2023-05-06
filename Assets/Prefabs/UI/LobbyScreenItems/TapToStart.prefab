@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6184738648706851354}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &6184738648706851359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 0
@@ -167,7 +167,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6184738649095876284}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &6184738649095876286
 MonoBehaviour:
   m_ObjectHideFlags: 0

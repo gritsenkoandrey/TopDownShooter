@@ -47,7 +47,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 1
+  m_ActiveColorSpace: 0
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
@@ -135,8 +135,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.0.1
-  preloadedAssets:
-  - {fileID: 11400000, guid: 79c84c0a77b5bf845a4d07e6fe00f6b3, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -164,7 +163,7 @@ PlayerSettings:
   overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 22
-  AndroidTargetSdkVersion: 0
+  AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -264,7 +263,7 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  chromeosInputEmulation: 1
+  chromeosInputEmulation: 0
   AndroidMinifyWithR8: 0
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
@@ -541,7 +540,7 @@ PlayerSettings:
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality:
   - m_BuildTarget: Android
-    m_EncodingQuality: 1
+    m_EncodingQuality: 0
   - m_BuildTarget: iPhone
     m_EncodingQuality: 1
   - m_BuildTarget: tvOS
@@ -549,7 +548,7 @@ PlayerSettings:
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetNormalMapEncoding:
   - m_BuildTarget: Android
-    m_Encoding: 1
+    m_Encoding: 0
   - m_BuildTarget: iPhone
     m_Encoding: 1
   - m_BuildTarget: tvOS

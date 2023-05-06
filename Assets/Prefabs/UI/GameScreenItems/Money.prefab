@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517514980924655254}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &3271423327113229460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3493704591646920941}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &5182317321437692188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +250,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7690716492831547937}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &3759299134614531116
 MonoBehaviour:
   m_ObjectHideFlags: 0
