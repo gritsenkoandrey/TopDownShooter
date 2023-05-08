@@ -40,7 +40,7 @@ namespace CodeBase.Game.Systems
                         component.Radar.Clear.Execute();
                         component.LifetimeDisposable.Clear();
 
-                        _gameFactory.CurrentCharacter.Enemies.Remove(component);
+                        _gameFactory.Character.Enemies.Remove(component);
                         _gameFactory.CreateDeathFx(component.transform.position.AddY(1f));
                     }
                 })

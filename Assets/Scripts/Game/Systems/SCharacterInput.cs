@@ -29,7 +29,7 @@ namespace CodeBase.Game.Systems
             
             foreach (CCharacter character in Entities)
             {
-                character.Move.Input = _joystickService.Value;
+                character.Move.Input = _joystickService.GetAxis();
                 
                 _joystickService.Execute();
             }

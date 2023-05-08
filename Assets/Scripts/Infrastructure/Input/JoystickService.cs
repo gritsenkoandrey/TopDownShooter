@@ -23,12 +23,11 @@ namespace CodeBase.Infrastructure.Input
         private bool _joystickHeld;
         private bool _isEnable;
 
-        public Vector2 Value { get; private set; }
+        private Vector2 _axis;
 
         private void Awake()
         {
-            Value = Vector2.zero;
-
+            _axis = Vector2.zero;
             _opacity = 0f;
             _canvasGroup.alpha = _opacity;
             _startPosition = _handle.position;
@@ -37,7 +36,9 @@ namespace CodeBase.Infrastructure.Input
             _deadZoneAreaRadiusSqr = Mathf.Pow(_deadZoneRadius, 2f);
         }
 
-        public void Enable(bool isEnable)
+        Vector2 IJoystickService.GetAxis() => _axis;
+
+        void IJoystickService.Enable(bool isEnable)
         {
             _isEnable = isEnable;
 
@@ -52,11 +53,11 @@ namespace CodeBase.Infrastructure.Input
             
                 _thumb.localPosition = Vector3.zero;
             
-                Value = Vector2.zero;
+                _axis = Vector2.zero;
             }
         }
 
-        public void Execute()
+        void IJoystickService.Execute()
         {
             _opacity = _joystickHeld ? 
                 Mathf.Min(1f, _opacity + Time.deltaTime * _fadeTime) : 
@@ -92,7 +93,7 @@ namespace CodeBase.Infrastructure.Input
 
             if (direction.sqrMagnitude < _deadZoneAreaRadiusSqr)
             {
-                Value = Vector2.zero;
+                _axis = Vector2.zero;
             }
             else
             {
@@ -101,7 +102,7 @@ namespace CodeBase.Infrastructure.Input
                     direction = direction.normalized * _movementAreaRadius;
                 }
 
-                Value = direction * _loverMovementAreaRadius * _valueMultiplier;
+                _axis = direction * _loverMovementAreaRadius * _valueMultiplier;
             }
             
             _thumb.localPosition = direction;
@@ -119,7 +120,7 @@ namespace CodeBase.Infrastructure.Input
             
             _thumb.localPosition = Vector3.zero;
 
-            Value = Vector2.zero;
+            _axis = Vector2.zero;
         }
     }
 }

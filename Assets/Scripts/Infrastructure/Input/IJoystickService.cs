@@ -5,7 +5,7 @@ namespace CodeBase.Infrastructure.Input
 {
     public interface IJoystickService : IService
     {
-        public Vector2 Value { get; }
+        public Vector2 GetAxis();
         public void Enable(bool isEnable);
         public void Execute();
     }

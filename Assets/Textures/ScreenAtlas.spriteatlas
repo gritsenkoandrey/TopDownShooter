@@ -56,7 +56,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
   - {fileID: 21300000, guid: 87d71d1a200c09846b2f4a83c9cf29ac, type: 3}
-  - {fileID: 21300000, guid: d6b37fbb16ed53143a98fe1213354685, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
   - {fileID: 21300000, guid: a3788f6eda275bb4c844456f85f9fff3, type: 3}
@@ -69,10 +68,9 @@ SpriteAtlas:
   - shop_speedometer
   - square
   - circle_two
-  - splat_two
   - shop_medical_pack
   - target
-  - splat_one
+  - splat
   - shop_show
   - circle_one
   m_RenderDataMap: {}

@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
@@ -22,7 +23,7 @@ namespace CodeBase.Infrastructure.States
         public GameStateService(ISceneLoaderService sceneLoaderService, IStaticDataService staticDataService, 
             IProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, 
             IUIFactory uiFactory, IAssetService assetService, ILoadingCurtainService loadingCurtainService, 
-            ICameraService cameraService, IJoystickService joystickService)
+            ICameraService cameraService, IJoystickService joystickService, ITextureArrayFactory textureArrayFactory)
         {
             _states = new Dictionary<Type, IExitState>
             {
@@ -39,7 +40,8 @@ namespace CodeBase.Infrastructure.States
                     progressService, 
                     assetService, 
                     loadingCurtainService,
-                    cameraService),
+                    cameraService,
+                    textureArrayFactory),
                 [typeof(StateLobby)] = new StateLobby(this),
                 [typeof(StateGame)] = new StateGame(this, 
                     joystickService, 

@@ -9,8 +9,8 @@ namespace CodeBase.Infrastructure.Factories.Game
 {
     public interface IGameFactory : IService
     {
-        public CLevel CurrentLevel { get; }
-        public CCharacter CurrentCharacter { get; }
+        public CLevel Level { get; }
+        public CCharacter Character { get; }
         public List<IProgressReader> ProgressReaders { get; }
         public List<IProgressWriter> ProgressWriters { get; }
         public CLevel CreateLevel();

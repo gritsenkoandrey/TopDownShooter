@@ -16,11 +16,9 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IProgressService _progressService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
-        
-        public List<IProgressReader> ProgressReaders { get; } = new();
-        public List<IProgressWriter> ProgressWriters { get; } = new();
-        public CLevel CurrentLevel { get; private set; }
-        public CCharacter CurrentCharacter { get; private set; }
+
+        private CLevel _level;
+        private CCharacter _character;
 
         public GameFactory(IStaticDataService staticDataService, IProgressService progressService, IObjectPoolService objectPoolService, ICameraService cameraService)
         {
@@ -29,12 +27,18 @@ namespace CodeBase.Infrastructure.Factories.Game
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
         }
-        
+
+        public List<IProgressReader> ProgressReaders { get; } = new();
+        public List<IProgressWriter> ProgressWriters { get; } = new();
+
+        CLevel IGameFactory.Level => _level;
+        CCharacter IGameFactory.Character => _character;
+
         CLevel IGameFactory.CreateLevel()
         {
             LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
             
-            return CurrentLevel = Object.Instantiate(_staticDataService.LevelData(levelType).Prefab);
+            return _level = Object.Instantiate(_staticDataService.LevelData(levelType).Prefab);
         }
 
         CCharacter IGameFactory.CreateCharacter()
@@ -43,21 +47,21 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
 
-            CurrentCharacter = Object.Instantiate(characterData.Prefab, _staticDataService.LevelData(levelType).Prefab.CharacterSpawnPosition, Quaternion.identity);
+            _character = Object.Instantiate(characterData.Prefab, _staticDataService.LevelData(levelType).Prefab.CharacterSpawnPosition, Quaternion.identity);
 
-            CurrentCharacter.Health.BaseHealth = characterData.Health;
-            CurrentCharacter.Weapon.BaseDamage = characterData.Damage;
-            CurrentCharacter.Weapon.AttackDistance = characterData.AttackDistance;
-            CurrentCharacter.Weapon.AttackRecharge = characterData.AttackRecharge;
-            CurrentCharacter.Move.BaseSpeed = characterData.Speed;
+            _character.Health.BaseHealth = characterData.Health;
+            _character.Weapon.BaseDamage = characterData.Damage;
+            _character.Weapon.AttackDistance = characterData.AttackDistance;
+            _character.Weapon.AttackRecharge = characterData.AttackRecharge;
+            _character.Move.BaseSpeed = characterData.Speed;
                 
-            Registered(CurrentCharacter.Health);
-            Registered(CurrentCharacter.Weapon);
-            Registered(CurrentCharacter.Move);
+            Registered(_character.Health);
+            Registered(_character.Weapon);
+            Registered(_character.Move);
             
-            _cameraService.SetTarget(CurrentCharacter.transform);
+            _cameraService.SetTarget(_character.transform);
 
-            return CurrentCharacter;
+            return _character;
         }
 
         CZombie IGameFactory.CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
@@ -66,14 +70,14 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             CZombie zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
             
-            zombie.Construct(CurrentCharacter);
+            zombie.Construct(_character);
 
             zombie.Health.MaxHealth = data.Health;
             zombie.Health.Health.Value = data.Health;
             zombie.Melee.Damage = data.Damage;
             zombie.Stats = data.Stats;
             
-            CurrentCharacter.Enemies.Add(zombie);
+            _character.Enemies.Add(zombie);
 
             return zombie;
         }
@@ -103,18 +107,18 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         void IGameFactory.CleanUp()
         {
-            if (CurrentCharacter != null)
+            if (_character != null)
             {
-                Object.Destroy(CurrentCharacter.gameObject);
+                Object.Destroy(_character.gameObject);
             }
             
-            if (CurrentLevel != null)
+            if (_level != null)
             {
-                Object.Destroy(CurrentLevel.gameObject);
+                Object.Destroy(_level.gameObject);
             }
 
-            CurrentLevel = null;
-            CurrentCharacter = null;
+            _level = null;
+            _character = null;
             
             ProgressReaders.Clear();
             ProgressWriters.Clear();

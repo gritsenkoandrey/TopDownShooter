@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Progress;
@@ -19,10 +20,12 @@ namespace CodeBase.Infrastructure.States
         private readonly IAssetService _assetService;
         private readonly ILoadingCurtainService _curtain;
         private readonly ICameraService _cameraService;
+        private readonly ITextureArrayFactory _textureArrayFactory;
 
         public StateLoadLevel(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, 
-            IAssetService assetService, ILoadingCurtainService curtain, ICameraService cameraService)
+            IAssetService assetService, ILoadingCurtainService curtain, ICameraService cameraService,
+            ITextureArrayFactory textureArrayFactory)
         {
             _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
@@ -32,6 +35,7 @@ namespace CodeBase.Infrastructure.States
             _assetService = assetService;
             _curtain = curtain;
             _cameraService = cameraService;
+            _textureArrayFactory = textureArrayFactory;
         }
 
         void IEnterLoadState<string>.Enter(string sceneName)
@@ -49,6 +53,7 @@ namespace CodeBase.Infrastructure.States
 
         private void Next()
         {
+            CreateTextureArray();
             CreateWorld();
             ReadProgress();
 
@@ -59,8 +64,9 @@ namespace CodeBase.Infrastructure.States
         {
             _uiFactory.CleanUp();
             _gameFactory.CleanUp();
-            _assetService.Unload();
             _cameraService.CleanUp();
+            _textureArrayFactory.CleanUp();
+            _assetService.Unload();
         }
 
         private void CreateWorld()
@@ -68,6 +74,12 @@ namespace CodeBase.Infrastructure.States
             _uiFactory.CreateScreen(ScreenType.Lobby);
             _gameFactory.CreateCharacter();
             _gameFactory.CreateLevel();
+        }
+
+        private void CreateTextureArray()
+        {
+            _textureArrayFactory.CreateTextureArray();
+            _textureArrayFactory.GenerateRandomTextureIndex();
         }
 
         private void ReadProgress()

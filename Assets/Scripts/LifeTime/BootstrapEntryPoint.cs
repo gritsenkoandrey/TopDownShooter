@@ -4,6 +4,7 @@ using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Pool;
@@ -26,10 +27,12 @@ namespace CodeBase.LifeTime
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
+        private readonly ITextureArrayFactory _textureArrayFactory;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
             IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService)
+            IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService,
+            ITextureArrayFactory textureArrayFactory)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -39,6 +42,7 @@ namespace CodeBase.LifeTime
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
             _joystickService = joystickService;
+            _textureArrayFactory = textureArrayFactory;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -86,6 +90,7 @@ namespace CodeBase.LifeTime
                 new SMoneyUpdate(_progressService),
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
+                new SGroundMesh(_textureArrayFactory),
             };
         }
 

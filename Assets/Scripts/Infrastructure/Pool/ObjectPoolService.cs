@@ -168,7 +168,13 @@ namespace CodeBase.Infrastructure.Pool
 			    
 			    Release(clone);
 		    }
-		    catch (OperationCanceledException exception) { }
+		    catch (OperationCanceledException exception)
+		    {
+			    if (exception.CancellationToken == _token)
+			    {
+				    Debug.Log($"{exception.CancellationToken}");
+			    }
+		    }
 	    }
     }
 }

@@ -16,5 +16,6 @@ namespace CodeBase.Infrastructure.StaticData
         public CharacterData CharacterData();
         public FxData FxData();
         public CBullet BulletData();
+        public TextureArrayData TextureArrayData();
     }
 }
