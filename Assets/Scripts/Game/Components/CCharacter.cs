@@ -1,4 +1,5 @@
 ﻿using CodeBase.ECSCore;
+using CodeBase.Game.Interfaces;
 using UniRx;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace CodeBase.Game.Components
         public CMove Move => _move;
         public Vector3 Position => transform.position;
 
-        public ReactiveCollection<CZombie> Enemies { get; } = new();
+        public ReactiveCollection<IEnemy> Enemies { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
 
         protected override void OnEntityCreate() { }

@@ -1,12 +1,20 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine;
+using CodeBase.Infrastructure.CameraMain;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterStateMachine : SystemComponent<CCharacter>
     {
+        private readonly ICameraService _cameraService;
+
+        public SCharacterStateMachine(ICameraService cameraService)
+        {
+            _cameraService = cameraService;
+        }
+        
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -38,7 +46,7 @@ namespace CodeBase.Game.Systems
         {
             CharacterStateMachine stateMachine = new CharacterStateMachine(component);
 
-            stateMachine.Init();
+            stateMachine.Init(_cameraService);
 
             component.UpdateStateMachine
                 .Subscribe(_ => stateMachine.Tick())

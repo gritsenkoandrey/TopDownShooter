@@ -1,4 +1,6 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Utils;
 using UnityEngine;
 
@@ -7,11 +9,10 @@ namespace CodeBase.Game.StateMachine
     public sealed class CharacterStateMachine
     {
         private readonly CCharacter _character;
-        private CZombie _target;
-        private Camera _camera;
+        private IEnemy _target;
+        private ICameraService _cameraService;
         private float _delay;
         private float _gravity;
-        private float _velocity;
         private float _angle;
         private bool _isAttack;
 
@@ -20,9 +21,9 @@ namespace CodeBase.Game.StateMachine
             _character = character;
         }
 
-        public void Init()
+        public void Init(ICameraService cameraService)
         {
-            _camera = Camera.main;
+            _cameraService = cameraService;
             _delay = _character.Weapon.AttackRecharge;
             _gravity = Physics.gravity.y * 10f;
         }
@@ -40,7 +41,7 @@ namespace CodeBase.Game.StateMachine
         {
             if (_character.Move.Input.sqrMagnitude > 0.5f)
             {
-                _angle = Mathf.Atan2(_character.Move.Input.x, _character.Move.Input.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+                _angle = Mathf.Atan2(_character.Move.Input.x, _character.Move.Input.y) * Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
             }
         }
 
@@ -76,7 +77,7 @@ namespace CodeBase.Game.StateMachine
                 return;
             }
             
-            foreach (CZombie enemy in _character.Enemies)
+            foreach (IEnemy enemy in _character.Enemies)
             {
                 if (Vector3.Distance(enemy.Position, _character.Position) < _character.Weapon.AttackDistance)
                 {
@@ -101,9 +102,9 @@ namespace CodeBase.Game.StateMachine
             }
             else
             {
-                float smoothAngle = Mathf.SmoothDampAngle(_character.transform.eulerAngles.y, _angle, ref _velocity, 0.05f);
+                float lerpAngle = Mathf.LerpAngle(_character.transform.eulerAngles.y, _angle, 0.25f);
 
-                _character.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+                _character.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
             }
         }
 

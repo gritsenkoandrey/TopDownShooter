@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
@@ -28,11 +29,12 @@ namespace CodeBase.LifeTime
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
         private readonly ITextureArrayFactory _textureArrayFactory;
+        private readonly IGuiService _guiService;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
             IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
             IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService,
-            ITextureArrayFactory textureArrayFactory)
+            ITextureArrayFactory textureArrayFactory, IGuiService guiService)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -43,6 +45,7 @@ namespace CodeBase.LifeTime
             _cameraService = cameraService;
             _joystickService = joystickService;
             _textureArrayFactory = textureArrayFactory;
+            _guiService = guiService;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -69,18 +72,18 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(),
+                new SCharacterStateMachine(_cameraService),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
                 new SCharacterDeath(_gameStateService),
-                new SCharacterKillEnemy(_progressService, _saveLoadService, _gameStateService),
+                new SCharacterKillEnemy(_gameStateService),
                 new SCharacterInput(_joystickService),
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),
                 new SZombieCollision(_gameFactory),
                 new SZombieMeleeAttack(),
-                new SZombieDeath(_gameFactory),
+                new SZombieDeath(_gameFactory, _progressService, _saveLoadService),
                 new SHealthViewUpdate(_cameraService),
                 new SRadarDraw(),
                 new SSelectMesh(),
@@ -91,6 +94,7 @@ namespace CodeBase.LifeTime
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
+                new SDamageView(_gameFactory, _cameraService, _guiService),
             };
         }
 

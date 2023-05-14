@@ -12,7 +12,7 @@ namespace CodeBase.Game.StateMachine
     {
         private readonly CZombie _enemy;
 
-        private Dictionary<ZombieState, Action> _actions;
+        private Dictionary<EnemyState, Action> _actions;
         
         private Vector3 _patrolPosition;
         private float _maxDelay;
@@ -33,7 +33,7 @@ namespace CodeBase.Game.StateMachine
 
         public void Init()
         {
-            _enemy.State = ZombieState.Idle;
+            _enemy.State = EnemyState.Idle;
             _patrolPosition = _enemy.transform.position;
             _maxDelay = _enemy.Stats.StayDelay;
             _delay = _maxDelay;
@@ -47,12 +47,12 @@ namespace CodeBase.Game.StateMachine
             _attackDelay = _maxAttackDelay;
             _enemy.Radar.Radius = _enemy.Stats.AggroRadius;
 
-            _actions = new Dictionary<ZombieState, Action>
+            _actions = new Dictionary<EnemyState, Action>
             {
-                { ZombieState.None, None },
-                { ZombieState.Idle, Idle },
-                { ZombieState.Patrol, Patrol },
-                { ZombieState.Pursuit, Pursuit },
+                { EnemyState.None, None },
+                { EnemyState.Idle, Idle },
+                { EnemyState.Patrol, Patrol },
+                { EnemyState.Pursuit, Pursuit },
             };
         }
 
@@ -190,7 +190,7 @@ namespace CodeBase.Game.StateMachine
             _enemy.Agent.speed = _pursuitSpeed;
             _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 1f);
             _enemy.Radar.Clear.Execute();
-            _enemy.State = ZombieState.Pursuit;
+            _enemy.State = EnemyState.Pursuit;
         }
 
         private void PatrolState()
@@ -199,7 +199,7 @@ namespace CodeBase.Game.StateMachine
             _enemy.Agent.speed = _normalSpeed;
             _enemy.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
             _enemy.Radar.Draw.Execute();
-            _enemy.State = ZombieState.Patrol;
+            _enemy.State = EnemyState.Patrol;
         }
     }
 }

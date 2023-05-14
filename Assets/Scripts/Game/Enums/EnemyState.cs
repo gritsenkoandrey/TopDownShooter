@@ -1,7 +1,7 @@
 ﻿namespace CodeBase.Game.Enums
 {
     [System.Serializable]
-    public enum ZombieState : byte
+    public enum EnemyState : byte
     {
         None    = byte.MaxValue,
         Idle    = 0,

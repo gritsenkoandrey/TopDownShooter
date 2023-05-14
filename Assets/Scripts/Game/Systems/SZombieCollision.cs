@@ -45,6 +45,8 @@ namespace CodeBase.Game.Systems
                         _gameFactory.CreateHitFx(bullet.Object.transform.position);
 
                         bullet.OnDestroy.Execute();
+
+                        component.DamageReceived.Execute(bullet.Damage);
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

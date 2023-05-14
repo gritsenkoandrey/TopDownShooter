@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.StaticData.Data;
 using UniRx;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.AI;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CZombie : EntityComponent<CZombie>
+    public sealed class CZombie : EntityComponent<CZombie>, IEnemy
     {
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private CAnimator _animator;
@@ -23,9 +24,11 @@ namespace CodeBase.Game.Components
         public CCharacter Character { get; private set; }
         public ZombieStats Stats { get; set; }
         public bool IsAggro { get; set; }
-        public ZombieState State { get; set; }
+        public EnemyState State { get; set; }
         public Vector3 Position => transform.position;
         public void Construct(CCharacter character) => Character = character;
+
+        public ReactiveCommand<int> DamageReceived { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
         
         protected override void OnEntityCreate() { }
