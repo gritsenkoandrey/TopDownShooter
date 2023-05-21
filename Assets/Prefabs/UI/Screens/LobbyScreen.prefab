@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1544038682976013172}
   - component: {fileID: 1544038682976013178}
   - component: {fileID: 1544038682976013175}
+  - component: {fileID: 1357532225960574586}
   m_Layer: 5
   m_Name: LobbyScreen
   m_TagString: Untagged
@@ -106,8 +107,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da2aa42804044d0a74ab072dbe98cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _safeArea: {fileID: 1357532225960574586}
   _button: {fileID: 1544038682559636176}
   _text: {fileID: 1544038682910912115}
+--- !u!114 &1357532225960574586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544038682976013176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1eb0ce7e0ca4e7693ddf9dbc713f00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 1544038682976013179}
 --- !u!1001 &1481075517406159488
 PrefabInstance:
   m_ObjectHideFlags: 0

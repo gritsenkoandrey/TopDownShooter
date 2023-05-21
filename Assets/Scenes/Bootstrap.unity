@@ -178,9 +178,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bootstrap
       objectReference: {fileID: 0}
-    - target: {fileID: 7303221303985584532, guid: 5f361011d6b659c47a42036ad9830d3c, type: 3}
-      propertyPath: m_ScreenMatchMode
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f361011d6b659c47a42036ad9830d3c, type: 3}

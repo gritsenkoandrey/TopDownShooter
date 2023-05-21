@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7060742050469915398}
   - component: {fileID: 7060742050469915399}
   - component: {fileID: 7060742050469915396}
+  - component: {fileID: 7226670252583950584}
   m_Layer: 5
   m_Name: GameScreen
   m_TagString: Untagged
@@ -75,6 +76,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141e1e1815d34878953d251720313bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _safeArea: {fileID: 7226670252583950584}
+--- !u!114 &7226670252583950584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060742050469915418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1eb0ce7e0ca4e7693ddf9dbc713f00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 7060742050469915397}
 --- !u!1001 &783294949861581299
 PrefabInstance:
   m_ObjectHideFlags: 0

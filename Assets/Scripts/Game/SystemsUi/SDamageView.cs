@@ -55,7 +55,7 @@ namespace CodeBase.Game.SystemsUi
                         component.Sequence.Append(component.transform
                             .DOMoveY(350f * _guiService.StaticCanvas.Canvas.scaleFactor, 1f)
                             .SetRelative()
-                            .SetEase(Ease.Linear));
+                            .SetEase(Ease.OutCirc));
 
                         component.Sequence.Join(component.CanvasGroup
                             .DOFade(0f, 1f)
