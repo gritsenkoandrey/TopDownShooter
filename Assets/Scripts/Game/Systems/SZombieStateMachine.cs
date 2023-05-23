@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.StateMachine;
-using Cysharp.Threading.Tasks;
+using CodeBase.Game.StateMachine.Zombie;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -40,16 +39,14 @@ namespace CodeBase.Game.Systems
             base.OnDisableComponent(component);
         }
 
-        private async void InitializeStateMachine(CZombie component)
+        private void InitializeStateMachine(CZombie component)
         {
-            await UniTask.NextFrame();
+            component.StateMachine = new ZombieStateMachine(component);
             
-            ZombieStateMachine enemyStateMachine = new ZombieStateMachine(component);
-            
-            enemyStateMachine.Init();
+            component.StateMachine.Enter<ZombieStateIdle>();
 
             component.UpdateStateMachine
-                .Subscribe(_ => enemyStateMachine.Tick())
+                .Subscribe(_ => component.StateMachine.Tick())
                 .AddTo(component.LifetimeDisposable);
         }
     }

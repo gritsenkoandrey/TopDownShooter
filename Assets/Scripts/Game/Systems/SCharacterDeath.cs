@@ -1,7 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
+using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.States;
 using UniRx;
 
@@ -42,9 +42,7 @@ namespace CodeBase.Game.Systems
 
                         foreach (IEnemy enemy in component.Enemies)
                         {
-                            enemy.Agent.ResetPath();
-                            enemy.Radar.Clear.Execute();
-                            enemy.State = EnemyState.None;
+                            enemy.StateMachine.Enter<ZombieStateNone>();
                         }
                     }
                 })

@@ -10,7 +10,7 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SHealthViewUpdate : SystemComponent<CHealthView>
     {
-        private ICameraService _cameraService;
+        private readonly ICameraService _cameraService;
 
         public SHealthViewUpdate(ICameraService cameraService)
         {
@@ -27,9 +27,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnUpdate()
+        protected override void OnLateUpdate()
         {
-            base.OnUpdate();
+            base.OnLateUpdate();
 
             foreach (CHealthView component in Entities)
             {

@@ -17,9 +17,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnUpdate()
+        protected override void OnLateUpdate()
         {
-            base.OnUpdate();
+            base.OnLateUpdate();
 
             foreach (CRadar radar in Entities)
             {

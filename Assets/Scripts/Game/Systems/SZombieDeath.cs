@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -42,9 +43,7 @@ namespace CodeBase.Game.Systems
                 {
                     if (health <= 0)
                     {
-                        component.Agent.ResetPath();
-                        component.Radar.Clear.Execute();
-                        component.LifetimeDisposable.Clear();
+                        component.StateMachine.Enter<ZombieStateNone>();
 
                         _progressService.PlayerProgress.Money.Value += component.Stats.Money;
                         _saveLoadService.SaveProgress();

@@ -1,5 +1,5 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Enums;
+using CodeBase.Game.StateMachine.Zombie;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,7 +10,7 @@ namespace CodeBase.Game.Interfaces
     {
         public NavMeshAgent Agent { get; }
         public CRadar Radar { get; }
-        public EnemyState State { get; set; }
+        public ZombieStateMachine StateMachine { get; }
         public Vector3 Position { get; }
         public ReactiveCommand<int> DamageReceived { get; }
     }
