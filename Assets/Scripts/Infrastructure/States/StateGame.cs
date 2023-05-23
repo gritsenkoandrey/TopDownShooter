@@ -20,6 +20,7 @@ namespace CodeBase.Infrastructure.States
         void IEnterState.Enter()
         {
             _uiFactory.CreateScreen(ScreenType.Game);
+            _joystickService.Init();
             _joystickService.Enable(true);
         }
 

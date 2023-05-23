@@ -25,7 +25,7 @@ namespace CodeBase.Infrastructure.Input
 
         private Vector2 _axis;
 
-        private void Awake()
+        void IJoystickService.Init()
         {
             _axis = Vector2.zero;
             _opacity = 0f;
@@ -66,7 +66,7 @@ namespace CodeBase.Infrastructure.Input
             _canvasGroup.alpha = _opacity;
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             if (!_isEnable) return;
             
@@ -84,7 +84,7 @@ namespace CodeBase.Infrastructure.Input
                 _handle.position = position;
             }
         }
-        public void OnDrag(PointerEventData eventData)
+        void IDragHandler.OnDrag(PointerEventData eventData)
         {
             if (!_isEnable) return;
 
@@ -107,7 +107,7 @@ namespace CodeBase.Infrastructure.Input
             
             _thumb.localPosition = direction;
         }
-        public void OnPointerUp(PointerEventData eventData)
+        void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
             if (!_isEnable) return;
             
