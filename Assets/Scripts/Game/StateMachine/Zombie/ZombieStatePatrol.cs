@@ -5,44 +5,36 @@ using UnityEngine.AI;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStatePatrol : ZombieState
+    public sealed class ZombieStatePatrol : ZombieState, IEnemyState
     {
-        private readonly CZombie _zombie;
         private readonly Vector3 _patrolPosition;
 
-        public ZombieStatePatrol(ZombieStateMachine stateMachine, CZombie zombie) : base(stateMachine)
+        public ZombieStatePatrol(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
         {
-            _zombie = zombie;
-            _patrolPosition = _zombie.transform.position;
+            _patrolPosition = Zombie.Position;
         }
         
-        public override void Enter()
+        void IEnemyState.Enter()
         {
-            base.Enter();
-            
-            _zombie.Agent.speed = _zombie.Stats.WalkSpeed;
-            _zombie.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
-            _zombie.Agent.SetDestination(GeneratePointOnNavmesh());
+            Zombie.Agent.speed = Zombie.Stats.WalkSpeed;
+            Zombie.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
+            Zombie.Agent.SetDestination(GeneratePointOnNavmesh());
         }
 
-        public override void Exit()
+        void IEnemyState.Exit()
         {
-            base.Exit();
-            
-            _zombie.Agent.ResetPath();
+            Zombie.Agent.ResetPath();
         }
 
-        public override void Tick()
+        void IEnemyState.Tick()
         {
-            base.Tick();
-            
-            if (Distance() < _zombie.Radar.Radius || _zombie.IsAggro)
+            if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
             else
             {
-                if (_zombie.Agent.hasPath)
+                if (Zombie.Agent.hasPath)
                 {
                     return;
                 }
@@ -55,7 +47,7 @@ namespace CodeBase.Game.StateMachine.Zombie
         {
             for (int i = 0; i < 10; i++)
             {
-                Vector3 center = _patrolPosition + GenerateRandomPoint(_zombie.Stats.PatrolRadius);
+                Vector3 center = _patrolPosition + GenerateRandomPoint(Zombie.Stats.PatrolRadius);
 
                 if (NavMesh.SamplePosition(center, out NavMeshHit hit, 1f, 1))
                 {
@@ -76,6 +68,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             return new Vector3(x, 0f, z);
         }
         
-        private float Distance() => Vector3.Distance(_zombie.Position, _zombie.Character.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Character.Position);
     }
 }

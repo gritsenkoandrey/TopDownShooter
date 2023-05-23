@@ -4,15 +4,15 @@ using CodeBase.Game.Components;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStateMachine
+    public sealed class ZombieStateMachine : IEnemyStateMachine
     {
-        private ZombieState _activeState;
+        private IEnemyState _activeState;
         
-        private readonly Dictionary<Type, ZombieState> _states;
+        private readonly Dictionary<Type, IEnemyState> _states;
 
         public ZombieStateMachine(CZombie zombie)
         {
-            _states = new Dictionary<Type, ZombieState>
+            _states = new Dictionary<Type, IEnemyState>
             {
                 [typeof(ZombieStateNone)] = new ZombieStateNone(this, zombie),
                 [typeof(ZombieStateIdle)] = new ZombieStateIdle(this, zombie),
@@ -21,15 +21,29 @@ namespace CodeBase.Game.StateMachine.Zombie
             };
         }
 
-        public void Enter<T>() where T : ZombieState
+        void IEnemyStateMachine.Enter<T>()
         {
-            T type = _states[typeof(T)] as T;
+            T state = ChangeState<T>();
 
-            _activeState?.Exit();
-            _activeState = type;
-            _activeState?.Enter();
+            state.Enter();
         }
 
-        public void Tick() => _activeState?.Tick();
+        void IEnemyStateMachine.Tick() => _activeState?.Tick();
+
+        private T ChangeState<T>() where T : class, IEnemyState
+        {
+            _activeState?.Exit();
+
+            T state = GetState<T>();
+
+            _activeState = state;
+            
+            return state;
+        }
+
+        private T GetState<T>() where T : class, IEnemyState
+        {
+            return _states[typeof(T)] as T;
+        }
     }
 }

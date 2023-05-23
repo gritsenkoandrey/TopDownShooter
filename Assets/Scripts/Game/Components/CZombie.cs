@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
+using CodeBase.Game.StateMachine;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.StaticData.Data;
 using UniRx;
@@ -23,7 +24,7 @@ namespace CodeBase.Game.Components
         public CMelee Melee => _melee;
         public CCharacter Character { get; private set; }
         public ZombieStats Stats { get; set; }
-        public ZombieStateMachine StateMachine { get; set; }
+        public IEnemyStateMachine StateMachine { get; set; }
         public bool IsAggro { get; set; }
         public Vector3 Position => transform.position;
         public void Construct(CCharacter character) => Character = character;

@@ -4,42 +4,31 @@ using UnityEngine;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStatePursuit : ZombieState
+    public sealed class ZombieStatePursuit : ZombieState, IEnemyState
     {
-        private readonly CZombie _zombie;
-
         private float _attackDelay;
 
-        public ZombieStatePursuit(ZombieStateMachine stateMachine, CZombie zombie) : base(stateMachine)
-        {
-            _zombie = zombie;
-        }
+        public ZombieStatePursuit(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie) { }
         
-        public override void Enter()
+        void IEnemyState.Enter()
         {
-            base.Enter();
-
-            _attackDelay = _zombie.Stats.AttackDelay;
-            _zombie.Agent.speed = _zombie.Stats.RunSpeed;
-            _zombie.Animator.Animator.SetFloat(Animations.RunBlend, 1f);
-            _zombie.Radar.Clear.Execute();
+            _attackDelay = Zombie.Stats.AttackDelay;
+            Zombie.Agent.speed = Zombie.Stats.RunSpeed;
+            Zombie.Animator.Animator.SetFloat(Animations.RunBlend, 1f);
+            Zombie.Radar.Clear.Execute();
         }
 
-        public override void Exit()
+        void IEnemyState.Exit()
         {
-            base.Exit();
-            
-            _zombie.Agent.ResetPath();
-            _attackDelay = _zombie.Stats.AttackDelay;
+            Zombie.Agent.ResetPath();
+            _attackDelay = Zombie.Stats.AttackDelay;
         }
 
-        public override void Tick()
+        void IEnemyState.Tick()
         {
-            base.Tick();
-            
-            if (Distance() > _zombie.Stats.PursuitRadius)
+            if (Distance() > Zombie.Stats.PursuitRadius)
             {
-                _zombie.IsAggro = false;
+                Zombie.IsAggro = false;
                 
                 StateMachine.Enter<ZombieStateIdle>();
             }
@@ -47,18 +36,18 @@ namespace CodeBase.Game.StateMachine.Zombie
             {
                 LockAt();
                 
-                if (Distance() < _zombie.Stats.MinDistanceToTarget)
+                if (Distance() < Zombie.Stats.MinDistanceToTarget)
                 {
-                    if (_zombie.Agent.hasPath)
+                    if (Zombie.Agent.hasPath)
                     {
-                        _zombie.Agent.ResetPath();
+                        Zombie.Agent.ResetPath();
                     }
                     
                     Attack();
                 }
                 else
                 {
-                    _zombie.Agent.SetDestination(_zombie.Character.Position);
+                    Zombie.Agent.SetDestination(Zombie.Character.Position);
                 }
 
                 _attackDelay -= Time.deltaTime;
@@ -69,19 +58,19 @@ namespace CodeBase.Game.StateMachine.Zombie
         {
             if (_attackDelay < 0f)
             {
-                _attackDelay = _zombie.Stats.AttackDelay;
+                _attackDelay = Zombie.Stats.AttackDelay;
 
-                _zombie.Melee.Attack.Execute();
+                Zombie.Melee.Attack.Execute();
             }
         }
         
         private void LockAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(_zombie.Character.Position - _zombie.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(Zombie.Character.Position - Zombie.Position);
 
-            _zombie.transform.rotation = Quaternion.Slerp(_zombie.transform.rotation, lookRotation, 0.5f);
+            Zombie.transform.rotation = Quaternion.Slerp(Zombie.transform.rotation, lookRotation, 0.5f);
         }
         
-        private float Distance() => Vector3.Distance(_zombie.Position, _zombie.Character.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Character.Position);
     }
 }

@@ -3,43 +3,31 @@ using UnityEngine;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStateIdle : ZombieState
+    public sealed class ZombieStateIdle : ZombieState, IEnemyState
     {
-        private readonly CZombie _zombie;
-        
         private float _delay;
-        
-        public ZombieStateIdle(ZombieStateMachine stateMachine, CZombie zombie) : base(stateMachine)
-        {
-            _zombie = zombie;
-        }
 
-        public override void Enter()
-        {
-            base.Enter();
+        public ZombieStateIdle(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie) { }
 
-            _delay = _zombie.Stats.StayDelay;
+        void IEnemyState.Enter()
+        {
+            _delay = Zombie.Stats.StayDelay;
              
-            _zombie.Radar.Radius = _zombie.Stats.AggroRadius;
-            _zombie.Radar.Draw.Execute();
+            Zombie.Radar.Radius = Zombie.Stats.AggroRadius;
+            Zombie.Radar.Draw.Execute();
         }
 
-        public override void Exit()
-        {
-            base.Exit();
-        }
+        void IEnemyState.Exit() { }
 
-        public override void Tick()
+        void IEnemyState.Tick()
         {
-            base.Tick();
-            
             if (_delay > 0f)
             {
                 _delay -= Time.deltaTime;
             }
             else
             {
-                if (Distance() < _zombie.Radar.Radius || _zombie.IsAggro)
+                if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
                 {
                     StateMachine.Enter<ZombieStatePursuit>();
                 }
@@ -49,7 +37,7 @@ namespace CodeBase.Game.StateMachine.Zombie
                 }
             }
         }
-        
-        private float Distance() => Vector3.Distance(_zombie.Position, _zombie.Character.Position);
+
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Character.Position);
     }
 }

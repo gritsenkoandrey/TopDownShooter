@@ -2,32 +2,18 @@
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStateNone : ZombieState
+    public sealed class ZombieStateNone : ZombieState, IEnemyState
     {
-        private readonly CZombie _zombie;
+        public ZombieStateNone(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie) { }
 
-        public ZombieStateNone(ZombieStateMachine stateMachine, CZombie zombie) : base(stateMachine)
+        void IEnemyState.Enter()
         {
-            _zombie = zombie;
-        }
-        
-        public override void Enter()
-        {
-            base.Enter();
-            
-            _zombie.Agent.ResetPath();
-            _zombie.Radar.Clear.Execute();
-            _zombie.LifetimeDisposable.Clear();
+            Zombie.Agent.ResetPath();
+            Zombie.Radar.Clear.Execute();
         }
 
-        public override void Exit()
-        {
-            base.Exit();
-        }
+        void IEnemyState.Exit() { }
 
-        public override void Tick()
-        {
-            base.Tick();
-        }
+        void IEnemyState.Tick() { }
     }
 }

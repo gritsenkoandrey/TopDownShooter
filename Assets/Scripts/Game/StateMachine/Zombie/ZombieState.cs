@@ -1,16 +1,16 @@
-﻿namespace CodeBase.Game.StateMachine.Zombie
+﻿using CodeBase.Game.Components;
+
+namespace CodeBase.Game.StateMachine.Zombie
 {
     public abstract class ZombieState
     {
-        protected ZombieStateMachine StateMachine { get; }
+        protected IEnemyStateMachine StateMachine { get; }
+        protected CZombie Zombie { get; }
 
-        protected ZombieState(ZombieStateMachine stateMachine)
+        protected ZombieState(IEnemyStateMachine stateMachine, CZombie zombie)
         {
             StateMachine = stateMachine;
+            Zombie = zombie;
         }
-        
-        public virtual void Enter() {}
-        public virtual void Exit() {}
-        public virtual void Tick() {}
     }
 }
