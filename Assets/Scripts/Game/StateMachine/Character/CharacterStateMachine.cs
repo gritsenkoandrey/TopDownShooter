@@ -1,18 +1,20 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Input;
 using CodeBase.Utils;
 using UnityEngine;
 
-namespace CodeBase.Game.StateMachine
+namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateMachine
     {
         private readonly CCharacter _character;
         private IEnemy _target;
         private ICameraService _cameraService;
+        private IJoystickService _joystickService;
+        
         private float _delay;
-        private float _gravity;
         private float _angle;
         private bool _isAttack;
 
@@ -21,15 +23,16 @@ namespace CodeBase.Game.StateMachine
             _character = character;
         }
 
-        public void Init(ICameraService cameraService)
+        public void Construct(ICameraService cameraService, IJoystickService joystickService)
         {
             _cameraService = cameraService;
-            _delay = _character.Weapon.AttackRecharge;
-            _gravity = Physics.gravity.y * 10f;
+            _joystickService = joystickService;
         }
 
         public void Tick()
         {
+            _joystickService.Execute();
+
             Input();
             Move();
             Target();
@@ -39,9 +42,10 @@ namespace CodeBase.Game.StateMachine
 
         private void Input()
         {
-            if (_character.Move.Input.sqrMagnitude > 0.5f)
+            if (_joystickService.GetAxis().sqrMagnitude > 0.5f)
             {
-                _angle = Mathf.Atan2(_character.Move.Input.x, _character.Move.Input.y) * Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
+                _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
+                    Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
             }
         }
 
@@ -49,7 +53,7 @@ namespace CodeBase.Game.StateMachine
         {
             Vector3 move = Vector3.zero;
 
-            if (_character.Move.Input.sqrMagnitude > 0.5f)
+            if (_joystickService.GetAxis().sqrMagnitude > 0.5f)
             {
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
@@ -63,7 +67,7 @@ namespace CodeBase.Game.StateMachine
                 }
             }
 
-            move.y = _character.Move.CharacterController.isGrounded ? 0f : _gravity;
+            move.y = _character.Move.CharacterController.isGrounded ? 0f : Physics.gravity.y;
 
             _character.Move.CharacterController.Move(move * _character.Move.Speed * Time.deltaTime);
         }
@@ -82,9 +86,8 @@ namespace CodeBase.Game.StateMachine
                 if (Vector3.Distance(enemy.Position, _character.Position) < _character.Weapon.AttackDistance)
                 {
                     _target = enemy;
-                    
                     _isAttack = true;
-
+                    
                     break;
                 }
 
@@ -97,13 +100,11 @@ namespace CodeBase.Game.StateMachine
             if (_isAttack)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(_target.Position - _character.Position);
-                
                 _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, lookRotation, 0.75f);
             }
             else
             {
                 float lerpAngle = Mathf.LerpAngle(_character.transform.eulerAngles.y, _angle, 0.25f);
-
                 _character.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
             }
         }
@@ -115,7 +116,6 @@ namespace CodeBase.Game.StateMachine
                 if (_delay < 0f)
                 {
                     _character.Weapon.Shoot.Execute();
-                    
                     _delay = _character.Weapon.AttackRecharge;
                 }
             }

@@ -9,7 +9,6 @@ namespace CodeBase.Game.Components
         [SerializeField] private CharacterController _characterController;
 
         public CharacterController CharacterController => _characterController;
-        public Vector2 Input { get; set; }
         public float BaseSpeed { get; set; }
         public float Speed { get; private set; }
         

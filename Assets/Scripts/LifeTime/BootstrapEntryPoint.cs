@@ -72,12 +72,11 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_cameraService),
+                new SCharacterStateMachine(_cameraService, _joystickService),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
                 new SCharacterDeath(_gameStateService),
                 new SCharacterKillEnemy(_gameStateService),
-                new SCharacterInput(_joystickService),
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),

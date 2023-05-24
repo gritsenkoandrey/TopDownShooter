@@ -1,4 +1,5 @@
 ﻿using CodeBase.Game.StateMachine;
+using CodeBase.Game.StateMachine.Zombie;
 using UniRx;
 using UnityEngine;
 

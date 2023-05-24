@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Game.StateMachine
+﻿namespace CodeBase.Game.StateMachine.Zombie
 {
     public interface IEnemyStateMachine
     {
