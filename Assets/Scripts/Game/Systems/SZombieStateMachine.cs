@@ -31,7 +31,14 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            InitializeStateMachine(component);
+            component.Target
+                .SkipLatestValueOnSubscribe()
+                .First()
+                .Subscribe(_ =>
+                {
+                    InitializeStateMachine(component);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CZombie component)

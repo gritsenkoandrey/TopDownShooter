@@ -20,10 +20,10 @@ MonoBehaviour:
     WalkSpeed: 2
     RunSpeed: 5
     AttackDelay: 1
-    AliveDelay: 3.5
     StayDelay: 2
     AggroRadius: 4
     PursuitRadius: 10
     PatrolRadius: 3
     MinDistanceToTarget: 2.5
+    Height: 3.5
   Prefab: {fileID: 3522537617868912392, guid: 348a9e1474e40ec4da07575d55c638ad, type: 3}

@@ -32,9 +32,9 @@ namespace CodeBase.Game.Systems
 
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
-                .Subscribe(health =>
+                .Subscribe(_ =>
                 {
-                    if (health <= 0)
+                    if (!component.Health.IsAlive)
                     {
                         _gameStateService.Enter<StateFail>();
                         

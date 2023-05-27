@@ -12,6 +12,7 @@ namespace CodeBase.Game.Components
         public Collider Collider => _collider;
         public int MaxHealth { get; set; }
         public int BaseHealth { get; set; }
+        public bool IsAlive => Health.Value > 0;
         public ReactiveProperty<int> Health { get; } = new();
 
         void IProgressReader.Read(PlayerProgress progress)

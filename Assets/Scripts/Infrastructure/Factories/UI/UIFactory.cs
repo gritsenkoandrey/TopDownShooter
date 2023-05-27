@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Progress;
@@ -64,6 +65,17 @@ namespace CodeBase.Infrastructure.Factories.UI
             Registered(button);
 
             return button;
+        }
+
+        CEnemyHealth IUIFactory.CreateEnemyHealth(IEnemy enemy, Transform parent)
+        {
+            UiData data = _staticDataService.UiData();
+            
+            CEnemyHealth enemyHealth = Object.Instantiate(data.EnemyHealth, parent);
+
+            enemyHealth.Enemy.SetValueAndForceNotify(enemy);
+
+            return enemyHealth;
         }
 
         void IUIFactory.CleanUp()

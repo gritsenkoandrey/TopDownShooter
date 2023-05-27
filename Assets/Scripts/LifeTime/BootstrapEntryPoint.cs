@@ -57,12 +57,7 @@ namespace CodeBase.LifeTime
             _gameStateService.Enter<StateBootstrap>();
         }
 
-        void IDisposable.Dispose()
-        {
-            DisableSystems();
-            Clear();
-        }
-
+        void IDisposable.Dispose() => Clear();
         void ITickable.Tick() => UpdateSystems();
         void IFixedTickable.FixedTick() => FixedUpdateSystems();
         void ILateTickable.LateTick() => LateUpdateSystems();
@@ -83,7 +78,6 @@ namespace CodeBase.LifeTime
                 new SZombieCollision(_gameFactory),
                 new SZombieMeleeAttack(),
                 new SZombieDeath(_gameFactory, _progressService, _saveLoadService),
-                new SHealthViewUpdate(_cameraService),
                 new SRadarDraw(),
                 new SSelectMesh(),
                 new SUpgradeShop(_uiFactory),
@@ -94,6 +88,9 @@ namespace CodeBase.LifeTime
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
                 new SDamageView(_gameFactory, _cameraService, _guiService),
+                new SEnemyHealthProvider(_gameFactory, _uiFactory, _cameraService),
+                new SEnemyHealth(),
+                new SCharacterHealth(_gameFactory),
             };
         }
 
@@ -121,6 +118,7 @@ namespace CodeBase.LifeTime
             }
             
             _joystickService.Execute();
+            _objectPoolService.Log();
         }
         
         private void FixedUpdateSystems()
@@ -139,6 +137,13 @@ namespace CodeBase.LifeTime
             }
         }
 
-        private void Clear() => _systems = Array.Empty<SystemBase>();
+        private void Clear()
+        {
+            DisableSystems();
+            
+            _systems = Array.Empty<SystemBase>();
+            
+            _objectPoolService.CleanUp();
+        }
     }
 }

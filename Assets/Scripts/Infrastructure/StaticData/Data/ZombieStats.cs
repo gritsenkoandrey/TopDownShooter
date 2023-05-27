@@ -14,5 +14,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         [Range(2.5f, 20f)] public float PursuitRadius;
         [Range(2.5f, 20f)] public float PatrolRadius;
         [Range(1f, 3f)] public float MinDistanceToTarget;
+        [Range(1f, 10f)] public float Height;
     }
 }

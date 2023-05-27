@@ -39,9 +39,9 @@ namespace CodeBase.Game.Systems
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
                 .ObserveOnMainThread()
-                .Subscribe(health =>
+                .Subscribe(_ =>
                 {
-                    if (health <= 0)
+                    if (!component.Health.IsAlive)
                     {
                         component.StateMachine.Enter<ZombieStateNone>();
 

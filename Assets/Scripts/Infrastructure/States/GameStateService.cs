@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
+using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.StaticData;
@@ -23,14 +24,16 @@ namespace CodeBase.Infrastructure.States
         public GameStateService(ISceneLoaderService sceneLoaderService, IStaticDataService staticDataService, 
             IProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, 
             IUIFactory uiFactory, IAssetService assetService, ILoadingCurtainService loadingCurtainService, 
-            ICameraService cameraService, IJoystickService joystickService, ITextureArrayFactory textureArrayFactory)
+            ICameraService cameraService, IJoystickService joystickService, ITextureArrayFactory textureArrayFactory, 
+            IObjectPoolService objectPoolService)
         {
             _states = new Dictionary<Type, IExitState>
             {
                 [typeof(StateBootstrap)] = new StateBootstrap(this, 
                     sceneLoaderService, 
                     staticDataService,
-                    joystickService),
+                    joystickService,
+                    objectPoolService),
                 [typeof(StateLoadProgress)] = new StateLoadProgress(this, 
                     progressService, 
                     saveLoadService),

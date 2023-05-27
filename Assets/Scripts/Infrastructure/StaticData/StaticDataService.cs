@@ -20,6 +20,7 @@ namespace CodeBase.Infrastructure.StaticData
         private const string LevelDataPath = "StaticData/LevelData";
         private const string FxDataPath = "Data/FX/FxData";
         private const string TextureArrayDataPath = "StaticData/TextureArrayData/TextureArrayData";
+        private const string UiDataPath = "StaticData/UiData/UiData";
 
         private Dictionary<ZombieType, ZombieData> _monsters;
         private Dictionary<ScreenType, ScreenData> _screens;
@@ -29,6 +30,7 @@ namespace CodeBase.Infrastructure.StaticData
         private CBullet _bullet;
         private FxData _fxData;
         private TextureArrayData _textureArrayData;
+        private UiData _uiData;
 
         public StaticDataService(IAssetService assetService)
         {
@@ -57,6 +59,7 @@ namespace CodeBase.Infrastructure.StaticData
             _bullet = _assetService.Load<CBullet>(BulletPath);
             _fxData = _assetService.Load<FxData>(FxDataPath);
             _textureArrayData = _assetService.Load<TextureArrayData>(TextureArrayDataPath);
+            _uiData = _assetService.Load<UiData>(UiDataPath);
         }
 
         ZombieData IStaticDataService.ZombieData(ZombieType type) => 
@@ -75,5 +78,6 @@ namespace CodeBase.Infrastructure.StaticData
         FxData IStaticDataService.FxData() => _fxData;
         CBullet IStaticDataService.BulletData() => _bullet;
         TextureArrayData IStaticDataService.TextureArrayData() => _textureArrayData;
+        UiData IStaticDataService.UiData() => _uiData;
     }
 }

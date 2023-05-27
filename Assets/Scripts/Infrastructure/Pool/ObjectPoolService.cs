@@ -21,7 +21,7 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private CancellationToken _token;
 
-	    private void Awake()
+	    void IObjectPoolService.Init()
 	    {
 		    _root = new GameObject().transform;
 		    
@@ -30,14 +30,11 @@ namespace CodeBase.Infrastructure.Pool
 		    _root.name = "Pool";
 
 		    _token = this.GetCancellationTokenOnDestroy();
-	    }
 
-	    private void Start()
-	    {
 		    FirstWarmPool();
 	    }
 
-	    private void Update()
+	    void IObjectPoolService.Log()
 	    {
 		    if (_logStatus && _dirty)
 		    {
@@ -47,7 +44,7 @@ namespace CodeBase.Infrastructure.Pool
 		    }
 	    }
 
-	    private void OnDisable()
+	    void IObjectPoolService.CleanUp()
 	    {
 		    _prefabLookup.Clear();
 		    _instanceLookup.Clear();

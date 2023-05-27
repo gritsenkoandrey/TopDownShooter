@@ -69,8 +69,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             ZombieData data = _staticDataService.ZombieData(zombieType);
             
             CZombie zombie = Object.Instantiate(data.Prefab, position, Quaternion.identity, parent);
-            
-            zombie.Construct(_character);
 
             zombie.Health.MaxHealth = data.Health;
             zombie.Health.Health.Value = data.Health;
@@ -78,6 +76,8 @@ namespace CodeBase.Infrastructure.Factories.Game
             zombie.Stats = data.Stats;
             
             _character.Enemies.Add(zombie);
+            
+            zombie.Target.SetValueAndForceNotify(_character);
 
             return zombie;
         }

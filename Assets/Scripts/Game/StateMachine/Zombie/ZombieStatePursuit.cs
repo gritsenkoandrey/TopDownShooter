@@ -47,7 +47,7 @@ namespace CodeBase.Game.StateMachine.Zombie
                 }
                 else
                 {
-                    Zombie.Agent.SetDestination(Zombie.Target.Position);
+                    Zombie.Agent.SetDestination(Zombie.Target.Value.Position);
                 }
 
                 _attackDelay -= Time.deltaTime;
@@ -66,11 +66,11 @@ namespace CodeBase.Game.StateMachine.Zombie
         
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(Zombie.Target.Position - Zombie.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(Zombie.Target.Value.Position - Zombie.Position);
 
             Zombie.transform.rotation = Quaternion.Slerp(Zombie.transform.rotation, lookRotation, 0.5f);
         }
         
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
     }
 }

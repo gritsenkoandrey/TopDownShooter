@@ -68,6 +68,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             return new Vector3(x, 0f, z);
         }
         
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
     }
 }

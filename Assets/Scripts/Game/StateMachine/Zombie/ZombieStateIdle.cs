@@ -20,15 +20,15 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IEnemyState.Tick()
         {
-            if (_delay > 0f)
+            if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
             {
-                _delay -= Time.deltaTime;
+                StateMachine.Enter<ZombieStatePursuit>();
             }
             else
             {
-                if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
+                if (_delay > 0f)
                 {
-                    StateMachine.Enter<ZombieStatePursuit>();
+                    _delay -= Time.deltaTime;
                 }
                 else
                 {
@@ -37,6 +37,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
     }
 }
