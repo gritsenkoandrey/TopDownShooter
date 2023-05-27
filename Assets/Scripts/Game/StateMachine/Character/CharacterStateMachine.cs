@@ -31,22 +31,10 @@ namespace CodeBase.Game.StateMachine.Character
 
         public void Tick()
         {
-            _joystickService.Execute();
-
-            Input();
             Move();
             Target();
             Rotate();
             Attack();
-        }
-
-        private void Input()
-        {
-            if (_joystickService.GetAxis().sqrMagnitude > 0.5f)
-            {
-                _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
-                    Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
-            }
         }
 
         private void Move()
@@ -55,6 +43,9 @@ namespace CodeBase.Game.StateMachine.Character
 
             if (_joystickService.GetAxis().sqrMagnitude > 0.5f)
             {
+                _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
+                    Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
+
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
                 Vector3 next = _character.transform.position + move * _character.Move.Speed * Time.deltaTime;
@@ -80,17 +71,31 @@ namespace CodeBase.Game.StateMachine.Character
                 
                 return;
             }
-            
-            foreach (IEnemy enemy in _character.Enemies)
-            {
-                if (Vector3.Distance(enemy.Position, _character.Position) < _character.Weapon.AttackDistance)
-                {
-                    _target = enemy;
-                    _isAttack = true;
-                    
-                    break;
-                }
 
+            int index = -1;
+            float minDistance = _character.Weapon.AttackDistance;
+
+            for (int i = 0; i < _character.Enemies.Count; i++)
+            {
+                float distance = Vector3.Distance(_character.Enemies[i].Position, _character.Position);
+                
+                if (distance < _character.Weapon.AttackDistance)
+                {
+                    if (distance < minDistance)
+                    {
+                        index = i;
+                        minDistance = distance;
+                    }
+                }
+            }
+
+            if (index >= 0)
+            {
+                _isAttack = true;
+                _target = _character.Enemies[index];
+            }
+            else
+            {
                 _isAttack = false;
             }
         }

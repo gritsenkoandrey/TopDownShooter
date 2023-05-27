@@ -24,14 +24,14 @@ namespace CodeBase.Game.Systems
             component.Melee.OnCheckDamage
                 .Subscribe(_ =>
                 {
-                    float distance = Vector3.Distance(component.transform.position, component.Character.Position);
+                    float distance = Vector3.Distance(component.Position, component.Target.Position);
 
                     if (distance > component.Stats.MinDistanceToTarget || component.Health.Health.Value <= 0)
                     {
                         return;
                     }
 
-                    component.Character.Health.Health.Value -= component.Melee.Damage;
+                    component.Target.Health.Health.Value -= component.Melee.Damage;
                 })
                 .AddTo(component.LifetimeDisposable);
         }

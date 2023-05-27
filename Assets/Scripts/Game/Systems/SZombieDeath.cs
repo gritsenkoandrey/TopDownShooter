@@ -48,7 +48,7 @@ namespace CodeBase.Game.Systems
                         _progressService.PlayerProgress.Money.Value += component.Stats.Money;
                         _saveLoadService.SaveProgress();
                         _gameFactory.Character.Enemies.Remove(component);
-                        _gameFactory.CreateDeathFx(component.transform.position.AddY(1f));
+                        _gameFactory.CreateDeathFx(component.Position.AddY(1f));
                     }
                 })
                 .AddTo(component.LifetimeDisposable);

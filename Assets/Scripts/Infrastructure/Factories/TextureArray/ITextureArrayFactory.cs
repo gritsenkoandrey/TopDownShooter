@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using CodeBase.Infrastructure.Services;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.TextureArray
 {
-    public interface ITextureArrayFactory
+    public interface ITextureArrayFactory : IService
     {
         public Texture2DArray GetTextureArray();
         public int GetIndex();

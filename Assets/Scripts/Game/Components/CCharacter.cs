@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CCharacter : EntityComponent<CCharacter>
+    public sealed class CCharacter : EntityComponent<CCharacter>, ITarget
     {
         [SerializeField] private CAnimator _animator;
         [SerializeField] private CHealth _health;
@@ -17,7 +17,6 @@ namespace CodeBase.Game.Components
         public CWeapon Weapon => _weapon;
         public CMove Move => _move;
         public Vector3 Position => transform.position;
-
         public ReactiveCollection<IEnemy> Enemies { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
 

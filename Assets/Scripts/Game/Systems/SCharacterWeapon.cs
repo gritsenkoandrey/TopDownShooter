@@ -26,19 +26,19 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnEnableComponent(CWeapon weapon)
+        protected override void OnEnableComponent(CWeapon component)
         {
-            base.OnEnableComponent(weapon);
+            base.OnEnableComponent(component);
 
-            weapon.Shoot
+            component.Shoot
                 .Subscribe(_ =>
                 {
-                    IBullet bullet = _gameFactory.CreateBullet(weapon.SpawnBulletPoint.position);
+                    IBullet bullet = _gameFactory.CreateBullet(component.SpawnBulletPoint.position);
 
-                    bullet.Damage = weapon.Damage;
-                    bullet.Rigidbody.AddForce(weapon.transform.forward * weapon.Force, ForceMode.Impulse);
+                    bullet.Damage = component.Damage;
+                    bullet.Rigidbody.AddForce(component.transform.forward * component.Force, ForceMode.Impulse);
                 })
-                .AddTo(weapon.LifetimeDisposable);
+                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CWeapon component)

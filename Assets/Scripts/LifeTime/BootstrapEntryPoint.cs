@@ -119,6 +119,8 @@ namespace CodeBase.LifeTime
             {
                 _systems[i].Update();
             }
+            
+            _joystickService.Execute();
         }
         
         private void FixedUpdateSystems()

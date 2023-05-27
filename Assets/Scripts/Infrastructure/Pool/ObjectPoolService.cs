@@ -172,7 +172,7 @@ namespace CodeBase.Infrastructure.Pool
 		    {
 			    if (exception.CancellationToken == _token)
 			    {
-				    Debug.Log($"{exception.CancellationToken}");
+				    Debug.LogWarning($"{exception.CancellationToken}");
 			    }
 		    }
 	    }

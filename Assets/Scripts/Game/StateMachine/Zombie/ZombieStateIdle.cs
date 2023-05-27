@@ -12,7 +12,6 @@ namespace CodeBase.Game.StateMachine.Zombie
         void IEnemyState.Enter()
         {
             _delay = Zombie.Stats.StayDelay;
-             
             Zombie.Radar.Radius = Zombie.Stats.AggroRadius;
             Zombie.Radar.Draw.Execute();
         }
@@ -38,6 +37,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Character.Position);
+        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Position);
     }
 }

@@ -29,7 +29,8 @@ namespace CodeBase.Infrastructure.States
             {
                 [typeof(StateBootstrap)] = new StateBootstrap(this, 
                     sceneLoaderService, 
-                    staticDataService),
+                    staticDataService,
+                    joystickService),
                 [typeof(StateLoadProgress)] = new StateLoadProgress(this, 
                     progressService, 
                     saveLoadService),

@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.StateMachine;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.StaticData.Data;
 using UniRx;
@@ -22,13 +21,12 @@ namespace CodeBase.Game.Components
         public CRadar Radar => _radar;
         public CHealth Health => _health;
         public CMelee Melee => _melee;
-        public CCharacter Character { get; private set; }
+        public ITarget Target { get; private set; }
         public ZombieStats Stats { get; set; }
         public IEnemyStateMachine StateMachine { get; set; }
         public bool IsAggro { get; set; }
         public Vector3 Position => transform.position;
-        public void Construct(CCharacter character) => Character = character;
-
+        public void Construct(ITarget target) => Target = target;
         public ReactiveCommand<int> DamageReceived { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
         

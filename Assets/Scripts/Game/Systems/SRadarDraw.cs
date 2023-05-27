@@ -42,7 +42,7 @@ namespace CodeBase.Game.Systems
                     
                     for (int i = 0; i < size; i++)
                     {
-                        offset += 2.0f * Mathf.PI * component.Scale;
+                        offset += 2f * Mathf.PI * component.Scale;
                         
                         float x = component.Radius * Mathf.Cos(offset);
                         float z = component.Radius * Mathf.Sin(offset);
