@@ -45,9 +45,7 @@ namespace CodeBase.Game.SystemsUi
                     if (health > 0)
                     {
                         component.Text.text = $"{health}/{enemy.Health.MaxHealth}";
-
                         float fillAmount = Mathematics.Remap(0, enemy.Health.MaxHealth, 0, 1, health);
-
                         component.Fill.fillAmount = fillAmount;
                     }
                     else

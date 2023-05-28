@@ -67,18 +67,20 @@ namespace CodeBase.Game.SystemsUi
         private void UpdatePosition(CEnemyHealthProvider component)
         {
             Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(_cameraService.Camera);
-            
-            foreach (CEnemyHealth enemyHealth in component.EnemyHealths)
+
+            for (int i = 0; i < component.EnemyHealths.Count; i++)
             {
-                Vector3 enemyPosition = enemyHealth.Enemy.Value.Position.AddY(enemyHealth.Enemy.Value.Stats.Height);
-                Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemyPosition);
-                enemyHealth.transform.position = screenPoint;
+                float height = component.EnemyHealths[i].Enemy.Value.Stats.Height;
+                Vector3 position = component.EnemyHealths[i].Enemy.Value.Position.AddY(height);
+                Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(position);
+                
+                component.EnemyHealths[i].transform.position = screenPoint.ZeroZ();
 
-                if (enemyHealth.Enemy.Value.Health.IsAlive)
+                if (component.EnemyHealths[i].Enemy.Value.Health.IsAlive)
                 {
-                    bool isVisible = GeometryUtility.TestPlanesAABB(frustumPlanes, enemyHealth.Enemy.Value.Health.Collider.bounds);
+                    bool isVisible = GeometryUtility.TestPlanesAABB(frustumPlanes, component.EnemyHealths[i].Enemy.Value.Health.Collider.bounds);
 
-                    enemyHealth.CanvasGroup.alpha = isVisible ? 1f : 0f;
+                    component.EnemyHealths[i].CanvasGroup.alpha = isVisible ? 1f : 0f;
                 }
             }
         }

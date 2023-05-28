@@ -19,9 +19,19 @@ namespace CodeBase.Utils
             return new Vector3(vector.x, vector.y, vector.z + add);
         }
 
+        public static Vector3 ZeroX(this Vector3 vector)
+        {
+            return new Vector3(0f, vector.y, vector.z);
+        }
+        
         public static Vector3 ZeroY(this Vector3 vector)
         {
             return new Vector3(vector.x, 0f, vector.z);
+        }
+        
+        public static Vector3 ZeroZ(this Vector3 vector)
+        {
+            return new Vector3(vector.x, vector.y, 0f);
         }
     }
 }
