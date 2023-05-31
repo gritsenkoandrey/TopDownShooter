@@ -42,24 +42,14 @@ namespace CodeBase.Game.SystemsUi
                 enemy.DamageReceived
                     .Subscribe(damage =>
                     {
+                        Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
+                        
                         component.Sequence?.Kill();
                         component.Text.text = damage.ToString();
                         component.CanvasGroup.alpha = 1f;
-
-                        Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
-
                         component.transform.position = screenPoint;
 
-                        component.Sequence = DOTween.Sequence();
-
-                        component.Sequence.Append(component.transform
-                            .DOMoveY(350f * _guiService.StaticCanvas.Canvas.scaleFactor, 1f)
-                            .SetRelative()
-                            .SetEase(Ease.OutCirc));
-
-                        component.Sequence.Join(component.CanvasGroup
-                            .DOFade(0f, 1f)
-                            .SetEase(Ease.Linear));
+                        StartAnimation(component);
                     })
                     .AddTo(component.LifetimeDisposable);
             }
@@ -70,6 +60,18 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableComponent(component);
             
             component.Sequence?.Kill();
+        }
+
+        private void StartAnimation(CDamageView component)
+        {
+            component.Sequence = DOTween.Sequence()
+                .Append(component.transform
+                    .DOMoveY(350f * _guiService.StaticCanvas.Canvas.scaleFactor, 1f)
+                    .SetRelative()
+                    .SetEase(Ease.OutCirc))
+                .Join(component.CanvasGroup
+                    .DOFade(0f, 1f)
+                    .SetEase(Ease.Linear));
         }
     }
 }

@@ -7,8 +7,14 @@ namespace CodeBase.Game.StateMachine.Zombie
     public sealed class ZombieStatePursuit : ZombieState, IEnemyState
     {
         private float _attackDelay;
+        private readonly float _pursuitRadius;
+        private readonly float _minDistanceToTarget;
 
-        public ZombieStatePursuit(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie) { }
+        public ZombieStatePursuit(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        {
+            _pursuitRadius = zombie.Stats.PursuitRadius * zombie.Stats.PursuitRadius;
+            _minDistanceToTarget = zombie.Stats.MinDistanceToTarget * zombie.Stats.MinDistanceToTarget;
+        }
         
         void IEnemyState.Enter()
         {
@@ -20,13 +26,12 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IEnemyState.Exit()
         {
-            _attackDelay = Zombie.Stats.AttackDelay;
             Zombie.Agent.ResetPath();
         }
 
         void IEnemyState.Tick()
         {
-            if (Distance() > Zombie.Stats.PursuitRadius)
+            if (Distance() > _pursuitRadius)
             {
                 Zombie.IsAggro = false;
                 
@@ -36,7 +41,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             {
                 LookAt();
                 
-                if (Distance() < Zombie.Stats.MinDistanceToTarget)
+                if (Distance() < _minDistanceToTarget)
                 {
                     if (Zombie.Agent.hasPath)
                     {
@@ -71,6 +76,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             Zombie.transform.rotation = Quaternion.Slerp(Zombie.transform.rotation, lookRotation, 0.5f);
         }
         
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
+        private float Distance() => (Zombie.Target.Value.Position - Zombie.Position).sqrMagnitude;
     }
 }

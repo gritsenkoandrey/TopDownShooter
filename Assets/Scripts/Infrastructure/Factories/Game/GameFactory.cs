@@ -74,6 +74,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             zombie.Health.Health.Value = data.Health;
             zombie.Melee.Damage = data.Damage;
             zombie.Stats = data.Stats;
+            zombie.Radar.Radius = data.Stats.AggroRadius;
             
             _character.Enemies.Add(zombie);
             

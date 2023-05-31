@@ -8,10 +8,12 @@ namespace CodeBase.Game.StateMachine.Zombie
     public sealed class ZombieStatePatrol : ZombieState, IEnemyState
     {
         private readonly Vector3 _patrolPosition;
+        private readonly float _aggroRadius;
 
         public ZombieStatePatrol(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
         {
             _patrolPosition = Zombie.Position;
+            _aggroRadius = zombie.Stats.AggroRadius * zombie.Stats.AggroRadius;
         }
         
         void IEnemyState.Enter()
@@ -28,7 +30,7 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IEnemyState.Tick()
         {
-            if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
+            if (Distance() < _aggroRadius || Zombie.IsAggro)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
@@ -68,6 +70,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             return new Vector3(x, 0f, z);
         }
         
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
+        private float Distance() => (Zombie.Target.Value.Position - Zombie.Position).sqrMagnitude;
     }
 }

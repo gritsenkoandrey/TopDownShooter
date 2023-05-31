@@ -6,13 +6,16 @@ namespace CodeBase.Game.StateMachine.Zombie
     public sealed class ZombieStateIdle : ZombieState, IEnemyState
     {
         private float _delay;
+        private readonly float _aggroRadius;
 
-        public ZombieStateIdle(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie) { }
+        public ZombieStateIdle(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        {
+            _aggroRadius = zombie.Stats.AggroRadius * zombie.Stats.AggroRadius;
+        }
 
         void IEnemyState.Enter()
         {
             _delay = Zombie.Stats.StayDelay;
-            Zombie.Radar.Radius = Zombie.Stats.AggroRadius;
             Zombie.Radar.Draw.Execute();
         }
 
@@ -20,7 +23,7 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IEnemyState.Tick()
         {
-            if (Distance() < Zombie.Radar.Radius || Zombie.IsAggro)
+            if (Distance() < _aggroRadius || Zombie.IsAggro)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
@@ -37,6 +40,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float Distance() => Vector3.Distance(Zombie.Position, Zombie.Target.Value.Position);
+        private float Distance() => (Zombie.Target.Value.Position - Zombie.Position).sqrMagnitude;
     }
 }

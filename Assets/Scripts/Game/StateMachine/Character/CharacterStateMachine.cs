@@ -41,7 +41,7 @@ namespace CodeBase.Game.StateMachine.Character
         {
             Vector3 move = Vector3.zero;
 
-            if (_joystickService.GetAxis().sqrMagnitude > 0.5f)
+            if (_joystickService.GetAxis().sqrMagnitude > 0.01f)
             {
                 _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
                     Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;
@@ -73,13 +73,15 @@ namespace CodeBase.Game.StateMachine.Character
             }
 
             int index = -1;
-            float minDistance = _character.Weapon.AttackDistance;
+
+            float attackDistance = _character.Weapon.AttackDistance * _character.Weapon.AttackDistance;
+            float minDistance = attackDistance;
 
             for (int i = 0; i < _character.Enemies.Count; i++)
             {
-                float distance = Vector3.Distance(_character.Enemies[i].Position, _character.Position);
-                
-                if (distance < _character.Weapon.AttackDistance)
+                float distance = (_character.Enemies[i].Position - _character.Position).sqrMagnitude;
+
+                if (distance < attackDistance)
                 {
                     if (distance < minDistance)
                     {
