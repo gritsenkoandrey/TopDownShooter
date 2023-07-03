@@ -48,6 +48,9 @@ namespace CodeBase.Infrastructure.Pool
 	    {
 		    _prefabLookup.Clear();
 		    _instanceLookup.Clear();
+		    _token.ThrowIfCancellationRequested();
+
+		    SetActivePoolPrefabs();
 	    }
 
 	    private void Warm(GameObject prefab, int size)
@@ -171,6 +174,14 @@ namespace CodeBase.Infrastructure.Pool
 			    {
 				    Debug.LogWarning($"{exception.CancellationToken}");
 			    }
+		    }
+	    }
+
+	    private void SetActivePoolPrefabs()
+	    {
+		    foreach (ObjectPoolItem obj in _poolItems)
+		    {
+			    obj.Prefab.SetActive(true);
 		    }
 	    }
     }

@@ -1,11 +1,19 @@
-﻿Shader "Unlit/UI Lerp Gradient Angle Direction"
+﻿Shader "Unlit/Gradient"
 {
     Properties
     {
+        [PerRendererData] _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
         _GradientColor ("Gradient Color", Color) = (0,0,0,0)
         _Percent ("Percent", Range(0, 2)) = 0.5
         _AngleDirection ("Angle Direction (Degrees)", Range(0.0, 360.0)) = 0.0
+
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+        _ColorMask ("Color Mask", Float) = 15
     }
  
     SubShader
@@ -13,16 +21,36 @@
         Tags
         {
             "RenderType"="Opaque"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+            "CanUseSpriteAtlas"="True"
         }
-        LOD 100
+        
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
+
+        Cull Off
+        Lighting Off
+        ZWrite Off
+        ZTest Always
+        Blend SrcAlpha OneMinusSrcAlpha
+        ColorMask [_ColorMask]
  
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma target 2.0
             #include "UnityCG.cginc"
- 
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -36,10 +64,10 @@
                 float4 color : COLOR;
             };
  
-            float4 _Color;
-            float4 _GradientColor;
-            float _AngleDirection;
-            float _Percent;
+            half4 _Color;
+            half4 _GradientColor;
+            half _AngleDirection;
+            half _Percent;
  
             v2f vert (appdata v)
             {
@@ -52,14 +80,15 @@
  
             fixed4 frag (v2f i) : SV_Target
             {
-                float angle = _AngleDirection * 0.0174533; // convert degrees to radians
-                float2 dir = float2(cos(angle), sin(angle));
-                float2 normalizedUV = i.uv - _Percent; // move origin to center of texture
-                float dotProduct = dot(normalizedUV, dir);
-                float t = (dotProduct + 0.5) * 2.0; // shift range from [-1, 1] to [0, 1]
-                fixed4 c = lerp(_GradientColor, _Color, t);
+                half angle = _AngleDirection * 0.0174533;
+                half2 direction = float2(cos(angle), sin(angle));
+                half2 normalizedUV = i.uv - _Percent;
+                half dotProduct = dot(normalizedUV, direction);
+                half time = (dotProduct + 0.5) * 2.0;
+                fixed4 c = lerp(_GradientColor, _Color, time);
                 return c;
             }
+            
             ENDCG
         }
     }

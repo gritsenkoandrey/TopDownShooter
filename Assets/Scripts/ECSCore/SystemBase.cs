@@ -5,6 +5,7 @@ namespace CodeBase.ECSCore
     public abstract class SystemBase
     {
         protected readonly CompositeDisposable LifetimeDisposable;
+        
         protected SystemBase() => LifetimeDisposable = new CompositeDisposable();
 
         public void EnableSystem() => OnEnableSystem();
