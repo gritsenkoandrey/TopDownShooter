@@ -3,7 +3,6 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.GUI;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -14,13 +13,11 @@ namespace CodeBase.Game.SystemsUi
     {
         private readonly IGameFactory _gameFactory;
         private readonly ICameraService _cameraService;
-        private readonly IGuiService _guiService;
 
-        public SDamageView(IGameFactory gameFactory, ICameraService cameraService, IGuiService guiService)
+        public SDamageView(IGameFactory gameFactory, ICameraService cameraService)
         {
             _gameFactory = gameFactory;
             _cameraService = cameraService;
-            _guiService = guiService;
         }
         
         protected override void OnEnableSystem()
@@ -44,9 +41,7 @@ namespace CodeBase.Game.SystemsUi
                     {
                         Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
                         
-                        component.Sequence?.Kill();
                         component.Text.text = damage.ToString();
-                        component.CanvasGroup.alpha = 1f;
                         component.transform.position = screenPoint;
 
                         StartAnimation(component);
@@ -64,14 +59,11 @@ namespace CodeBase.Game.SystemsUi
 
         private void StartAnimation(CDamageView component)
         {
+            component.Sequence?.Kill();
+
             component.Sequence = DOTween.Sequence()
-                .Append(component.transform
-                    .DOMoveY(350f * _guiService.StaticCanvas.Canvas.scaleFactor, 1f)
-                    .SetRelative()
-                    .SetEase(Ease.OutCirc))
-                .Join(component.CanvasGroup
-                    .DOFade(0f, 1f)
-                    .SetEase(Ease.Linear));
+                .Append(component.transform.DOMoveY(350f, 1f).SetRelative().SetEase(Ease.OutCirc))
+                .Join(component.CanvasGroup.DOFade(0f, 1f).From(1f).SetEase(Ease.Linear));
         }
     }
 }

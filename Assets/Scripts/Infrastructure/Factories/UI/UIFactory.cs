@@ -7,7 +7,6 @@ using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
-using CodeBase.UI;
 using CodeBase.UI.Screens;
 using UnityEngine;
 using VContainer;
@@ -26,7 +25,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         public List<IProgressWriter> ProgressWriters { get; } = new();
         
         private BaseScreen _currentScreen;
-        private StaticCanvas _currentCanvas;
 
         public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, 
             IObjectResolver objectResolver, IGuiService guiService)
@@ -85,13 +83,6 @@ namespace CodeBase.Infrastructure.Factories.UI
                 Object.Destroy(_currentScreen.gameObject);
                 
                 _currentScreen = null;
-            }
-
-            if (_currentCanvas != null)
-            {
-                Object.Destroy(_currentCanvas.gameObject);
-                
-                _currentCanvas = null;
             }
             
             ProgressReaders.Clear();

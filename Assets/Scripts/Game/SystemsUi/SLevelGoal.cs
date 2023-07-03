@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
@@ -39,7 +38,6 @@ namespace CodeBase.Game.SystemsUi
                 {
                     if (count > 0)
                     {
-                        component.Background.transform.PunchTransform();
                         component.TextLevelGoal.text = count.ToString();
                     }
                     else

@@ -87,7 +87,7 @@ namespace CodeBase.LifeTime
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
-                new SDamageView(_gameFactory, _cameraService, _guiService),
+                new SDamageView(_gameFactory, _cameraService),
                 new SEnemyHealthProvider(_gameFactory, _uiFactory, _cameraService),
                 new SEnemyHealth(),
                 new SCharacterHealth(_gameFactory),

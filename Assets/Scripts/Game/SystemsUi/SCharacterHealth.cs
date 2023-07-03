@@ -32,7 +32,7 @@ namespace CodeBase.Game.SystemsUi
             _gameFactory.Character.Health.Health
                 .Subscribe(health =>
                 {
-                    component.Text.text = $"{health}/{_gameFactory.Character.Health.MaxHealth}";
+                    component.Text.text = _gameFactory.Character.Health.ToString();
                     component.Fill.fillAmount = Mathematics.Remap(0, _gameFactory.Character.Health.MaxHealth, 0, 1, health);
                 })
                 .AddTo(component.LifetimeDisposable);

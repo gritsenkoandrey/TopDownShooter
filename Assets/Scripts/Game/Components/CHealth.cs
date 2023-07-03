@@ -21,6 +21,8 @@ namespace CodeBase.Game.Components
             Health.SetValueAndForceNotify(MaxHealth);
         }
 
+        public override string ToString() => $"{Health.Value}/{MaxHealth}";
+
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }
         protected override void OnEntityDisable() { }
