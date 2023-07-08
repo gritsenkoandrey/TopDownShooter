@@ -12,6 +12,7 @@ using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
+using VContainer;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
@@ -30,11 +31,12 @@ namespace CodeBase.LifeTime
         private readonly IJoystickService _joystickService;
         private readonly ITextureArrayFactory _textureArrayFactory;
         private readonly IGuiService _guiService;
+        private readonly IObjectResolver _objectResolver;
 
         public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
             IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
             IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService,
-            ITextureArrayFactory textureArrayFactory, IGuiService guiService)
+            ITextureArrayFactory textureArrayFactory, IGuiService guiService, IObjectResolver objectResolver)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -46,6 +48,7 @@ namespace CodeBase.LifeTime
             _joystickService = joystickService;
             _textureArrayFactory = textureArrayFactory;
             _guiService = guiService;
+            _objectResolver = objectResolver;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -67,7 +70,7 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_cameraService, _joystickService),
+                new SCharacterStateMachine(_objectResolver),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
                 new SCharacterDeath(_gameStateService),

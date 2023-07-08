@@ -1,21 +1,18 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine.Character;
-using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Input;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterStateMachine : SystemComponent<CCharacter>
     {
-        private readonly ICameraService _cameraService;
-        private readonly IJoystickService _joystickService;
+        private readonly IObjectResolver _objectResolver;
 
-        public SCharacterStateMachine(ICameraService cameraService, IJoystickService joystickService)
+        public SCharacterStateMachine(IObjectResolver objectResolver)
         {
-            _cameraService = cameraService;
-            _joystickService = joystickService;
+            _objectResolver = objectResolver;
         }
         
         protected override void OnEnableSystem()
@@ -48,8 +45,8 @@ namespace CodeBase.Game.Systems
         private void InitializeStateMachine(CCharacter component)
         {
             CharacterStateMachine stateMachine = new CharacterStateMachine(component);
-
-            stateMachine.Construct(_cameraService, _joystickService);
+            
+            _objectResolver.Inject(stateMachine);
 
             component.UpdateStateMachine
                 .Subscribe(_ => stateMachine.Tick())

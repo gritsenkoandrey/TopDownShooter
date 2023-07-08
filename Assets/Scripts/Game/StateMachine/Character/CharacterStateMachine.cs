@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Character
 {
@@ -23,6 +24,7 @@ namespace CodeBase.Game.StateMachine.Character
             _character = character;
         }
 
+        [Inject]
         public void Construct(ICameraService cameraService, IJoystickService joystickService)
         {
             _cameraService = cameraService;
