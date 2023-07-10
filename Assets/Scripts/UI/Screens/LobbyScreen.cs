@@ -16,7 +16,7 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
 
-            _button.OnClickAsObservable().Subscribe(StartGame).AddTo(this);
+            _button.OnClickAsObservable().First().Subscribe(StartGame).AddTo(this);
         }
 
         protected override void OnDisable()
@@ -26,7 +26,9 @@ namespace CodeBase.UI.Screens
 
         private async void StartGame(Unit _)
         {
-            await _text.PunchTransform().AsyncWaitForCompletion();
+            _text.PunchTransform();
+            
+            await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion();
             
             GameStateService.Enter<StateGame>();
         }

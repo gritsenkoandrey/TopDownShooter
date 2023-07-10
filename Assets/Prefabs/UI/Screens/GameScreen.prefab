@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _safeArea: {fileID: 7226670252583950584}
+  _canvasGroup: {fileID: 7060742050469915399}
 --- !u!114 &7226670252583950584
 MonoBehaviour:
   m_ObjectHideFlags: 0

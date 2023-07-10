@@ -42,13 +42,12 @@ namespace CodeBase.Game.SystemsUi
             enemy.Health.Health
                 .Subscribe(health =>
                 {
-                    if (health > 0)
-                    {
-                        component.Text.text = enemy.Health.ToString();
-                        float fillAmount = Mathematics.Remap(0, enemy.Health.MaxHealth, 0, 1, health);
-                        component.Fill.fillAmount = fillAmount;
-                    }
-                    else
+                    float fillAmount = Mathematics.Remap(0, enemy.Health.MaxHealth, 0, 1, health);
+                    
+                    component.Text.text = enemy.Health.ToString();
+                    component.Fill.fillAmount = fillAmount;
+
+                    if (health <= 0)
                     {
                         component.CanvasGroup.alpha = 0f;
                     }

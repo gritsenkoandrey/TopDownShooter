@@ -18,6 +18,8 @@ namespace CodeBase.UI.Screens
             _button.OnClickAsObservable().Subscribe(NextGame).AddTo(this);
             
             ShowButton();
+            
+            FadeCanvas(0f, 1f, 0.25f);
         }
 
         protected override void OnDisable()

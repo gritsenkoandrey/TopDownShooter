@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.101960786}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   _safeArea: {fileID: 1357532225960574586}
   _button: {fileID: 1544038682559636176}
   _text: {fileID: 1544038682910912115}
+  _canvasGroup: {fileID: 1544038682976013172}
 --- !u!114 &1357532225960574586
 MonoBehaviour:
   m_ObjectHideFlags: 0

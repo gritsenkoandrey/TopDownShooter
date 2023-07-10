@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Progress;
+using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
@@ -31,7 +32,7 @@ namespace CodeBase.Game.SystemsUi
             _progressService.PlayerProgress.Money
                 .Subscribe(value =>
                 {
-                    component.TextCountMoney.text = value.ToString();
+                    component.TextCountMoney.text = value.Trim();
                 })
                 .AddTo(component.LifetimeDisposable);
         }
