@@ -30,10 +30,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             _progressService.PlayerProgress.Money
-                .Subscribe(value =>
-                {
-                    component.TextCountMoney.text = value.Trim();
-                })
+                .Subscribe(value => component.TextCountMoney.text = value.Trim())
                 .AddTo(component.LifetimeDisposable);
         }
 

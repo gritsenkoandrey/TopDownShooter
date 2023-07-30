@@ -27,7 +27,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            component.TextLevel.text = $"Level {_progressService.PlayerProgress.Level}";
+            component.TextLevel.SetText("Level {0}", _progressService.PlayerProgress.Level);
         }
 
         protected override void OnDisableComponent(CCurrentLevel component)

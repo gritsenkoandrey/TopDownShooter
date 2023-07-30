@@ -8,9 +8,11 @@ namespace CodeBase.Game.Components
 {
     public sealed class CBullet : EntityComponent<CBullet> , IBullet
     {
-        [SerializeField] private Rigidbody _rigidbody;
-
-        public Rigidbody Rigidbody => _rigidbody;
+        [SerializeField] private float _collisionDistance = 1f;
+        
+        public Vector3 Direction { get; set; }
+        public Vector3 Position => transform.position;
+        public float CollisionDistance => _collisionDistance;
         public int Damage { get; set; }
         public GameObject Object => gameObject;
         public Tween Tween { get; set; }

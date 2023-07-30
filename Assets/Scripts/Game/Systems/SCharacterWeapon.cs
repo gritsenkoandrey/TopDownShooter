@@ -3,7 +3,6 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -36,7 +35,7 @@ namespace CodeBase.Game.Systems
                     IBullet bullet = _gameFactory.CreateBullet(component.SpawnBulletPoint.position);
 
                     bullet.Damage = component.Damage;
-                    bullet.Rigidbody.AddForce(component.transform.forward * component.Force, ForceMode.Impulse);
+                    bullet.Direction = component.transform.forward.normalized * component.Force;
                 })
                 .AddTo(component.LifetimeDisposable);
         }

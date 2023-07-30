@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface IBullet : IObject
+    public interface IBullet : IObject, IPosition
     {
-        public Rigidbody Rigidbody { get; }
+        public Vector3 Direction { get; set; }
         public int Damage { get; set; }
         public ReactiveCommand OnDestroy { get; }
     }

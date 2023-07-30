@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SSelectMesh : SystemComponent<CSelectMesh>
+    public sealed class SZombieSelectSkin : SystemComponent<CSelectMesh>
     {
         protected override void OnEnableSystem()
         {
@@ -20,7 +20,7 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
             
-            SelectRandomMesh(component);
+            SelectRandomSkin(component);
         }
 
         protected override void OnDisableComponent(CSelectMesh component)
@@ -28,7 +28,7 @@ namespace CodeBase.Game.Systems
             base.OnDisableComponent(component);
         }
 
-        private void SelectRandomMesh(CSelectMesh component)
+        private void SelectRandomSkin(CSelectMesh component)
         {
             int index = Random.Range(0, component.Meshes.Length);
 

@@ -78,11 +78,11 @@ namespace CodeBase.LifeTime
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),
-                new SZombieCollision(_gameFactory),
+                new SZombieAggro(),
                 new SZombieMeleeAttack(),
                 new SZombieDeath(_gameFactory, _progressService, _saveLoadService),
                 new SRadarDraw(),
-                new SSelectMesh(),
+                new SZombieSelectSkin(),
                 new SUpgradeShop(_uiFactory),
                 new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),
                 new SLevelGoal(_gameFactory),
@@ -94,6 +94,7 @@ namespace CodeBase.LifeTime
                 new SEnemyHealthProvider(_gameFactory, _uiFactory, _cameraService),
                 new SEnemyHealth(),
                 new SCharacterHealth(_gameFactory),
+                new SBulletProvider(_gameFactory),
             };
         }
 

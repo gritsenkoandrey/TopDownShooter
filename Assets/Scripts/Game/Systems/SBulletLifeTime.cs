@@ -29,26 +29,18 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Rigidbody.isKinematic = false;
-
             component.OnDestroy
-                .Subscribe(_ =>
-                {
-                    _objectPoolService.ReleaseObject(component.Object);
-                })
+                .First()
+                .Subscribe(_ => _objectPoolService.ReleaseObject(component.Object))
                 .AddTo(component.LifetimeDisposable);
 
-            component.Tween = DOVirtual.DelayedCall(2f, () =>
-            {
-                _objectPoolService.ReleaseObject(component.Object);
-            });
+            component.Tween = DOVirtual
+                .DelayedCall(2f, () => _objectPoolService.ReleaseObject(component.Object));
         }
 
         protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
-            
-            component.Rigidbody.isKinematic = true;
             
             component.Tween?.Kill();
         }

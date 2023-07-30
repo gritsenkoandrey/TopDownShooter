@@ -10,7 +10,6 @@ namespace CodeBase.Game.StateMachine.Zombie
         {
             Zombie.Agent.ResetPath();
             Zombie.Radar.Clear.Execute();
-            Zombie.Health.Collider.enabled = false;
         }
 
         void IEnemyState.Exit() { }

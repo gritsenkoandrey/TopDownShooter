@@ -4757,8 +4757,6 @@ GameObject:
   - component: {fileID: 438534}
   - component: {fileID: 19879398}
   - component: {fileID: 19995504}
-  - component: {fileID: 7425613941429013291}
-  - component: {fileID: 8207241479295286241}
   - component: {fileID: 4124218422691179304}
   m_Layer: 8
   m_Name: Bullet
@@ -9487,35 +9485,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!135 &7425613941429013291
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8207241479295286241
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193226}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &4124218422691179304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9528,4 +9497,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aecd7c6afb74ad2800350fe1d2b3b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 8207241479295286241}
+  _collisionDistance: 1

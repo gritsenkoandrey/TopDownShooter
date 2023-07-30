@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnBulletPoint: {fileID: 4362219188250157871}
-  _force: 30
+  _force: 0.5
 --- !u!114 &5152373867274854575
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Utils;
 using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
@@ -25,10 +26,7 @@ namespace CodeBase.Game.SystemsUi
             component.Enemy
                 .SkipLatestValueOnSubscribe()
                 .First()
-                .Subscribe(enemy =>
-                {
-                    SubscribeOnChangeHealth(component, enemy);
-                })
+                .Subscribe(enemy => SubscribeOnChangeHealth(component, enemy))
                 .AddTo(component.LifetimeDisposable);
         }
 
