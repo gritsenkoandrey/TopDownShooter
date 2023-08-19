@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "UpgradeButtonData", menuName = "Data/UpgradeButtonData")]
+    [CreateAssetMenu(fileName = nameof(UpgradeButtonData), menuName = "Data/" + nameof(UpgradeButtonData))]
     public sealed class UpgradeButtonData : ScriptableObject
     {
         public UpgradeButtonType UpgradeButtonType;

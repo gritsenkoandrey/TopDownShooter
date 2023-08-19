@@ -5552,7 +5552,6 @@ GameObject:
   - component: {fileID: 3522537617868912395}
   - component: {fileID: 3522537617868912393}
   - component: {fileID: 913261861730659750}
-  - component: {fileID: 3999256074427278474}
   - component: {fileID: 8209875914142552308}
   - component: {fileID: 2384393711855601958}
   - component: {fileID: 5875993521760972332}
@@ -5631,19 +5630,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &3999256074427278474
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3522537617868912407}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &8209875914142552308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5656,7 +5642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf80a4c35204bfabefbf13a7ef1ad6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 3999256074427278474}
 --- !u!114 &2384393711855601958
 MonoBehaviour:
   m_ObjectHideFlags: 0

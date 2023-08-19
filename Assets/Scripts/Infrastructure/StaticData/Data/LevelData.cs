@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "LevelData", menuName = "Data/LevelData", order = 0)]
+    [CreateAssetMenu(fileName = nameof(LevelData), menuName = "Data/" + nameof(LevelData))]
     public sealed class LevelData : ScriptableObject
     {
         public LevelType LevelType;

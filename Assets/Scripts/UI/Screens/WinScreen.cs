@@ -15,7 +15,7 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.OnClickAsObservable().Subscribe(NextGame).AddTo(this);
+            _button.OnClickAsObservable().First().Subscribe(NextGame).AddTo(this);
             
             ShowButton();
             

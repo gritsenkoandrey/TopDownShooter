@@ -7,9 +7,6 @@ namespace CodeBase.Game.Components
 {
     public sealed class CHealth : EntityComponent<CHealth>, IProgressReader
     {
-        [SerializeField] private Collider _collider;
-
-        public Collider Collider => _collider;
         public int MaxHealth { get; set; }
         public int BaseHealth { get; set; }
         public bool IsAlive => Health.Value > 0;

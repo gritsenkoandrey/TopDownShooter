@@ -56,11 +56,9 @@ namespace CodeBase.Game.Systems
             base.OnDisableComponent(component);
         }
 
-        private void Collision(IBullet bullet, IEnemy target)
+        private void Collision(IBullet bullet, ITarget target)
         {
             target.Health.Health.Value -= bullet.Damage;
-            target.DamageReceived.Execute(bullet.Damage);
-                
             bullet.OnDestroy.Execute();
                 
             _gameFactory.CreateHitFx(bullet.Object.transform.position);

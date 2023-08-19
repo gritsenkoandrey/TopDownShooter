@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "UiData", menuName = "Data/UiData", order = 0)]
+    [CreateAssetMenu(fileName = nameof(UiData), menuName = "Data/" + nameof(UiData))]
     public sealed class UiData : ScriptableObject
     {
         public CEnemyHealth EnemyHealth;

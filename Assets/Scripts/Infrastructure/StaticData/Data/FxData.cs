@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "FxData", menuName = "Data/FxData", order = 0)]
+    [CreateAssetMenu(fileName = nameof(FxData), menuName = "Data/" + nameof(FxData))]
     public sealed class FxData : ScriptableObject
     {
         public GameObject HitFx;

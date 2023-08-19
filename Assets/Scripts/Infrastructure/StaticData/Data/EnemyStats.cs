@@ -3,7 +3,7 @@
 namespace CodeBase.Infrastructure.StaticData.Data
 {
     [System.Serializable]
-    public struct ZombieStats
+    public struct EnemyStats
     {
         [Range(1, 500)] public int Money;
         [Range(1f, 5f)] public float WalkSpeed;

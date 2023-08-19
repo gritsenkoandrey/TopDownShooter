@@ -20,9 +20,9 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly ICameraService _cameraService;
         private readonly IObjectResolver _objectResolver;
         private readonly IGuiService _guiService;
-        
-        public List<IProgressReader> ProgressReaders { get; } = new();
-        public List<IProgressWriter> ProgressWriters { get; } = new();
+
+        public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
+        public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
         
         private BaseScreen _currentScreen;
 

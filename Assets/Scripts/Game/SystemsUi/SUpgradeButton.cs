@@ -1,4 +1,5 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
@@ -40,6 +41,7 @@ namespace CodeBase.Game.SystemsUi
 
             component.BuyButton
                 .OnClickAsObservable()
+                .ThrottleFirst(Time())
                 .Subscribe(_ =>
                 {
                     component.Level++;
@@ -70,5 +72,7 @@ namespace CodeBase.Game.SystemsUi
                 progress.Read(_progressService.PlayerProgress);
             }
         }
+        
+        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
     }
 }

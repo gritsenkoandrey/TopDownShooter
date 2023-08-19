@@ -21,12 +21,11 @@ namespace CodeBase.Game.Components
         public CRadar Radar => _radar;
         public CHealth Health => _health;
         public CMelee Melee => _melee;
-        public ZombieStats Stats { get; set; }
+        public EnemyStats Stats { get; set; }
         public IEnemyStateMachine StateMachine { get; set; }
         public bool IsAggro { get; set; }
         public Vector3 Position => transform.position;
         public ReactiveProperty<ITarget> Target { get; } = new();
-        public ReactiveCommand<int> DamageReceived { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
         
         protected override void OnEntityCreate() { }

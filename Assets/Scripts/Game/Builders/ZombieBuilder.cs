@@ -11,7 +11,7 @@ namespace CodeBase.Game.Builders
         private ITarget _target;
         private Transform _parent;
         
-        private ZombieStats _stats;
+        private EnemyStats _stats;
         private int _health;
         private int _damage;
         private Vector3 _position;
@@ -51,7 +51,7 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
-        public ZombieBuilder SetStats(ZombieStats stats)
+        public ZombieBuilder SetStats(EnemyStats stats)
         {
             _stats = stats;
 

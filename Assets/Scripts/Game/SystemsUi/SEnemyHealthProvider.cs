@@ -1,4 +1,5 @@
-﻿using CodeBase.ECSCore;
+﻿using System.Collections.Generic;
+using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
@@ -56,6 +57,8 @@ namespace CodeBase.Game.SystemsUi
 
         private void CreateEnemyHealths(CEnemyHealthProvider component)
         {
+            component.EnemyHealths = new List<CEnemyHealth>(_gameFactory.Character.Enemies.Count);
+            
             foreach (IEnemy enemy in _gameFactory.Character.Enemies)
             {
                 CEnemyHealth enemyHealth = _uiFactory.CreateEnemyHealth(enemy, component.transform);
@@ -66,23 +69,21 @@ namespace CodeBase.Game.SystemsUi
 
         private void UpdatePosition(CEnemyHealthProvider component)
         {
-            Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(_cameraService.Camera);
-
             for (int i = 0; i < component.EnemyHealths.Count; i++)
             {
                 float height = component.EnemyHealths[i].Enemy.Value.Stats.Height;
                 Vector3 position = component.EnemyHealths[i].Enemy.Value.Position.AddY(height);
                 Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(position);
-                
+                Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(position);
                 component.EnemyHealths[i].transform.position = screenPoint.ZeroZ();
 
                 if (component.EnemyHealths[i].Enemy.Value.Health.IsAlive)
                 {
-                    bool isVisible = GeometryUtility.TestPlanesAABB(frustumPlanes, component.EnemyHealths[i].Enemy.Value.Health.Collider.bounds);
-
-                    component.EnemyHealths[i].CanvasGroup.alpha = isVisible ? 1f : 0f;
+                    component.EnemyHealths[i].CanvasGroup.alpha = IsOnScreen(viewportPoint) ? 1f : 0f;
                 }
             }
         }
+        
+        private bool IsOnScreen(Vector3 viewportPoint) => viewportPoint is { x: > 0f and < 1f, y: > 0f and < 1f };
     }
 }

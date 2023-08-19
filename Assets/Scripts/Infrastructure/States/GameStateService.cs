@@ -17,7 +17,7 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class GameStateService : IGameStateService
     {
-        private readonly Dictionary<Type, IExitState> _states;
+        private readonly IDictionary<Type, IExitState> _states;
 
         private IExitState _activeState;
         

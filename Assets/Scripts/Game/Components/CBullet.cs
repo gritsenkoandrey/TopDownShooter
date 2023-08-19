@@ -10,9 +10,10 @@ namespace CodeBase.Game.Components
     {
         [SerializeField] private float _collisionDistance = 1f;
         
-        public Vector3 Direction { get; set; }
+        public Vector3 Direction { get; private set; }
         public Vector3 Position => transform.position;
         public float CollisionDistance => _collisionDistance;
+        public void SetDirection(Vector3 direction) => Direction = direction;
         public int Damage { get; set; }
         public GameObject Object => gameObject;
         public Tween Tween { get; set; }

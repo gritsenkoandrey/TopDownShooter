@@ -1,15 +1,11 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Game.StateMachine.Zombie;
+﻿using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.StaticData.Data;
-using UniRx;
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface IEnemy : IPosition
+    public interface IEnemy : ITarget
     {
-        public CHealth Health { get; }
-        public ZombieStats Stats { get; }
+        public EnemyStats Stats { get; }
         public IEnemyStateMachine StateMachine { get; }
-        public ReactiveCommand<int> DamageReceived { get; }
     }
 }

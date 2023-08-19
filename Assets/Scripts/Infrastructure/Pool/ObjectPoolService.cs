@@ -10,24 +10,25 @@ namespace CodeBase.Infrastructure.Pool
     {
         [SerializeField] private bool _logStatus = false;
 	    
-	    [Space,SerializeField] private List<ObjectPoolItem> _poolItems = new ();
+	    [Space,SerializeField] private ObjectPoolItem[] _poolItems;
 
-	    private bool _dirty = false;
+	    private bool _dirty;
 
 	    private Transform _root;
 
-	    private readonly Dictionary<GameObject, ObjectPool<GameObject>> _prefabLookup = new ();
-	    private readonly Dictionary<GameObject, ObjectPool<GameObject>> _instanceLookup = new ();
+	    private IDictionary<GameObject, ObjectPool<GameObject>> _prefabLookup;
+	    private IDictionary<GameObject, ObjectPool<GameObject>> _instanceLookup;
 
 	    private CancellationToken _token;
 
 	    void IObjectPoolService.Init()
 	    {
 		    _root = new GameObject().transform;
-		    
 		    _root.SetParent(transform);
-		    
 		    _root.name = "Pool";
+
+		    _prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
+		    _instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
 
 		    _token = this.GetCancellationTokenOnDestroy();
 
@@ -134,9 +135,9 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private void FirstWarmPool()
 	    {
-		    foreach (ObjectPoolItem pool in _poolItems)
+		    for (int i = 0; i < _poolItems.Length; i++)
 		    {
-			    WarmPool(pool.Prefab, pool.Count);
+			    WarmPool(_poolItems[i].Prefab, _poolItems[i].Count);
 		    }
 	    }
 
@@ -179,9 +180,9 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private void SetActivePoolPrefabs()
 	    {
-		    foreach (ObjectPoolItem obj in _poolItems)
+		    for (int i = 0; i < _poolItems.Length; i++)
 		    {
-			    obj.Prefab.SetActive(true);
+			    _poolItems[i].Prefab.SetActive(true);
 		    }
 	    }
     }

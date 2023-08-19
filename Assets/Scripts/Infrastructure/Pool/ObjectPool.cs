@@ -6,8 +6,8 @@ namespace CodeBase.Infrastructure.Pool
 {
     public sealed class ObjectPool<T>
     {
-        private readonly List<ObjectPoolContainer<T>> _list;
-        private readonly Dictionary<T, ObjectPoolContainer<T>> _lookup;
+        private readonly IList<ObjectPoolContainer<T>> _list;
+        private readonly IDictionary<T, ObjectPoolContainer<T>> _lookup;
         private readonly Func<T> _factoryFunc;
 	    
         private int _lastIndex = 0;
@@ -15,14 +15,14 @@ namespace CodeBase.Infrastructure.Pool
         public int Count => _list.Count;
         public int CountUsedItems => _lookup.Count;
 
-        public ObjectPool(Func<T> factoryFunc, int initialSize)
+        public ObjectPool(Func<T> factoryFunc, int size)
         {
             _factoryFunc = factoryFunc;
 
-            _list = new List<ObjectPoolContainer<T>>(initialSize);
-            _lookup = new Dictionary<T, ObjectPoolContainer<T>>(initialSize);
+            _list = new List<ObjectPoolContainer<T>>(size);
+            _lookup = new Dictionary<T, ObjectPoolContainer<T>>(size);
 
-            Warm(initialSize);
+            Warm(size);
         }
 
         private void Warm(int capacity)
@@ -58,11 +58,7 @@ namespace CodeBase.Infrastructure.Pool
                     _lastIndex = 0;
                 }
 
-                if (_list[_lastIndex].Used)
-                {
-                    continue;
-                }
-                else
+                if (!_list[_lastIndex].Used)
                 {
                     container = _list[_lastIndex];
                     break;

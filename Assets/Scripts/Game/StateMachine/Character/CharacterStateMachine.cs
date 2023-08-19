@@ -4,29 +4,23 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Utils;
 using UnityEngine;
-using VContainer;
 
 namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateMachine
     {
         private readonly CCharacter _character;
+        private readonly ICameraService _cameraService;
+        private readonly IJoystickService _joystickService;
         private IEnemy _target;
-        private ICameraService _cameraService;
-        private IJoystickService _joystickService;
-        
+
         private float _delay;
         private float _angle;
         private bool _isAttack;
 
-        public CharacterStateMachine(CCharacter character)
+        public CharacterStateMachine(CCharacter character, ICameraService cameraService, IJoystickService joystickService)
         {
             _character = character;
-        }
-
-        [Inject]
-        public void Construct(ICameraService cameraService, IJoystickService joystickService)
-        {
             _cameraService = cameraService;
             _joystickService = joystickService;
         }
@@ -43,7 +37,7 @@ namespace CodeBase.Game.StateMachine.Character
         {
             Vector3 move = Vector3.zero;
 
-            if (_joystickService.GetAxis().sqrMagnitude > 0.01f)
+            if (_joystickService.GetAxis().sqrMagnitude > 0.1f)
             {
                 _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
                     Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y;

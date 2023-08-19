@@ -35,7 +35,7 @@ namespace CodeBase.Game.Systems
                     IBullet bullet = _gameFactory.CreateBullet(component.SpawnBulletPoint.position);
 
                     bullet.Damage = component.Damage;
-                    bullet.Direction = component.transform.forward.normalized * component.Force;
+                    bullet.SetDirection(component.transform.forward.normalized * component.Force);
                 })
                 .AddTo(component.LifetimeDisposable);
         }

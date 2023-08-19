@@ -11,8 +11,8 @@ namespace CodeBase.Infrastructure.Factories.UI
 {
     public interface IUIFactory : IService
     {
-        public List<IProgressReader> ProgressReaders { get; }
-        public List<IProgressWriter> ProgressWriters { get; }
+        public IList<IProgressReader> ProgressReaders { get; }
+        public IList<IProgressWriter> ProgressWriters { get; }
         public BaseScreen CreateScreen(ScreenType type);
         public CUpgradeButton CreateUpgradeButton(UpgradeButtonType type, Transform parent);
         public CEnemyHealth CreateEnemyHealth(IEnemy enemy, Transform parent);

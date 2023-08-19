@@ -19,7 +19,7 @@ namespace CodeBase.LifeTime
 {
     public sealed class BootstrapEntryPoint : IInitializable, IStartable, ITickable, IFixedTickable, ILateTickable, IDisposable
     {
-        private SystemBase[] _systems;
+        private SystemBase[] _systems = Array.Empty<SystemBase>();
 
         private readonly IGameStateService _gameStateService;
         private readonly IUIFactory _uiFactory;
@@ -70,7 +70,7 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_objectResolver),
+                new SCharacterStateMachine(_cameraService, _joystickService),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
                 new SCharacterDeath(_gameStateService),

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "CharacterData", menuName = "Data/CharacterData")]
+    [CreateAssetMenu(fileName = nameof(CharacterData), menuName = "Data/" + nameof(CharacterData))]
     public sealed class CharacterData : ScriptableObject
     {
         [Range(1, 20)] public int Health;

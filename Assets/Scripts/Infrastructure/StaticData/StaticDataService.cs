@@ -22,10 +22,10 @@ namespace CodeBase.Infrastructure.StaticData
         private const string TextureArrayDataPath = "StaticData/TextureArrayData/TextureArrayData";
         private const string UiDataPath = "StaticData/UiData/UiData";
 
-        private Dictionary<ZombieType, ZombieData> _monsters;
-        private Dictionary<ScreenType, ScreenData> _screens;
-        private Dictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
-        private Dictionary<LevelType, LevelData> _levels;
+        private IDictionary<ZombieType, ZombieData> _monsters;
+        private IDictionary<ScreenType, ScreenData> _screens;
+        private IDictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
+        private IDictionary<LevelType, LevelData> _levels;
         private CharacterData _character;
         private CBullet _bullet;
         private FxData _fxData;

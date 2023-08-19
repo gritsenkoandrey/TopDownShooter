@@ -11,8 +11,8 @@ namespace CodeBase.Infrastructure.Factories.Game
     {
         public CLevel Level { get; }
         public CCharacter Character { get; }
-        public List<IProgressReader> ProgressReaders { get; }
-        public List<IProgressWriter> ProgressWriters { get; }
+        public IList<IProgressReader> ProgressReaders { get; }
+        public IList<IProgressWriter> ProgressWriters { get; }
         public CLevel CreateLevel();
         public CCharacter CreateCharacter();
         public CZombie CreateZombie(ZombieType zombieType, Vector3 position, Transform parent);

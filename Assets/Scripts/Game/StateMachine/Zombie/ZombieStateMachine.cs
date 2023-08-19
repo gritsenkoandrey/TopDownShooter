@@ -8,7 +8,7 @@ namespace CodeBase.Game.StateMachine.Zombie
     {
         private IEnemyState _activeState;
         
-        private readonly Dictionary<Type, IEnemyState> _states;
+        private readonly IDictionary<Type, IEnemyState> _states;
 
         public ZombieStateMachine(CZombie zombie)
         {

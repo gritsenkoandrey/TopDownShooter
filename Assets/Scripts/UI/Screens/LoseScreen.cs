@@ -16,7 +16,7 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.OnClickAsObservable().Subscribe(RestartGame).AddTo(this);
+            _button.OnClickAsObservable().First().Subscribe(RestartGame).AddTo(this);
 
             ShowLoseScreen();
 

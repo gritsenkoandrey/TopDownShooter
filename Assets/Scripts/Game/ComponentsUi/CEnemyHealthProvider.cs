@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.ECSCore;
 
 namespace CodeBase.Game.ComponentsUi
 {
     public sealed class CEnemyHealthProvider : EntityComponent<CEnemyHealthProvider>
     {
-        public readonly List<CEnemyHealth> EnemyHealths = new();
+        public IList<CEnemyHealth> EnemyHealths = Array.Empty<CEnemyHealth>();
         
         protected override void OnEntityCreate() { }
         protected override void OnEntityEnable() { }

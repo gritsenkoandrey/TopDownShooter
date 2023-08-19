@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Infrastructure.Factories.Game
 {
@@ -17,21 +18,23 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IProgressService _progressService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
+        private readonly IObjectResolver _objectResolver;
 
         private CLevel _level;
         private CCharacter _character;
 
         public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService)
+            IObjectPoolService objectPoolService, ICameraService cameraService, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
+            _objectResolver = objectResolver;
         }
 
-        public List<IProgressReader> ProgressReaders { get; } = new();
-        public List<IProgressWriter> ProgressWriters { get; } = new();
+        public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
+        public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
 
         CLevel IGameFactory.Level => _level;
         CCharacter IGameFactory.Character => _character;

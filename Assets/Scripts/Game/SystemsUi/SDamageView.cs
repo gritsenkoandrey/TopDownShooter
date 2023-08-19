@@ -36,15 +36,19 @@ namespace CodeBase.Game.SystemsUi
 
             foreach (IEnemy enemy in _gameFactory.Character.Enemies)
             {
-                enemy.DamageReceived
-                    .Subscribe(damage =>
+                enemy.Health.Health
+                    .Pairwise()
+                    .Subscribe(pairWise =>
                     {
-                        Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
+                        if (pairWise.Previous > pairWise.Current)
+                        {
+                            Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
                         
-                        component.Text.text = damage.ToString();
-                        component.transform.position = screenPoint;
-
-                        StartAnimation(component);
+                            component.Text.text = (pairWise.Previous - pairWise.Current).ToString();
+                            component.transform.position = screenPoint;
+                        
+                            StartAnimation(component);
+                        }
                     })
                     .AddTo(component.LifetimeDisposable);
             }
