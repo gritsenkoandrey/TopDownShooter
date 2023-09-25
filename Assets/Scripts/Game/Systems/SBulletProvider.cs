@@ -32,13 +32,13 @@ namespace CodeBase.Game.Systems
             {
                 bullet.transform.position += bullet.Direction;
 
-                for (int i = 0; i < _gameFactory.Character.Enemies.Count; i++)
+                for (int i = 0; i < _gameFactory.Enemies.Count; i++)
                 {
-                    bool isCollision = (bullet.Position - _gameFactory.Character.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
+                    bool isCollision = (bullet.Position - _gameFactory.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
 
                     if (isCollision)
                     {
-                        Collision(bullet, _gameFactory.Character.Enemies[i]);
+                        Collision(bullet, _gameFactory.Enemies[i]);
                         
                         return;
                     }

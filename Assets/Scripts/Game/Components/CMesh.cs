@@ -8,9 +8,5 @@ namespace CodeBase.Game.Components
         [SerializeField] private Renderer _renderer;
 
         public Renderer Renderer => _renderer;
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

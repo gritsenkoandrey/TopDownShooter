@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Zombie;
+using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.States;
 using UniRx;
 
@@ -10,10 +11,12 @@ namespace CodeBase.Game.Systems
     public sealed class SCharacterDeath : SystemComponent<CCharacter>
     {
         private readonly IGameStateService _gameStateService;
+        private readonly IGameFactory _gameFactory;
 
-        public SCharacterDeath(IGameStateService gameStateService)
+        public SCharacterDeath(IGameStateService gameStateService, IGameFactory gameFactory)
         {
             _gameStateService = gameStateService;
+            _gameFactory = gameFactory;
         }
         
         protected override void OnEnableSystem()
@@ -40,7 +43,7 @@ namespace CodeBase.Game.Systems
                         
                         component.LifetimeDisposable.Clear();
 
-                        foreach (IEnemy enemy in component.Enemies)
+                        foreach (IEnemy enemy in _gameFactory.Enemies)
                         {
                             enemy.StateMachine.Enter<ZombieStateNone>();
                         }

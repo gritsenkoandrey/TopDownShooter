@@ -17,9 +17,5 @@ namespace CodeBase.Game.Components
         
         public ReactiveCommand Draw { get; } = new();
         public ReactiveCommand Clear { get; } = new();
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

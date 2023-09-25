@@ -65,9 +65,5 @@ namespace CodeBase.Game.ComponentsUi
                     break;
             }
         }
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

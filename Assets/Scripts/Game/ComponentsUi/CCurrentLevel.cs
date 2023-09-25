@@ -9,9 +9,5 @@ namespace CodeBase.Game.ComponentsUi
         [SerializeField] private TextMeshProUGUI _textLevel;
 
         public TextMeshProUGUI TextLevel => _textLevel;
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

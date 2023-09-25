@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
 using UniRx;
 
@@ -11,11 +12,13 @@ namespace CodeBase.Game.Systems
     {
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
+        private readonly IGameFactory _gameFactory;
 
-        public SCharacterStateMachine(ICameraService cameraService, IJoystickService joystickService)
+        public SCharacterStateMachine(ICameraService cameraService, IJoystickService joystickService, IGameFactory gameFactory)
         {
             _cameraService = cameraService;
             _joystickService = joystickService;
+            _gameFactory = gameFactory;
         }
         
         protected override void OnEnableSystem()
@@ -47,7 +50,7 @@ namespace CodeBase.Game.Systems
 
         private void InitializeStateMachine(CCharacter component)
         {
-            CharacterStateMachine stateMachine = new CharacterStateMachine(component, _cameraService, _joystickService);
+            CharacterStateMachine stateMachine = new CharacterStateMachine(component, _gameFactory, _cameraService, _joystickService);
 
             component.UpdateStateMachine
                 .Subscribe(_ => stateMachine.Tick())

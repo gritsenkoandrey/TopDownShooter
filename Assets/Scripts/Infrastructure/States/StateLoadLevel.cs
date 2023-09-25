@@ -72,7 +72,6 @@ namespace CodeBase.Infrastructure.States
         private void CreateWorld()
         {
             _uiFactory.CreateScreen(ScreenType.Lobby);
-            _gameFactory.CreateCharacter();
             _gameFactory.CreateLevel();
         }
 

@@ -8,7 +8,8 @@ namespace CodeBase.Game.Builders
     {
         private CCharacter _prefab;
         private ICameraService _cameraService;
-        
+
+        private Transform _parent;
         private Vector3 _position;
         private int _health;
         private int _damage;
@@ -19,6 +20,13 @@ namespace CodeBase.Game.Builders
         public CharacterBuilder SetPrefab(CCharacter prefab)
         {
             _prefab = prefab;
+
+            return this;
+        }
+
+        public CharacterBuilder SetParent(Transform parent)
+        {
+            _parent = parent;
 
             return this;
         }
@@ -88,7 +96,7 @@ namespace CodeBase.Game.Builders
 
         public CCharacter Build()
         {
-            CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity);
+            CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent);
 
             character.Health.BaseHealth = _health;
             character.Weapon.BaseDamage = _damage;

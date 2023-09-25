@@ -20,9 +20,5 @@ namespace CodeBase.Game.ComponentsUi
         public GameObject Hide => _hide;
         public UpgradeButtonType[] UpgradeButtonType => _upgradeButtonType;
         public ReactiveProperty<bool> IsShowUpgradeShop { get; } = new(false);
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

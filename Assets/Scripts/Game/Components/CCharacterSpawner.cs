@@ -1,20 +1,16 @@
 ﻿using CodeBase.ECSCore;
-using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CSpawnerZombie : EntityComponent<CSpawnerZombie>, IPosition
+    public sealed class CCharacterSpawner : EntityComponent<CCharacterSpawner>, IPosition
     {
-        [SerializeField] private ZombieType _zombieType;
-
-        public ZombieType ZombieType => _zombieType;
         public Vector3 Position => transform.position;
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.green;
             
             Gizmos.DrawSphere(transform.position, 0.25f);
         }

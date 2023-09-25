@@ -1,14 +1,11 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
-using UnityEngine;
+using CodeBase.Game.Interfaces;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CLevel : EntityComponent<CLevel>
+    public sealed class CLevel : EntityComponent<CLevel>, ILevel
     {
-        [SerializeField] private Transform _characterSpawnPoint;
-
-        public Vector3 CharacterSpawnPosition => _characterSpawnPoint.position;
         public LevelType LevelType { get; private set; }
         public int LevelTime { get; private set; }
 

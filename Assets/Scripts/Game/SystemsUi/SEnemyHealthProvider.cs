@@ -57,9 +57,9 @@ namespace CodeBase.Game.SystemsUi
 
         private void CreateEnemyHealths(CEnemyHealthProvider component)
         {
-            component.EnemyHealths = new List<CEnemyHealth>(_gameFactory.Character.Enemies.Count);
+            component.EnemyHealths = new List<CEnemyHealth>(_gameFactory.Enemies.Count);
             
-            foreach (IEnemy enemy in _gameFactory.Character.Enemies)
+            foreach (IEnemy enemy in _gameFactory.Enemies)
             {
                 CEnemyHealth enemyHealth = _uiFactory.CreateEnemyHealth(enemy, component.transform);
                 

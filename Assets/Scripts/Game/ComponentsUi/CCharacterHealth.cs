@@ -12,9 +12,5 @@ namespace CodeBase.Game.ComponentsUi
         
         public Image Fill => _fill;
         public TextMeshProUGUI Text => _text;
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

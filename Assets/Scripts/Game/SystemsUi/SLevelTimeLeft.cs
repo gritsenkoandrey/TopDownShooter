@@ -29,23 +29,13 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableSystem();
         }
 
-        protected override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            foreach (CLevelTimeLeft entity in Entities)
-            {
-                entity.UpdateTimer.Execute();
-            }
-        }
-
         protected override void OnEnableComponent(CLevelTimeLeft component)
         {
             base.OnEnableComponent(component);
 
             int time = _gameFactory.Level.LevelTime;
 
-            component.UpdateTimer
+            Observable.EveryUpdate()
                 .ThrottleFirst(Time())
                 .Subscribe(_ =>
                 {

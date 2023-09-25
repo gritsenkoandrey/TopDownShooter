@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Utils;
 using UnityEngine;
@@ -12,15 +13,17 @@ namespace CodeBase.Game.StateMachine.Character
         private readonly CCharacter _character;
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
+        private readonly IGameFactory _gameFactory;
         private IEnemy _target;
 
         private float _delay;
         private float _angle;
         private bool _isAttack;
 
-        public CharacterStateMachine(CCharacter character, ICameraService cameraService, IJoystickService joystickService)
+        public CharacterStateMachine(CCharacter character, IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService)
         {
             _character = character;
+            _gameFactory = gameFactory;
             _cameraService = cameraService;
             _joystickService = joystickService;
         }
@@ -61,7 +64,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private void Target()
         {
-            if (_character.Enemies.Count == 0)
+            if (_gameFactory.Enemies.Count == 0)
             {
                 _isAttack = false;
                 
@@ -73,9 +76,9 @@ namespace CodeBase.Game.StateMachine.Character
             float attackDistance = _character.Weapon.AttackDistance * _character.Weapon.AttackDistance;
             float minDistance = attackDistance;
 
-            for (int i = 0; i < _character.Enemies.Count; i++)
+            for (int i = 0; i < _gameFactory.Enemies.Count; i++)
             {
-                float distance = (_character.Enemies[i].Position - _character.Position).sqrMagnitude;
+                float distance = (_gameFactory.Enemies[i].Position - _character.Position).sqrMagnitude;
 
                 if (distance < attackDistance)
                 {
@@ -90,7 +93,7 @@ namespace CodeBase.Game.StateMachine.Character
             if (index >= 0)
             {
                 _isAttack = true;
-                _target = _character.Enemies[index];
+                _target = _gameFactory.Enemies[index];
             }
             else
             {

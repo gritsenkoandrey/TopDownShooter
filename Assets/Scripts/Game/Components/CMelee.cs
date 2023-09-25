@@ -11,9 +11,5 @@ namespace CodeBase.Game.Components
         public ReactiveCommand Attack { get; } = new();
         public ReactiveCommand OnCheckDamage { get; } = new();
         public void OnAttack() => OnCheckDamage.Execute();
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

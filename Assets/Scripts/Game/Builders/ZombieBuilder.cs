@@ -8,7 +8,6 @@ namespace CodeBase.Game.Builders
     public sealed class ZombieBuilder
     {
         private CZombie _prefab;
-        private ITarget _target;
         private Transform _parent;
         
         private EnemyStats _stats;
@@ -58,17 +57,9 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
-        public ZombieBuilder SetTarget(ITarget target)
-        {
-            _target = target;
-
-            return this;
-        }
-
         public ZombieBuilder Reset()
         {
             _prefab = null;
-            _target = null;
             _parent = null;
             _stats = default;
             _position = default;
@@ -87,7 +78,6 @@ namespace CodeBase.Game.Builders
             zombie.Melee.Damage = _damage;
             zombie.Stats = _stats;
             zombie.Radar.Radius = _stats.AggroRadius;
-            zombie.Target.SetValueAndForceNotify(_target);
 
             return zombie;
         }

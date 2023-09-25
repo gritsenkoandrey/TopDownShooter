@@ -1,22 +1,20 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.States;
 using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterKillEnemy : SystemComponent<CCharacter>
+    public sealed class SCharacterSpawner : SystemComponent<CCharacterSpawner>
     {
-        private readonly IGameStateService _gameStateService;
         private readonly IGameFactory _gameFactory;
 
-        public SCharacterKillEnemy(IGameStateService gameStateService, IGameFactory gameFactory)
+        public SCharacterSpawner(IGameFactory gameFactory)
         {
-            _gameStateService = gameStateService;
             _gameFactory = gameFactory;
         }
-        
+
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -27,23 +25,22 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnEnableComponent(CCharacter component)
+        protected override void OnEnableComponent(CCharacterSpawner component)
         {
             base.OnEnableComponent(component);
 
+            ICharacter character = _gameFactory.CreateCharacter(component.Position, component.transform.parent);
+
             _gameFactory.Enemies
-                .ObserveRemove()
-                .Subscribe(_ =>
+                .ObserveAdd()
+                .Subscribe(enemy =>
                 {
-                    if (_gameFactory.Enemies.Count == 0)
-                    {
-                        _gameStateService.Enter<StateWin>();
-                    }
+                    enemy.Value.Target.SetValueAndForceNotify(character);
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CCharacter component)
+        protected override void OnDisableComponent(CCharacterSpawner component)
         {
             base.OnDisableComponent(component);
         }

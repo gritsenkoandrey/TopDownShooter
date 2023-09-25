@@ -34,7 +34,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            foreach (IEnemy enemy in _gameFactory.Character.Enemies)
+            foreach (IEnemy enemy in _gameFactory.Enemies)
             {
                 enemy.Health.Health
                     .Pairwise()

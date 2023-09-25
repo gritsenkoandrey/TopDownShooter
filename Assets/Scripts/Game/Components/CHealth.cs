@@ -19,9 +19,5 @@ namespace CodeBase.Game.Components
         }
 
         public override string ToString() => $"{Mathf.Clamp(Health.Value, 0, MaxHealth)}/{MaxHealth}";
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

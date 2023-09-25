@@ -27,9 +27,5 @@ namespace CodeBase.Game.Components
         public Vector3 Position => transform.position;
         public ReactiveProperty<ITarget> Target { get; } = new();
         public ReactiveCommand UpdateStateMachine { get; } = new();
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

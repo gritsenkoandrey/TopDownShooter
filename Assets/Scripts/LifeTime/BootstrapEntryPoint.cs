@@ -70,11 +70,11 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_cameraService, _joystickService),
+                new SCharacterStateMachine(_cameraService, _joystickService, _gameFactory),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
-                new SCharacterDeath(_gameStateService),
-                new SCharacterKillEnemy(_gameStateService),
+                new SCharacterDeath(_gameStateService, _gameFactory),
+                new SCharacterKillEnemy(_gameStateService, _gameFactory),
                 new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),
@@ -96,6 +96,7 @@ namespace CodeBase.LifeTime
                 new SCharacterHealth(_gameFactory),
                 new SBulletProvider(_gameFactory),
                 new SLevelTimeLeft(_gameStateService, _gameFactory),
+                new SCharacterSpawner(_gameFactory),
             };
         }
 

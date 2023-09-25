@@ -11,9 +11,5 @@ namespace CodeBase.Game.ComponentsUi
 
         public TextMeshProUGUI TextLevelGoal => _textLevelGoal;
         public GameObject Background => _background;
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

@@ -17,9 +17,5 @@ namespace CodeBase.Game.ComponentsUi
         public TextMeshProUGUI Text => _text;
         public CanvasGroup CanvasGroup => _canvasGroup;
         public ReactiveProperty<IEnemy> Enemy { get; } = new();
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

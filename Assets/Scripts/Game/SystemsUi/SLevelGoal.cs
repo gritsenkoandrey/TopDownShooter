@@ -28,11 +28,11 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            int max = _gameFactory.Character.Enemies.Count;
+            int max = _gameFactory.Enemies.Count;
             
             component.TextLevelGoal.text = max.ToString();
 
-            _gameFactory.Character.Enemies
+            _gameFactory.Enemies
                 .ObserveCountChanged()
                 .Subscribe(count =>
                 {

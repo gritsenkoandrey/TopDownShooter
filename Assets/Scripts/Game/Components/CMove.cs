@@ -16,9 +16,5 @@ namespace CodeBase.Game.Components
         {
             Speed = progress.Stats.Speed + BaseSpeed;
         }
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

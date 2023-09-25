@@ -22,9 +22,5 @@ namespace CodeBase.Game.Components
         {
             Damage = progress.Stats.Damage * BaseDamage;
         }
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

@@ -13,9 +13,5 @@ namespace CodeBase.Game.ComponentsUi
         public TextMeshProUGUI Text => _text;
         public CanvasGroup CanvasGroup => _canvasGroup;
         public Sequence Sequence { get; set; }
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

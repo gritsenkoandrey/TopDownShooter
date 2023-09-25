@@ -2,11 +2,13 @@
 using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
+using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
@@ -20,6 +22,7 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         private CLevel _level;
         private CCharacter _character;
+        private readonly IReactiveCollection<IEnemy> _enemies = new ReactiveCollection<IEnemy>();
 
         public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
             IObjectPoolService objectPoolService, ICameraService cameraService)
@@ -33,14 +36,16 @@ namespace CodeBase.Infrastructure.Factories.Game
         public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
         public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
 
-        CLevel IGameFactory.Level => _level;
-        CCharacter IGameFactory.Character => _character;
+        ILevel IGameFactory.Level => _level;
+        ICharacter IGameFactory.Character => _character;
+        IReactiveCollection<IEnemy> IGameFactory.Enemies => _enemies;
 
-        CLevel IGameFactory.CreateLevel()
+        ILevel IGameFactory.CreateLevel()
         {
             LevelData data = _staticDataService.LevelData(GetLevelType());
 
             _level = new LevelBuilder()
+                .Reset()
                 .SetPrefab(data.Prefab)
                 .SetLevelType(data.LevelType)
                 .SetLevelTime(data.LevelTime)
@@ -49,20 +54,21 @@ namespace CodeBase.Infrastructure.Factories.Game
             return _level;
         }
 
-        CCharacter IGameFactory.CreateCharacter()
+        ICharacter IGameFactory.CreateCharacter(Vector3 position, Transform parent)
         {
-            CharacterData characterData = _staticDataService.CharacterData();
+            CharacterData data = _staticDataService.CharacterData();
 
             _character = new CharacterBuilder()
                 .Reset()
-                .SetPrefab(characterData.Prefab)
+                .SetPrefab(data.Prefab)
+                .SetParent(parent)
                 .SetCamera(_cameraService)
-                .SetPosition(_staticDataService.LevelData(GetLevelType()).Prefab.CharacterSpawnPosition)
-                .SetHealth(characterData.Health)
-                .SetDamage(characterData.Damage)
-                .SetAttackDistance(characterData.AttackDistance)
-                .SetAttackRecharge(characterData.AttackRecharge)
-                .SetSpeed(characterData.Speed)
+                .SetPosition(position)
+                .SetHealth(data.Health)
+                .SetDamage(data.Damage)
+                .SetAttackDistance(data.AttackDistance)
+                .SetAttackRecharge(data.AttackRecharge)
+                .SetSpeed(data.Speed)
                 .Build();
 
             Registered(_character.Health);
@@ -84,10 +90,9 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetHealth(data.Health)
                 .SetDamage(data.Damage)
                 .SetStats(data.Stats)
-                .SetTarget(_character)
                 .Build();
             
-            _character.Enemies.Add(zombie);
+            _enemies.Add(zombie);
 
             return zombie;
         }
@@ -135,6 +140,8 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             ProgressReaders.Clear();
             ProgressWriters.Clear();
+            
+            _enemies.Clear();
         }
 
         private void Registered(IProgress progress)

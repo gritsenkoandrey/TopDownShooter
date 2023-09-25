@@ -31,6 +31,15 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
+        public LevelBuilder Reset()
+        {
+            _prefab = null;
+            _levelType = default;
+            _levelTime = default;
+
+            return this;
+        }
+
         public CLevel Build()
         {
             CLevel level = Object.Instantiate(_prefab);

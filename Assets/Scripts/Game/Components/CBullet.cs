@@ -18,9 +18,5 @@ namespace CodeBase.Game.Components
         public GameObject Object => gameObject;
         public Tween Tween { get; set; }
         public ReactiveCommand OnDestroy { get; } = new();
-
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }

@@ -9,9 +9,5 @@ namespace CodeBase.Game.ComponentsUi
         [SerializeField] private TextMeshProUGUI _textCountMoney;
 
         public TextMeshProUGUI TextCountMoney => _textCountMoney;
-        
-        protected override void OnEntityCreate() { }
-        protected override void OnEntityEnable() { }
-        protected override void OnEntityDisable() { }
     }
 }
