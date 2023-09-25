@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.AssetData
@@ -7,6 +8,6 @@ namespace CodeBase.Infrastructure.AssetData
     {
         public T Load<T>(string path) where T : Object;
         public T[] LoadAll<T>(string path) where T : Object;
-        public void Unload();
+        public UniTaskVoid Unload();
     }
 }

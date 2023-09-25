@@ -8,7 +8,6 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
-using VContainer;
 
 namespace CodeBase.Infrastructure.Factories.Game
 {
@@ -18,19 +17,17 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IProgressService _progressService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
-        private readonly IObjectResolver _objectResolver;
 
         private CLevel _level;
         private CCharacter _character;
 
         public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService, IObjectResolver objectResolver)
+            IObjectPoolService objectPoolService, ICameraService cameraService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
-            _objectResolver = objectResolver;
         }
 
         public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
@@ -41,22 +38,26 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         CLevel IGameFactory.CreateLevel()
         {
-            LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+            LevelData data = _staticDataService.LevelData(GetLevelType());
+
+            _level = new LevelBuilder()
+                .SetPrefab(data.Prefab)
+                .SetLevelType(data.LevelType)
+                .SetLevelTime(data.LevelTime)
+                .Build();
             
-            return _level = Object.Instantiate(_staticDataService.LevelData(levelType).Prefab);
+            return _level;
         }
 
         CCharacter IGameFactory.CreateCharacter()
         {
             CharacterData characterData = _staticDataService.CharacterData();
-            
-            LevelType levelType = _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
 
             _character = new CharacterBuilder()
                 .Reset()
                 .SetPrefab(characterData.Prefab)
                 .SetCamera(_cameraService)
-                .SetPosition(_staticDataService.LevelData(levelType).Prefab.CharacterSpawnPosition)
+                .SetPosition(_staticDataService.LevelData(GetLevelType()).Prefab.CharacterSpawnPosition)
                 .SetHealth(characterData.Health)
                 .SetDamage(characterData.Damage)
                 .SetAttackDistance(characterData.AttackDistance)
@@ -147,6 +148,11 @@ namespace CodeBase.Infrastructure.Factories.Game
             {
                 ProgressReaders.Add(reader);
             }
+        }
+
+        private LevelType GetLevelType()
+        {
+            return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
         }
     }
 }

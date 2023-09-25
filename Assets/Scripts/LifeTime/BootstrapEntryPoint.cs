@@ -95,6 +95,7 @@ namespace CodeBase.LifeTime
                 new SEnemyHealth(),
                 new SCharacterHealth(_gameFactory),
                 new SBulletProvider(_gameFactory),
+                new SLevelTimeLeft(_gameStateService, _gameFactory),
             };
         }
 

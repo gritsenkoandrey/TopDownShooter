@@ -8,6 +8,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     public sealed class LevelData : ScriptableObject
     {
         public LevelType LevelType;
+        public int LevelTime;
         public CLevel Prefab;
     }
 }

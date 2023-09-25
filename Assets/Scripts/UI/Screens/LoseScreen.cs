@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -16,7 +17,11 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.OnClickAsObservable().First().Subscribe(RestartGame).AddTo(this);
+            _button
+                .OnClickAsObservable()
+                .First()
+                .Subscribe(_ => RestartGame().Forget())
+                .AddTo(this);
 
             ShowLoseScreen();
 
@@ -28,9 +33,9 @@ namespace CodeBase.UI.Screens
             base.OnDisable();
         }
 
-        private async void RestartGame(Unit _)
+        private async UniTaskVoid RestartGame()
         {
-            await _button.transform.PunchTransform().AsyncWaitForCompletion();
+            await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             
             GameStateService.Enter<StateLoadProgress>();
         }

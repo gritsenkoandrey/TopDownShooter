@@ -19,8 +19,8 @@ namespace CodeBase.Infrastructure.Curtain
 
         async UniTask ILoadingCurtainService.Hide()
         {
-            await ShowLoadingText().AsyncWaitForCompletion();
-            await FadeCanvas().AsyncWaitForCompletion();
+            await ShowLoadingText().AsyncWaitForCompletion().AsUniTask();
+            await FadeCanvas().AsyncWaitForCompletion().AsUniTask();
             
             gameObject.SetActive(false);
         }
@@ -34,17 +34,17 @@ namespace CodeBase.Infrastructure.Curtain
             return DOVirtual.DelayedCall(0.3f, () => UpdateText(ref index)).SetLoops(3);
         }
 
+        private Tween FadeCanvas()
+        {
+            return _canvasGroup.DOFade(0f, 0.25f).From(1f).SetDelay(0.5f).SetEase(Ease.Linear);
+        }
+
         private void UpdateText(ref int index)
         {
             _loadingText.text = "";
             _loadingText.text += (index % 3) switch { 1 => ".", 2 => "..", _ => "..." };
                     
             index++;
-        }
-
-        private Tween FadeCanvas()
-        {
-            return _canvasGroup.DOFade(0f, 0.25f).From(1f).SetDelay(0.5f).SetEase(Ease.Linear);
         }
     }
 }

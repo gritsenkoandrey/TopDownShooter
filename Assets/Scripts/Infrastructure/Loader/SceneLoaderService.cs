@@ -1,6 +1,5 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.Loader
@@ -9,10 +8,10 @@ namespace CodeBase.Infrastructure.Loader
     {
         void ISceneLoaderService.Load(string name, Action onLoaded)
         {
-            LoadScene(name, onLoaded);
+            LoadScene(name, onLoaded).Forget();
         }
         
-        private async void LoadScene(string name, Action onLoaded)
+        private async UniTaskVoid LoadScene(string name, Action onLoaded)
         {
             if (SceneManager.GetActiveScene().name == name)
             {
@@ -21,9 +20,9 @@ namespace CodeBase.Infrastructure.Loader
                 return;
             }
             
-            AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
+            UniTask waitNextScene = SceneManager.LoadSceneAsync(name).ToUniTask();
 
-            while (!waitNextScene.isDone)
+            while (!waitNextScene.Status.IsCompleted())
             {
                 await UniTask.Yield();
             }

@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -16,7 +17,11 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
 
-            _button.OnClickAsObservable().First().Subscribe(StartGame).AddTo(this);
+            _button
+                .OnClickAsObservable()
+                .First()
+                .Subscribe(_ => StartGame().Forget())
+                .AddTo(this);
         }
 
         protected override void OnDisable()
@@ -24,11 +29,11 @@ namespace CodeBase.UI.Screens
             base.OnDisable();
         }
 
-        private async void StartGame(Unit _)
+        private async UniTaskVoid StartGame()
         {
             _text.PunchTransform();
             
-            await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion();
+            await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion().AsUniTask();
             
             GameStateService.Enter<StateGame>();
         }

@@ -3,7 +3,6 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Utils;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {

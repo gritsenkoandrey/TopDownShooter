@@ -44,8 +44,8 @@ namespace CodeBase.Game.Systems
                     {
                         offset += 2f * Mathf.PI * component.Scale;
                         
-                        float x = component.Radius * Mathf.Cos(offset);
-                        float z = component.Radius * Mathf.Sin(offset);
+                        float x = component.Radius * Mathf.Sin(offset);
+                        float z = component.Radius * Mathf.Cos(offset);
                         
                         component.LineRenderer.SetPosition(i, new Vector3(x, 0f, z));
                     }

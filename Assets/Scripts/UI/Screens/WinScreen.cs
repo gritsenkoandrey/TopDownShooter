@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -15,7 +16,11 @@ namespace CodeBase.UI.Screens
         {
             base.OnEnable();
             
-            _button.OnClickAsObservable().First().Subscribe(NextGame).AddTo(this);
+            _button
+                .OnClickAsObservable()
+                .First()
+                .Subscribe(_ => NextGame().Forget())
+                .AddTo(this);
             
             ShowButton();
             
@@ -27,9 +32,9 @@ namespace CodeBase.UI.Screens
             base.OnDisable();
         }
 
-        private async void NextGame(Unit _)
+        private async UniTaskVoid NextGame()
         {
-            await _button.transform.PunchTransform().AsyncWaitForCompletion();
+            await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             
             GameStateService.Enter<StateLoadProgress>();
         }
