@@ -17,6 +17,8 @@ namespace CodeBase.Game.Components
         public CWeapon Weapon => _weapon;
         public CMove Move => _move;
         public Vector3 Position => transform.position;
+        public Quaternion Rotation => transform.rotation;
+        public float Angle => transform.eulerAngles.y;
         public ReactiveCommand UpdateStateMachine { get; } = new();
     }
 }

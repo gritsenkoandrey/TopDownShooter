@@ -8,17 +8,17 @@ using UniRx;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SCharacterDeath : SystemComponent<CCharacter>
+    public sealed class SLevelGameState : SystemComponent<CCharacter>
     {
         private readonly IGameStateService _gameStateService;
         private readonly IGameFactory _gameFactory;
 
-        public SCharacterDeath(IGameStateService gameStateService, IGameFactory gameFactory)
+        public SLevelGameState(IGameStateService gameStateService, IGameFactory gameFactory)
         {
             _gameStateService = gameStateService;
             _gameFactory = gameFactory;
         }
-        
+
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
@@ -32,12 +32,39 @@ namespace CodeBase.Game.Systems
         protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);
+            
+            SubscribeOnWinGame(component);
+            SubscribeOnFailGame(component);
+        }
 
+        protected override void OnDisableComponent(CCharacter component)
+        {
+            base.OnDisableComponent(component);
+        }
+
+        private void SubscribeOnWinGame(CCharacter component)
+        {
+            _gameFactory.Enemies
+                .ObserveRemove()
+                .Subscribe(_ =>
+                {
+                    if (_gameFactory.Enemies.Count == 0)
+                    {
+                        _gameStateService.Enter<StateWin>();
+                        
+                        component.LifetimeDisposable.Clear();
+                    }
+                })
+                .AddTo(component.LifetimeDisposable);
+        }
+
+        private void SubscribeOnFailGame(CCharacter component)
+        {
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
                 .Subscribe(_ =>
                 {
-                    if (!component.Health.IsAlive)
+                    if (!_gameFactory.Character.Health.IsAlive)
                     {
                         _gameStateService.Enter<StateFail>();
                         
@@ -50,11 +77,6 @@ namespace CodeBase.Game.Systems
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CCharacter component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

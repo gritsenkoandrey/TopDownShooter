@@ -1,6 +1,6 @@
 ﻿namespace CodeBase.Game.Interfaces
 {
-    public interface ICharacter : ITarget
+    public interface ICharacter : ITarget, IRotation
     {
         
     }

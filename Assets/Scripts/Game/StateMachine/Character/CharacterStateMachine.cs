@@ -47,7 +47,7 @@ namespace CodeBase.Game.StateMachine.Character
 
                 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
-                Vector3 next = _character.transform.position + move * _character.Move.Speed * Time.deltaTime;
+                Vector3 next = _character.Position + move * _character.Move.Speed * Time.deltaTime;
                         
                 Ray ray = new Ray { origin = next, direction = Vector3.down };
 
@@ -57,7 +57,7 @@ namespace CodeBase.Game.StateMachine.Character
                 }
             }
 
-            move.y = _character.Move.CharacterController.isGrounded ? 0f : Physics.gravity.y;
+            move.y = _character.Move.IsGrounded ? 0f : Physics.gravity.y;
 
             _character.Move.CharacterController.Move(move * _character.Move.Speed * Time.deltaTime);
         }
@@ -106,11 +106,11 @@ namespace CodeBase.Game.StateMachine.Character
             if (_isAttack)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(_target.Position - _character.Position);
-                _character.transform.rotation = Quaternion.Slerp(_character.transform.rotation, lookRotation, 0.75f);
+                _character.transform.rotation = Quaternion.Slerp(_character.Rotation, lookRotation, 0.75f);
             }
             else
             {
-                float lerpAngle = Mathf.LerpAngle(_character.transform.eulerAngles.y, _angle, 0.25f);
+                float lerpAngle = Mathf.LerpAngle(_character.Angle, _angle, 0.25f);
                 _character.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
             }
         }

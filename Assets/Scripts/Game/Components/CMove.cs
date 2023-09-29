@@ -11,6 +11,8 @@ namespace CodeBase.Game.Components
         public CharacterController CharacterController => _characterController;
         public float BaseSpeed { get; set; }
         public float Speed { get; private set; }
+        public float Velocity => _characterController.velocity.sqrMagnitude;
+        public bool IsGrounded => _characterController.isGrounded;
         
         void IProgressReader.Read(PlayerProgress progress)
         {
