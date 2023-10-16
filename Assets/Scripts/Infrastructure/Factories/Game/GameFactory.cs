@@ -106,18 +106,22 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         GameObject IGameFactory.CreateHitFx(Vector3 position)
         {
-            GameObject hitFx = _objectPoolService.SpawnObject(_staticDataService.FxData().HitFx, position, Quaternion.identity);
+            FxData data = _staticDataService.FxData();
+
+            GameObject hitFx = _objectPoolService.SpawnObject(data.HitFx, position, Quaternion.identity);
             
-            _objectPoolService.ReleaseObjectAfterTime(hitFx, 1f);
+            _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime);
             
             return hitFx;
         }
 
         GameObject IGameFactory.CreateDeathFx(Vector3 position)
         {
-            GameObject deathFx = _objectPoolService.SpawnObject(_staticDataService.FxData().DeatFx, position, Quaternion.identity);
+            FxData data = _staticDataService.FxData();
             
-            _objectPoolService.ReleaseObjectAfterTime(deathFx, 2f);
+            GameObject deathFx = _objectPoolService.SpawnObject(data.DeatFx, position, Quaternion.identity);
+            
+            _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime);
 
             return deathFx;
         }

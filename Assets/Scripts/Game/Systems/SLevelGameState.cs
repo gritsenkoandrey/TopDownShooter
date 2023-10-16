@@ -62,6 +62,7 @@ namespace CodeBase.Game.Systems
         {
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
+                .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
                     if (!_gameFactory.Character.Health.IsAlive)

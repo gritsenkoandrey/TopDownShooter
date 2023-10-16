@@ -64,8 +64,8 @@ namespace CodeBase.Game.StateMachine.Zombie
         {
             float angle = Random.Range(0f, 1f) * (2f * Mathf.PI) - Mathf.PI;
                     
-            float x = Mathf.Cos(angle) * radius;
-            float z = Mathf.Sin(angle) * radius;
+            float x = Mathf.Sin(angle) * radius;
+            float z = Mathf.Cos(angle) * radius;
 
             return new Vector3(x, 0f, z);
         }

@@ -1,6 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
+using CodeBase.Utils;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.SaveLoad
@@ -11,7 +12,7 @@ namespace CodeBase.Infrastructure.SaveLoad
         private readonly IUIFactory _uiFactory;
         private readonly IGameFactory _gameFactory;
 
-        private const string Key = nameof(PlayerProgress);
+        private const string Key = PlayerPrefsConst.PlayerProgressKey;
 
         public SaveLoadService(IProgressService progressService, IUIFactory uiFactory, IGameFactory gameFactory)
         {
