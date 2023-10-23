@@ -27,3 +27,8 @@ MonoBehaviour:
     MinDistanceToTarget: 3
     Height: 5
   Prefab: {fileID: 3522537617868912392, guid: ed507b4fe7e559f4283e282e97d9e458, type: 3}
+  PrefabReference:
+    m_AssetGUID: ed507b4fe7e559f4283e282e97d9e458
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

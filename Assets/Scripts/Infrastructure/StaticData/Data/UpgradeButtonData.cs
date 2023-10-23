@@ -1,6 +1,6 @@
-﻿using CodeBase.Game.ComponentsUi;
-using CodeBase.Game.Enums;
+﻿using CodeBase.Game.Enums;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
@@ -9,6 +9,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
     {
         public UpgradeButtonType UpgradeButtonType;
         [Range(1, 500)]public int BaseCost;
-        public CUpgradeButton Prefab;
+        public AssetReference PrefabReference;
     }
 }

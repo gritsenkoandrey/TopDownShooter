@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
@@ -47,7 +48,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            CreateEnemyHealths(component);
+            CreateEnemyHealths(component).Forget();
         }
 
         protected override void OnDisableComponent(CEnemyHealthProvider component)
@@ -55,13 +56,13 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableComponent(component);
         }
 
-        private void CreateEnemyHealths(CEnemyHealthProvider component)
+        private async UniTaskVoid CreateEnemyHealths(CEnemyHealthProvider component)
         {
             component.EnemyHealths = new List<CEnemyHealth>(_gameFactory.Enemies.Count);
             
             foreach (IEnemy enemy in _gameFactory.Enemies)
             {
-                CEnemyHealth enemyHealth = _uiFactory.CreateEnemyHealth(enemy, component.transform);
+                CEnemyHealth enemyHealth = await _uiFactory.CreateEnemyHealth(enemy, component.transform);
                 
                 component.EnemyHealths.Add(enemyHealth);
             }

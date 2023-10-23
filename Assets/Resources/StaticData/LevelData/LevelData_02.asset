@@ -15,3 +15,13 @@ MonoBehaviour:
   LevelType: 1
   LevelTime: 120
   Prefab: {fileID: 3495192746181472546, guid: f2fdb6d646174fd4c91e92d6fd0a3b88, type: 3}
+  PrefabReference:
+    m_AssetGUID: f2fdb6d646174fd4c91e92d6fd0a3b88
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  PrefabReferenceLevel:
+    m_AssetGUID: f2fdb6d646174fd4c91e92d6fd0a3b88
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

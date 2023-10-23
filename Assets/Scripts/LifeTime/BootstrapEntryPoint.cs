@@ -73,7 +73,6 @@ namespace CodeBase.LifeTime
                 new SCharacterStateMachine(_cameraService, _joystickService, _gameFactory),
                 new SCharacterAnimator(),
                 new SCharacterWeapon(_gameFactory),
-                new SZombieSpawner(_gameFactory),
                 new SZombieStateMachine(),
                 new SZombieAnimator(),
                 new SZombieAggro(),
@@ -94,7 +93,6 @@ namespace CodeBase.LifeTime
                 new SCharacterHealth(_gameFactory),
                 new SBulletProvider(_gameFactory),
                 new SLevelTimeLeft(_gameStateService, _gameFactory),
-                new SCharacterSpawner(_gameFactory),
                 new SLevelGameState(_gameStateService, _gameFactory),
             };
         }

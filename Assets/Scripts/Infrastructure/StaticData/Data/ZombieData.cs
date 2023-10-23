@@ -1,6 +1,6 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Game.Enums;
+﻿using CodeBase.Game.Enums;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
@@ -11,6 +11,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         [Range(1, 250)] public int Health;
         [Range(1, 25)] public int Damage;
         public EnemyStats Stats;
-        [Space] public CZombie Prefab;
+        [Space] public AssetReference PrefabReference;
     }
 }

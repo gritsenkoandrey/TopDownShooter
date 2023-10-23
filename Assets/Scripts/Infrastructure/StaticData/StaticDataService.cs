@@ -1,33 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData
 {
     public sealed class StaticDataService : IStaticDataService
     {
         private readonly IAssetService _assetService;
-        
-        private const string ZombieDataPath = "StaticData/ZombieData";
-        private const string ScreenDataPath = "StaticData/ScreenData";
-        private const string CharacterDataPath = "StaticData/CharacterData/CharacterData";
-        private const string UpgradeButtonDataPath = "StaticData/UpgradeButtonData";
-        private const string BulletPath = "Data/Bulets/Bullet";
-        private const string LevelDataPath = "StaticData/LevelData";
-        private const string FxDataPath = "Data/FX/FxData";
-        private const string TextureArrayDataPath = "StaticData/TextureArrayData/TextureArrayData";
-        private const string UiDataPath = "StaticData/UiData/UiData";
 
         private IDictionary<ZombieType, ZombieData> _monsters;
         private IDictionary<ScreenType, ScreenData> _screens;
         private IDictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
         private IDictionary<LevelType, LevelData> _levels;
         private CharacterData _character;
-        private CBullet _bullet;
+        private BulletData _bullet;
         private FxData _fxData;
         private TextureArrayData _textureArrayData;
         private UiData _uiData;
@@ -37,29 +28,31 @@ namespace CodeBase.Infrastructure.StaticData
             _assetService = assetService;
         }
 
-        void IStaticDataService.Load()
+        async UniTask IStaticDataService.Load()
         {
             _monsters = _assetService
-                .LoadAll<ZombieData>(ZombieDataPath)
+                .LoadAllFromResources<ZombieData>(AssetAddress.ZombieDataPath)
                 .ToDictionary(data => data.ZombieType, data => data);
 
             _screens = _assetService
-                .LoadAll<ScreenData>(ScreenDataPath)
+                .LoadAllFromResources<ScreenData>(AssetAddress.ScreenDataPath)
                 .ToDictionary(data => data.ScreenType, data => data);
 
             _upgradeButtons = _assetService
-                .LoadAll<UpgradeButtonData>(UpgradeButtonDataPath)
+                .LoadAllFromResources<UpgradeButtonData>(AssetAddress.UpgradeButtonDataPath)
                 .ToDictionary(data => data.UpgradeButtonType, data => data);
 
             _levels = _assetService
-                .LoadAll<LevelData>(LevelDataPath)
+                .LoadAllFromResources<LevelData>(AssetAddress.LevelDataPath)
                 .ToDictionary(data => data.LevelType, data => data);
 
-            _character = _assetService.Load<CharacterData>(CharacterDataPath);
-            _bullet = _assetService.Load<CBullet>(BulletPath);
-            _fxData = _assetService.Load<FxData>(FxDataPath);
-            _textureArrayData = _assetService.Load<TextureArrayData>(TextureArrayDataPath);
-            _uiData = _assetService.Load<UiData>(UiDataPath);
+            _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
+            _bullet = _assetService.LoadFromResources<BulletData>(AssetAddress.BulletDataPath);
+            _fxData = _assetService.LoadFromResources<FxData>(AssetAddress.FxDataPath);
+            _textureArrayData = _assetService.LoadFromResources<TextureArrayData>(AssetAddress.TextureArrayDataPath);
+            _uiData = _assetService.LoadFromResources<UiData>(AssetAddress.UiDataPath);
+
+            await WarmUp();
         }
 
         ZombieData IStaticDataService.ZombieData(ZombieType type) => 
@@ -75,9 +68,16 @@ namespace CodeBase.Infrastructure.StaticData
             _levels.TryGetValue(type, out LevelData staticData) ? staticData : null; 
 
         CharacterData IStaticDataService.CharacterData() => _character;
+        BulletData IStaticDataService.BulletData() => _bullet;
         FxData IStaticDataService.FxData() => _fxData;
-        CBullet IStaticDataService.BulletData() => _bullet;
         TextureArrayData IStaticDataService.TextureArrayData() => _textureArrayData;
         UiData IStaticDataService.UiData() => _uiData;
+
+        private async UniTask WarmUp()
+        {
+            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
+            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
+            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
+        }
     }
 }

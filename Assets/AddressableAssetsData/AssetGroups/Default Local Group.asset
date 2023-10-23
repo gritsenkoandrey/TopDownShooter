@@ -16,7 +16,79 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 8d208fa770f25ab4e94d81359758fbef
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: bb0dd454804f7be4a94f189e78732829
+    m_Address: Character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f2fdb6d646174fd4c91e92d6fd0a3b88
+    m_Address: LevelBoss
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8b37044fc561cdc41a38b4f1035c3300
+    m_Address: LevelNormal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 348a9e1474e40ec4da07575d55c638ad
+    m_Address: ZombieHard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c6d60fcd31540b84681d1580dae357ac
+    m_Address: ZombieEasy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 48c5591f64bfe8341b05269663b11831
+    m_Address: ZombieNormal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ed507b4fe7e559f4283e282e97d9e458
+    m_Address: ZombieBoss
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ed28e53c93fc7d2449d7c68bb8409223
+    m_Address: Bullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cca79b260878071418290367024a6716
+    m_Address: DeathFx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fdac75e990da47649b31f10049c400b0
+    m_Address: HitFx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6df19e06a43020e4a9ae94c4bf206ed9
+    m_Address: LobbyScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3bfda78987cc15146b3ad22c99fff1f6
+    m_Address: GameScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 199b426e5d7b9fa4da25b33239920b35
+    m_Address: WinScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9aa1606cb99a2204fa8f633927ce446a
+    m_Address: LoseScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b743356fc62389848846dab711e68711
+    m_Address: Damage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c2d258784586ea24f834872285b3a92a
+    m_Address: Health
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8a3e157373a32d942be9c2b3039043d1
+    m_Address: Speed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1e36f800db20f6a4ea1956cd95af55ed
+    m_Address: EnemyHealth
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

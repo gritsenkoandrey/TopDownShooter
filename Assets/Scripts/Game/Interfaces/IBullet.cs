@@ -6,6 +6,7 @@ namespace CodeBase.Game.Interfaces
     public interface IBullet : IObject, IPosition
     {
         public void SetDirection(Vector3 direction);
+        public void SetCollisionDistance(float collisionDistance);
         public int Damage { get; set; }
         public ReactiveCommand OnDestroy { get; }
     }
