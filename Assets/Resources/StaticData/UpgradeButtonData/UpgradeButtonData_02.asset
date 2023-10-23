@@ -15,3 +15,8 @@ MonoBehaviour:
   UpgradeButtonType: 1
   BaseCost: 100
   Prefab: {fileID: 8049763259387518725, guid: c2d258784586ea24f834872285b3a92a, type: 3}
+  PrefabReference:
+    m_AssetGUID: c2d258784586ea24f834872285b3a92a
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenType: 2
   Prefab: {fileID: 2816436683870373461, guid: 199b426e5d7b9fa4da25b33239920b35, type: 3}
+  PrefabReference:
+    m_AssetGUID: 199b426e5d7b9fa4da25b33239920b35
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: UiData
   m_EditorClassIdentifier: 
   EnemyHealth: {fileID: 1298437792690601452, guid: 1e36f800db20f6a4ea1956cd95af55ed, type: 3}
+  PrefabReference:
+    m_AssetGUID: 1e36f800db20f6a4ea1956cd95af55ed
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -2,12 +2,14 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -20,6 +22,7 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly ICameraService _cameraService;
         private readonly IObjectResolver _objectResolver;
         private readonly IGuiService _guiService;
+        private readonly IAssetService _assetService;
 
         public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
         public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
@@ -27,35 +30,42 @@ namespace CodeBase.Infrastructure.Factories.UI
         private BaseScreen _currentScreen;
 
         public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, 
-            IObjectResolver objectResolver, IGuiService guiService)
+            IObjectResolver objectResolver, IGuiService guiService, IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _cameraService = cameraService;
             _objectResolver = objectResolver;
             _guiService = guiService;
+            _assetService = assetService;
         }
 
-        BaseScreen IUIFactory.CreateScreen(ScreenType type)
+        async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
         {
             if (_currentScreen != null)
             {
                 Object.Destroy(_currentScreen.gameObject);
             }
 
-            ScreenData screenData = _staticDataService.ScreenData(type);
+            ScreenData data = _staticDataService.ScreenData(type);
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            _currentScreen = _objectResolver.Instantiate(screenData.Prefab, _guiService.StaticCanvas.transform);
+            _currentScreen = _objectResolver
+                .Instantiate(prefab, _guiService.StaticCanvas.transform)
+                .GetComponent<BaseScreen>();
             
             _cameraService.ActivateCamera(type);
 
             return _currentScreen;
         }
 
-        CUpgradeButton IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
+        async UniTask<CUpgradeButton> IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
         {
             UpgradeButtonData data = _staticDataService.UpgradeButtonData(type);
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            CUpgradeButton button = Object.Instantiate(data.Prefab, parent);
+            CUpgradeButton button = Object.Instantiate(prefab, parent).GetComponent<CUpgradeButton>();
 
             button.UpgradeButtonType = data.UpgradeButtonType;
             button.BaseCost = data.BaseCost;
@@ -65,11 +75,13 @@ namespace CodeBase.Infrastructure.Factories.UI
             return button;
         }
 
-        CEnemyHealth IUIFactory.CreateEnemyHealth(IEnemy enemy, Transform parent)
+        async UniTask<CEnemyHealth> IUIFactory.CreateEnemyHealth(IEnemy enemy, Transform parent)
         {
             UiData data = _staticDataService.UiData();
+
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             
-            CEnemyHealth enemyHealth = Object.Instantiate(data.EnemyHealth, parent);
+            CEnemyHealth enemyHealth = Object.Instantiate(prefab, parent).GetComponent<CEnemyHealth>();
 
             enemyHealth.Enemy.SetValueAndForceNotify(enemy);
 

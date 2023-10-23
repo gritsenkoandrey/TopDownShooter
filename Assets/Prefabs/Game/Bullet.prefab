@@ -9497,4 +9497,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aecd7c6afb74ad2800350fe1d2b3b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collisionDistance: 1

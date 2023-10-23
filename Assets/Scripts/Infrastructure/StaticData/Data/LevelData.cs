@@ -1,6 +1,6 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Game.Enums;
+﻿using CodeBase.Game.Enums;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
@@ -9,6 +9,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
     {
         public LevelType LevelType;
         public int LevelTime;
-        public CLevel Prefab;
+        public AssetReference PrefabReference;
     }
 }

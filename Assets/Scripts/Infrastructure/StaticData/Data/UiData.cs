@@ -1,11 +1,11 @@
-﻿using CodeBase.Game.ComponentsUi;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
     [CreateAssetMenu(fileName = nameof(UiData), menuName = "Data/" + nameof(UiData))]
     public sealed class UiData : ScriptableObject
     {
-        public CEnemyHealth EnemyHealth;
+        public AssetReference PrefabReference;
     }
 }

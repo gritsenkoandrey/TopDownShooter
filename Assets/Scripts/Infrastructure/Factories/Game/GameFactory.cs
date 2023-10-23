@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using CodeBase.Game.Behaviours;
 using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -19,18 +22,20 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IProgressService _progressService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
+        private readonly IAssetService _assetService;
 
         private CLevel _level;
         private CCharacter _character;
         private readonly IReactiveCollection<IEnemy> _enemies = new ReactiveCollection<IEnemy>();
 
         public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService)
+            IObjectPoolService objectPoolService, ICameraService cameraService, IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
+            _assetService = assetService;
         }
 
         public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
@@ -40,27 +45,48 @@ namespace CodeBase.Infrastructure.Factories.Game
         ICharacter IGameFactory.Character => _character;
         IReactiveCollection<IEnemy> IGameFactory.Enemies => _enemies;
 
-        ILevel IGameFactory.CreateLevel()
+        async UniTask<ILevel> IGameFactory.CreateLevel()
         {
             LevelData data = _staticDataService.LevelData(GetLevelType());
 
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+
             _level = new LevelBuilder()
                 .Reset()
-                .SetPrefab(data.Prefab)
+                .SetPrefab(prefab.GetComponent<CLevel>())
                 .SetLevelType(data.LevelType)
                 .SetLevelTime(data.LevelTime)
                 .Build();
+
+            foreach (SpawnPoint spawnPoint in _level.SpawnPoints)
+            {
+                switch (spawnPoint.UnitType)
+                {
+                    case UnitType.None:
+                        break;
+                    case UnitType.Character:
+                        await CreateCharacter(spawnPoint.Position, _level.transform);
+                        break;
+                    case UnitType.Zombie:
+                        await CreateZombie(spawnPoint.ZombieType, spawnPoint.Position, _level.transform);
+                        break;
+                }
+            }
+            
+            SubscribeOnCreateEnemies();
             
             return _level;
         }
 
-        ICharacter IGameFactory.CreateCharacter(Vector3 position, Transform parent)
+        private async UniTask<ICharacter> CreateCharacter(Vector3 position, Transform parent)
         {
             CharacterData data = _staticDataService.CharacterData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             _character = new CharacterBuilder()
                 .Reset()
-                .SetPrefab(data.Prefab)
+                .SetPrefab(prefab.GetComponent<CCharacter>())
                 .SetParent(parent)
                 .SetCamera(_cameraService)
                 .SetPosition(position)
@@ -78,13 +104,15 @@ namespace CodeBase.Infrastructure.Factories.Game
             return _character;
         }
 
-        CZombie IGameFactory.CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
+        private async UniTask<CZombie> CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
         {
             ZombieData data = _staticDataService.ZombieData(zombieType);
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             CZombie zombie = new ZombieBuilder()
                 .Reset()
-                .SetPrefab(data.Prefab)
+                .SetPrefab(prefab.GetComponent<CZombie>())
                 .SetPosition(position)
                 .SetParent(parent)
                 .SetHealth(data.Health)
@@ -97,29 +125,41 @@ namespace CodeBase.Infrastructure.Factories.Game
             return zombie;
         }
 
-        CBullet IGameFactory.CreateBullet(Vector3 position)
+        async UniTask<IBullet> IGameFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)
         {
-            return _objectPoolService
-                .SpawnObject(_staticDataService.BulletData().gameObject, position, Quaternion.identity)
-                .GetComponent<CBullet>();
+            BulletData data = _staticDataService.BulletData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
+
+            return new BulletBuilder(_objectPoolService)
+                .SetPrefab(prefab)
+                .SetDamage(damage)
+                .SetPosition(position)
+                .SetDirection(direction)
+                .SetCollisionDistance(data.CollisionRadius)
+                .Build();
         }
 
-        GameObject IGameFactory.CreateHitFx(Vector3 position)
+        async UniTask<GameObject> IGameFactory.CreateHitFx(Vector3 position)
         {
             FxData data = _staticDataService.FxData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
 
-            GameObject hitFx = _objectPoolService.SpawnObject(data.HitFx, position, Quaternion.identity);
+            GameObject hitFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
             
             _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime);
             
             return hitFx;
         }
 
-        GameObject IGameFactory.CreateDeathFx(Vector3 position)
+        async UniTask<GameObject> IGameFactory.CreateDeathFx(Vector3 position)
         {
             FxData data = _staticDataService.FxData();
             
-            GameObject deathFx = _objectPoolService.SpawnObject(data.DeatFx, position, Quaternion.identity);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
+
+            GameObject deathFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
             
             _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime);
 
@@ -164,6 +204,19 @@ namespace CodeBase.Infrastructure.Factories.Game
         private LevelType GetLevelType()
         {
             return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+        }
+
+        private void SubscribeOnCreateEnemies()
+        {
+            foreach (IEnemy enemy in _enemies)
+            {
+                enemy.Target.SetValueAndForceNotify(_character);
+            }
+
+            _enemies
+                .ObserveAdd()
+                .Subscribe(enemy => enemy.Value.Target.SetValueAndForceNotify(_character))
+                .AddTo(_level.LifetimeDisposable);
         }
     }
 }

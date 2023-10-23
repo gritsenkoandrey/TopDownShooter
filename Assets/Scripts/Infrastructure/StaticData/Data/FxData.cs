@@ -7,8 +7,5 @@ namespace CodeBase.Infrastructure.StaticData.Data
     {
         public float HitFxReleaseTime;
         public float DeathFxReleaseTime;
-        
-        public GameObject HitFx;
-        public GameObject DeatFx;
     }
 }

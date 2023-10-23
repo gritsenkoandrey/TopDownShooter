@@ -1,8 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
+using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -30,19 +31,22 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             component.Shoot
-                .Subscribe(_ =>
-                {
-                    IBullet bullet = _gameFactory.CreateBullet(component.SpawnBulletPoint.position);
-
-                    bullet.Damage = component.Damage;
-                    bullet.SetDirection(component.transform.forward.normalized * component.Force);
-                })
+                .Subscribe(_ => CreateBullet(component).Forget())
                 .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CWeapon component)
         {
             base.OnDisableComponent(component);
+        }
+
+        private async UniTaskVoid CreateBullet(CWeapon component)
+        {
+            int damage = component.Damage;
+            Vector3 position = component.SpawnBulletPoint.position;
+            Vector3 direction = component.transform.forward.normalized * component.Force;
+            
+            await _gameFactory.CreateBullet(damage, position, direction);
         }
     }
 }

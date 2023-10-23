@@ -1,13 +1,17 @@
 ﻿using CodeBase.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.AssetData
 {
     public interface IAssetService : IService
     {
-        public T Load<T>(string path) where T : Object;
-        public T[] LoadAll<T>(string path) where T : Object;
+        public UniTask Init();
+        public T LoadFromResources<T>(string path) where T : Object;
+        public T[] LoadAllFromResources<T>(string path) where T : Object;
+        UniTask<T> LoadFromAddressable<T>(AssetReference assetReference) where T : class;
+        UniTask<T> LoadFromAddressable<T>(string address) where T : class;
         public UniTaskVoid Unload();
     }
 }

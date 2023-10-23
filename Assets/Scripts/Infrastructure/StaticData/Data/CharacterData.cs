@@ -1,5 +1,5 @@
-﻿using CodeBase.Game.Components;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
@@ -11,7 +11,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         [Range(1f, 5f)] public float Speed;
         [Range(2.5f, 10f)] public float AttackDistance;
         [Range(0.1f, 2f)] public float AttackRecharge;
-        
-        public CCharacter Prefab;
+        public AssetReference PrefabReference;
     }
 }

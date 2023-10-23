@@ -7,6 +7,7 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -46,7 +47,12 @@ namespace CodeBase.Infrastructure.States
             _sceneLoaderService.Load(sceneName, Next);
         }
 
-        async void IExitState.Exit()
+        void IExitState.Exit()
+        {
+            Hide().Forget();
+        }
+
+        private async UniTaskVoid Hide()
         {
             await _curtain.Hide();
         }
@@ -54,8 +60,8 @@ namespace CodeBase.Infrastructure.States
         private void Next()
         {
             CreateTextureArray();
-            CreateWorld();
-            ReadProgress();
+            CreateScreen();
+            CreateLevel().Forget();
 
             _stateService.Enter<StateLobby>();
         }
@@ -69,10 +75,16 @@ namespace CodeBase.Infrastructure.States
             _assetService.Unload();
         }
 
-        private void CreateWorld()
+        private async UniTaskVoid CreateLevel()
+        {
+            await _gameFactory.CreateLevel();
+            
+            ReadProgress();
+        }
+
+        private void CreateScreen()
         {
             _uiFactory.CreateScreen(ScreenType.Lobby);
-            _gameFactory.CreateLevel();
         }
 
         private void CreateTextureArray()

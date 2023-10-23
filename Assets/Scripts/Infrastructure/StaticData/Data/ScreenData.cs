@@ -1,5 +1,6 @@
 ﻿using CodeBase.UI.Screens;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Infrastructure.StaticData.Data
 {
@@ -7,6 +8,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
     public sealed class ScreenData : ScriptableObject
     {
         public ScreenType ScreenType;
-        public BaseScreen Prefab;
+        public AssetReference PrefabReference;
     }
 }

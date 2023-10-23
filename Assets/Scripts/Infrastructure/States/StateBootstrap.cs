@@ -1,8 +1,10 @@
 ﻿using CodeBase.App;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -13,20 +15,24 @@ namespace CodeBase.Infrastructure.States
         private readonly IStaticDataService _staticDataService;
         private readonly IJoystickService _joystickService;
         private readonly IObjectPoolService _objectPoolService;
+        private readonly IAssetService _assetService;
 
         public StateBootstrap(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
-            IStaticDataService staticDataService, IJoystickService joystickService, IObjectPoolService objectPoolService)
+            IStaticDataService staticDataService, IJoystickService joystickService, IObjectPoolService objectPoolService,
+            IAssetService assetService)
         {
             _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
             _joystickService = joystickService;
             _objectPoolService = objectPoolService;
+            _assetService = assetService;
         }
         
-        void IEnterState.Enter()
+        async void IEnterState.Enter()
         {
-            LoadResources();
+            await InitAsset();
+            await LoadResources();
             InitJoystick();
             InitObjectPool();
             
@@ -36,7 +42,8 @@ namespace CodeBase.Infrastructure.States
         void IExitState.Exit() { }
 
         private void Next() => _stateService.Enter<StateLoadProgress>();
-        private void LoadResources() => _staticDataService.Load();
+        private async UniTask LoadResources() => await _staticDataService.Load();
+        private async UniTask InitAsset() => await _assetService.Init();
         private void InitJoystick() => _joystickService.Init();
         private void InitObjectPool() => _objectPoolService.Init();
     }
