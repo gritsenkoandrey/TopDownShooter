@@ -2,13 +2,12 @@
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
-using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.StaticData
 {
     public interface IStaticDataService : IService
     {
-        public UniTask Load();
+        public void Load();
         public ZombieData ZombieData(ZombieType type);
         public ScreenData ScreenData(ScreenType type);
         public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
@@ -18,5 +17,6 @@ namespace CodeBase.Infrastructure.StaticData
         public FxData FxData();
         public TextureArrayData TextureArrayData();
         public UiData UiData();
+        public PoolData PoolData();
     }
 }

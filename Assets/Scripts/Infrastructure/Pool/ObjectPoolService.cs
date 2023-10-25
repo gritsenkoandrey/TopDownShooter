@@ -1,38 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.StaticData;
+using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
 {
-    public sealed class ObjectPoolService : MonoBehaviour, IObjectPoolService
+    public sealed class ObjectPoolService : IObjectPoolService
     {
-        [SerializeField] private bool _logStatus = false;
-	    
-	    [Space,SerializeField] private ObjectPoolItem[] _poolItems;
-
-	    private bool _dirty;
-
 	    private Transform _root;
-
+	    private readonly Transform _parent;
+	    private bool _logStatus;
+	    private bool _dirty;
+	    private List<ObjectPoolItem> _poolItems;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _prefabLookup;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _instanceLookup;
-
 	    private CancellationToken _token;
+	    private readonly IAssetService _assetService;
+	    private readonly IStaticDataService _staticDataService;
+	    
+	    public ObjectPoolService(IAssetService assetService, IStaticDataService staticDataService, Transform parent)
+	    {
+		    _assetService = assetService;
+		    _staticDataService = staticDataService;
+		    _parent = parent;
+	    }
 
-	    void IObjectPoolService.Init()
+	    async UniTask IObjectPoolService.Init()
 	    {
 		    _root = new GameObject().transform;
-		    _root.SetParent(transform);
+		    _root.SetParent(_parent);
 		    _root.name = "Pool";
-
+		    
 		    _prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
 		    _instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
+		    _token = new CancellationToken();
 
-		    _token = this.GetCancellationTokenOnDestroy();
-
+		    await LoadPoolItems();
+		    
 		    FirstWarmPool();
+	    }
+
+	    GameObject IObjectPoolService.SpawnObject(GameObject prefab)
+	    {
+		    return Spawn(prefab);
+	    }
+
+	    GameObject IObjectPoolService.SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
+	    {
+		    return Spawn(prefab, position, rotation);
+	    }
+
+	    void IObjectPoolService.ReleaseObject(GameObject clone)
+	    {
+		    Release(clone);
+	    }
+
+	    async UniTaskVoid IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
+	    {
+		    try
+		    {
+			    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
+			    
+			    Release(clone);
+		    }
+		    catch (OperationCanceledException exception)
+		    {
+			    if (exception.CancellationToken == _token)
+			    {
+				    Debug.LogWarning($"{exception.CancellationToken}");
+			    }
+		    }
 	    }
 
 	    void IObjectPoolService.Log()
@@ -52,6 +93,22 @@ namespace CodeBase.Infrastructure.Pool
 		    _token.ThrowIfCancellationRequested();
 
 		    SetActivePoolPrefabs();
+	    }
+
+	    private async UniTask LoadPoolItems()
+	    {
+		    PoolData data = _staticDataService.PoolData();
+
+		    _logStatus = data.LogStatus;
+		    _poolItems = new List<ObjectPoolItem>(data.PoolItems.Length);
+
+		    for (int i = 0; i < data.PoolItems.Length; i++)
+		    {
+			    int count = data.PoolItems[i].Count;
+			    GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PoolItems[i].PrefabReference);
+
+			    _poolItems.Add(new ObjectPoolItem(prefab, count));
+		    }
 	    }
 
 	    private void Warm(GameObject prefab, int size)
@@ -115,7 +172,7 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private GameObject InstantiatePrefab(GameObject prefab)
 	    {
-		    GameObject go = Instantiate(prefab);
+		    GameObject go = UnityEngine.Object.Instantiate(prefab);
 		    
 		    if (_root != null)
 		    {
@@ -135,7 +192,7 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private void FirstWarmPool()
 	    {
-		    for (int i = 0; i < _poolItems.Length; i++)
+		    for (int i = 0; i < _poolItems.Count; i++)
 		    {
 			    WarmPool(_poolItems[i].Prefab, _poolItems[i].Count);
 		    }
@@ -146,41 +203,9 @@ namespace CodeBase.Infrastructure.Pool
 		    Warm(prefab, size);
 	    }
 
-	    GameObject IObjectPoolService.SpawnObject(GameObject prefab)
-	    {
-		    return Spawn(prefab);
-	    }
-
-	    GameObject IObjectPoolService.SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
-	    {
-		    return Spawn(prefab, position, rotation);
-	    }
-
-	    void IObjectPoolService.ReleaseObject(GameObject clone)
-	    {
-		    Release(clone);
-	    }
-
-	    async void IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
-	    {
-		    try
-		    {
-			    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
-			    
-			    Release(clone);
-		    }
-		    catch (OperationCanceledException exception)
-		    {
-			    if (exception.CancellationToken == _token)
-			    {
-				    Debug.LogWarning($"{exception.CancellationToken}");
-			    }
-		    }
-	    }
-
 	    private void SetActivePoolPrefabs()
 	    {
-		    for (int i = 0; i < _poolItems.Length; i++)
+		    for (int i = 0; i < _poolItems.Count; i++)
 		    {
 			    _poolItems[i].Prefab.SetActive(true);
 		    }

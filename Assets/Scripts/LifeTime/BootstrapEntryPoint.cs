@@ -33,10 +33,18 @@ namespace CodeBase.LifeTime
         private readonly IGuiService _guiService;
         private readonly IObjectResolver _objectResolver;
 
-        public BootstrapEntryPoint(IGameStateService gameStateService, IUIFactory uiFactory, 
-            IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService, IJoystickService joystickService,
-            ITextureArrayFactory textureArrayFactory, IGuiService guiService, IObjectResolver objectResolver)
+        public BootstrapEntryPoint(
+            IGameStateService gameStateService, 
+            IUIFactory uiFactory, 
+            IGameFactory gameFactory, 
+            IProgressService progressService, 
+            ISaveLoadService saveLoadService, 
+            IObjectPoolService objectPoolService, 
+            ICameraService cameraService, 
+            IJoystickService joystickService,
+            ITextureArrayFactory textureArrayFactory, 
+            IGuiService guiService, 
+            IObjectResolver objectResolver)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;

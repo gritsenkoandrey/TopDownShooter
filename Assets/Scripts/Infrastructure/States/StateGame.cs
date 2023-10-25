@@ -10,7 +10,10 @@ namespace CodeBase.Infrastructure.States
         private readonly IJoystickService _joystickService;
         private readonly IUIFactory _uiFactory;
 
-        public StateGame(IGameStateService stateService, IJoystickService joystickService, IUIFactory uiFactory)
+        public StateGame(
+            IGameStateService stateService, 
+            IJoystickService joystickService, 
+            IUIFactory uiFactory)
         {
             _stateService = stateService;
             _joystickService = joystickService;

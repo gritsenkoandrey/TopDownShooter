@@ -8,7 +8,9 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateService _stateService;
         private readonly IUIFactory _uiFactory;
 
-        public StateFail(IGameStateService stateService, IUIFactory uiFactory)
+        public StateFail(
+            IGameStateService stateService, 
+            IUIFactory uiFactory)
         {
             _stateService = stateService;
             _uiFactory = uiFactory;

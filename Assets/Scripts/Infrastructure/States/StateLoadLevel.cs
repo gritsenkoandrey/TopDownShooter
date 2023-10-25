@@ -23,9 +23,15 @@ namespace CodeBase.Infrastructure.States
         private readonly ICameraService _cameraService;
         private readonly ITextureArrayFactory _textureArrayFactory;
 
-        public StateLoadLevel(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
-            IGameFactory gameFactory, IUIFactory uiFactory, IProgressService progressService, 
-            IAssetService assetService, ILoadingCurtainService curtain, ICameraService cameraService,
+        public StateLoadLevel(
+            IGameStateService stateService, 
+            ISceneLoaderService sceneLoaderService, 
+            IGameFactory gameFactory, 
+            IUIFactory uiFactory, 
+            IProgressService progressService, 
+            IAssetService assetService, 
+            ILoadingCurtainService curtain, 
+            ICameraService cameraService,
             ITextureArrayFactory textureArrayFactory)
         {
             _stateService = stateService;

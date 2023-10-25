@@ -10,7 +10,10 @@ namespace CodeBase.Infrastructure.States
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
-        public StateLoadProgress(IGameStateService stateService, IProgressService progressService, ISaveLoadService saveLoadService)
+        public StateLoadProgress(
+            IGameStateService stateService, 
+            IProgressService progressService, 
+            ISaveLoadService saveLoadService)
         {
             _stateService = stateService;
             _progressService = progressService;

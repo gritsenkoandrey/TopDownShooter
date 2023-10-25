@@ -2,10 +2,15 @@
 
 namespace CodeBase.Infrastructure.Pool
 {
-    [System.Serializable]
     public struct ObjectPoolItem
     {
-        public GameObject Prefab;
-        public int Count;
+        public readonly GameObject Prefab;
+        public readonly int Count;
+
+        public ObjectPoolItem(GameObject prefab, int count)
+        {
+            Prefab = prefab;
+            Count = count;
+        }
     }
 }

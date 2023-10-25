@@ -14,5 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitFxReleaseTime: 1
   DeathFxReleaseTime: 2
-  HitFx: {fileID: 167524, guid: fdac75e990da47649b31f10049c400b0, type: 3}
-  DeatFx: {fileID: 153568, guid: cca79b260878071418290367024a6716, type: 3}

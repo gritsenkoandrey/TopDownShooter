@@ -26,7 +26,7 @@ MonoBehaviour:
     PatrolRadius: 5
     MinDistanceToTarget: 1.5
     Height: 2
-  Prefab: {fileID: 3522537617868912392, guid: c6d60fcd31540b84681d1580dae357ac, type: 3}
+  Prefab: {fileID: 0}
   PrefabReference:
     m_AssetGUID: c6d60fcd31540b84681d1580dae357ac
     m_SubObjectName: 

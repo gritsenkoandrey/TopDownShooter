@@ -17,13 +17,8 @@ MonoBehaviour:
   Speed: 5
   AttackDistance: 7.5
   AttackRecharge: 1
-  Prefab: {fileID: 879267955218250750, guid: bb0dd454804f7be4a94f189e78732829, type: 3}
+  Prefab: {fileID: 0}
   PrefabReference:
-    m_AssetGUID: bb0dd454804f7be4a94f189e78732829
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  PrefabReferenceGameObject:
     m_AssetGUID: bb0dd454804f7be4a94f189e78732829
     m_SubObjectName: 
     m_SubObjectType: 

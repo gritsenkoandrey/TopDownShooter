@@ -21,10 +21,18 @@ namespace CodeBase.Infrastructure.States
 
         private IExitState _activeState;
         
-        public GameStateService(ISceneLoaderService sceneLoaderService, IStaticDataService staticDataService, 
-            IProgressService progressService, ISaveLoadService saveLoadService, IGameFactory gameFactory, 
-            IUIFactory uiFactory, IAssetService assetService, ILoadingCurtainService loadingCurtainService, 
-            ICameraService cameraService, IJoystickService joystickService, ITextureArrayFactory textureArrayFactory, 
+        public GameStateService(
+            ISceneLoaderService sceneLoaderService, 
+            IStaticDataService staticDataService, 
+            IProgressService progressService, 
+            ISaveLoadService saveLoadService, 
+            IGameFactory gameFactory, 
+            IUIFactory uiFactory, 
+            IAssetService assetService, 
+            ILoadingCurtainService loadingCurtainService, 
+            ICameraService cameraService, 
+            IJoystickService joystickService, 
+            ITextureArrayFactory textureArrayFactory, 
             IObjectPoolService objectPoolService)
         {
             _states = new Dictionary<Type, IExitState>

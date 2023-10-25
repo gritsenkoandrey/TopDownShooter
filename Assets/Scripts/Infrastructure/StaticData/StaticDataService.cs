@@ -4,8 +4,6 @@ using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData
 {
@@ -22,13 +20,14 @@ namespace CodeBase.Infrastructure.StaticData
         private FxData _fxData;
         private TextureArrayData _textureArrayData;
         private UiData _uiData;
+        private PoolData _poolData;
 
         public StaticDataService(IAssetService assetService)
         {
             _assetService = assetService;
         }
 
-        async UniTask IStaticDataService.Load()
+        void IStaticDataService.Load()
         {
             _monsters = _assetService
                 .LoadAllFromResources<ZombieData>(AssetAddress.ZombieDataPath)
@@ -51,8 +50,7 @@ namespace CodeBase.Infrastructure.StaticData
             _fxData = _assetService.LoadFromResources<FxData>(AssetAddress.FxDataPath);
             _textureArrayData = _assetService.LoadFromResources<TextureArrayData>(AssetAddress.TextureArrayDataPath);
             _uiData = _assetService.LoadFromResources<UiData>(AssetAddress.UiDataPath);
-
-            await WarmUp();
+            _poolData = _assetService.LoadFromResources<PoolData>(AssetAddress.PoolDataPath);
         }
 
         ZombieData IStaticDataService.ZombieData(ZombieType type) => 
@@ -72,12 +70,6 @@ namespace CodeBase.Infrastructure.StaticData
         FxData IStaticDataService.FxData() => _fxData;
         TextureArrayData IStaticDataService.TextureArrayData() => _textureArrayData;
         UiData IStaticDataService.UiData() => _uiData;
-
-        private async UniTask WarmUp()
-        {
-            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
-            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
-            await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
-        }
+        PoolData IStaticDataService.PoolData() => _poolData;
     }
 }

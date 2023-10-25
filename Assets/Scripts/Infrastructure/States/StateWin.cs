@@ -12,8 +12,11 @@ namespace CodeBase.Infrastructure.States
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
-        public StateWin(IGameStateService stateService, IUIFactory uiFactory, 
-            IProgressService progressService, ISaveLoadService saveLoadService)
+        public StateWin(
+            IGameStateService stateService, 
+            IUIFactory uiFactory, 
+            IProgressService progressService, 
+            ISaveLoadService saveLoadService)
         {
             _stateService = stateService;
             _uiFactory = uiFactory;

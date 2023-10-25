@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3da6a425160545c79743125ce5e0e09c, type: 3}
   m_Name: UiData
   m_EditorClassIdentifier: 
-  EnemyHealth: {fileID: 1298437792690601452, guid: 1e36f800db20f6a4ea1956cd95af55ed, type: 3}
   PrefabReference:
     m_AssetGUID: 1e36f800db20f6a4ea1956cd95af55ed
     m_SubObjectName: 

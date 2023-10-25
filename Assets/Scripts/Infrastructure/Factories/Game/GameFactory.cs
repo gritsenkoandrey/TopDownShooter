@@ -28,8 +28,12 @@ namespace CodeBase.Infrastructure.Factories.Game
         private CCharacter _character;
         private readonly IReactiveCollection<IEnemy> _enemies = new ReactiveCollection<IEnemy>();
 
-        public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
-            IObjectPoolService objectPoolService, ICameraService cameraService, IAssetService assetService)
+        public GameFactory(
+            IStaticDataService staticDataService, 
+            IProgressService progressService, 
+            IObjectPoolService objectPoolService, 
+            ICameraService cameraService, 
+            IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
@@ -57,7 +61,97 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetLevelType(data.LevelType)
                 .SetLevelTime(data.LevelTime)
                 .Build();
+            
+            await CreateUnits();
+            
+            SubscribeOnCreateEnemies();
+            
+            return _level;
+        }
 
+        async UniTask<IBullet> IGameFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)
+        {
+            BulletData data = _staticDataService.BulletData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
+
+            return new BulletBuilder(_objectPoolService)
+                .SetPrefab(prefab)
+                .SetDamage(damage)
+                .SetPosition(position)
+                .SetDirection(direction)
+                .SetCollisionDistance(data.CollisionRadius)
+                .Build();
+        }
+
+        async UniTask<GameObject> IGameFactory.CreateHitFx(Vector3 position)
+        {
+            FxData data = _staticDataService.FxData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
+
+            GameObject hitFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
+            
+            _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime).Forget();
+            
+            return hitFx;
+        }
+
+        async UniTask<GameObject> IGameFactory.CreateDeathFx(Vector3 position)
+        {
+            FxData data = _staticDataService.FxData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
+
+            GameObject deathFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
+            
+            _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime).Forget();
+
+            return deathFx;
+        }
+
+        void IGameFactory.CleanUp()
+        {
+            if (_character != null)
+            {
+                Object.Destroy(_character.gameObject);
+
+                _character = null;
+            }
+            
+            if (_level != null)
+            {
+                Object.Destroy(_level.gameObject);
+
+                _level = null;
+            }
+            
+            ProgressReaders.Clear();
+            ProgressWriters.Clear();
+            
+            _enemies.Clear();
+        }
+
+        private void Registered(IProgress progress)
+        {
+            if (progress is IProgressWriter writer)
+            {
+                ProgressWriters.Add(writer);
+            }
+
+            if (progress is IProgressReader reader)
+            {
+                ProgressReaders.Add(reader);
+            }
+        }
+
+        private LevelType GetLevelType()
+        {
+            return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+        }
+
+        private async UniTask CreateUnits()
+        {
             foreach (SpawnPoint spawnPoint in _level.SpawnPoints)
             {
                 switch (spawnPoint.UnitType)
@@ -72,10 +166,6 @@ namespace CodeBase.Infrastructure.Factories.Game
                         break;
                 }
             }
-            
-            SubscribeOnCreateEnemies();
-            
-            return _level;
         }
 
         private async UniTask<ICharacter> CreateCharacter(Vector3 position, Transform parent)
@@ -123,87 +213,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             _enemies.Add(zombie);
 
             return zombie;
-        }
-
-        async UniTask<IBullet> IGameFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)
-        {
-            BulletData data = _staticDataService.BulletData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
-
-            return new BulletBuilder(_objectPoolService)
-                .SetPrefab(prefab)
-                .SetDamage(damage)
-                .SetPosition(position)
-                .SetDirection(direction)
-                .SetCollisionDistance(data.CollisionRadius)
-                .Build();
-        }
-
-        async UniTask<GameObject> IGameFactory.CreateHitFx(Vector3 position)
-        {
-            FxData data = _staticDataService.FxData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
-
-            GameObject hitFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
-            _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime);
-            
-            return hitFx;
-        }
-
-        async UniTask<GameObject> IGameFactory.CreateDeathFx(Vector3 position)
-        {
-            FxData data = _staticDataService.FxData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
-
-            GameObject deathFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
-            _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime);
-
-            return deathFx;
-        }
-
-        void IGameFactory.CleanUp()
-        {
-            if (_character != null)
-            {
-                Object.Destroy(_character.gameObject);
-
-                _character = null;
-            }
-            
-            if (_level != null)
-            {
-                Object.Destroy(_level.gameObject);
-
-                _level = null;
-            }
-            
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
-            
-            _enemies.Clear();
-        }
-
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-        }
-
-        private LevelType GetLevelType()
-        {
-            return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
         }
 
         private void SubscribeOnCreateEnemies()

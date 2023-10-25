@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScreenData_01
   m_EditorClassIdentifier: 
   ScreenType: 0
-  Prefab: {fileID: 1544038682976013175, guid: 6df19e06a43020e4a9ae94c4bf206ed9, type: 3}
+  Prefab: {fileID: 0}
   PrefabReference:
     m_AssetGUID: 6df19e06a43020e4a9ae94c4bf206ed9
     m_SubObjectName: 

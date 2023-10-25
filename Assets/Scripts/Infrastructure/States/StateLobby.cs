@@ -4,7 +4,8 @@
     {
         private readonly IGameStateService _stateService;
 
-        public StateLobby(IGameStateService stateService)
+        public StateLobby(
+            IGameStateService stateService)
         {
             _stateService = stateService;
         }

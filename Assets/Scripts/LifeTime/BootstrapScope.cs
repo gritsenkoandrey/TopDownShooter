@@ -35,7 +35,6 @@ namespace CodeBase.LifeTime
         {
             builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
             builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
-            builder.RegisterComponentInHierarchy<ObjectPoolService>().As<IObjectPoolService>();
             builder.RegisterComponentInHierarchy<GuiService>().As<IGuiService>();
             builder.RegisterComponentInHierarchy<JoystickService>().As<IJoystickService>();
             
@@ -47,6 +46,7 @@ namespace CodeBase.LifeTime
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
             builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
+            builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
             
             builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
             

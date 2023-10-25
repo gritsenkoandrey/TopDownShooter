@@ -17,8 +17,12 @@ namespace CodeBase.Infrastructure.States
         private readonly IObjectPoolService _objectPoolService;
         private readonly IAssetService _assetService;
 
-        public StateBootstrap(IGameStateService stateService, ISceneLoaderService sceneLoaderService, 
-            IStaticDataService staticDataService, IJoystickService joystickService, IObjectPoolService objectPoolService,
+        public StateBootstrap(
+            IGameStateService stateService, 
+            ISceneLoaderService sceneLoaderService, 
+            IStaticDataService staticDataService, 
+            IJoystickService joystickService, 
+            IObjectPoolService objectPoolService, 
             IAssetService assetService)
         {
             _stateService = stateService;
@@ -31,20 +35,20 @@ namespace CodeBase.Infrastructure.States
         
         async void IEnterState.Enter()
         {
+            LoadResources();
             await InitAsset();
-            await LoadResources();
+            await InitObjectPool();
             InitJoystick();
-            InitObjectPool();
-            
+
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
 
         void IExitState.Exit() { }
 
         private void Next() => _stateService.Enter<StateLoadProgress>();
-        private async UniTask LoadResources() => await _staticDataService.Load();
+        private void LoadResources() => _staticDataService.Load();
         private async UniTask InitAsset() => await _assetService.Init();
+        private async UniTask InitObjectPool() => await _objectPoolService.Init();
         private void InitJoystick() => _joystickService.Init();
-        private void InitObjectPool() => _objectPoolService.Init();
     }
 }
