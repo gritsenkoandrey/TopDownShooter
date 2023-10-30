@@ -1,5 +1,4 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 

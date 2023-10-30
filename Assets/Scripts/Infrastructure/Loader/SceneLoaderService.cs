@@ -20,12 +20,7 @@ namespace CodeBase.Infrastructure.Loader
                 return;
             }
             
-            UniTask waitNextScene = SceneManager.LoadSceneAsync(name).ToUniTask();
-
-            while (!waitNextScene.Status.IsCompleted())
-            {
-                await UniTask.Yield();
-            }
+            await SceneManager.LoadSceneAsync(name).ToUniTask();
             
             onLoaded?.Invoke();
         }

@@ -34,10 +34,7 @@ namespace CodeBase.Game.Systems
             component.Target
                 .SkipLatestValueOnSubscribe()
                 .First()
-                .Subscribe(_ =>
-                {
-                    InitializeStateMachine(component);
-                })
+                .Subscribe(_ => InitializeStateMachine(component))
                 .AddTo(component.LifetimeDisposable);
         }
 

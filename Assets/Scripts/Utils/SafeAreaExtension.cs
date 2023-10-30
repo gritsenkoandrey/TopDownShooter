@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.UI
+namespace CodeBase.Utils
 {
-    public sealed class SafeArea : MonoBehaviour
+    public static class SafeAreaExtension
     {
-        [SerializeField] private RectTransform _rectTransform;
-
-        public void ApplySafeArea()
+        public static void ApplySafeArea(this RectTransform rectTransform)
         {
             Rect rect = Screen.safeArea;
             
@@ -16,8 +14,8 @@ namespace CodeBase.UI
             anchorMin.y /= Screen.height;
             anchorMax.x /= Screen.width;
             anchorMax.y /= Screen.height;
-            _rectTransform.anchorMin = anchorMin;
-            _rectTransform.anchorMax = anchorMax;
+            rectTransform.anchorMin = anchorMin;
+            rectTransform.anchorMax = anchorMax;
         }
     }
 }

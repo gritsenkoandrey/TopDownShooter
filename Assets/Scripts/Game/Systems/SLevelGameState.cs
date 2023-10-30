@@ -46,15 +46,7 @@ namespace CodeBase.Game.Systems
         {
             _gameFactory.Enemies
                 .ObserveRemove()
-                .Subscribe(_ =>
-                {
-                    if (_gameFactory.Enemies.Count == 0)
-                    {
-                        _gameStateService.Enter<StateWin>();
-                        
-                        component.LifetimeDisposable.Clear();
-                    }
-                })
+                .Subscribe(_ => Win())
                 .AddTo(component.LifetimeDisposable);
         }
 
@@ -62,22 +54,31 @@ namespace CodeBase.Game.Systems
         {
             component.Health.Health
                 .SkipLatestValueOnSubscribe()
-                .ObserveOnMainThread()
-                .Subscribe(_ =>
-                {
-                    if (!_gameFactory.Character.Health.IsAlive)
-                    {
-                        _gameStateService.Enter<StateFail>();
-                        
-                        component.LifetimeDisposable.Clear();
-
-                        foreach (IEnemy enemy in _gameFactory.Enemies)
-                        {
-                            enemy.StateMachine.Enter<ZombieStateNone>();
-                        }
-                    }
-                })
+                .Subscribe(_ => Lose(component))
                 .AddTo(component.LifetimeDisposable);
+        }
+
+        private void Win()
+        {
+            if (_gameFactory.Enemies.Count == 0)
+            {
+                _gameStateService.Enter<StateWin>();
+            }
+        }
+
+        private void Lose(CCharacter component)
+        {
+            if (!component.Health.IsAlive)
+            {
+                _gameStateService.Enter<StateFail>();
+
+                foreach (IEnemy enemy in _gameFactory.Enemies)
+                {
+                    enemy.StateMachine.Enter<ZombieStateNone>();
+                }
+                
+                component.CleanSubscribe();
+            }
         }
     }
 }

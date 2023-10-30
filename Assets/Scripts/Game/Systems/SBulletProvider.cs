@@ -24,24 +24,17 @@ namespace CodeBase.Game.Systems
             base.OnDisableSystem();
         }
 
-        protected override void OnFixedUpdate()
+        protected override void OnUpdate()
         {
-            base.OnFixedUpdate();
+            base.OnUpdate();
 
             foreach (CBullet bullet in Entities)
             {
-                bullet.transform.position += bullet.Direction;
-
-                for (int i = 0; i < _gameFactory.Enemies.Count; i++)
+                Move(bullet);
+                
+                if (CheckCollision(bullet))
                 {
-                    bool isCollision = (bullet.Position - _gameFactory.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
-
-                    if (isCollision)
-                    {
-                        Collision(bullet, _gameFactory.Enemies[i]);
-                        
-                        return;
-                    }
+                    return;
                 }
             }
         }
@@ -54,6 +47,28 @@ namespace CodeBase.Game.Systems
         protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
+        }
+
+        private void Move(IBullet bullet)
+        {
+            bullet.Object.transform.position += bullet.Direction;
+        }
+
+        private bool CheckCollision(IBullet bullet)
+        {
+            for (int i = 0; i < _gameFactory.Enemies.Count; i++)
+            {
+                bool isCollision = (bullet.Position - _gameFactory.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
+
+                if (isCollision)
+                {
+                    Collision(bullet, _gameFactory.Enemies[i]);
+                        
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void Collision(IBullet bullet, ITarget target)
