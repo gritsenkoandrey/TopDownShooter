@@ -22,23 +22,31 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             component.Melee.OnCheckDamage
-                .Subscribe(_ =>
-                {
-                    float distance = Vector3.Distance(component.Position, component.Target.Value.Position);
-
-                    if (distance > component.Stats.MinDistanceToTarget || !component.Health.IsAlive)
-                    {
-                        return;
-                    }
-
-                    component.Target.Value.Health.Health.Value -= component.Melee.Damage;
-                })
+                .Where(_ => CheckDamage(component))
+                .Subscribe(_ => Damage(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CZombie component)
         {
             base.OnDisableComponent(component);
+        }
+
+        private bool CheckDamage(CZombie component)
+        {
+            float distance = Vector3.Distance(component.Position, component.Target.Value.Position);
+            
+            if (distance > component.Stats.MinDistanceToTarget || !component.Health.IsAlive)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void Damage(CZombie component)
+        {
+            component.Target.Value.Health.Health.Value -= component.Melee.Damage;
         }
     }
 }

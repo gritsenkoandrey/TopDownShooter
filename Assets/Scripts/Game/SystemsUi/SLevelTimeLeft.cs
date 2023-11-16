@@ -37,19 +37,7 @@ namespace CodeBase.Game.SystemsUi
 
             Observable.EveryUpdate()
                 .ThrottleFirst(Time())
-                .Subscribe(_ =>
-                {
-                    if (time == 0)
-                    {
-                        _gameStateService.Enter<StateFail>();
-                        
-                        return;
-                    }
-                    
-                    time -= 1;
-
-                    component.TimeLeftText.text = FormatTime.SecondsToTime(time);
-                })
+                .Subscribe(_ => UpdateTime(component, ref time))
                 .AddTo(component.LifetimeDisposable);
         }
 
@@ -59,5 +47,19 @@ namespace CodeBase.Game.SystemsUi
         }
 
         private TimeSpan Time() => TimeSpan.FromSeconds(1f);
+
+        private void UpdateTime(CLevelTimeLeft component, ref int time)
+        {
+            if (time == 0)
+            {
+                _gameStateService.Enter<StateFail>();
+                        
+                return;
+            }
+                    
+            time -= 1;
+
+            component.TimeLeftText.text = FormatTime.SecondsToTime(time);
+        }
     }
 }

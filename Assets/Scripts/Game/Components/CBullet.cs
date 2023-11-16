@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
-using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
@@ -15,7 +14,6 @@ namespace CodeBase.Game.Components
         public void SetCollisionDistance(float collisionDistance) => CollisionDistance = collisionDistance;
         public int Damage { get; set; }
         public GameObject Object => gameObject;
-        public Tween Tween { get; set; }
         public ReactiveCommand OnDestroy { get; } = new();
     }
 }

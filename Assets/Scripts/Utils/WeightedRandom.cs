@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeBase.Utils
@@ -22,7 +21,9 @@ namespace CodeBase.Utils
                 }
             }
 
-            throw new ArgumentException("Item not found");
+            UnityEngine.Debug.LogWarning($"Item {typeof(T)} not found");
+            
+            return default;
         }
         
         public struct RandomItemContainer

@@ -41,11 +41,8 @@ namespace CodeBase.Infrastructure.Factories.UI
 
         async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
         {
-            if (_currentScreen != null)
-            {
-                Object.Destroy(_currentScreen.gameObject);
-            }
-
+            DestroyCurrentScreen();
+            
             ScreenData data = _staticDataService.ScreenData(type);
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
@@ -90,12 +87,7 @@ namespace CodeBase.Infrastructure.Factories.UI
 
         void IUIFactory.CleanUp()
         {
-            if (_currentScreen != null)
-            {
-                Object.Destroy(_currentScreen.gameObject);
-                
-                _currentScreen = null;
-            }
+            DestroyCurrentScreen();
             
             ProgressReaders.Clear();
             ProgressWriters.Clear();
@@ -111,6 +103,16 @@ namespace CodeBase.Infrastructure.Factories.UI
             if (progress is IProgressReader reader)
             {
                 ProgressReaders.Add(reader);
+            }
+        }
+
+        private void DestroyCurrentScreen()
+        {
+            if (_currentScreen != null)
+            {
+                Object.Destroy(_currentScreen.gameObject);
+                
+                _currentScreen = null;
             }
         }
     }

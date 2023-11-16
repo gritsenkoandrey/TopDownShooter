@@ -84,6 +84,7 @@ namespace CodeBase.Infrastructure.Input
                 _handle.position = position;
             }
         }
+        
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
             if (!_isEnable) return;
@@ -107,6 +108,7 @@ namespace CodeBase.Infrastructure.Input
             
             _thumb.localPosition = direction;
         }
+        
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
             if (!_isEnable) return;

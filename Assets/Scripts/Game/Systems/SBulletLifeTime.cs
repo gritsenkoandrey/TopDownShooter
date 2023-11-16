@@ -1,7 +1,8 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
-using DG.Tweening;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -31,18 +32,22 @@ namespace CodeBase.Game.Systems
 
             component.OnDestroy
                 .First()
-                .Subscribe(_ => _objectPoolService.ReleaseObject(component.Object))
+                .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
 
-            component.Tween = DOVirtual
-                .DelayedCall(2f, () => _objectPoolService.ReleaseObject(component.Object));
+            Observable.Interval(Time())
+                .First()
+                .Subscribe(_ => ReturnToPool(component))
+                .AddTo(component.LifetimeDisposable);
         }
 
         protected override void OnDisableComponent(CBullet component)
         {
             base.OnDisableComponent(component);
-            
-            component.Tween?.Kill();
         }
+
+        private void ReturnToPool(IObject component) => _objectPoolService.ReleaseObject(component.Object);
+        
+        private TimeSpan Time() => TimeSpan.FromSeconds(2f);
     }
 }
