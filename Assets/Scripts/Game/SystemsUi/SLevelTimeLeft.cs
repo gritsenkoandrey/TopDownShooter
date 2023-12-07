@@ -2,7 +2,6 @@
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
 using UniRx;
 
@@ -10,12 +9,10 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
-        private readonly IGameStateService _gameStateService;
         private readonly IGameFactory _gameFactory;
         
-        public SLevelTimeLeft(IGameStateService gameStateService, IGameFactory gameFactory)
+        public SLevelTimeLeft(IGameFactory gameFactory)
         {
-            _gameStateService = gameStateService;
             _gameFactory = gameFactory;
         }
 
@@ -52,8 +49,8 @@ namespace CodeBase.Game.SystemsUi
         {
             if (time == 0)
             {
-                _gameStateService.Enter<StateFail>();
-                        
+                _gameFactory.Character.Health.Health.SetValueAndForceNotify(0);
+                    
                 return;
             }
                     

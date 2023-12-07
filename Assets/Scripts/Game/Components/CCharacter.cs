@@ -20,5 +20,5 @@ namespace CodeBase.Game.Components
         public Quaternion Rotation => transform.rotation;
         public float Angle => transform.eulerAngles.y;
         public ReactiveCommand UpdateStateMachine { get; } = new();
-    }
+    } 
 }
