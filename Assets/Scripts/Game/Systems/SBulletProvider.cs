@@ -1,4 +1,5 @@
-﻿using CodeBase.ECSCore;
+﻿using System.Linq;
+using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Game;
@@ -12,16 +13,6 @@ namespace CodeBase.Game.Systems
         public SBulletProvider(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
-        }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
         }
 
         protected override void OnUpdate()
@@ -37,16 +28,6 @@ namespace CodeBase.Game.Systems
                     return;
                 }
             }
-        }
-
-        protected override void OnEnableComponent(CBullet component)
-        {
-            base.OnEnableComponent(component);
-        }
-
-        protected override void OnDisableComponent(CBullet component)
-        {
-            base.OnDisableComponent(component);
         }
 
         private void Move(IBullet bullet)
@@ -73,7 +54,7 @@ namespace CodeBase.Game.Systems
 
         private void Collision(IBullet bullet, ITarget target)
         {
-            target.Health.Health.Value -= bullet.Damage;
+            target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
                 
             _gameFactory.CreateHitFx(bullet.Object.transform.position);

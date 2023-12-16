@@ -16,16 +16,6 @@ namespace CodeBase.Game.SystemsUi
         {
             _uiFactory = uiFactory;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CUpgradeShop component)
         {
@@ -51,11 +41,6 @@ namespace CodeBase.Game.SystemsUi
                     component.IsShowUpgradeShop.Value = !component.IsShowUpgradeShop.Value;
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CUpgradeShop component)
-        {
-            base.OnDisableComponent(component);
         }
         
         private void CreateUpgradeButtons(CUpgradeShop component)

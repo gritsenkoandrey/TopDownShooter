@@ -8,47 +8,20 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SZombieAnimator : SystemComponent<CZombie>
     {
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
-
-        protected override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            foreach (CZombie enemy in Entities)
-            {
-                enemy.Animator.UpdateAnimator.Execute(enemy.Agent.velocity.sqrMagnitude);
-            }
-        }
-
         protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
 
-            component.Health.Health
-                .SkipLatestValueOnSubscribe()
-                .Subscribe(health =>
+            component.Health.CurrentHealth
+                .Pairwise()
+                .Where(health => health.Current < health.Previous && health.Current > 0)
+                .Subscribe(_ =>
                 {
-                    if (health > 0)
-                    {
-                        component.Animator.Animator.SetTrigger(Animations.Hit);
-                    }
-                    else
-                    {
-                        component.Animator.Animator.SetFloat(Animations.DeathBlend, Random.Range(0, 5));
-                        component.Animator.Animator.SetTrigger(Animations.Death);
-                    }
+                    component.Animator.Animator.SetTrigger(Animations.Hit);
                 })
                 .AddTo(component.LifetimeDisposable);
 
-            component.Melee.Attack
+            component.Animator.OnAttack
                 .Subscribe(_ =>
                 {
                     component.Animator.Animator.SetTrigger(Animations.Shoot);
@@ -56,17 +29,28 @@ namespace CodeBase.Game.Systems
                 })
                 .AddTo(component.LifetimeDisposable);
 
-            component.Animator.UpdateAnimator
-                .Subscribe(velocity =>
+            component.Animator.OnRun
+                .Subscribe(blend =>
                 {
-                    component.Animator.Animator.SetFloat(Animations.Velocity, velocity, 0.05f, Time.deltaTime);
+                    component.Animator.Animator.SetFloat(Animations.Velocity, 1f);
+                    component.Animator.Animator.SetFloat(Animations.RunBlend, blend);
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CZombie component)
-        {
-            base.OnDisableComponent(component);
+            
+            component.Animator.OnIdle
+                .Subscribe(_ =>
+                {
+                    component.Animator.Animator.SetFloat(Animations.Velocity, 0f);
+                })
+                .AddTo(component.LifetimeDisposable);
+            
+            component.Animator.OnDeath
+                .Subscribe(_ =>
+                {
+                    component.Animator.Animator.SetFloat(Animations.DeathBlend, Random.Range(0, 5));
+                    component.Animator.Animator.SetTrigger(Animations.Death);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
     }
 }

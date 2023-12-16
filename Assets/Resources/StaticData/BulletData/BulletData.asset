@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef34116efd42fcbdaa1c80dea6e253, type: 3}
   m_Name: BulletData
   m_EditorClassIdentifier: 
-  CollisionRadius: 1
+  CollisionRadius: 1.5

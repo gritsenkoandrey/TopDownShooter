@@ -4,10 +4,10 @@ namespace CodeBase.Game.StateMachine.Zombie
 {
     public abstract class ZombieState
     {
-        protected IEnemyStateMachine StateMachine { get; }
-        protected CZombie Zombie { get; }
+        protected readonly IStateMachine StateMachine;
+        protected readonly CZombie Zombie;
 
-        protected ZombieState(IEnemyStateMachine stateMachine, CZombie zombie)
+        protected ZombieState(IStateMachine stateMachine, CZombie zombie)
         {
             StateMachine = stateMachine;
             Zombie = zombie;

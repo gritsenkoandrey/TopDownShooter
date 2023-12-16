@@ -69,21 +69,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             return _level;
         }
 
-        async UniTask<IBullet> IGameFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)
-        {
-            BulletData data = _staticDataService.BulletData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
-
-            return new BulletBuilder(_objectPoolService)
-                .SetPrefab(prefab)
-                .SetDamage(damage)
-                .SetPosition(position)
-                .SetDirection(direction)
-                .SetCollisionDistance(data.CollisionRadius)
-                .Build();
-        }
-
         async UniTask<GameObject> IGameFactory.CreateHitFx(Vector3 position)
         {
             FxData data = _staticDataService.FxData();
@@ -181,14 +166,11 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetCamera(_cameraService)
                 .SetPosition(position)
                 .SetHealth(data.Health)
-                .SetDamage(data.Damage)
-                .SetAttackDistance(data.AttackDistance)
-                .SetAttackRecharge(data.AttackRecharge)
                 .SetSpeed(data.Speed)
                 .Build();
 
             Registered(_character.Health);
-            Registered(_character.Weapon);
+            // Registered(_character.Weapon);
             Registered(_character.Move);
 
             return _character;

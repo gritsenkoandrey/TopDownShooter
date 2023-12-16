@@ -21,29 +21,17 @@ namespace CodeBase.Game.Systems
             _progressService = progressService;
             _saveLoadService = saveLoadService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
-
         protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
             
-            component.Health.Health
+            component.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
-                .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
                     if (!component.Health.IsAlive)
                     {
-                        component.StateMachine.Enter<ZombieStateNone>();
+                        component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
 
                         _progressService.PlayerProgress.Money.Value += component.Stats.Money;
                         _saveLoadService.SaveProgress();
@@ -52,11 +40,6 @@ namespace CodeBase.Game.Systems
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CZombie component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

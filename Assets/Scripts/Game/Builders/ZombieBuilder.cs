@@ -73,8 +73,8 @@ namespace CodeBase.Game.Builders
             CZombie zombie = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent);
 
             zombie.Health.MaxHealth = _health;
-            zombie.Health.Health.Value = _health;
-            zombie.Melee.Damage = _damage;
+            zombie.Health.CurrentHealth.Value = _health;
+            zombie.Damage = _damage;
             zombie.Stats = _stats;
             zombie.Radar.Radius = _stats.AggroRadius;
 

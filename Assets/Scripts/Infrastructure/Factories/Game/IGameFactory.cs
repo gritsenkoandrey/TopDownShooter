@@ -16,7 +16,6 @@ namespace CodeBase.Infrastructure.Factories.Game
         public IList<IProgressReader> ProgressReaders { get; }
         public IList<IProgressWriter> ProgressWriters { get; }
         public UniTask<ILevel> CreateLevel();
-        public UniTask<IBullet> CreateBullet(int damage, Vector3 position, Vector3 direction);
         public UniTask<GameObject> CreateHitFx(Vector3 position);
         public UniTask<GameObject> CreateDeathFx(Vector3 position);
         public void CleanUp();

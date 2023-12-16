@@ -16,5 +16,6 @@
         public const string TextureArrayDataPath = "StaticData/TextureArrayData/TextureArrayData";
         public const string UiDataPath = "StaticData/UiData/UiData";
         public const string PoolDataPath = "StaticData/PoolData/PoolData";
+        public const string WeaponCharacteristicDataPath = "StaticData/WeaponCharacteristic";
     }
 }

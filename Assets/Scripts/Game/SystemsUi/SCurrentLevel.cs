@@ -12,27 +12,12 @@ namespace CodeBase.Game.SystemsUi
         {
             _progressService = progressService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CCurrentLevel component)
         {
             base.OnEnableComponent(component);
 
             component.TextLevel.SetText("Level {0}", _progressService.PlayerProgress.Level);
-        }
-
-        protected override void OnDisableComponent(CCurrentLevel component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

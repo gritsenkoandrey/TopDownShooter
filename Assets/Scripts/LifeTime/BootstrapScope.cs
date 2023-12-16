@@ -1,4 +1,5 @@
 ﻿using CodeBase.App;
+using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
@@ -45,6 +46,7 @@ namespace CodeBase.LifeTime
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
             builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
             

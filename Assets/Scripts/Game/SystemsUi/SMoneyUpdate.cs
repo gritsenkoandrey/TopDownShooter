@@ -14,16 +14,6 @@ namespace CodeBase.Game.SystemsUi
         {
             _progressService = progressService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CMoneyUpdate component)
         {
@@ -32,11 +22,6 @@ namespace CodeBase.Game.SystemsUi
             _progressService.PlayerProgress.Money
                 .Subscribe(value => component.TextCountMoney.text = value.Trim())
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CMoneyUpdate component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

@@ -12,9 +12,6 @@ namespace CodeBase.Game.Builders
         private Transform _parent;
         private Vector3 _position;
         private int _health;
-        private int _damage;
-        private float _attackDistance;
-        private float _attackRecharge;
         private float _speed;
 
         public CharacterBuilder SetPrefab(CCharacter prefab)
@@ -44,28 +41,7 @@ namespace CodeBase.Game.Builders
 
             return this;
         }
-
-        public CharacterBuilder SetDamage(int damage)
-        {
-            _damage = damage;
-
-            return this;
-        }
         
-        public CharacterBuilder SetAttackDistance(float attackDistance)
-        {
-            _attackDistance = attackDistance;
-
-            return this;
-        }
-        
-        public CharacterBuilder SetAttackRecharge(float attackRecharge)
-        {
-            _attackRecharge = attackRecharge;
-
-            return this;
-        }
-
         public CharacterBuilder SetSpeed(float speed)
         {
             _speed = speed;
@@ -86,9 +62,6 @@ namespace CodeBase.Game.Builders
             _cameraService = null;
             _position = default;
             _health = default;
-            _damage = default;
-            _attackDistance = default;
-            _attackRecharge = default;
             _speed = default;
 
             return this;
@@ -99,9 +72,6 @@ namespace CodeBase.Game.Builders
             CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent);
 
             character.Health.BaseHealth = _health;
-            character.Weapon.BaseDamage = _damage;
-            character.Weapon.AttackDistance = _attackDistance;
-            character.Weapon.AttackRecharge = _attackRecharge;
             character.Move.BaseSpeed = _speed;
             
             _cameraService.SetTarget(character.transform);

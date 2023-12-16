@@ -14,33 +14,18 @@ namespace CodeBase.Game.SystemsUi
         {
             _gameFactory = gameFactory;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CCharacterHealth component)
         {
             base.OnEnableComponent(component);
 
-            _gameFactory.Character.Health.Health
+            _gameFactory.Character.Health.CurrentHealth
                 .Subscribe(health =>
                 {
                     component.Text.text = _gameFactory.Character.Health.ToString();
                     component.Fill.fillAmount = Mathematics.Remap(0, _gameFactory.Character.Health.MaxHealth, 0, 1, health);
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CCharacterHealth component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

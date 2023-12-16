@@ -2,6 +2,7 @@
 using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
+using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
@@ -12,7 +13,6 @@ using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
-using VContainer;
 using VContainer.Unity;
 
 namespace CodeBase.LifeTime
@@ -31,7 +31,7 @@ namespace CodeBase.LifeTime
         private readonly IJoystickService _joystickService;
         private readonly ITextureArrayFactory _textureArrayFactory;
         private readonly IGuiService _guiService;
-        private readonly IObjectResolver _objectResolver;
+        private readonly IWeaponFactory _weaponFactory;
 
         public BootstrapEntryPoint(
             IGameStateService gameStateService, 
@@ -44,7 +44,7 @@ namespace CodeBase.LifeTime
             IJoystickService joystickService,
             ITextureArrayFactory textureArrayFactory, 
             IGuiService guiService, 
-            IObjectResolver objectResolver)
+            IWeaponFactory weaponFactory)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -56,7 +56,7 @@ namespace CodeBase.LifeTime
             _joystickService = joystickService;
             _textureArrayFactory = textureArrayFactory;
             _guiService = guiService;
-            _objectResolver = objectResolver;
+            _weaponFactory = weaponFactory;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -78,12 +78,10 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterStateMachine(_cameraService, _joystickService, _gameFactory),
-                new SCharacterAnimator(),
-                new SCharacterWeapon(_gameFactory),
-                new SZombieStateMachine(),
+                new SCharacterInitStateMachine(_cameraService, _joystickService, _gameFactory),
+                new SWeaponInit(_weaponFactory),
+                new SZombieInitStateMachine(),
                 new SZombieAnimator(),
-                new SZombieAggro(),
                 new SZombieMeleeAttack(),
                 new SZombieDeath(_gameFactory, _progressService, _saveLoadService),
                 new SRadarDraw(),
@@ -100,8 +98,11 @@ namespace CodeBase.LifeTime
                 new SEnemyHealth(),
                 new SCharacterHealth(_gameFactory),
                 new SBulletProvider(_gameFactory),
-                new SLevelTimeLeft(_gameFactory),
+                new SLevelTimeLeft(_gameFactory, _gameStateService),
                 new SLevelGameState(_gameStateService, _gameFactory),
+                new SStateMachineUpdate(),
+                new SCharacterWeaponMediator(),
+                new SCharacterAnimation(),
             };
         }
 

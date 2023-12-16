@@ -8,6 +8,10 @@ namespace CodeBase.Game.Components
     {
         [SerializeField] private Animator _animator;
         public Animator Animator => _animator;
-        public ReactiveCommand<float> UpdateAnimator { get; } = new();
+
+        public readonly ReactiveCommand<float> OnRun = new();
+        public readonly ReactiveCommand OnIdle = new();
+        public readonly ReactiveCommand OnAttack = new();
+        public readonly ReactiveCommand OnDeath = new();
     }
 }

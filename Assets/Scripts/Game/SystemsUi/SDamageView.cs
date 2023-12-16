@@ -19,16 +19,6 @@ namespace CodeBase.Game.SystemsUi
             _gameFactory = gameFactory;
             _cameraService = cameraService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CDamageView component)
         {
@@ -36,19 +26,17 @@ namespace CodeBase.Game.SystemsUi
 
             foreach (IEnemy enemy in _gameFactory.Enemies)
             {
-                enemy.Health.Health
+                enemy.Health.CurrentHealth
                     .Pairwise()
-                    .Subscribe(pairWise =>
+                    .Where(health => health.Current < health.Previous)
+                    .Subscribe(health =>
                     {
-                        if (pairWise.Previous > pairWise.Current)
-                        {
-                            Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
+                        Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
                         
-                            component.Text.text = (pairWise.Previous - pairWise.Current).ToString();
-                            component.transform.position = screenPoint;
+                        component.Text.text = (health.Previous - health.Current).ToString();
+                        component.transform.position = screenPoint;
                         
-                            StartAnimation(component);
-                        }
+                        StartAnimation(component);
                     })
                     .AddTo(component.LifetimeDisposable);
             }

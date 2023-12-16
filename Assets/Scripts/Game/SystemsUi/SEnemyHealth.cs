@@ -8,16 +8,6 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SEnemyHealth : SystemComponent<CEnemyHealth>
     {
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
-
         protected override void OnEnableComponent(CEnemyHealth component)
         {
             base.OnEnableComponent(component);
@@ -29,14 +19,9 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CEnemyHealth component)
-        {
-            base.OnDisableComponent(component);
-        }
-
         private void SubscribeOnChangeHealth(CEnemyHealth component, IEnemy enemy)
         {
-            enemy.Health.Health
+            enemy.Health.CurrentHealth
                 .Subscribe(health =>
                 {
                     float fillAmount = Mathematics.Remap(0, enemy.Health.MaxHealth, 0, 1, health);

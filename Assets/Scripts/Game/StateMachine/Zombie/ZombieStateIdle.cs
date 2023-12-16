@@ -3,27 +3,30 @@ using UnityEngine;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStateIdle : ZombieState, IEnemyState
+    public sealed class ZombieStateIdle : ZombieState, IState
     {
         private float _delay;
         private readonly float _aggroRadius;
+        private int _startHealth;
 
-        public ZombieStateIdle(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        public ZombieStateIdle(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
         {
-            _aggroRadius = zombie.Stats.AggroRadius * zombie.Stats.AggroRadius;
+            _aggroRadius = Mathf.Pow(zombie.Stats.AggroRadius, 2);
         }
 
-        void IEnemyState.Enter()
+        void IState.Enter()
         {
+            _startHealth = Zombie.Health.CurrentHealth.Value;
             _delay = Zombie.Stats.StayDelay;
+            Zombie.Animator.OnIdle.Execute();
             Zombie.Radar.Draw.Execute();
         }
 
-        void IEnemyState.Exit() { }
+        void IState.Exit() { }
 
-        void IEnemyState.Tick()
+        void IState.Tick()
         {
-            if (Distance() < _aggroRadius || Zombie.IsAggro)
+            if (Distance() < _aggroRadius || IsAggro())
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
@@ -40,6 +43,8 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float Distance() => (Zombie.Target.Value.Position - Zombie.Position).sqrMagnitude;
+        private float Distance() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+
+        private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }
 }

@@ -25,16 +25,6 @@ namespace CodeBase.Game.SystemsUi
             _gameFactory = gameFactory;
         }
 
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
-
         protected override void OnEnableComponent(CUpgradeButton component)
         {
             base.OnEnableComponent(component);
@@ -53,11 +43,6 @@ namespace CodeBase.Game.SystemsUi
                     UpdateProgress();
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CUpgradeButton component)
-        {
-            base.OnDisableComponent(component);
         }
         
         private void UpdateProgress()

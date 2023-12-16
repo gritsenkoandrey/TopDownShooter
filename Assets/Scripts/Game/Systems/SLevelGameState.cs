@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
+using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.States;
@@ -19,16 +20,6 @@ namespace CodeBase.Game.Systems
             _gameFactory = gameFactory;
         }
 
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
-
         protected override void OnEnableComponent(CCharacter component)
         {
             base.OnEnableComponent(component);
@@ -37,31 +28,27 @@ namespace CodeBase.Game.Systems
             SubscribeOnFailGame(component);
         }
 
-        protected override void OnDisableComponent(CCharacter component)
-        {
-            base.OnDisableComponent(component);
-        }
-
         private void SubscribeOnWinGame(CCharacter component)
         {
             _gameFactory.Enemies
                 .ObserveRemove()
-                .Subscribe(_ => Win())
+                .Subscribe(_ => Win(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
         private void SubscribeOnFailGame(CCharacter component)
         {
-            component.Health.Health
+            component.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
                 .Subscribe(_ => Lose(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void Win()
+        private void Win(CCharacter component)
         {
             if (_gameFactory.Enemies.Count == 0)
             {
+                component.StateMachine.StateMachine.Enter<CharacterStateNone>();
                 _gameStateService.Enter<StateWin>();
             }
         }
@@ -70,14 +57,13 @@ namespace CodeBase.Game.Systems
         {
             if (!component.Health.IsAlive)
             {
+                component.StateMachine.StateMachine.Enter<CharacterStateDeath>();
                 _gameStateService.Enter<StateFail>();
 
                 foreach (IEnemy enemy in _gameFactory.Enemies)
                 {
-                    enemy.StateMachine.Enter<ZombieStateNone>();
+                    enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
                 }
-                
-                component.CleanSubscribe();
             }
         }
     }

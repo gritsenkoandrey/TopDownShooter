@@ -13,16 +13,6 @@ namespace CodeBase.Game.SystemsUi
         {
             _gameFactory = gameFactory;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CLevelGoal component)
         {
@@ -46,11 +36,6 @@ namespace CodeBase.Game.SystemsUi
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CLevelGoal component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

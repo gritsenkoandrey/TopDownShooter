@@ -1,36 +1,37 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
-    public sealed class ZombieStatePatrol : ZombieState, IEnemyState
+    public sealed class ZombieStatePatrol : ZombieState, IState
     {
         private readonly Vector3 _patrolPosition;
         private readonly float _aggroRadius;
+        private int _startHealth;
 
-        public ZombieStatePatrol(IEnemyStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        public ZombieStatePatrol(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
         {
             _patrolPosition = Zombie.Position;
-            _aggroRadius = zombie.Stats.AggroRadius * zombie.Stats.AggroRadius;
+            _aggroRadius = Mathf.Pow(zombie.Stats.AggroRadius, 2);
         }
         
-        void IEnemyState.Enter()
+        void IState.Enter()
         {
+            _startHealth = Zombie.Health.CurrentHealth.Value;
             Zombie.Agent.speed = Zombie.Stats.WalkSpeed;
-            Zombie.Animator.Animator.SetFloat(Animations.RunBlend, 0f);
+            Zombie.Animator.OnRun.Execute(0f);
             Zombie.Agent.SetDestination(GeneratePointOnNavmesh());
         }
 
-        void IEnemyState.Exit()
+        void IState.Exit()
         {
             Zombie.Agent.ResetPath();
         }
 
-        void IEnemyState.Tick()
+        void IState.Tick()
         {
-            if (Distance() < _aggroRadius || Zombie.IsAggro)
+            if (Distance() < _aggroRadius || IsAggro())
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
@@ -70,6 +71,8 @@ namespace CodeBase.Game.StateMachine.Zombie
             return new Vector3(x, 0f, z);
         }
         
-        private float Distance() => (Zombie.Target.Value.Position - Zombie.Position).sqrMagnitude;
+        private float Distance() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+        
+        private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }
 }

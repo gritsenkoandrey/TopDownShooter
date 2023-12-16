@@ -15,16 +15,6 @@ namespace CodeBase.Game.Systems
         {
             _objectPoolService = objectPoolService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CBullet component)
         {
@@ -39,11 +29,6 @@ namespace CodeBase.Game.Systems
                 .First()
                 .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CBullet component)
-        {
-            base.OnDisableComponent(component);
         }
 
         private void ReturnToPool(IObject component) => _objectPoolService.ReleaseObject(component.Object);

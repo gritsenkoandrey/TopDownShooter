@@ -5549,12 +5549,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3522537617868912396}
-  - component: {fileID: 3522537617868912395}
   - component: {fileID: 3522537617868912393}
   - component: {fileID: 913261861730659750}
-  - component: {fileID: 8209875914142552308}
-  - component: {fileID: 2384393711855601958}
   - component: {fileID: 5875993521760972332}
+  - component: {fileID: 5197208702143561607}
   - component: {fileID: 3522537617868912392}
   m_Layer: 7
   m_Name: ZombieBoss
@@ -5580,14 +5578,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3522537617868912395
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3522537617868912407}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!195 &3522537617868912393
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5630,30 +5620,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8209875914142552308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3522537617868912407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cf80a4c35204bfabefbf13a7ef1ad6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2384393711855601958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3522537617868912407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f76613b90664cd89e4aef61a6cb54df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5875993521760972332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5667,6 +5633,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 913261861730659750}
+--- !u!114 &5197208702143561607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3522537617868912407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b74de8a03a4600aae2ab5fc5fd149b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3522537617868912392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5682,8 +5660,7 @@ MonoBehaviour:
   _agent: {fileID: 3522537617868912393}
   _animator: {fileID: 5875993521760972332}
   _radar: {fileID: 4938344555105946139}
-  _health: {fileID: 8209875914142552308}
-  _melee: {fileID: 2384393711855601958}
+  _stateMachine: {fileID: 5197208702143561607}
 --- !u!1001 &5458808628160320383
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,7 +1,11 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Game.Interfaces;
+using CodeBase.Game.StateMachine.Character;
+using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
 using UniRx;
 
@@ -10,20 +14,12 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
         private readonly IGameFactory _gameFactory;
+        private readonly IGameStateService _gameStateService;
         
-        public SLevelTimeLeft(IGameFactory gameFactory)
+        public SLevelTimeLeft(IGameFactory gameFactory, IGameStateService gameStateService)
         {
             _gameFactory = gameFactory;
-        }
-
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
+            _gameStateService = gameStateService;
         }
 
         protected override void OnEnableComponent(CLevelTimeLeft component)
@@ -38,25 +34,32 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CLevelTimeLeft component)
-        {
-            base.OnDisableComponent(component);
-        }
-
         private TimeSpan Time() => TimeSpan.FromSeconds(1f);
 
         private void UpdateTime(CLevelTimeLeft component, ref int time)
         {
             if (time == 0)
             {
-                _gameFactory.Character.Health.Health.SetValueAndForceNotify(0);
-                    
+                TimeLeft();
+                
                 return;
             }
                     
             time -= 1;
 
             component.TimeLeftText.text = FormatTime.SecondsToTime(time);
+        }
+
+        private void TimeLeft()
+        {
+            _gameStateService.Enter<StateFail>();
+            
+            _gameFactory.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
+                
+            foreach (IEnemy enemy in _gameFactory.Enemies)
+            {
+                enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
+            }
         }
     }
 }

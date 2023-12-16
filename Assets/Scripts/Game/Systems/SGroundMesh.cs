@@ -13,16 +13,6 @@ namespace CodeBase.Game.Systems
         {
             _textureArrayFactory = textureArrayFactory;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem(); 
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnEnableComponent(CMesh component)
         {
@@ -30,11 +20,6 @@ namespace CodeBase.Game.Systems
             
             component.Renderer.material.SetTexture(Shaders.TextureArray, _textureArrayFactory.GetTextureArray());
             component.Renderer.material.SetInt(Shaders.Index, _textureArrayFactory.GetIndex());
-        }
-
-        protected override void OnDisableComponent(CMesh component)
-        {
-            base.OnDisableComponent(component);
         }
     }
 }

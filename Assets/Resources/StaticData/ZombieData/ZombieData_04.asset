@@ -17,16 +17,15 @@ MonoBehaviour:
   Damage: 25
   Stats:
     Money: 250
-    WalkSpeed: 3
-    RunSpeed: 6
+    WalkSpeed: 2
+    RunSpeed: 4
     AttackDelay: 1
     StayDelay: 3
-    AggroRadius: 6
-    PursuitRadius: 12
+    AggroRadius: 7.5
+    PursuitRadius: 15
     PatrolRadius: 7.5
     MinDistanceToTarget: 3
     Height: 5
-  Prefab: {fileID: 0}
   PrefabReference:
     m_AssetGUID: ed507b4fe7e559f4283e282e97d9e458
     m_SubObjectName: 

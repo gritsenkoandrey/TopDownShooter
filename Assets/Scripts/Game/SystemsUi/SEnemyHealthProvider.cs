@@ -23,16 +23,6 @@ namespace CodeBase.Game.SystemsUi
             _uiFactory = uiFactory;
             _cameraService = cameraService;
         }
-        
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-        }
 
         protected override void OnLateUpdate()
         {
@@ -49,11 +39,6 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             CreateEnemyHealths(component).Forget();
-        }
-
-        protected override void OnDisableComponent(CEnemyHealthProvider component)
-        {
-            base.OnDisableComponent(component);
         }
 
         private async UniTaskVoid CreateEnemyHealths(CEnemyHealthProvider component)

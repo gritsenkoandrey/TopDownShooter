@@ -7,11 +7,11 @@ namespace CodeBase.Game.Components
     public sealed class CMove : EntityComponent<CMove>, IProgressReader
     {
         [SerializeField] private CharacterController _characterController;
-
         public CharacterController CharacterController => _characterController;
+        public Vector3 Position => transform.position;
+        public float Angle => transform.eulerAngles.y;
         public float BaseSpeed { get; set; }
         public float Speed { get; private set; }
-        public float Velocity => _characterController.velocity.sqrMagnitude;
         public bool IsGrounded => _characterController.isGrounded;
         
         void IProgressReader.Read(PlayerProgress progress)

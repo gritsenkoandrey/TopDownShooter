@@ -1,6 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
-using UniRx;
+using CodeBase.Game.Models;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -8,17 +8,15 @@ namespace CodeBase.Game.Components
     public sealed class CCharacter : EntityComponent<CCharacter>, ICharacter
     {
         [SerializeField] private CAnimator _animator;
-        [SerializeField] private CHealth _health;
-        [SerializeField] private CWeapon _weapon;
+        [SerializeField] private CWeaponMediator _weaponMediator;
         [SerializeField] private CMove _move;
-        
+        [SerializeField] private CStateMachine _stateMachine;
+
         public CAnimator Animator => _animator;
-        public CHealth Health => _health;
-        public CWeapon Weapon => _weapon;
+        public CWeaponMediator WeaponMediator => _weaponMediator;
         public CMove Move => _move;
-        public Vector3 Position => transform.position;
-        public Quaternion Rotation => transform.rotation;
-        public float Angle => transform.eulerAngles.y;
-        public ReactiveCommand UpdateStateMachine { get; } = new();
+        public CStateMachine StateMachine => _stateMachine;
+        public Health Health { get; } = new();
+        public Entity Entity => this;
     } 
 }

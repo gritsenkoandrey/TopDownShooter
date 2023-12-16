@@ -18,7 +18,7 @@ MonoBehaviour:
   Stats:
     Money: 25
     WalkSpeed: 2
-    RunSpeed: 5
+    RunSpeed: 3
     AttackDelay: 1
     StayDelay: 2
     AggroRadius: 5
@@ -26,7 +26,6 @@ MonoBehaviour:
     PatrolRadius: 5
     MinDistanceToTarget: 1.5
     Height: 2
-  Prefab: {fileID: 0}
   PrefabReference:
     m_AssetGUID: c6d60fcd31540b84681d1580dae357ac
     m_SubObjectName: 
