@@ -117,7 +117,7 @@ namespace CodeBase.Infrastructure.Pool
 
 		    if (_prefabLookup.ContainsKey(prefab))
 		    {
-			    throw new Exception($"Pool for prefab {prefab.name} has already been created");
+			    Debug.LogError($"Pool for prefab {prefab.name} has already been created");
 		    }
 
 		    ObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => InstantiatePrefab(prefab), size);

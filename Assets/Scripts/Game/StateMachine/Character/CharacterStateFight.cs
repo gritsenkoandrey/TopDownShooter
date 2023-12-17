@@ -23,14 +23,14 @@ namespace CodeBase.Game.StateMachine.Character
 
         void IState.Tick()
         {
-            if (JoystickService.GetAxis().sqrMagnitude > 0.1f)
+            UseGravity();
+            
+            if (HasInput())
             {
                 StateMachine.Enter<CharacterStateRun>();
                 
                 return;
             }
-
-            Gravity();
 
             if (TrySetTarget())
             {
@@ -38,8 +38,7 @@ namespace CodeBase.Game.StateMachine.Character
 
                 if (Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack())
                 {
-                    Character.Animator.OnAttack.Execute();
-                    Character.WeaponMediator.CurrentWeapon.Weapon.Attack();
+                    Attack();
                 }
             }
             else
@@ -48,19 +47,32 @@ namespace CodeBase.Game.StateMachine.Character
             }
         }
 
+        private void UseGravity()
+        {
+            if (Character.Move.IsGrounded) return;
+            
+            Vector3 move = Vector3.zero;
+            move.y = Physics.gravity.y;
+            Character.Move.CharacterController.Move(move * Character.Move.Speed * Time.deltaTime);
+        }
+
+        private void Attack()
+        {
+            Character.Animator.OnAttack.Execute();
+            Character.WeaponMediator.CurrentWeapon.Weapon.Attack();
+        }
+
+        private bool HasInput()
+        {
+            return JoystickService.GetAxis().sqrMagnitude > 0.1f;
+        }
+
         private void LockAtTarget()
         {
             Quaternion lookRotation = Quaternion.LookRotation(_target.Position - Character.Move.Position);
             Character.Move.transform.rotation = lookRotation;
         }
 
-        private void Gravity()
-        {
-            Vector3 move = Vector3.zero;
-            move.y = Character.Move.IsGrounded ? 0f : Physics.gravity.y;
-            Character.Move.CharacterController.Move(move * Character.Move.Speed * Time.deltaTime);
-        }
-        
         private bool TrySetTarget()
         {
             if (GameFactory.Enemies.Count == 0)
@@ -88,7 +100,7 @@ namespace CodeBase.Game.StateMachine.Character
 
             for (int i = 0; i < GameFactory.Enemies.Count; i++)
             {
-                float distance = Distance(GameFactory.Enemies[i].Position);
+                float distance = DistanceToTarget(GameFactory.Enemies[i].Position);
 
                 if (distance < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
@@ -103,7 +115,7 @@ namespace CodeBase.Game.StateMachine.Character
             return index;
         }
 
-        private float Distance(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
+        private float DistanceToTarget(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
 
         private bool HasObstacleOnAttackPath(Vector3 target)
         {

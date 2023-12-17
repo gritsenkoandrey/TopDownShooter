@@ -23,33 +23,42 @@ namespace CodeBase.Game.StateMachine.Character
 
         void IState.Tick()
         {
-            if (JoystickService.GetAxis().sqrMagnitude > 0.1f)
+            UseGravity();
+            
+            if (HasInput())
             {
                 StateMachine.Enter<CharacterStateRun>();
                 
                 return;
             }
 
-            Gravity();
-
             if (HasDetectedTarget())
             {
                 StateMachine.Enter<CharacterStateFight>();
+                
+                return;
             }
         }
 
-        private void Gravity()
+        private void UseGravity()
         {
+            if (Character.Move.IsGrounded) return;
+            
             Vector3 move = Vector3.zero;
-            move.y = Character.Move.IsGrounded ? 0f : Physics.gravity.y;
+            move.y = Physics.gravity.y;
             Character.Move.CharacterController.Move(move * Character.Move.Speed * Time.deltaTime);
         }
-        
+
+        private bool HasInput()
+        {
+            return JoystickService.GetAxis().sqrMagnitude > 0.1f;
+        }
+
         private bool HasDetectedTarget()
         {
             for (int i = 0; i < GameFactory.Enemies.Count; i++)
             {
-                if (Distance(GameFactory.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
+                if (DistanceToTarget(GameFactory.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
                     return true;
                 }
@@ -58,6 +67,7 @@ namespace CodeBase.Game.StateMachine.Character
             return false;
         }
         
-        private float Distance(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
+        
+        private float DistanceToTarget(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
     }
 }

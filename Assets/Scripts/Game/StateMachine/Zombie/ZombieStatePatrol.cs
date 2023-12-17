@@ -8,6 +8,7 @@ namespace CodeBase.Game.StateMachine.Zombie
     {
         private readonly Vector3 _patrolPosition;
         private readonly float _aggroRadius;
+        
         private int _startHealth;
 
         public ZombieStatePatrol(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
@@ -31,7 +32,7 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IState.Tick()
         {
-            if (Distance() < _aggroRadius || IsAggro())
+            if (DistanceToTarget() < _aggroRadius || IsAggro())
             {
                 StateMachine.Enter<ZombieStatePursuit>();
             }
@@ -45,7 +46,17 @@ namespace CodeBase.Game.StateMachine.Zombie
                 StateMachine.Enter<ZombieStateIdle>();
             }
         }
-        
+
+        private Vector3 GenerateRandomPoint(float radius)
+        {
+            float angle = Random.Range(0f, 1f) * (2f * Mathf.PI) - Mathf.PI;
+                    
+            float x = Mathf.Sin(angle) * radius;
+            float z = Mathf.Cos(angle) * radius;
+
+            return new Vector3(x, 0f, z);
+        }
+
         private Vector3 GeneratePointOnNavmesh()
         {
             for (int i = 0; i < 10; i++)
@@ -60,19 +71,9 @@ namespace CodeBase.Game.StateMachine.Zombie
             
             return Vector3.zero;
         }
-        
-        private Vector3 GenerateRandomPoint(float radius)
-        {
-            float angle = Random.Range(0f, 1f) * (2f * Mathf.PI) - Mathf.PI;
-                    
-            float x = Mathf.Sin(angle) * radius;
-            float z = Mathf.Cos(angle) * radius;
 
-            return new Vector3(x, 0f, z);
-        }
-        
-        private float Distance() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
-        
+        private float DistanceToTarget() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }
 }

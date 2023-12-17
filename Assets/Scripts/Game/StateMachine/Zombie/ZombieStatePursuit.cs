@@ -28,7 +28,7 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IState.Tick()
         {
-            if (Distance() > _pursuitRadius)
+            if (DistanceToTarget() > _pursuitRadius)
             {
                 StateMachine.Enter<ZombieStateIdle>();
             }
@@ -36,7 +36,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             {
                 LookAt();
                 
-                if (Distance() < _minDistanceToTarget)
+                if (DistanceToTarget() < _minDistanceToTarget)
                 {
                     StateMachine.Enter<ZombieStateFight>();
                 }
@@ -46,14 +46,14 @@ namespace CodeBase.Game.StateMachine.Zombie
                 }
             }
         }
-        
+
+        private float DistanceToTarget() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+
         private void LookAt()
         {
             Quaternion lookRotation = Quaternion.LookRotation(Zombie.Target.Value.Move.Position - Zombie.Position);
 
             Zombie.transform.rotation = Quaternion.Slerp(Zombie.transform.rotation, lookRotation, 0.5f);
         }
-        
-        private float Distance() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
     }
 }

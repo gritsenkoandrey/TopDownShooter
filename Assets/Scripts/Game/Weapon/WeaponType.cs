@@ -7,7 +7,6 @@
         Rifle = 1,
         SniperRifle = 2,
         
-        
         None = byte.MaxValue
     }
 }

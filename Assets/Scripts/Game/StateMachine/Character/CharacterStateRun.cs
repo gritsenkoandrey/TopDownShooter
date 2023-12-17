@@ -26,15 +26,20 @@ namespace CodeBase.Game.StateMachine.Character
 
         void IState.Tick()
         {
-            if (JoystickService.GetAxis().sqrMagnitude < 0.1f)
+            if (HasNoInput())
             {
                 StateMachine.Enter<CharacterStateIdle>();
+                
+                return;
             }
-            else
-            {
-                Move();
-                Rotate();
-            }
+
+            Move();
+            Rotate();
+        }
+
+        private bool HasNoInput()
+        {
+            return JoystickService.GetAxis().sqrMagnitude < 0.1f;
         }
 
         private void Move()
