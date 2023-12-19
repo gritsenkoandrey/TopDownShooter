@@ -7,21 +7,23 @@ using UnityEngine;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public abstract class MeleeWeapon : BaseWeapon, IWeapon
+    public sealed class MeleeWeapon : BaseWeapon, IWeapon
     {
         private readonly IWeaponFactory _weaponFactory;
+        private readonly IProgressService _progressService;
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly CWeapon _weapon;
 
         private float _attackDistance;
         private bool _canAttack;
 
-        protected MeleeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponType weaponType) 
-            : base(weaponFactory, progressService, weaponType)
+        public MeleeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponCharacteristic weaponCharacteristic) 
+            : base(weaponFactory, progressService)
         {
             _weapon = weapon;
             _weaponFactory = weaponFactory;
-            _weaponCharacteristic = weaponFactory.GetWeaponCharacteristic(weaponType);
+            _progressService = progressService;
+            _weaponCharacteristic = weaponCharacteristic;
             
             SetCanAttack();
             SetAttackDistance();

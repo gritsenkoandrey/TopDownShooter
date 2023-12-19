@@ -14,6 +14,7 @@ namespace CodeBase.Infrastructure.Curtain
         {
             gameObject.SetActive(true);
             
+            _loadingText.text = string.Empty;
             _canvasGroup.alpha = 1f;
         }
 
@@ -29,7 +30,7 @@ namespace CodeBase.Infrastructure.Curtain
         {
             int index = 1;
 
-            _loadingText.text = "";
+            _loadingText.text = string.Empty;
 
             return DOVirtual.DelayedCall(0.3f, () => UpdateText(ref index)).SetLoops(3);
         }
@@ -41,7 +42,7 @@ namespace CodeBase.Infrastructure.Curtain
 
         private void UpdateText(ref int index)
         {
-            _loadingText.text = "";
+            _loadingText.text = string.Empty;
             _loadingText.text += (index % 3) switch { 1 => ".", 2 => "..", _ => "..." };
                     
             index++;

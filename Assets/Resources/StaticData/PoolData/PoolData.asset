@@ -25,10 +25,10 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Count: 2
+    Count: 0
   - PrefabReference:
       m_AssetGUID: fdac75e990da47649b31f10049c400b0
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    Count: 5
+    Count: 0

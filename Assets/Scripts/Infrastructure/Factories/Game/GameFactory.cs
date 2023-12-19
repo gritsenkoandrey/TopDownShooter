@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Game.Behaviours;
+using CodeBase.Game.Behaviours.Gizmos;
 using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -20,7 +19,6 @@ namespace CodeBase.Infrastructure.Factories.Game
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IProgressService _progressService;
-        private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
         private readonly IAssetService _assetService;
 
@@ -31,13 +29,11 @@ namespace CodeBase.Infrastructure.Factories.Game
         public GameFactory(
             IStaticDataService staticDataService, 
             IProgressService progressService, 
-            IObjectPoolService objectPoolService, 
             ICameraService cameraService, 
             IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
-            _objectPoolService = objectPoolService;
             _cameraService = cameraService;
             _assetService = assetService;
         }
@@ -68,33 +64,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             return _level;
         }
-
-        async UniTask<GameObject> IGameFactory.CreateHitFx(Vector3 position)
-        {
-            FxData data = _staticDataService.FxData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
-
-            GameObject hitFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
-            _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime).Forget();
-            
-            return hitFx;
-        }
-
-        async UniTask<GameObject> IGameFactory.CreateDeathFx(Vector3 position)
-        {
-            FxData data = _staticDataService.FxData();
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
-
-            GameObject deathFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
-            _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime).Forget();
-
-            return deathFx;
-        }
-
+        
         void IGameFactory.CleanUp()
         {
             if (_character != null)
@@ -170,7 +140,6 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .Build();
 
             Registered(_character.Health);
-            // Registered(_character.Weapon);
             Registered(_character.Move);
 
             return _character;

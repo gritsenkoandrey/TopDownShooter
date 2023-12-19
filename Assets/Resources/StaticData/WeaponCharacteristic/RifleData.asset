@@ -15,10 +15,15 @@ MonoBehaviour:
   WeaponType: 1
   WeaponCharacteristic:
     Damage: 2
-    ClipCount: 30
+    ClipCount: 3
     ForceBullet: 0.5
-    RechargeTime: 2.5
-    SpeedAttack: 0.5
+    RechargeTime: 1
+    SpeedAttack: 0.1
     DetectionDistance: 15
     AttackDistance: 10
     IsDetectThroughObstacle: 1
+  PrefabReference:
+    m_AssetGUID: bfd8110cedb636540be4f0aeb9beca8d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

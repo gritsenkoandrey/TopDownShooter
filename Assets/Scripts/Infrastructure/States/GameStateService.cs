@@ -45,7 +45,8 @@ namespace CodeBase.Infrastructure.States
                     assetService),
                 [typeof(StateLoadProgress)] = new StateLoadProgress(this, 
                     progressService, 
-                    saveLoadService),
+                    saveLoadService,
+                    loadingCurtainService),
                 [typeof(StateLoadLevel)] = new StateLoadLevel(this, 
                     sceneLoaderService, 
                     gameFactory, 
@@ -58,13 +59,17 @@ namespace CodeBase.Infrastructure.States
                 [typeof(StateLobby)] = new StateLobby(this),
                 [typeof(StateGame)] = new StateGame(this, 
                     joystickService, 
-                    uiFactory),
+                    uiFactory,
+                    gameFactory),
                 [typeof(StateFail)] = new StateFail(this, 
                     uiFactory),
                 [typeof(StateWin)] = new StateWin(this, 
                     uiFactory,
                     progressService,
-                    saveLoadService)
+                    saveLoadService),
+                [typeof(StatePreview)] = new StatePreview(this, 
+                    uiFactory,
+                    sceneLoaderService),
             };
         }
         

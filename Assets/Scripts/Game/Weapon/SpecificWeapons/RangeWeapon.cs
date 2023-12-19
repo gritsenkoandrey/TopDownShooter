@@ -19,13 +19,13 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private float _attackDistance;
         private bool _canAttack;
 
-        public RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponType weaponType) 
-            : base(weaponFactory, progressService, weaponType)
+        public RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponCharacteristic weaponCharacteristic) 
+            : base(weaponFactory, progressService)
         {
             _weapon = weapon;
             _weaponFactory = weaponFactory;
             _progressService = progressService;
-            _weaponCharacteristic = weaponFactory.GetWeaponCharacteristic(weaponType);
+            _weaponCharacteristic = weaponCharacteristic;
             
             SetAttackDistance();
             SetClipCount();

@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.AssetData
         async UniTask<T> IAssetService.LoadFromAddressable<T>(string address) where T : class 
             => await Load(Addressables.LoadAssetAsync<T>(address), address);
 
-        async UniTaskVoid IAssetService.Unload()
+        async UniTaskVoid IAssetService.CleanUp()
         {
             ReleaseHandles();
 

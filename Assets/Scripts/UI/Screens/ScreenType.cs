@@ -5,9 +5,10 @@
     {
         None = byte.MaxValue,
         
-        Lobby  = 0,
-        Game   = 1,
-        Win    = 2,
-        Lose   = 4,
+        Lobby     = 0,
+        Game      = 1,
+        Win       = 2,
+        Lose      = 4,
+        Preview   = 8,
     }
 }

@@ -22,3 +22,8 @@ MonoBehaviour:
     DetectionDistance: 20
     AttackDistance: 15
     IsDetectThroughObstacle: 1
+  PrefabReference:
+    m_AssetGUID: 2ad70921c60b43b4493e843940bb11ca
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

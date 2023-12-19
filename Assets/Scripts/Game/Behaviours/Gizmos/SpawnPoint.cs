@@ -2,7 +2,7 @@
 using CodeBase.Game.Interfaces;
 using UnityEngine;
 
-namespace CodeBase.Game.Behaviours
+namespace CodeBase.Game.Behaviours.Gizmos
 {
     public sealed class SpawnPoint : MonoBehaviour, ISpawnPoint
     {
@@ -15,9 +15,9 @@ namespace CodeBase.Game.Behaviours
         
         private void OnDrawGizmos()
         {
-            Gizmos.color = _unitType == UnitType.Character ? Color.green : Color.red;
+            UnityEngine.Gizmos.color = _unitType == UnitType.Character ? Color.green : Color.red;
 
-            Gizmos.DrawSphere(transform.position, 0.25f);
+            UnityEngine.Gizmos.DrawSphere(transform.position, 0.25f);
         }
     }
 }

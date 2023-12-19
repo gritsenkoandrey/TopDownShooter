@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Factories.Game;
 
 namespace CodeBase.Game.Systems
@@ -9,10 +9,12 @@ namespace CodeBase.Game.Systems
     public sealed class SBulletProvider : SystemComponent<CBullet>
     {
         private readonly IGameFactory _gameFactory;
+        private readonly IEffectFactory _effectFactory;
 
-        public SBulletProvider(IGameFactory gameFactory)
+        public SBulletProvider(IGameFactory gameFactory, IEffectFactory effectFactory)
         {
             _gameFactory = gameFactory;
+            _effectFactory = effectFactory;
         }
 
         protected override void OnUpdate()
@@ -57,7 +59,7 @@ namespace CodeBase.Game.Systems
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
                 
-            _gameFactory.CreateHitFx(bullet.Object.transform.position);
+            _effectFactory.CreateHitFx(bullet.Object.transform.position);
         }
     }
 }

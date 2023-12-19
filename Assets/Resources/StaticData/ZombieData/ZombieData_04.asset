@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: ZombieData_04
   m_EditorClassIdentifier: 
   ZombieType: 4
-  Health: 250
+  Health: 999
   Damage: 25
   Stats:
     Money: 250
     WalkSpeed: 2
-    RunSpeed: 4
+    RunSpeed: 5
     AttackDelay: 1
     StayDelay: 3
     AggroRadius: 7.5
-    PursuitRadius: 15
+    PursuitRadius: 20
     PatrolRadius: 7.5
-    MinDistanceToTarget: 3
+    MinDistanceToTarget: 3.5
     Height: 5
   PrefabReference:
     m_AssetGUID: ed507b4fe7e559f4283e282e97d9e458

@@ -4,6 +4,7 @@ using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsUi;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
@@ -32,6 +33,7 @@ namespace CodeBase.LifeTime
         private readonly ITextureArrayFactory _textureArrayFactory;
         private readonly IGuiService _guiService;
         private readonly IWeaponFactory _weaponFactory;
+        private readonly IEffectFactory _effectFactory;
 
         public BootstrapEntryPoint(
             IGameStateService gameStateService, 
@@ -44,7 +46,8 @@ namespace CodeBase.LifeTime
             IJoystickService joystickService,
             ITextureArrayFactory textureArrayFactory, 
             IGuiService guiService, 
-            IWeaponFactory weaponFactory)
+            IWeaponFactory weaponFactory,
+            IEffectFactory effectFactory)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -57,6 +60,7 @@ namespace CodeBase.LifeTime
             _textureArrayFactory = textureArrayFactory;
             _guiService = guiService;
             _weaponFactory = weaponFactory;
+            _effectFactory = effectFactory;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -79,11 +83,10 @@ namespace CodeBase.LifeTime
             {
                 new SGroundBuildNavMesh(),
                 new SCharacterInitStateMachine(_cameraService, _joystickService, _gameFactory),
-                new SWeaponInit(_weaponFactory),
                 new SZombieInitStateMachine(),
                 new SZombieAnimator(),
                 new SZombieMeleeAttack(),
-                new SZombieDeath(_gameFactory, _progressService, _saveLoadService),
+                new SZombieDeath(_gameFactory, _progressService, _saveLoadService, _effectFactory),
                 new SRadarDraw(),
                 new SZombieSelectSkin(),
                 new SUpgradeShop(_uiFactory),
@@ -97,12 +100,14 @@ namespace CodeBase.LifeTime
                 new SEnemyHealthProvider(_gameFactory, _uiFactory, _cameraService),
                 new SEnemyHealth(),
                 new SCharacterHealth(_gameFactory),
-                new SBulletProvider(_gameFactory),
+                new SBulletProvider(_gameFactory, _effectFactory),
                 new SLevelTimeLeft(_gameFactory, _gameStateService),
                 new SLevelGameState(_gameStateService, _gameFactory),
                 new SStateMachineUpdate(),
-                new SCharacterWeaponMediator(),
                 new SCharacterAnimation(),
+                new SCharacterPreviewRotation(),
+                new SCharacterPreviewAnimator(),
+                new SWeaponMediator(_weaponFactory),
             };
         }
 

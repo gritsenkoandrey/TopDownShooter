@@ -50,17 +50,13 @@ namespace CodeBase.Infrastructure.States
             CleanUpWorld();
 
             _curtain.Show();
+            
             _sceneLoaderService.Load(sceneName, Next);
         }
 
         void IExitState.Exit()
         {
-            Hide().Forget();
-        }
-
-        private async UniTaskVoid Hide()
-        {
-            await _curtain.Hide();
+            _curtain.Hide().Forget();
         }
 
         private void Next()
@@ -78,7 +74,7 @@ namespace CodeBase.Infrastructure.States
             _gameFactory.CleanUp();
             _cameraService.CleanUp();
             _textureArrayFactory.CleanUp();
-            _assetService.Unload();
+            _assetService.CleanUp();
         }
 
         private async UniTaskVoid CreateLevel()

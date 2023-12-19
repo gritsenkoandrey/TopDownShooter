@@ -30,8 +30,7 @@ namespace CodeBase.Game.Systems
 
         private void InitializeStateMachine(CCharacter component)
         {
-            component.StateMachine.StateMachine = new CharacterStateMachine(component, _cameraService, _joystickService, _gameFactory);
-            component.StateMachine.StateMachine.Enter<CharacterStateIdle>();
+            component.StateMachine.SetStateMachine(new CharacterStateMachine(component, _cameraService, _joystickService, _gameFactory));
 
             component.StateMachine.UpdateStateMachine
                 .Subscribe(_ => component.StateMachine.StateMachine.Tick())

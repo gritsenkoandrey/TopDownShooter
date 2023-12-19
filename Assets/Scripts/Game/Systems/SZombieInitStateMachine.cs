@@ -20,8 +20,7 @@ namespace CodeBase.Game.Systems
 
         private void InitializeStateMachine(CZombie component)
         {
-            component.StateMachine.StateMachine = new ZombieStateMachine(component);
-            component.StateMachine.StateMachine.Enter<ZombieStateIdle>();
+            component.StateMachine.SetStateMachine(new ZombieStateMachine(component));
 
             component.StateMachine.UpdateStateMachine
                 .Subscribe(_ => component.StateMachine.StateMachine.Tick())

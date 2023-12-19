@@ -1,8 +1,6 @@
 ﻿using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon.Data;
-using CodeBase.Game.Weapon.SpecificWeapons;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
@@ -32,14 +30,18 @@ namespace CodeBase.Game.Weapon.Factories
             _progressService = progressService;
         }
 
-        BaseWeapon IWeaponFactory.GetWeapon(CWeapon weapon, WeaponType type)
+        async UniTask<CWeapon> IWeaponFactory.CreateWeapon(WeaponType type, Transform parent)
         {
-            return new RangeWeapon(weapon, this, _progressService, type);
-        }
+            WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
 
-        WeaponCharacteristic IWeaponFactory.GetWeaponCharacteristic(WeaponType type)
-        {
-            return _staticDataService.WeaponCharacteristicData(type).WeaponCharacteristic;
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+
+            return new WeaponBuilder(this, _progressService)
+                .SetPrefab(prefab)
+                .SetParent(parent)
+                .SetWeaponType(type)
+                .SetWeaponCharacteristic(data.WeaponCharacteristic)
+                .Build();
         }
 
         async UniTask<IBullet> IWeaponFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)

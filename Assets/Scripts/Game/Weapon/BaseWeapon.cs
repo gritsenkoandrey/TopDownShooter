@@ -5,6 +5,6 @@ namespace CodeBase.Game.Weapon
 {
     public abstract class BaseWeapon
     {
-        protected BaseWeapon(IWeaponFactory weaponFactory,  IProgressService progressService, WeaponType weaponType) { }
+        protected BaseWeapon(IWeaponFactory weaponFactory,  IProgressService progressService) { }
     }
 }

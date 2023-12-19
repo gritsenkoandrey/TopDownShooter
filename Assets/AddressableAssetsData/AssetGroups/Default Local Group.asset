@@ -89,6 +89,26 @@ MonoBehaviour:
     m_Address: Character
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 442db06ab34b2c949b10e10d8ff9e8d9
+    m_Address: PreviewScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bfd8110cedb636540be4f0aeb9beca8d
+    m_Address: Rifle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2ad70921c60b43b4493e843940bb11ca
+    m_Address: SniperRifle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2102083c2e0080247829e08e19148eab
+    m_Address: Pistol
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e97a893391e84884784e67046ec16760
+    m_Address: HuntingRifle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

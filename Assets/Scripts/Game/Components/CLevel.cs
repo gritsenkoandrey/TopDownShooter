@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Behaviours;
+using CodeBase.Game.Behaviours.Gizmos;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using UnityEngine;

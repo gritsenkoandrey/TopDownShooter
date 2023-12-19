@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.States;
+﻿using CodeBase.App;
+using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -36,7 +37,7 @@ namespace CodeBase.UI.Screens
         {
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             
-            GameStateService.Enter<StateLoadProgress>();
+            GameStateService.Enter<StatePreview, string>(SceneName.Lobby);
         }
 
         private void ShowButton()

@@ -19,14 +19,6 @@ namespace CodeBase.Game.StateMachine.Zombie
         void IState.Enter()
         {
             Zombie.Animator.OnIdle.Execute();
-
-            if (_canAttack)
-            {
-                SetCanAttack();
-                
-                Zombie.Attack.Execute();
-                Zombie.Animator.OnAttack.Execute();
-            }
         }
 
         void IState.Exit() { }
@@ -36,6 +28,16 @@ namespace CodeBase.Game.StateMachine.Zombie
             if (DistanceToTarget() > _minDistanceToTarget && Zombie.Target.Value.Health.IsAlive)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
+                
+                return;
+            }
+            
+            if (_canAttack)
+            {
+                SetCanAttack();
+                
+                Zombie.Attack.Execute();
+                Zombie.Animator.OnAttack.Execute();
             }
         }
 

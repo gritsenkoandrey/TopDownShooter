@@ -1,39 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CodeBase.ECSCore;
-using CodeBase.Game.Weapon;
+﻿using CodeBase.ECSCore;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
     public sealed class CWeaponMediator : EntityComponent<CWeaponMediator>
     {
-        [SerializeField] private CWeapon[] _weapons;
-
-        private IReadOnlyDictionary<WeaponType, CWeapon> _weaponsDictionary;
+        [SerializeField] private Transform _container;
+        public Transform Container => _container;
         public CWeapon CurrentWeapon { get; private set; }
-        public void SetWeapon(WeaponType weaponType)
-        {
-            SetActiveCurrentWeapon(false);
 
-            CurrentWeapon = _weaponsDictionary.TryGetValue(weaponType, out CWeapon weapon) ? weapon : null;
-            
-            SetActiveCurrentWeapon(true);
-        }
-
-        protected override void OnEntityCreate()
-        {
-            base.OnEntityCreate();
-
-            _weaponsDictionary = _weapons.ToDictionary(weapon => weapon.WeaponType, weapon => weapon);
-        }
-
-        private void SetActiveCurrentWeapon(bool value)
+        public void SetWeapon(CWeapon weapon)
         {
             if (CurrentWeapon != null)
             {
-                CurrentWeapon.SetActive(value);
+                Destroy(CurrentWeapon.gameObject);
             }
+
+            CurrentWeapon = weapon;
         }
     }
 }
