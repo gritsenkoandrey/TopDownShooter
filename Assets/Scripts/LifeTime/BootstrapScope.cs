@@ -10,6 +10,7 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -39,6 +40,8 @@ namespace CodeBase.LifeTime
             builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
             builder.RegisterComponentInHierarchy<GuiService>().As<IGuiService>();
             builder.RegisterComponentInHierarchy<JoystickService>().As<IJoystickService>();
+
+            builder.Register<InventoryModel>(Lifetime.Singleton);
             
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);

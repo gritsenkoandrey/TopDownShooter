@@ -10,6 +10,7 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -35,6 +36,8 @@ namespace CodeBase.LifeTime
         private readonly IWeaponFactory _weaponFactory;
         private readonly IEffectFactory _effectFactory;
 
+        private readonly InventoryModel _inventoryModel;
+
         public BootstrapEntryPoint(
             IGameStateService gameStateService, 
             IUIFactory uiFactory, 
@@ -47,7 +50,8 @@ namespace CodeBase.LifeTime
             ITextureArrayFactory textureArrayFactory, 
             IGuiService guiService, 
             IWeaponFactory weaponFactory,
-            IEffectFactory effectFactory)
+            IEffectFactory effectFactory,
+            InventoryModel inventoryModel)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -61,6 +65,7 @@ namespace CodeBase.LifeTime
             _guiService = guiService;
             _weaponFactory = weaponFactory;
             _effectFactory = effectFactory;
+            _inventoryModel = inventoryModel;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -107,7 +112,10 @@ namespace CodeBase.LifeTime
                 new SCharacterAnimation(),
                 new SCharacterPreviewRotation(),
                 new SCharacterPreviewAnimator(),
-                new SWeaponMediator(_weaponFactory),
+                new SCharacterPreviewModel(_inventoryModel),
+                new SCharacterPreviewChanger(),
+                new SCharacterWeaponMediator(_weaponFactory, _inventoryModel),
+                new SCharacterBodyMediator(_inventoryModel),
             };
         }
 

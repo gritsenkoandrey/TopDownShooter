@@ -19,7 +19,7 @@ namespace CodeBase.Game.ComponentsUi
 
         void IAnimationStateReader.ExitedState(int stateHash)
         {
-            if (Animations.StartGame == stateHash)
+            if (Animations.Preview == stateHash)
             {
                 IsExitAnimation = true;
             }

@@ -109,6 +109,50 @@ MonoBehaviour:
     m_Address: HuntingRifle
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 56ed8e51357bb97498a3de9990fdf68f
+    m_Address: Bazooka
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2928ec4b54180a940b9a9cdb320d17f2
+    m_Address: ElectricGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0d4fe6c756ab2c443b4af8885704f332
+    m_Address: ChemicalGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8cf96e4b574afd24daafe1f4c881928e
+    m_Address: FlameThrower
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 04ddffe1be05b5246b791227de75cd1b
+    m_Address: GravityGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b892dd671cffd5a4085577f72519916b
+    m_Address: HMG
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 213da5ff74b87b94291bb7ea134a72e6
+    m_Address: IceGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 70b5f213e7426bb4391eba6ca7da5484
+    m_Address: MiniGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c452cfe709be8a94eac44ae630ccc2a0
+    m_Address: RailGun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e21af676a7522044d8313cbe4777cc36
+    m_Address: Shotgun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1caf74cd7b934454497f8e67769a1190
+    m_Address: SMG
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

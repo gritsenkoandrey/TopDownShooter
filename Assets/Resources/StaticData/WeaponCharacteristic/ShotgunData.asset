@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0455bedf078b46569c38efbef32d84e2, type: 3}
+  m_Name: ShotgunData
+  m_EditorClassIdentifier: 
+  WeaponType: 7
+  WeaponCharacteristic:
+    Damage: 5
+    ClipCount: 2
+    ForceBullet: 0.75
+    RechargeTime: 2.5
+    SpeedAttack: 1
+    DetectionDistance: 20
+    AttackDistance: 15
+    IsDetectThroughObstacle: 1
+  PrefabReference:
+    m_AssetGUID: e21af676a7522044d8313cbe4777cc36
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

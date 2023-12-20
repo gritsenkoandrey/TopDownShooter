@@ -51,24 +51,32 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: cfc5ea7037e30f04ea076cfd71eba05f, type: 3}
+  - {fileID: 21300000, guid: bb33f5920fac3bd4181a3840cbbaf4f9, type: 3}
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: 2079b87688256f748be41055895c942b, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
+  - {fileID: 21300000, guid: eb8c115bc40e94b47aad4e9121ed3bd1, type: 3}
+  - {fileID: 21300000, guid: 452d12cb27da9b74fb9366cb0f2a34e3, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
   - {fileID: 21300000, guid: a3788f6eda275bb4c844456f85f9fff3, type: 3}
+  - {fileID: 21300000, guid: f813018f9361f9948bbffb2b7f016bf9, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
   - {fileID: 21300000, guid: b3ee4aafec0ec2d4084afb64faad54d1, type: 3}
   m_PackedSpriteNamesToIndex:
   - shop_hide
+  - up
   - shop_weapon
   - money
   - shop_speedometer
   - square
+  - left
+  - down
   - shop_medical_pack
   - target
   - splat
+  - right
   - shop_show
   - circle
   m_RenderDataMap: {}

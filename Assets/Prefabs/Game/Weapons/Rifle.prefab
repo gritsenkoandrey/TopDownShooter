@@ -161,4 +161,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnBulletPoint: {fileID: 1259960906380090436}
-  _weaponType: 1
+  _animatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}

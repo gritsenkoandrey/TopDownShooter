@@ -13,5 +13,6 @@ namespace CodeBase.Game.Components
         public readonly ReactiveCommand OnIdle = new();
         public readonly ReactiveCommand OnAttack = new();
         public readonly ReactiveCommand OnDeath = new();
+        public readonly ReactiveCommand OnVictory = new();
     }
 }

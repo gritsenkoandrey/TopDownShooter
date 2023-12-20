@@ -15,8 +15,8 @@ namespace CodeBase.Game.SystemsUi
             component.StartAnimation
                 .Subscribe(_ =>
                 {
-                    component.Animator.SetFloat(Animations.StartGameBlend, Random.Range(0, 4));
-                    component.Animator.SetTrigger(Animations.StartGame);
+                    component.Animator.SetFloat(Animations.PreviewBlend, Random.Range(0, 4));
+                    component.Animator.SetTrigger(Animations.Preview);
                 })
                 .AddTo(component.LifetimeDisposable);
         }
