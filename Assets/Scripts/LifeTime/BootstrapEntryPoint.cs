@@ -111,11 +111,9 @@ namespace CodeBase.LifeTime
                 new SStateMachineUpdate(),
                 new SCharacterAnimation(),
                 new SCharacterPreviewRotation(),
-                new SCharacterPreviewAnimator(),
-                new SCharacterPreviewModel(_inventoryModel),
-                new SCharacterPreviewChanger(),
                 new SCharacterWeaponMediator(_weaponFactory, _inventoryModel),
                 new SCharacterBodyMediator(_inventoryModel),
+                new SCharacterPreviewMediator(_inventoryModel),
             };
         }
 

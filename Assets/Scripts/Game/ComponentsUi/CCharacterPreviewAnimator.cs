@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Behaviours.AnimationStateBehaviour;
 using CodeBase.Utils;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.ComponentsUi
@@ -11,8 +10,6 @@ namespace CodeBase.Game.ComponentsUi
     {
         [SerializeField] private Animator _animator;
         public Animator Animator => _animator;
-        
-        public readonly ReactiveCommand StartAnimation = new();
         public bool IsExitAnimation { get; private set; }
 
         void IAnimationStateReader.EnteredState(int stateHash) { }

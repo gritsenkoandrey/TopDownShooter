@@ -17,19 +17,19 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            SetCharacterSelectedBody(component);
+            SetEquipment(component);
         }
 
-        private void SetCharacterSelectedBody(CCharacter component)
+        private void SetEquipment(CCharacter component)
         {
             for (int i = 0; i < component.BodyMediator.Bodies.Length; i++)
             {
-                component.BodyMediator.Bodies[i].SetActive(_inventoryModel.BodyIndex == i);
+                component.BodyMediator.Bodies[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
             }
 
             for (int i = 0; i < component.BodyMediator.Heads.Length; i++)
             {
-                component.BodyMediator.Heads[i].SetActive(_inventoryModel.BodyIndex == i);
+                component.BodyMediator.Heads[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
             }
         }
     }
