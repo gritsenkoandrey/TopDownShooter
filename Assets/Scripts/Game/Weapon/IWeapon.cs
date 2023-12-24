@@ -1,6 +1,8 @@
-﻿namespace CodeBase.Game.Weapon
+﻿using System;
+
+namespace CodeBase.Game.Weapon
 {
-    public interface IWeapon
+    public interface IWeapon : IDisposable
     {
         public void Attack();
         public bool CanAttack();

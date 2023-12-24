@@ -57,9 +57,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
   - {fileID: 21300000, guid: eb8c115bc40e94b47aad4e9121ed3bd1, type: 3}
+  - {fileID: 21300000, guid: 0e54d4ab857026e46af697e6823f9fb7, type: 3}
   - {fileID: 21300000, guid: 452d12cb27da9b74fb9366cb0f2a34e3, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
+  - {fileID: 21300000, guid: 998d196ee78bdfd4dbc1b513d936938a, type: 3}
   - {fileID: 21300000, guid: a3788f6eda275bb4c844456f85f9fff3, type: 3}
   - {fileID: 21300000, guid: f813018f9361f9948bbffb2b7f016bf9, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
@@ -72,9 +74,11 @@ SpriteAtlas:
   - shop_speedometer
   - square
   - left
+  - ammunition
   - down
   - shop_medical_pack
   - target
+  - watch
   - splat
   - right
   - shop_show

@@ -114,6 +114,7 @@ namespace CodeBase.LifeTime
                 new SCharacterWeaponMediator(_weaponFactory, _inventoryModel),
                 new SCharacterBodyMediator(_inventoryModel),
                 new SCharacterPreviewMediator(_inventoryModel),
+                new SCharacterAmmunitionView(_inventoryModel),
             };
         }
 

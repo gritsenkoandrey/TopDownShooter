@@ -24,6 +24,13 @@ namespace CodeBase.Game.Systems
             CreateWeapon(component).Forget();
         }
 
+        protected override void OnDisableComponent(CCharacter component)
+        {
+            base.OnDisableComponent(component);
+            
+            component.WeaponMediator.CurrentWeapon.Weapon?.Dispose();
+        }
+
         private async UniTaskVoid CreateWeapon(CCharacter component)
         {
             CWeapon weapon = await _weaponFactory.CreateWeapon(_inventoryModel.SelectedWeapon.Value, component.WeaponMediator.Container);

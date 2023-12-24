@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Components;
+﻿using System;
+using CodeBase.Game.Components;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.Progress;
@@ -39,6 +40,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         bool IWeapon.CanAttack() => _canAttack;
         bool IWeapon.IsDetectThroughObstacle() => true;
         float IWeapon.AttackDistance() => _attackDistance;
+        void IDisposable.Dispose() { }
 
         private void SetCanAttack() => _canAttack = true;
         private void SetAttackDistance() => _attackDistance = Mathf.Pow(_weaponCharacteristic.AttackDistance, 2);

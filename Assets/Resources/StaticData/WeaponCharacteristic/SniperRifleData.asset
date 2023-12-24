@@ -20,7 +20,7 @@ MonoBehaviour:
     RechargeTime: 2.5
     SpeedAttack: 1
     DetectionDistance: 20
-    AttackDistance: 15
+    AttackDistance: 10
     IsDetectThroughObstacle: 1
   PrefabReference:
     m_AssetGUID: 2ad70921c60b43b4493e843940bb11ca

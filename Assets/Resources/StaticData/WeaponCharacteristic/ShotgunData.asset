@@ -19,8 +19,8 @@ MonoBehaviour:
     ForceBullet: 0.75
     RechargeTime: 2.5
     SpeedAttack: 1
-    DetectionDistance: 20
-    AttackDistance: 15
+    DetectionDistance: 7.5
+    AttackDistance: 5
     IsDetectThroughObstacle: 1
   PrefabReference:
     m_AssetGUID: e21af676a7522044d8313cbe4777cc36

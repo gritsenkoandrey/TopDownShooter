@@ -13,6 +13,10 @@ namespace CodeBase.Game.Components
         public Vector3 SpawnBulletPointPosition => _spawnBulletPoint.position;
         public Vector3 NormalizeForwardDirection => _spawnBulletPoint.forward.normalized;
         public IWeapon Weapon { get; private set; }
-        public void SetWeapon(IWeapon weapon) => Weapon = weapon;
+        public void SetWeapon(IWeapon weapon)
+        {
+            Weapon?.Dispose();
+            Weapon = weapon;
+        }
     }
 }

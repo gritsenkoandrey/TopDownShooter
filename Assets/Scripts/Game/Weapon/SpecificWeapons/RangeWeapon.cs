@@ -1,6 +1,8 @@
-﻿using CodeBase.Game.Components;
+﻿using System;
+using CodeBase.Game.Components;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -14,19 +16,25 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private readonly IProgressService _progressService;
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly CWeapon _weapon;
+        private readonly InventoryModel _inventoryModel;
 
         private int _clipCount;
         private float _attackDistance;
         private bool _canAttack;
 
-        public RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponCharacteristic weaponCharacteristic) 
+        private Tween _speedAttackTween;
+        private Tween _rechargeTimeTween;
+
+        public RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, 
+            WeaponCharacteristic weaponCharacteristic, InventoryModel inventoryModel) 
             : base(weaponFactory, progressService)
         {
             _weapon = weapon;
             _weaponFactory = weaponFactory;
             _progressService = progressService;
             _weaponCharacteristic = weaponCharacteristic;
-            
+            _inventoryModel = inventoryModel;
+
             SetAttackDistance();
             SetClipCount();
             SetCanAttack();
@@ -38,13 +46,17 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
             _canAttack = false;
 
-            DOVirtual.DelayedCall(_weaponCharacteristic.SpeedAttack, SetCanAttack);
+            _speedAttackTween?.Kill();
+            _speedAttackTween = DOVirtual.DelayedCall(_weaponCharacteristic.SpeedAttack, SetCanAttack);
             
             _clipCount--;
 
+            _inventoryModel.ClipCount.Value = _clipCount;
+
             if (_clipCount <= 0)
             {
-                DOVirtual.DelayedCall(_weaponCharacteristic.RechargeTime, SetClipCount);
+                _rechargeTimeTween?.Kill();
+                _rechargeTimeTween = DOVirtual.DelayedCall(_weaponCharacteristic.RechargeTime, SetClipCount);
             }
         }
 
@@ -63,8 +75,19 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             await _weaponFactory.CreateBullet(damage, position, direction);
         }
 
-        private void SetClipCount() => _clipCount = _weaponCharacteristic.ClipCount;
+        private void SetClipCount()
+        {
+            _clipCount = _weaponCharacteristic.ClipCount;
+            _inventoryModel.ClipCount.Value = _clipCount;
+        }
+
         private void SetCanAttack() => _canAttack = true;
         private void SetAttackDistance() => _attackDistance = Mathf.Pow(_weaponCharacteristic.AttackDistance, 2);
+        
+        void IDisposable.Dispose()
+        {
+            _speedAttackTween?.Kill();
+            _rechargeTimeTween?.Kill();
+        }
     }
 }

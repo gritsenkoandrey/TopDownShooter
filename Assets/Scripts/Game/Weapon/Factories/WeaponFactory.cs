@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
@@ -17,17 +18,20 @@ namespace CodeBase.Game.Weapon.Factories
         private readonly IAssetService _assetService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly IProgressService _progressService;
+        private readonly InventoryModel _inventoryModel;
 
         public WeaponFactory(
             IStaticDataService staticDataService, 
             IAssetService assetService, 
             IObjectPoolService objectPoolService, 
-            IProgressService progressService)
+            IProgressService progressService,
+            InventoryModel inventoryModel)
         {
             _staticDataService = staticDataService;
             _assetService = assetService;
             _objectPoolService = objectPoolService;
             _progressService = progressService;
+            _inventoryModel = inventoryModel;
         }
 
         async UniTask<CWeapon> IWeaponFactory.CreateWeapon(WeaponType type, Transform parent)
@@ -41,6 +45,7 @@ namespace CodeBase.Game.Weapon.Factories
                 .SetParent(parent)
                 .SetWeaponType(type)
                 .SetWeaponCharacteristic(data.WeaponCharacteristic)
+                .SetInventoryModel(_inventoryModel)
                 .Build();
         }
 
