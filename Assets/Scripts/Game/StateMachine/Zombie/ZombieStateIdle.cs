@@ -1,29 +1,34 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Models;
 using UnityEngine;
 
 namespace CodeBase.Game.StateMachine.Zombie
 {
     public sealed class ZombieStateIdle : ZombieState, IState
     {
-        private readonly float _aggroRadius;
-        
+        private float _aggroRadius;
         private float _delay;
         private int _startHealth;
+        private ICharacter _target;
 
-        public ZombieStateIdle(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
-        {
-            _aggroRadius = Mathf.Pow(zombie.Stats.AggroRadius, 2);
-        }
+        public ZombieStateIdle(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
+            : base(stateMachine, zombie, levelModel) { }
 
         void IState.Enter()
         {
+            _target = LevelModel.Character;
+            _aggroRadius = Mathf.Pow(Zombie.Stats.AggroRadius, 2);
             _startHealth = Zombie.Health.CurrentHealth.Value;
             _delay = Zombie.Stats.StayDelay;
             Zombie.Animator.OnIdle.Execute();
             Zombie.Radar.Draw.Execute();
         }
 
-        void IState.Exit() { }
+        void IState.Exit()
+        {
+            _target = null;
+        }
 
         void IState.Tick()
         {
@@ -44,7 +49,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float DistanceToTarget() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }

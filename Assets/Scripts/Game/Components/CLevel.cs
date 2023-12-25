@@ -1,5 +1,4 @@
 ﻿using CodeBase.ECSCore;
-using CodeBase.Game.Behaviours;
 using CodeBase.Game.Behaviours.Gizmos;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
@@ -13,6 +12,7 @@ namespace CodeBase.Game.Components
         public SpawnPoint[] SpawnPoints => _spawnPoints;
         public LevelType LevelType { get; private set; }
         public int LevelTime { get; private set; }
+        public Entity Entity => this;
 
         public void SetLevelType(LevelType levelType) => LevelType = levelType;
         public void SetLevelTime(int levelTime) => LevelTime = levelTime;

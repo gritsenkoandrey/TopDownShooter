@@ -1,7 +1,7 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 using UnityEngine;
 
 namespace CodeBase.Game.StateMachine.Character
@@ -9,8 +9,8 @@ namespace CodeBase.Game.StateMachine.Character
     public sealed class CharacterStateIdle : CharacterState, IState
     {
         public CharacterStateIdle(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, IGameFactory gameFactory) 
-            : base(stateMachine, character, cameraService, joystickService, gameFactory)
+            IJoystickService joystickService, LevelModel levelModel) 
+            : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
         }
 
@@ -56,9 +56,9 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasDetectedTarget()
         {
-            for (int i = 0; i < GameFactory.Enemies.Count; i++)
+            for (int i = 0; i < LevelModel.Enemies.Count; i++)
             {
-                if (DistanceToTarget(GameFactory.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
+                if (DistanceToTarget(LevelModel.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
                     return true;
                 }

@@ -42,6 +42,7 @@ namespace CodeBase.LifeTime
             builder.RegisterComponentInHierarchy<JoystickService>().As<IJoystickService>();
 
             builder.Register<InventoryModel>(Lifetime.Singleton);
+            builder.Register<LevelModel>(Lifetime.Singleton);
             
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);

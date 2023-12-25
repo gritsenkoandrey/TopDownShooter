@@ -1,28 +1,28 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelGoal : SystemComponent<CLevelGoal>
     {
-        private readonly IGameFactory _gameFactory;
+        private readonly LevelModel _levelModel;
 
-        public SLevelGoal(IGameFactory gameFactory)
+        public SLevelGoal(LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
+            _levelModel = levelModel;
         }
 
         protected override void OnEnableComponent(CLevelGoal component)
         {
             base.OnEnableComponent(component);
 
-            int max = _gameFactory.Enemies.Count;
+            int max = _levelModel.Enemies.Count;
             
             component.TextLevelGoal.text = max.ToString();
 
-            _gameFactory.Enemies
+            _levelModel.Enemies
                 .ObserveCountChanged()
                 .Subscribe(count =>
                 {

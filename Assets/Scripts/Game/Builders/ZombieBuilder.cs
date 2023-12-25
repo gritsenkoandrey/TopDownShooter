@@ -1,4 +1,5 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 

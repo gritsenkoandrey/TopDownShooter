@@ -1,10 +1,11 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -13,18 +14,18 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateService _stateService;
         private readonly IJoystickService _joystickService;
         private readonly IUIFactory _uiFactory;
-        private readonly IGameFactory _gameFactory;
+        private readonly LevelModel _levelModel;
 
         public StateGame(
             IGameStateService stateService, 
             IJoystickService joystickService, 
             IUIFactory uiFactory,
-            IGameFactory gameFactory)
+            LevelModel levelModel)
         {
             _stateService = stateService;
             _joystickService = joystickService;
             _uiFactory = uiFactory;
-            _gameFactory = gameFactory;
+            _levelModel = levelModel;
         }
 
         void IEnterState.Enter()
@@ -32,7 +33,7 @@ namespace CodeBase.Infrastructure.States
             _uiFactory.CreateScreen(ScreenType.Game);
             _joystickService.Enable(true);
             
-            SetIdleState();
+            StartUnitStateMachine();
         }
 
         void IExitState.Exit()
@@ -40,11 +41,11 @@ namespace CodeBase.Infrastructure.States
             _joystickService.Enable(false);
         }
 
-        private void SetIdleState()
+        private void StartUnitStateMachine()
         {
-            _gameFactory.Character.StateMachine.StateMachine.Enter<CharacterStateIdle>();
+            _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateIdle>();
 
-            foreach (IEnemy enemy in _gameFactory.Enemies)
+            foreach (IEnemy enemy in _levelModel.Enemies)
             {
                 enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>();
             }

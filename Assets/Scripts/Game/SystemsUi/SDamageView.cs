@@ -2,7 +2,7 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -11,20 +11,20 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SDamageView : SystemComponent<CDamageView>
     {
-        private readonly IGameFactory _gameFactory;
         private readonly ICameraService _cameraService;
+        private readonly LevelModel _levelModel;
 
-        public SDamageView(IGameFactory gameFactory, ICameraService cameraService)
+        public SDamageView(ICameraService cameraService, LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
             _cameraService = cameraService;
+            _levelModel = levelModel;
         }
 
         protected override void OnEnableComponent(CDamageView component)
         {
             base.OnEnableComponent(component);
 
-            foreach (IEnemy enemy in _gameFactory.Enemies)
+            foreach (IEnemy enemy in _levelModel.Enemies)
             {
                 enemy.Health.CurrentHealth
                     .Pairwise()

@@ -1,7 +1,7 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
 
@@ -12,8 +12,8 @@ namespace CodeBase.Game.StateMachine.Character
         private IEnemy _target;
         
         public CharacterStateFight(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, IGameFactory gameFactory) 
-            : base(stateMachine, character, cameraService, joystickService, gameFactory)
+            IJoystickService joystickService, LevelModel levelModel) 
+            : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
         }
 
@@ -75,7 +75,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool TrySetTarget()
         {
-            if (GameFactory.Enemies.Count == 0)
+            if (LevelModel.Enemies.Count == 0)
             {
                 return false;
             }
@@ -84,7 +84,7 @@ namespace CodeBase.Game.StateMachine.Character
 
             if (index >= 0)
             {
-                _target = GameFactory.Enemies[index];
+                _target = LevelModel.Enemies[index];
                 
                 return true;
             }
@@ -98,13 +98,13 @@ namespace CodeBase.Game.StateMachine.Character
             
             float minDistance = Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance();
 
-            for (int i = 0; i < GameFactory.Enemies.Count; i++)
+            for (int i = 0; i < LevelModel.Enemies.Count; i++)
             {
-                float distance = DistanceToTarget(GameFactory.Enemies[i].Position);
+                float distance = DistanceToTarget(LevelModel.Enemies[i].Position);
 
                 if (distance < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
-                    if (distance < minDistance && HasObstacleOnAttackPath(GameFactory.Enemies[i].Position) == false)
+                    if (distance < minDistance && HasObstacleOnAttackPath(LevelModel.Enemies[i].Position) == false)
                     {
                         index = i;
                         minDistance = distance;

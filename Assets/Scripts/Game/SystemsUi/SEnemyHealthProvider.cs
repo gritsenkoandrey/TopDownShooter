@@ -3,8 +3,8 @@ using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -13,15 +13,15 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SEnemyHealthProvider : SystemComponent<CEnemyHealthProvider>
     {
-        private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
         private readonly ICameraService _cameraService;
+        private readonly LevelModel _levelModel;
 
-        public SEnemyHealthProvider(IGameFactory gameFactory, IUIFactory uiFactory, ICameraService cameraService)
+        public SEnemyHealthProvider(IUIFactory uiFactory, ICameraService cameraService, LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
             _uiFactory = uiFactory;
             _cameraService = cameraService;
+            _levelModel = levelModel;
         }
 
         protected override void OnLateUpdate()
@@ -43,9 +43,9 @@ namespace CodeBase.Game.SystemsUi
 
         private async UniTaskVoid CreateEnemyHealths(CEnemyHealthProvider component)
         {
-            component.EnemyHealths = new List<CEnemyHealth>(_gameFactory.Enemies.Count);
+            component.EnemyHealths = new List<CEnemyHealth>(_levelModel.Enemies.Count);
             
-            foreach (IEnemy enemy in _gameFactory.Enemies)
+            foreach (IEnemy enemy in _levelModel.Enemies)
             {
                 CEnemyHealth enemyHealth = await _uiFactory.CreateEnemyHealth(enemy, component.transform);
                 

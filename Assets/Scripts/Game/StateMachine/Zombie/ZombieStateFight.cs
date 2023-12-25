@@ -1,4 +1,6 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Models;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,26 +8,31 @@ namespace CodeBase.Game.StateMachine.Zombie
 {
     public sealed class ZombieStateFight : ZombieState, IState
     {
-        private readonly float _minDistanceToTarget;
-        
+        private float _minDistanceToTarget;
         private bool _canAttack;
+        private ICharacter _target;
 
-        public ZombieStateFight(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        public ZombieStateFight(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
+            : base(stateMachine, zombie, levelModel)
         {
             _canAttack = true;
-            _minDistanceToTarget = Mathf.Pow(zombie.Stats.MinDistanceToTarget, 2);
         }
 
         void IState.Enter()
         {
+            _minDistanceToTarget = Mathf.Pow(Zombie.Stats.MinDistanceToTarget, 2);
+            _target = LevelModel.Character;
             Zombie.Animator.OnIdle.Execute();
         }
 
-        void IState.Exit() { }
+        void IState.Exit()
+        {
+            _target = null;
+        }
 
         void IState.Tick()
         {
-            if (DistanceToTarget() > _minDistanceToTarget && Zombie.Target.Value.Health.IsAlive)
+            if (DistanceToTarget() > _minDistanceToTarget && _target.Health.IsAlive)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
                 
@@ -48,6 +55,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             DOVirtual.DelayedCall(Zombie.Stats.AttackDelay, () => _canAttack = true);
         }
         
-        private float DistanceToTarget() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
     }
 }

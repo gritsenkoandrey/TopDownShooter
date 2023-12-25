@@ -3,6 +3,7 @@ using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Utils;
@@ -12,17 +13,17 @@ namespace CodeBase.Game.Systems
 {
     public sealed class SZombieDeath : SystemComponent<CZombie>
     {
-        private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IEffectFactory _effectFactory;
+        private readonly LevelModel _levelModel;
 
-        public SZombieDeath(IGameFactory gameFactory, IProgressService progressService, ISaveLoadService saveLoadService, IEffectFactory effectFactory)
+        public SZombieDeath(IProgressService progressService, ISaveLoadService saveLoadService, IEffectFactory effectFactory, LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _effectFactory = effectFactory;
+            _levelModel = levelModel;
         }
         protected override void OnEnableComponent(CZombie component)
         {
@@ -38,7 +39,7 @@ namespace CodeBase.Game.Systems
 
                         _progressService.PlayerProgress.Money.Value += component.Stats.Money;
                         _saveLoadService.SaveProgress();
-                        _gameFactory.Enemies.Remove(component);
+                        _levelModel.RemoveEnemy(component);
                         _effectFactory.CreateDeathFx(component.Position.AddY(1f));
                     }
                 })

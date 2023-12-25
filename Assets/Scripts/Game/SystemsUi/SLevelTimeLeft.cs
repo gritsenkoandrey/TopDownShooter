@@ -4,7 +4,7 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
-using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
 using UniRx;
@@ -13,20 +13,20 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
-        private readonly IGameFactory _gameFactory;
         private readonly IGameStateService _gameStateService;
-        
-        public SLevelTimeLeft(IGameFactory gameFactory, IGameStateService gameStateService)
+        private readonly LevelModel _levelModel;
+
+        public SLevelTimeLeft(IGameStateService gameStateService, LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
             _gameStateService = gameStateService;
+            _levelModel = levelModel;
         }
 
         protected override void OnEnableComponent(CLevelTimeLeft component)
         {
             base.OnEnableComponent(component);
 
-            int time = _gameFactory.Level.LevelTime;
+            int time = _levelModel.Level.LevelTime;
 
             Observable.EveryUpdate()
                 .ThrottleFirst(Time())
@@ -54,9 +54,9 @@ namespace CodeBase.Game.SystemsUi
         {
             _gameStateService.Enter<StateFail>();
             
-            _gameFactory.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
+            _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
                 
-            foreach (IEnemy enemy in _gameFactory.Enemies)
+            foreach (IEnemy enemy in _levelModel.Enemies)
             {
                 enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
             }

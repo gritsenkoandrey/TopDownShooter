@@ -1,6 +1,5 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.StaticData.Data;
-using UniRx;
 
 namespace CodeBase.Game.Interfaces
 {
@@ -8,6 +7,5 @@ namespace CodeBase.Game.Interfaces
     {
         public EnemyStats Stats { get; }
         public CStateMachine StateMachine { get; }
-        public ReactiveProperty<ICharacter> Target { get; }
     }
 }

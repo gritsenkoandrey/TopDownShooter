@@ -1,5 +1,4 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Game.Models;
+﻿using CodeBase.Game.Models;
 
 namespace CodeBase.Game.Interfaces
 {

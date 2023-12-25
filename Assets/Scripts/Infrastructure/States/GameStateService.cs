@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -33,7 +34,8 @@ namespace CodeBase.Infrastructure.States
             ICameraService cameraService, 
             IJoystickService joystickService, 
             ITextureArrayFactory textureArrayFactory, 
-            IObjectPoolService objectPoolService)
+            IObjectPoolService objectPoolService,
+            LevelModel levelModel)
         {
             _states = new Dictionary<Type, IExitState>
             {
@@ -55,12 +57,13 @@ namespace CodeBase.Infrastructure.States
                     assetService, 
                     loadingCurtainService,
                     cameraService,
-                    textureArrayFactory),
+                    textureArrayFactory,
+                    levelModel),
                 [typeof(StateLobby)] = new StateLobby(this),
                 [typeof(StateGame)] = new StateGame(this, 
                     joystickService, 
                     uiFactory,
-                    gameFactory),
+                    levelModel),
                 [typeof(StateFail)] = new StateFail(this, 
                     uiFactory),
                 [typeof(StateWin)] = new StateWin(this, 

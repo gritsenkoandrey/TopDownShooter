@@ -6,11 +6,11 @@ using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
@@ -21,29 +21,24 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IProgressService _progressService;
         private readonly ICameraService _cameraService;
         private readonly IAssetService _assetService;
-
-        private CLevel _level;
-        private CCharacter _character;
-        private readonly IReactiveCollection<IEnemy> _enemies = new ReactiveCollection<IEnemy>();
+        private readonly LevelModel _levelModel;
 
         public GameFactory(
             IStaticDataService staticDataService, 
             IProgressService progressService, 
             ICameraService cameraService, 
-            IAssetService assetService)
+            IAssetService assetService,
+            LevelModel levelModel)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
             _cameraService = cameraService;
             _assetService = assetService;
+            _levelModel = levelModel;
         }
 
         public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
         public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
-
-        ILevel IGameFactory.Level => _level;
-        ICharacter IGameFactory.Character => _character;
-        IReactiveCollection<IEnemy> IGameFactory.Enemies => _enemies;
 
         async UniTask<ILevel> IGameFactory.CreateLevel()
         {
@@ -51,40 +46,24 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            _level = new LevelBuilder()
+            CLevel level = new LevelBuilder()
                 .Reset()
                 .SetPrefab(prefab.GetComponent<CLevel>())
                 .SetLevelType(data.LevelType)
                 .SetLevelTime(data.LevelTime)
                 .Build();
             
-            await CreateUnits();
+            _levelModel.SetLevel(level);
             
-            SubscribeOnCreateEnemies();
+            await CreateUnits(level);
             
-            return _level;
+            return level;
         }
         
         void IGameFactory.CleanUp()
         {
-            if (_character != null)
-            {
-                Object.Destroy(_character.gameObject);
-
-                _character = null;
-            }
-            
-            if (_level != null)
-            {
-                Object.Destroy(_level.gameObject);
-
-                _level = null;
-            }
-            
             ProgressReaders.Clear();
             ProgressWriters.Clear();
-            
-            _enemies.Clear();
         }
 
         private void Registered(IProgress progress)
@@ -105,19 +84,19 @@ namespace CodeBase.Infrastructure.Factories.Game
             return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
         }
 
-        private async UniTask CreateUnits()
+        private async UniTask CreateUnits(CLevel level)
         {
-            foreach (SpawnPoint spawnPoint in _level.SpawnPoints)
+            foreach (SpawnPoint spawnPoint in level.SpawnPoints)
             {
                 switch (spawnPoint.UnitType)
                 {
                     case UnitType.None:
                         break;
                     case UnitType.Character:
-                        await CreateCharacter(spawnPoint.Position, _level.transform);
+                        await CreateCharacter(spawnPoint.Position, level.transform);
                         break;
                     case UnitType.Zombie:
-                        await CreateZombie(spawnPoint.ZombieType, spawnPoint.Position, _level.transform);
+                        await CreateZombie(spawnPoint.ZombieType, spawnPoint.Position, level.transform);
                         break;
                 }
             }
@@ -129,7 +108,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            _character = new CharacterBuilder()
+            CCharacter character = new CharacterBuilder()
                 .Reset()
                 .SetPrefab(prefab.GetComponent<CCharacter>())
                 .SetParent(parent)
@@ -138,11 +117,13 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetHealth(data.Health)
                 .SetSpeed(data.Speed)
                 .Build();
+            
+            _levelModel.SetCharacter(character);
 
-            Registered(_character.Health);
-            Registered(_character.Move);
+            Registered(character.Health);
+            Registered(character.Move);
 
-            return _character;
+            return character;
         }
 
         private async UniTask<CZombie> CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
@@ -161,22 +142,9 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetStats(data.Stats)
                 .Build();
             
-            _enemies.Add(zombie);
+            _levelModel.AddEnemy(zombie);
 
             return zombie;
-        }
-
-        private void SubscribeOnCreateEnemies()
-        {
-            foreach (IEnemy enemy in _enemies)
-            {
-                enemy.Target.SetValueAndForceNotify(_character);
-            }
-
-            _enemies
-                .ObserveAdd()
-                .Subscribe(enemy => enemy.Value.Target.SetValueAndForceNotify(_character))
-                .AddTo(_level.LifetimeDisposable);
         }
     }
 }

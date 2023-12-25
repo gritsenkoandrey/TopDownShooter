@@ -23,7 +23,6 @@ namespace CodeBase.Game.Components
         public CStateMachine StateMachine => _stateMachine;
         public EnemyStats Stats { get; set; }
         public Vector3 Position => transform.position;
-        public ReactiveProperty<ICharacter> Target { get; } = new();
         public int Damage { get; set; }
         public ReactiveCommand Attack { get; } = new();
         public ReactiveCommand OnCheckDamage { get; } = new();

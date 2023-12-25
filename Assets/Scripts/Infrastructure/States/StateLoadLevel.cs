@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace CodeBase.Infrastructure.States
         private readonly ILoadingCurtainService _curtain;
         private readonly ICameraService _cameraService;
         private readonly ITextureArrayFactory _textureArrayFactory;
+        private readonly LevelModel _levelModel;
 
         public StateLoadLevel(
             IGameStateService stateService, 
@@ -32,7 +34,8 @@ namespace CodeBase.Infrastructure.States
             IAssetService assetService, 
             ILoadingCurtainService curtain, 
             ICameraService cameraService,
-            ITextureArrayFactory textureArrayFactory)
+            ITextureArrayFactory textureArrayFactory,
+            LevelModel levelModel)
         {
             _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
@@ -43,6 +46,7 @@ namespace CodeBase.Infrastructure.States
             _curtain = curtain;
             _cameraService = cameraService;
             _textureArrayFactory = textureArrayFactory;
+            _levelModel = levelModel;
         }
 
         void IEnterLoadState<string>.Enter(string sceneName)
@@ -75,6 +79,7 @@ namespace CodeBase.Infrastructure.States
             _cameraService.CleanUp();
             _textureArrayFactory.CleanUp();
             _assetService.CleanUp();
+            _levelModel.CleanUp();
         }
 
         private async UniTaskVoid CreateLevel()

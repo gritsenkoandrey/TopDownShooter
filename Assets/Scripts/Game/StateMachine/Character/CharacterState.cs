@@ -1,7 +1,7 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 
 namespace CodeBase.Game.StateMachine.Character
 {
@@ -9,18 +9,18 @@ namespace CodeBase.Game.StateMachine.Character
     {
         protected readonly ICameraService CameraService;
         protected readonly IJoystickService JoystickService;
-        protected readonly IGameFactory GameFactory;
         protected readonly IStateMachine StateMachine;
         protected readonly ICharacter Character;
+        protected readonly LevelModel LevelModel;
 
         protected CharacterState(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, IGameFactory gameFactory)
+            IJoystickService joystickService, LevelModel levelModel)
         {
             StateMachine = stateMachine;
             Character = character;
             CameraService = cameraService;
             JoystickService = joystickService;
-            GameFactory = gameFactory;
+            LevelModel = levelModel;
         }
     }
 }

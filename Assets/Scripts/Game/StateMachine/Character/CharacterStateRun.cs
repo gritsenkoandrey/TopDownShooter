@@ -1,7 +1,7 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
 
@@ -12,8 +12,8 @@ namespace CodeBase.Game.StateMachine.Character
         private float _angle;
 
         public CharacterStateRun(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, IGameFactory gameFactory) 
-            : base(stateMachine, character, cameraService, joystickService, gameFactory)
+            IJoystickService joystickService, LevelModel levelModel) 
+            : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
         }
 

@@ -2,19 +2,19 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SBulletProvider : SystemComponent<CBullet>
     {
-        private readonly IGameFactory _gameFactory;
         private readonly IEffectFactory _effectFactory;
+        private readonly LevelModel _levelModel;
 
-        public SBulletProvider(IGameFactory gameFactory, IEffectFactory effectFactory)
+        public SBulletProvider(IEffectFactory effectFactory, LevelModel levelModel)
         {
-            _gameFactory = gameFactory;
             _effectFactory = effectFactory;
+            _levelModel = levelModel;
         }
 
         protected override void OnUpdate()
@@ -39,13 +39,13 @@ namespace CodeBase.Game.Systems
 
         private bool CheckCollision(IBullet bullet)
         {
-            for (int i = 0; i < _gameFactory.Enemies.Count; i++)
+            for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
-                bool isCollision = (bullet.Position - _gameFactory.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
+                bool isCollision = (bullet.Position - _levelModel.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
 
                 if (isCollision)
                 {
-                    Collision(bullet, _gameFactory.Enemies[i]);
+                    Collision(bullet, _levelModel.Enemies[i]);
                         
                     return true;
                 }

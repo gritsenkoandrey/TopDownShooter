@@ -1,4 +1,6 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Models;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,18 +9,20 @@ namespace CodeBase.Game.StateMachine.Zombie
     public sealed class ZombieStatePatrol : ZombieState, IState
     {
         private readonly Vector3 _patrolPosition;
-        private readonly float _aggroRadius;
-        
+        private float _aggroRadius;
+        private ICharacter _target;
         private int _startHealth;
 
-        public ZombieStatePatrol(IStateMachine stateMachine, CZombie zombie) : base(stateMachine, zombie)
+        public ZombieStatePatrol(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
+            : base(stateMachine, zombie, levelModel)
         {
-            _patrolPosition = Zombie.Position;
-            _aggroRadius = Mathf.Pow(zombie.Stats.AggroRadius, 2);
+            _patrolPosition = zombie.Position;
         }
         
         void IState.Enter()
         {
+            _aggroRadius = Mathf.Pow(Zombie.Stats.AggroRadius, 2);
+            _target = LevelModel.Character;
             _startHealth = Zombie.Health.CurrentHealth.Value;
             Zombie.Agent.speed = Zombie.Stats.WalkSpeed;
             Zombie.Animator.OnRun.Execute(0f);
@@ -27,6 +31,7 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IState.Exit()
         {
+            _target = null;
             Zombie.Agent.ResetPath();
         }
 
@@ -72,7 +77,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             return Vector3.zero;
         }
 
-        private float DistanceToTarget() => (Zombie.Target.Value.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }

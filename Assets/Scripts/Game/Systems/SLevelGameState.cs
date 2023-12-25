@@ -4,6 +4,7 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.States;
 using UniRx;
 
@@ -13,11 +14,13 @@ namespace CodeBase.Game.Systems
     {
         private readonly IGameStateService _gameStateService;
         private readonly IGameFactory _gameFactory;
+        private readonly LevelModel _levelModel;
 
-        public SLevelGameState(IGameStateService gameStateService, IGameFactory gameFactory)
+        public SLevelGameState(IGameStateService gameStateService, IGameFactory gameFactory, LevelModel levelModel)
         {
             _gameStateService = gameStateService;
             _gameFactory = gameFactory;
+            _levelModel = levelModel;
         }
 
         protected override void OnEnableComponent(CCharacter component)
@@ -30,7 +33,7 @@ namespace CodeBase.Game.Systems
 
         private void SubscribeOnWinGame(CCharacter component)
         {
-            _gameFactory.Enemies
+            _levelModel.Enemies
                 .ObserveRemove()
                 .Subscribe(_ => Win(component))
                 .AddTo(component.LifetimeDisposable);
@@ -46,7 +49,7 @@ namespace CodeBase.Game.Systems
 
         private void Win(CCharacter component)
         {
-            if (_gameFactory.Enemies.Count == 0)
+            if (_levelModel.Enemies.Count == 0)
             {
                 component.StateMachine.StateMachine.Enter<CharacterStateNone>();
                 _gameStateService.Enter<StateWin>();
@@ -60,7 +63,7 @@ namespace CodeBase.Game.Systems
                 component.StateMachine.StateMachine.Enter<CharacterStateDeath>();
                 _gameStateService.Enter<StateFail>();
 
-                foreach (IEnemy enemy in _gameFactory.Enemies)
+                foreach (IEnemy enemy in _levelModel.Enemies)
                 {
                     enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
                 }

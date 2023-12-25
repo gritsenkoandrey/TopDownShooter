@@ -37,6 +37,7 @@ namespace CodeBase.LifeTime
         private readonly IEffectFactory _effectFactory;
 
         private readonly InventoryModel _inventoryModel;
+        private readonly LevelModel _levelModel;
 
         public BootstrapEntryPoint(
             IGameStateService gameStateService, 
@@ -51,7 +52,8 @@ namespace CodeBase.LifeTime
             IGuiService guiService, 
             IWeaponFactory weaponFactory,
             IEffectFactory effectFactory,
-            InventoryModel inventoryModel)
+            InventoryModel inventoryModel,
+            LevelModel levelModel)
         {
             _gameStateService = gameStateService;
             _uiFactory = uiFactory;
@@ -66,6 +68,7 @@ namespace CodeBase.LifeTime
             _weaponFactory = weaponFactory;
             _effectFactory = effectFactory;
             _inventoryModel = inventoryModel;
+            _levelModel = levelModel;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -87,27 +90,27 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterInitStateMachine(_cameraService, _joystickService, _gameFactory),
-                new SZombieInitStateMachine(),
+                new SCharacterInitStateMachine(_cameraService, _joystickService, _levelModel),
+                new SZombieInitStateMachine(_levelModel),
                 new SZombieAnimator(),
-                new SZombieMeleeAttack(),
-                new SZombieDeath(_gameFactory, _progressService, _saveLoadService, _effectFactory),
+                new SZombieMeleeAttack(_levelModel),
+                new SZombieDeath(_progressService, _saveLoadService, _effectFactory, _levelModel),
                 new SRadarDraw(),
                 new SZombieSelectSkin(),
                 new SUpgradeShop(_uiFactory),
                 new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),
-                new SLevelGoal(_gameFactory),
+                new SLevelGoal(_levelModel),
                 new SMoneyUpdate(_progressService),
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
-                new SDamageView(_gameFactory, _cameraService),
-                new SEnemyHealthProvider(_gameFactory, _uiFactory, _cameraService),
+                new SDamageView(_cameraService, _levelModel),
+                new SEnemyHealthProvider(_uiFactory, _cameraService, _levelModel),
                 new SEnemyHealth(),
-                new SCharacterHealth(_gameFactory),
-                new SBulletProvider(_gameFactory, _effectFactory),
-                new SLevelTimeLeft(_gameFactory, _gameStateService),
-                new SLevelGameState(_gameStateService, _gameFactory),
+                new SCharacterHealth(_levelModel),
+                new SBulletProvider(_effectFactory, _levelModel),
+                new SLevelTimeLeft(_gameStateService, _levelModel),
+                new SLevelGameState(_gameStateService, _gameFactory, _levelModel),
                 new SStateMachineUpdate(),
                 new SCharacterAnimation(),
                 new SCharacterPreviewRotation(),
