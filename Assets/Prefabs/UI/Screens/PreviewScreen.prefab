@@ -144,7 +144,7 @@ MonoBehaviour:
   _canvasGroup: {fileID: 1544038682976013172}
   _safeArea: {fileID: 5490875462719566425}
   _button: {fileID: 1544038682559636176}
-  _cCharacterPreviewMediator: {fileID: 6320292816390752960}
+  _characterPreviewMediator: {fileID: 6320292816390752960}
 --- !u!1001 &719068594293809593
 PrefabInstance:
   m_ObjectHideFlags: 0

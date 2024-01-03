@@ -13,7 +13,7 @@ namespace CodeBase.UI.Screens
     public sealed class PreviewScreen : BaseScreen
     {
         [SerializeField] private Button _button;
-        [SerializeField] private CCharacterPreviewMediator _cCharacterPreviewMediator;
+        [SerializeField] private CCharacterPreviewMediator _characterPreviewMediator;
 
         protected override void OnEnable()
         {
@@ -35,11 +35,11 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid StartGame()
         {
-            _cCharacterPreviewMediator.SelectCharacter.Execute();
+            _characterPreviewMediator.SelectCharacter.Execute();
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
-            await UniTask.WaitUntil(() => _cCharacterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation);
+            await UniTask.WaitUntil(() => _characterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation);
             
             GameStateService.Enter<StateLoadLevel, string>(SceneName.Main);
         }
