@@ -2,7 +2,6 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.SaveLoad;
@@ -31,19 +30,20 @@ namespace CodeBase.Game.Systems
             
             component.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
+                .Where(_ => IsDeath(component))
+                .First()
                 .Subscribe(_ =>
                 {
-                    if (!component.Health.IsAlive)
-                    {
-                        component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
+                    component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
 
-                        _progressService.PlayerProgress.Money.Value += component.Stats.Money;
-                        _saveLoadService.SaveProgress();
-                        _levelModel.RemoveEnemy(component);
-                        _effectFactory.CreateDeathFx(component.Position.AddY(1f));
-                    }
+                    _progressService.PlayerProgress.Money.Value += component.Stats.Money;
+                    _saveLoadService.SaveProgress();
+                    _levelModel.RemoveEnemy(component);
+                    _effectFactory.CreateDeathFx(component.Position.AddY(1f));
                 })
                 .AddTo(component.LifetimeDisposable);
         }
+
+        private bool IsDeath(CZombie component) => !component.Health.IsAlive;
     }
 }

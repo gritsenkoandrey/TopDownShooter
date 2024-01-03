@@ -2,7 +2,7 @@
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface ITarget : IPosition
+    public interface ITarget
     {
         public Health Health { get; }
     }
