@@ -116,7 +116,7 @@ namespace CodeBase.LifeTime
                 new SCharacterBodyMediator(_inventoryModel),
                 new SCharacterPreviewMediator(_inventoryModel),
                 new SCharacterAmmunitionView(_inventoryModel),
-                new SCharacterSpawner(_gameFactory, _progressService, _uiFactory, _cameraService, _joystickService, _levelModel),
+                new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _uiFactory, _progressService, _levelModel),
                 new SZombieSpawner(_gameFactory, _levelModel),
             };
         }

@@ -53,7 +53,6 @@ namespace CodeBase.Infrastructure.States
                     sceneLoaderService, 
                     gameFactory, 
                     uiFactory, 
-                    progressService, 
                     assetService, 
                     loadingCurtainService,
                     cameraService,

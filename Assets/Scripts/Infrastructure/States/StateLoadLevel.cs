@@ -6,9 +6,7 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
-using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
@@ -19,7 +17,6 @@ namespace CodeBase.Infrastructure.States
         private readonly ISceneLoaderService _sceneLoaderService;
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
-        private readonly IProgressService _progressService;
         private readonly IAssetService _assetService;
         private readonly ILoadingCurtainService _curtain;
         private readonly ICameraService _cameraService;
@@ -31,7 +28,6 @@ namespace CodeBase.Infrastructure.States
             ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, 
             IUIFactory uiFactory, 
-            IProgressService progressService, 
             IAssetService assetService, 
             ILoadingCurtainService curtain, 
             ICameraService cameraService,
@@ -42,7 +38,6 @@ namespace CodeBase.Infrastructure.States
             _sceneLoaderService = sceneLoaderService;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
-            _progressService = progressService;
             _assetService = assetService;
             _curtain = curtain;
             _cameraService = cameraService;
@@ -69,8 +64,6 @@ namespace CodeBase.Infrastructure.States
             CreateTextureArray();
             CreateScreen();
             CreateLevel().Forget();
-
-            _stateService.Enter<StateLobby>();
         }
 
         private void CleanUpWorld()
@@ -87,7 +80,7 @@ namespace CodeBase.Infrastructure.States
         {
             await _gameFactory.CreateLevel();
             
-            ReadProgress();
+            _stateService.Enter<StateLobby>();
         }
 
         private void CreateScreen()
@@ -99,17 +92,6 @@ namespace CodeBase.Infrastructure.States
         {
             _textureArrayFactory.CreateTextureArray();
             _textureArrayFactory.GenerateRandomTextureIndex();
-        }
-
-        private void ReadProgress()
-        {
-            _uiFactory.ProgressReaders.Foreach(ReadProgress);
-            _gameFactory.ProgressReaders.Foreach(ReadProgress);
-        }
-
-        private void ReadProgress(IProgressReader progress)
-        {
-            progress.Read(_progressService.PlayerProgress);
         }
     }
 }

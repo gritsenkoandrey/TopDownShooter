@@ -17,20 +17,20 @@ namespace CodeBase.Game.Systems
     public sealed class SCharacterSpawner : SystemComponent<CCharacterSpawner>
     {
         private readonly IGameFactory _gameFactory;
-        private readonly IProgressService _progressService;
-        private readonly IUIFactory _uiFactory;
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
+        private readonly IUIFactory _uiFactory;
+        private readonly IProgressService _progressService;
         private readonly LevelModel _levelModel;
 
-        public SCharacterSpawner(IGameFactory gameFactory, IProgressService progressService, IUIFactory uiFactory, 
-            ICameraService cameraService, IJoystickService joystickService, LevelModel levelModel)
+        public SCharacterSpawner(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
+            IUIFactory uiFactory, IProgressService progressService, LevelModel levelModel)
         {
             _gameFactory = gameFactory;
-            _progressService = progressService;
-            _uiFactory = uiFactory;
             _cameraService = cameraService;
             _joystickService = joystickService;
+            _uiFactory = uiFactory;
+            _progressService = progressService;
             _levelModel = levelModel;
         }
         
@@ -49,6 +49,15 @@ namespace CodeBase.Game.Systems
             CreateStateMachine(character);
         }
 
+        private void CreateStateMachine(ICharacter character)
+        {
+            character.StateMachine.SetStateMachine(new CharacterStateMachine(character, _cameraService, _joystickService, _levelModel));
+
+            character.StateMachine.UpdateStateMachine
+                .Subscribe(_ => character.StateMachine.StateMachine.Tick())
+                .AddTo(character.Entity.LifetimeDisposable);
+        }
+        
         private void ReadProgress()
         {
             _uiFactory.ProgressReaders.Foreach(ReadProgress);
@@ -58,15 +67,6 @@ namespace CodeBase.Game.Systems
         private void ReadProgress(IProgressReader progress)
         {
             progress.Read(_progressService.PlayerProgress);
-        }
-
-        private void CreateStateMachine(ICharacter character)
-        {
-            character.StateMachine.SetStateMachine(new CharacterStateMachine(character, _cameraService, _joystickService, _levelModel));
-
-            character.StateMachine.UpdateStateMachine
-                .Subscribe(_ => character.StateMachine.StateMachine.Tick())
-                .AddTo(character.Entity.LifetimeDisposable);
         }
     }
 }

@@ -4,13 +4,17 @@
     {
         private readonly IGameStateService _stateService;
 
-        public StateLobby(
-            IGameStateService stateService)
+        public StateLobby(IGameStateService stateService)
         {
             _stateService = stateService;
         }
 
-        void IEnterState.Enter() { }
-        void IExitState.Exit() { }
+        void IEnterState.Enter()
+        {
+        }
+
+        void IExitState.Exit()
+        {
+        }
     }
 }
