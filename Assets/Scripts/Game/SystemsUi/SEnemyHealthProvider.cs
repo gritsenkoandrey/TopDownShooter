@@ -27,11 +27,8 @@ namespace CodeBase.Game.SystemsUi
         protected override void OnLateUpdate()
         {
             base.OnLateUpdate();
-
-            foreach (CEnemyHealthProvider provider in Entities)
-            {
-                UpdatePosition(provider);
-            }
+            
+            Entities.Foreach(UpdatePosition);
         }
 
         protected override void OnEnableComponent(CEnemyHealthProvider component)

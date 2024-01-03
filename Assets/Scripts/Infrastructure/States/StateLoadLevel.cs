@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
+using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
@@ -102,15 +103,13 @@ namespace CodeBase.Infrastructure.States
 
         private void ReadProgress()
         {
-            foreach (IProgressReader progress in _uiFactory.ProgressReaders)
-            {
-                progress.Read(_progressService.PlayerProgress);
-            }
+            _uiFactory.ProgressReaders.Foreach(ReadProgress);
+            _gameFactory.ProgressReaders.Foreach(ReadProgress);
+        }
 
-            foreach (IProgressReader progress in _gameFactory.ProgressReaders)
-            {
-                progress.Read(_progressService.PlayerProgress);
-            }
+        private void ReadProgress(IProgressReader progress)
+        {
+            progress.Read(_progressService.PlayerProgress);
         }
     }
 }

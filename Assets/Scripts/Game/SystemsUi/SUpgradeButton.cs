@@ -47,17 +47,12 @@ namespace CodeBase.Game.SystemsUi
         
         private void UpdateProgress()
         {
-            foreach (IProgressReader progress in _uiFactory.ProgressReaders)
-            {
-                progress.Read(_progressService.PlayerProgress);
-            }
-
-            foreach (IProgressReader progress in _gameFactory.ProgressReaders)
-            {
-                progress.Read(_progressService.PlayerProgress);
-            }
+            _uiFactory.ProgressReaders.Foreach(UpdateProgress);
+            _gameFactory.ProgressReaders.Foreach(UpdateProgress);
         }
-        
+
+        private void UpdateProgress(IProgressReader progress) => progress.Read(_progressService.PlayerProgress);
+
         private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
     }
 }

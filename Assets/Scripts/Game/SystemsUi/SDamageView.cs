@@ -3,6 +3,7 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -23,23 +24,8 @@ namespace CodeBase.Game.SystemsUi
         protected override void OnEnableComponent(CDamageView component)
         {
             base.OnEnableComponent(component);
-
-            foreach (IEnemy enemy in _levelModel.Enemies)
-            {
-                enemy.Health.CurrentHealth
-                    .Pairwise()
-                    .Where(health => health.Current < health.Previous)
-                    .Subscribe(health =>
-                    {
-                        Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
-                        
-                        component.Text.text = (health.Previous - health.Current).ToString();
-                        component.transform.position = screenPoint;
-                        
-                        StartAnimation(component);
-                    })
-                    .AddTo(component.LifetimeDisposable);
-            }
+            
+            _levelModel.Enemies.Foreach(enemy => SubscribeOnEnemyDamage(component, enemy));
         }
 
         protected override void OnDisableComponent(CDamageView component)
@@ -47,6 +33,23 @@ namespace CodeBase.Game.SystemsUi
             base.OnDisableComponent(component);
             
             component.Sequence?.Kill();
+        }
+
+        private void SubscribeOnEnemyDamage(CDamageView component, IEnemy enemy)
+        {
+            enemy.Health.CurrentHealth
+                .Pairwise()
+                .Where(health => health.Current < health.Previous)
+                .Subscribe(health =>
+                {
+                    Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
+
+                    component.Text.text = (health.Previous - health.Current).ToString();
+                    component.transform.position = screenPoint;
+
+                    StartAnimation(component);
+                })
+                .AddTo(component.LifetimeDisposable);
         }
 
         private void StartAnimation(CDamageView component)

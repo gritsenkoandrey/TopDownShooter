@@ -90,8 +90,6 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SCharacterInitStateMachine(_cameraService, _joystickService, _levelModel),
-                new SZombieInitStateMachine(_levelModel),
                 new SZombieAnimator(),
                 new SZombieMeleeAttack(_levelModel),
                 new SZombieDeath(_progressService, _saveLoadService, _effectFactory, _levelModel),
@@ -110,7 +108,7 @@ namespace CodeBase.LifeTime
                 new SCharacterHealth(_levelModel),
                 new SBulletProvider(_effectFactory, _levelModel),
                 new SLevelTimeLeft(_gameStateService, _levelModel),
-                new SLevelGameState(_gameStateService, _gameFactory, _levelModel),
+                new SLevelGameState(_gameStateService, _levelModel),
                 new SStateMachineUpdate(),
                 new SCharacterAnimation(),
                 new SCharacterPreviewRotation(),
@@ -118,6 +116,8 @@ namespace CodeBase.LifeTime
                 new SCharacterBodyMediator(_inventoryModel),
                 new SCharacterPreviewMediator(_inventoryModel),
                 new SCharacterAmmunitionView(_inventoryModel),
+                new SCharacterSpawner(_gameFactory, _progressService, _uiFactory, _cameraService, _joystickService, _levelModel),
+                new SZombieSpawner(_gameFactory, _levelModel),
             };
         }
 

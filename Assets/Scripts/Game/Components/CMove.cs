@@ -14,9 +14,6 @@ namespace CodeBase.Game.Components
         public float Speed { get; private set; }
         public bool IsGrounded => _characterController.isGrounded;
         
-        void IProgressReader.Read(PlayerProgress progress)
-        {
-            Speed = progress.Stats.Speed + BaseSpeed;
-        }
+        void IProgressReader.Read(PlayerProgress progress) => Speed = progress.Stats.Speed + BaseSpeed;
     }
 }

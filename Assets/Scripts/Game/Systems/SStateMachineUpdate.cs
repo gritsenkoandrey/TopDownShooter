@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Utils;
 
 namespace CodeBase.Game.Systems
 {
@@ -8,11 +9,13 @@ namespace CodeBase.Game.Systems
         protected override void OnUpdate()
         {
             base.OnUpdate();
+            
+            Entities.Foreach(UpdateStateMachine);
+        }
 
-            foreach (CStateMachine stateMachine in Entities)
-            {
-                stateMachine.UpdateStateMachine.Execute();
-            }
+        private void UpdateStateMachine(CStateMachine stateMachine)
+        {
+            stateMachine.UpdateStateMachine.Execute();
         }
     }
 }

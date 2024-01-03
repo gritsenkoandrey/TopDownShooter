@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Game.Behaviours.Gizmos;
 using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
@@ -55,54 +54,10 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             _levelModel.SetLevel(level);
             
-            await CreateUnits(level);
-            
             return level;
         }
-        
-        void IGameFactory.CleanUp()
-        {
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
-        }
 
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-        }
-
-        private LevelType GetLevelType()
-        {
-            return _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
-        }
-
-        private async UniTask CreateUnits(CLevel level)
-        {
-            foreach (SpawnPoint spawnPoint in level.SpawnPoints)
-            {
-                switch (spawnPoint.UnitType)
-                {
-                    case UnitType.None:
-                        break;
-                    case UnitType.Character:
-                        await CreateCharacter(spawnPoint.Position, level.transform);
-                        break;
-                    case UnitType.Zombie:
-                        await CreateZombie(spawnPoint.ZombieType, spawnPoint.Position, level.transform);
-                        break;
-                }
-            }
-        }
-
-        private async UniTask<ICharacter> CreateCharacter(Vector3 position, Transform parent)
+        async UniTask<ICharacter> IGameFactory.CreateCharacter(Vector3 position, Transform parent)
         {
             CharacterData data = _staticDataService.CharacterData();
             
@@ -126,7 +81,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             return character;
         }
 
-        private async UniTask<CZombie> CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
+        async UniTask<CZombie> IGameFactory.CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
         {
             ZombieData data = _staticDataService.ZombieData(zombieType);
             
@@ -146,5 +101,26 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             return zombie;
         }
+
+        void IGameFactory.CleanUp()
+        {
+            ProgressReaders.Clear();
+            ProgressWriters.Clear();
+        }
+
+        private void Registered(IProgress progress)
+        {
+            if (progress is IProgressWriter writer)
+            {
+                ProgressWriters.Add(writer);
+            }
+
+            if (progress is IProgressReader reader)
+            {
+                ProgressReaders.Add(reader);
+            }
+        }
+
+        private LevelType GetLevelType() => _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
     }
 }

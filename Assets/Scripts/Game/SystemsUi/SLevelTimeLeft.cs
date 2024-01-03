@@ -1,7 +1,6 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Models;
@@ -55,11 +54,7 @@ namespace CodeBase.Game.SystemsUi
             _gameStateService.Enter<StateFail>();
             
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
-                
-            foreach (IEnemy enemy in _levelModel.Enemies)
-            {
-                enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
-            }
+            _levelModel.Enemies.Foreach(enemy => enemy.StateMachine.StateMachine.Enter<ZombieStateNone>());
         }
     }
 }

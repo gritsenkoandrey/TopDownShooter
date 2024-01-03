@@ -3,9 +3,9 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
-using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.States;
+using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -13,61 +13,62 @@ namespace CodeBase.Game.Systems
     public sealed class SLevelGameState : SystemComponent<CCharacter>
     {
         private readonly IGameStateService _gameStateService;
-        private readonly IGameFactory _gameFactory;
         private readonly LevelModel _levelModel;
 
-        public SLevelGameState(IGameStateService gameStateService, IGameFactory gameFactory, LevelModel levelModel)
+        public SLevelGameState(IGameStateService gameStateService, LevelModel levelModel)
         {
             _gameStateService = gameStateService;
-            _gameFactory = gameFactory;
             _levelModel = levelModel;
         }
 
-        protected override void OnEnableComponent(CCharacter component)
+        protected override void OnEnableComponent(CCharacter character)
         {
-            base.OnEnableComponent(component);
+            base.OnEnableComponent(character);
             
-            SubscribeOnWinGame(component);
-            SubscribeOnFailGame(component);
+            SubscribeOnWinGame(character);
+            SubscribeOnFailGame(character);
         }
 
-        private void SubscribeOnWinGame(CCharacter component)
+        private void SubscribeOnWinGame(CCharacter character)
         {
             _levelModel.Enemies
                 .ObserveRemove()
-                .Subscribe(_ => Win(component))
-                .AddTo(component.LifetimeDisposable);
+                .Where(_ => AllEnemyIsDeath())
+                .First()
+                .Subscribe(_ => Win(character))
+                .AddTo(character.LifetimeDisposable);
         }
 
-        private void SubscribeOnFailGame(CCharacter component)
+        private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
+
+        private void Win(CCharacter character)
         {
-            component.Health.CurrentHealth
+            _gameStateService.Enter<StateWin>();
+            
+            character.StateMachine.StateMachine.Enter<CharacterStateNone>();
+        }
+
+        private void SubscribeOnFailGame(CCharacter character)
+        {
+            character.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
-                .Subscribe(_ => Lose(component))
-                .AddTo(component.LifetimeDisposable);
+                .Where(_ => CharacterIsDeath(character))
+                .First()
+                .Subscribe(_ => Lose(character))
+                .AddTo(character.LifetimeDisposable);
         }
 
-        private void Win(CCharacter component)
+        private bool CharacterIsDeath(CCharacter character) => !character.Health.IsAlive;
+
+        private void Lose(CCharacter character)
         {
-            if (_levelModel.Enemies.Count == 0)
-            {
-                component.StateMachine.StateMachine.Enter<CharacterStateNone>();
-                _gameStateService.Enter<StateWin>();
-            }
+            _gameStateService.Enter<StateFail>();
+            
+            character.StateMachine.StateMachine.Enter<CharacterStateDeath>();
+            
+            _levelModel.Enemies.Foreach(SetEnemyStateNone);
         }
 
-        private void Lose(CCharacter component)
-        {
-            if (!component.Health.IsAlive)
-            {
-                component.StateMachine.StateMachine.Enter<CharacterStateDeath>();
-                _gameStateService.Enter<StateFail>();
-
-                foreach (IEnemy enemy in _levelModel.Enemies)
-                {
-                    enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
-                }
-            }
-        }
+        private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
     }
 }

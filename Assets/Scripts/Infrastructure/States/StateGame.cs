@@ -1,11 +1,10 @@
-﻿using CodeBase.Game.Interfaces;
-using CodeBase.Game.StateMachine.Character;
+﻿using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
-using UnityEngine;
+using CodeBase.Utils;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -44,11 +43,7 @@ namespace CodeBase.Infrastructure.States
         private void StartUnitStateMachine()
         {
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateIdle>();
-
-            foreach (IEnemy enemy in _levelModel.Enemies)
-            {
-                enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>();
-            }
+            _levelModel.Enemies.Foreach(enemy => enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>());
         }
     }
 }
