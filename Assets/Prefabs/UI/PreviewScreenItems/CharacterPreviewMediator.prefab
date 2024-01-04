@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 3115086900434937838}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1024, y: 1024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9202299533388657669
 CanvasRenderer:
@@ -249,6 +249,7 @@ MonoBehaviour:
   _characterPreviewAnimator: {fileID: 4034025963164893828}
   _characterPreviewButtons: {fileID: 6028602909817093002}
   _characterPreviewModel: {fileID: 22156696823062258}
+  _previewCamera: {fileID: 9222482512728990842}
 --- !u!1 &2578642931549970117
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UniRx;
@@ -10,10 +11,12 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SCharacterPreviewMediator : SystemComponent<CCharacterPreviewMediator>
     {
         private readonly InventoryModel _inventoryModel;
-        
-        public SCharacterPreviewMediator(InventoryModel inventoryModel)
+        private readonly IGuiService _guiService;
+
+        public SCharacterPreviewMediator(InventoryModel inventoryModel, IGuiService guiService)
         {
             _inventoryModel = inventoryModel;
+            _guiService = guiService;
         }
         
         protected override void OnEnableComponent(CCharacterPreviewMediator component)
@@ -23,6 +26,7 @@ namespace CodeBase.Game.SystemsUi
             SubscribeOnChangeEquipment(component);
             SubscribeOnSelectCharacter(component);
             SubscribeOnClickButtons(component);
+            SetOrthographicSizeOnPreviewCamera(component);
         }
 
         protected override void OnDisableComponent(CCharacterPreviewMediator component)
@@ -98,7 +102,7 @@ namespace CodeBase.Game.SystemsUi
                 })
                 .AddTo(component.ButtonDisposable);
         }
-        
+
         private void TurnUp(CCharacterPreviewModel component)
         {
             int index = _inventoryModel.WeaponIndex.Value;
@@ -112,6 +116,7 @@ namespace CodeBase.Game.SystemsUi
             
             _inventoryModel.WeaponIndex.Value = index;
         }
+
         private void TurnDown(CCharacterPreviewModel component)
         {
             int index = _inventoryModel.WeaponIndex.Value;
@@ -125,6 +130,7 @@ namespace CodeBase.Game.SystemsUi
             
             _inventoryModel.WeaponIndex.Value = index;
         }
+
         private void TurnRight(CCharacterPreviewModel component)
         {
             int index = _inventoryModel.EquipmentIndex.Value;
@@ -138,6 +144,7 @@ namespace CodeBase.Game.SystemsUi
             
             _inventoryModel.EquipmentIndex.Value = index;
         }
+
         private void TurnLeft(CCharacterPreviewModel component)
         {
             int index = _inventoryModel.EquipmentIndex.Value;
@@ -151,7 +158,7 @@ namespace CodeBase.Game.SystemsUi
 
             _inventoryModel.EquipmentIndex.Value = index;
         }
-        
+
         private void SetWeapon(CCharacterPreviewModel component, int index)
         {
             for (int i = 0; i < component.Weapons.Length; i++)
@@ -161,6 +168,7 @@ namespace CodeBase.Game.SystemsUi
             
             _inventoryModel.SelectedWeapon.Value = component.Weapons[index].WeaponType;
         }
+
         private void SetEquipment(CCharacterPreviewModel component, int index)
         {
             for (int i = 0; i < component.Heads.Length; i++)
@@ -173,10 +181,16 @@ namespace CodeBase.Game.SystemsUi
                 component.Bodies[i].SetActive(i == index);
             }
         }
+
         private void SetAnimatorController(CCharacterPreviewMediator component, int index)
         {
             component.CharacterPreviewAnimator.Animator.runtimeAnimatorController = 
                 component.CharacterPreviewModel.Weapons[index].Weapon.AnimatorController;
+        }
+
+        private void SetOrthographicSizeOnPreviewCamera(CCharacterPreviewMediator component)
+        {
+            component.PreviewCamera.orthographicSize *= _guiService.StaticCanvas.Canvas.scaleFactor;
         }
     }
 }

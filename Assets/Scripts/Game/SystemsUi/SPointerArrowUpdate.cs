@@ -1,0 +1,104 @@
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.ComponentsUi;
+using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.GUI;
+using CodeBase.Utils;
+using UnityEngine;
+
+namespace CodeBase.Game.SystemsUi
+{
+    public sealed class SPointerArrowUpdate : SystemComponent<CPointerArrow>
+    {
+        private readonly ICameraService _cameraService;
+        private readonly IGuiService _guiService;
+
+        private float _scale;
+
+        public SPointerArrowUpdate(ICameraService cameraService, IGuiService guiService)
+        {
+            _cameraService = cameraService;
+            _guiService = guiService;
+        }
+
+        protected override void OnEnableSystem()
+        {
+            base.OnEnableSystem();
+
+            _scale = _guiService.StaticCanvas.Canvas.scaleFactor;
+        }
+
+        protected override void OnLateUpdate()
+        {
+            base.OnLateUpdate();
+            
+            Entities.Foreach(UpdateArrow);
+        }
+        
+        private void UpdateArrow(CPointerArrow pointerArrow)
+        {
+            if (!pointerArrow.Target.Health.IsAlive)
+            {
+                pointerArrow.CanvasGroup.alpha = 0f;
+                return;
+            }
+            
+            Vector3 indicatorPosition = _cameraService.Camera.WorldToScreenPoint(pointerArrow.Target.Position);
+            Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(pointerArrow.Target.Position);
+            
+            pointerArrow.CanvasGroup.alpha = IsOnScreen(viewportPoint) ? 0f : 1f;
+
+            if (indicatorPosition.z > 0f & indicatorPosition.x < pointerArrow.Rect.width * _scale
+                                         & indicatorPosition.y < pointerArrow.Rect.height * _scale
+                                         & indicatorPosition.x > 0f
+                                         & indicatorPosition.y > 0f)
+            {
+                indicatorPosition.z = 0f;
+            }
+            else if (indicatorPosition.z > 0f)
+            {
+                indicatorPosition = CalculatePosition(pointerArrow, indicatorPosition);
+            }
+            else
+            {
+                indicatorPosition *= -1f;
+                indicatorPosition = CalculatePosition(pointerArrow, indicatorPosition);
+            }
+
+            pointerArrow.RectTransform.position = indicatorPosition;
+            pointerArrow.RectTransform.rotation = CalculateRotation(pointerArrow, indicatorPosition);
+        }
+
+        private Vector3 CalculatePosition(CPointerArrow pointerArrow, Vector3 indicatorPosition)
+        {
+            indicatorPosition.z = 0f;
+            float offset = pointerArrow.Offset;
+            Vector3 canvasCenter = new Vector3(pointerArrow.Rect.width / 2f, pointerArrow.Rect.height / 2f, 0f) * _scale;
+            indicatorPosition -= canvasCenter;
+            float divX = (pointerArrow.Rect.width / 2f - offset) / Mathf.Abs(indicatorPosition.x);
+            float divY = (pointerArrow.Rect.height / 2f - offset) / Mathf.Abs(indicatorPosition.y);
+            if (divX < divY)
+            {
+                float angle = Vector3.SignedAngle(Vector3.right, indicatorPosition, Vector3.forward);
+                indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (pointerArrow.Rect.width * 0.5f - offset) * _scale;
+                indicatorPosition.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.x;
+            }
+            else
+            {
+                float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition, Vector3.forward);
+                indicatorPosition.y = Mathf.Sign(indicatorPosition.y) * (pointerArrow.Rect.height / 2f - offset) * _scale;
+                indicatorPosition.x = -Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.y;
+            }
+            indicatorPosition += canvasCenter;
+            return indicatorPosition;
+        }
+
+        private Quaternion CalculateRotation(CPointerArrow pointerArrow, Vector3 indicatorPosition)
+        {
+            Vector3 canvasCenter = new Vector3(pointerArrow.Rect.width / 2f, pointerArrow.Rect.height / 2f, 0f) * _scale;
+            float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
+            return Quaternion.Euler(new Vector3(0f, 0f, angle));
+        }
+        
+        private bool IsOnScreen(Vector3 viewportPoint) => viewportPoint is { x: > 0f and < 1f, y: > 0f and < 1f };
+    }
+}

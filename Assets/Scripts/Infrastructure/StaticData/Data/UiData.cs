@@ -6,6 +6,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     [CreateAssetMenu(fileName = nameof(UiData), menuName = "Data/" + nameof(UiData))]
     public sealed class UiData : ScriptableObject
     {
-        public AssetReference PrefabReference;
+        public AssetReference EnemyHealthPrefabReference;
+        public AssetReference PointerArrowPrefabReference;
     }
 }

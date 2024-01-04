@@ -114,10 +114,12 @@ namespace CodeBase.LifeTime
                 new SCharacterPreviewRotation(),
                 new SCharacterWeaponMediator(_weaponFactory, _inventoryModel),
                 new SCharacterBodyMediator(_inventoryModel),
-                new SCharacterPreviewMediator(_inventoryModel),
+                new SCharacterPreviewMediator(_inventoryModel, _guiService),
                 new SCharacterAmmunitionView(_inventoryModel),
                 new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _uiFactory, _progressService, _levelModel),
                 new SZombieSpawner(_gameFactory, _levelModel),
+                new SPointerArrowProvider(_uiFactory, _levelModel),
+                new SPointerArrowUpdate(_cameraService, _guiService),
             };
         }
 

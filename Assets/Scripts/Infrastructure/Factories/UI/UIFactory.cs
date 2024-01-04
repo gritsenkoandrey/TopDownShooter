@@ -76,13 +76,24 @@ namespace CodeBase.Infrastructure.Factories.UI
         {
             UiData data = _staticDataService.UiData();
 
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.EnemyHealthPrefabReference);
             
             CEnemyHealth enemyHealth = Object.Instantiate(prefab, parent).GetComponent<CEnemyHealth>();
 
             enemyHealth.Enemy.SetValueAndForceNotify(enemy);
 
             return enemyHealth;
+        }
+
+        async UniTask<CPointerArrow> IUIFactory.CreatePointerArrow(Transform parent)
+        {
+            UiData data = _staticDataService.UiData();
+
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PointerArrowPrefabReference);
+
+            CPointerArrow pointerArrow = Object.Instantiate(prefab, parent).GetComponent<CPointerArrow>();
+
+            return pointerArrow;
         }
 
         void IUIFactory.CleanUp()
