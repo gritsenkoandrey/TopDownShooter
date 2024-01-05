@@ -14,16 +14,19 @@ namespace CodeBase.Game.Builders
         private GameObject _prefab;
         private Transform _parent;
         private WeaponType _weaponType;
-        private WeaponCharacteristic _weaponCharacteristic;
-        private InventoryModel _inventoryModel;
-
+        
+        private readonly WeaponCharacteristic _weaponCharacteristic;
+        private readonly InventoryModel _inventoryModel;
         private readonly IWeaponFactory _weaponFactory;
         private readonly IProgressService _progressService;
 
-        public WeaponBuilder(IWeaponFactory weaponFactory, IProgressService progressService)
+        public WeaponBuilder(IWeaponFactory weaponFactory, IProgressService progressService, 
+            WeaponCharacteristic weaponCharacteristic, InventoryModel inventoryModel)
         {
             _weaponFactory = weaponFactory;
             _progressService = progressService;
+            _weaponCharacteristic = weaponCharacteristic;
+            _inventoryModel = inventoryModel;
         }
 
         public WeaponBuilder SetPrefab(GameObject prefab)
@@ -43,20 +46,6 @@ namespace CodeBase.Game.Builders
         public WeaponBuilder SetWeaponType(WeaponType weaponType)
         {
             _weaponType = weaponType;
-
-            return this;
-        }
-
-        public WeaponBuilder SetWeaponCharacteristic(WeaponCharacteristic weaponCharacteristic)
-        {
-            _weaponCharacteristic = weaponCharacteristic;
-
-            return this;
-        }
-
-        public WeaponBuilder SetInventoryModel(InventoryModel inventoryModel)
-        {
-            _inventoryModel = inventoryModel;
 
             return this;
         }

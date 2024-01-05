@@ -40,12 +40,10 @@ namespace CodeBase.Game.Weapon.Factories
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponBuilder(this, _progressService)
+            return new WeaponBuilder(this, _progressService, data.WeaponCharacteristic, _inventoryModel)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)
-                .SetWeaponCharacteristic(data.WeaponCharacteristic)
-                .SetInventoryModel(_inventoryModel)
                 .Build();
         }
 

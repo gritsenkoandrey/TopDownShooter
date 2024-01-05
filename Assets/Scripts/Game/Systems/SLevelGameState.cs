@@ -39,15 +39,6 @@ namespace CodeBase.Game.Systems
                 .AddTo(character.LifetimeDisposable);
         }
 
-        private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
-
-        private void Win(CCharacter character)
-        {
-            _gameStateService.Enter<StateWin>();
-            
-            character.StateMachine.StateMachine.Enter<CharacterStateNone>();
-        }
-
         private void SubscribeOnFailGame(CCharacter character)
         {
             character.Health.CurrentHealth
@@ -56,6 +47,15 @@ namespace CodeBase.Game.Systems
                 .First()
                 .Subscribe(_ => Lose(character))
                 .AddTo(character.LifetimeDisposable);
+        }
+
+        private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
+
+        private void Win(CCharacter character)
+        {
+            _gameStateService.Enter<StateWin>();
+            
+            character.StateMachine.StateMachine.Enter<CharacterStateNone>();
         }
 
         private bool CharacterIsDeath(CCharacter character) => !character.Health.IsAlive;
