@@ -36,7 +36,7 @@ namespace CodeBase.Game.Systems
             CWeapon weapon = await _weaponFactory.CreateWeapon(_inventoryModel.SelectedWeapon.Value, component.WeaponMediator.Container);
             
             component.WeaponMediator.SetWeapon(weapon);
-            component.Animator.Animator.runtimeAnimatorController = weapon.AnimatorController;
+            component.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
         }
     }
 }

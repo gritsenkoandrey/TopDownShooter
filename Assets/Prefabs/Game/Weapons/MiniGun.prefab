@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnBulletPoint: {fileID: 5662927068148463359}
-  _animatorController: {fileID: 9100000, guid: f8813795f10f3664a9db2e7a07542979, type: 2}
+  _animatorController: {fileID: 0}
+  _runtimeAnimatorController: {fileID: 9100000, guid: f8813795f10f3664a9db2e7a07542979, type: 2}
 --- !u!1 &1960904297127548777
 GameObject:
   m_ObjectHideFlags: 0

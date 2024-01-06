@@ -185,7 +185,7 @@ namespace CodeBase.Game.SystemsUi
         private void SetAnimatorController(CCharacterPreviewMediator component, int index)
         {
             component.CharacterPreviewAnimator.Animator.runtimeAnimatorController = 
-                component.CharacterPreviewModel.Weapons[index].Weapon.AnimatorController;
+                component.CharacterPreviewModel.Weapons[index].Weapon.RuntimeAnimatorController;
         }
 
         private void SetOrthographicSizeOnPreviewCamera(CCharacterPreviewMediator component)
