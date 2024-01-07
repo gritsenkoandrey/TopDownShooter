@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.Models;
@@ -68,7 +69,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
         private async UniTaskVoid CreateBullet()
         {
-            int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Damage;
+            int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value[UpgradeButtonType.Damage];
             Vector3 position = _weapon.SpawnBulletPointPosition;
             Vector3 direction = _weapon.NormalizeForwardDirection * _weaponCharacteristic.ForceBullet;
             

@@ -1,7 +1,6 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using UniRx;
@@ -22,19 +21,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             SubscribeOnBuyButtonClick(component);
-            
-            switch (component.UpgradeButtonType)
-            {
-                case UpgradeButtonType.Damage:
-                    SubscribeOnChangeDamage(component);
-                    break;
-                case UpgradeButtonType.Health:
-                    SubscribeOnChangeHealth(component);
-                    break;
-                case UpgradeButtonType.Speed:
-                    SubscribeOnChangeSpeed(component);
-                    break;
-            }
+            SubscribeOnUpdateButton(component);
         }
 
         private void SubscribeOnBuyButtonClick(CUpgradeButton component)
@@ -47,48 +34,20 @@ namespace CodeBase.Game.SystemsUi
                     component.BuyButton.transform.PunchTransform();
                     
                     _progressService.MoneyData.Data.Value -= component.Cost;
-
-                    switch (component.UpgradeButtonType)
-                    {
-                        case UpgradeButtonType.Damage:
-                            _progressService.StatsData.Data.Value.Damage++;
-                            break;
-                        case UpgradeButtonType.Health:
-                            _progressService.StatsData.Data.Value.Health++;
-                            break;
-                        case UpgradeButtonType.Speed:
-                            _progressService.StatsData.Data.Value.Speed++;
-                            break;
-                    }
+                    _progressService.StatsData.Data.Value[component.UpgradeButtonType]++;
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
+        private void SubscribeOnUpdateButton(CUpgradeButton component)
+        {
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(data => data[component.UpgradeButtonType])
+                .Subscribe(level => UpdateButton(component, level))
+                .AddTo(component.LifetimeDisposable);
+        }
 
-        private void SubscribeOnChangeHealth(CUpgradeButton component)
-        {
-            _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Health)
-                .Subscribe(level => UpdateButton(component, level))
-                .AddTo(component.LifetimeDisposable);
-        }
-        
-        private void SubscribeOnChangeDamage(CUpgradeButton component)
-        {
-            _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Damage)
-                .Subscribe(level => UpdateButton(component, level))
-                .AddTo(component.LifetimeDisposable);
-        }
-        
-        private void SubscribeOnChangeSpeed(CUpgradeButton component)
-        {
-            _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Speed)
-                .Subscribe(level => UpdateButton(component, level))
-                .AddTo(component.LifetimeDisposable);
-        }
+        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
 
         private void UpdateButton(CUpgradeButton component, int level)
         {

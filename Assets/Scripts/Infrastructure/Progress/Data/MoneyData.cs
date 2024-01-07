@@ -9,6 +9,8 @@ namespace CodeBase.Infrastructure.Progress.Data
     {
         private readonly IDisposable _disposable;
         
+        private const int DefaultValue = 0;
+
         public IReactiveProperty<int> Data { get; }
 
         public MoneyData()
@@ -24,7 +26,7 @@ namespace CodeBase.Infrastructure.Progress.Data
             PlayerPrefs.Save();
         }
 
-        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, 10000);
+        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, DefaultValue);
 
         public void Dispose() => _disposable?.Dispose();
     }

@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Infrastructure.CameraMain;
@@ -42,7 +43,7 @@ namespace CodeBase.Game.Systems
             ICharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
 
             _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Health)
+                .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Health])
                 .Subscribe(health =>
                 {
                     character.Health.MaxHealth = character.Health.BaseHealth * health;
@@ -51,7 +52,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(character.Entity.LifetimeDisposable);
             
             _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Speed)
+                .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Speed])
                 .Subscribe(speed =>
                 {
                     character.Move.Speed = character.Move.BaseSpeed + speed;

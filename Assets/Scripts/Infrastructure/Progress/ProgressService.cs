@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Progress.Data;
 
 namespace CodeBase.Infrastructure.Progress
@@ -7,7 +9,7 @@ namespace CodeBase.Infrastructure.Progress
     {
         public IData<int> LevelData { get; private set; }
         public IData<int> MoneyData { get; private set; }
-        public IData<Stats> StatsData { get; private set; }
+        public IData<IDictionary<UpgradeButtonType, int>> StatsData { get; private set; }
 
         void IProgressService.Load()
         {

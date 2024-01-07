@@ -1,63 +1,57 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.SaveLoad;
+using CodeBase.Utils;
 using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Progress.Data
 {
-    public sealed class StatsData : ISaveLoad<Stats>
+    public sealed class StatsData : ISaveLoad<IDictionary<UpgradeButtonType, int>>
     {
         private readonly CompositeDisposable _disposable;
+        
+        private const int DefaultValue = 1;
 
-        public IReactiveProperty<Stats> Data { get; }
+        public IReactiveProperty<IDictionary<UpgradeButtonType, int>> Data { get; }
 
         public StatsData()
         {
-            Data = new ReactiveProperty<Stats>(Load());
+            Data = new ReactiveProperty<IDictionary<UpgradeButtonType, int>>(Load());
             
             _disposable = new CompositeDisposable();
-
-            Data.Value
-                .ObserveEveryValueChanged(stats => stats.Health)
-                .Subscribe(_ => Save(Data.Value))
-                .AddTo(_disposable);
             
-            Data.Value
-                .ObserveEveryValueChanged(stats => stats.Damage)
-                .Subscribe(_ => Save(Data.Value))
-                .AddTo(_disposable);
-            
-            Data.Value
-                .ObserveEveryValueChanged(stats => stats.Speed)
-                .Subscribe(_ => Save(Data.Value))
-                .AddTo(_disposable);
+            Data.Value.Keys.Foreach(SubscribeOnDataChanged);
         }
         
-        public void Save(Stats data)
+        public void Save(IDictionary<UpgradeButtonType, int> data)
         {
             PlayerPrefs.SetString(DataKeys.Stats, data.ToSerialize());
             PlayerPrefs.Save();
         }
 
-        public Stats Load() => PlayerPrefs.HasKey(DataKeys.Stats)
-                ? PlayerPrefs.GetString(DataKeys.Stats)?.ToDeserialize<Stats>()
-                : new Stats();
+        public IDictionary<UpgradeButtonType, int> Load() => PlayerPrefs.HasKey(DataKeys.Stats)
+            ? PlayerPrefs.GetString(DataKeys.Stats)?.ToDeserialize<Dictionary<UpgradeButtonType, int>>()
+            : SetDefaultValue();
 
         public void Dispose() => _disposable.Clear();
-    }
-    
-    [Serializable]
-    public sealed class Stats
-    {
-        public int Damage;
-        public int Health;
-        public int Speed;
 
-        public Stats()
+        private void SubscribeOnDataChanged(UpgradeButtonType type)
         {
-            Damage = 1;
-            Health = 1;
-            Speed = 1;
+            Data.Value
+                .ObserveEveryValueChanged(data => data[type])
+                .Subscribe(_ => Save(Data.Value))
+                .AddTo(_disposable);
+        }
+
+        private Dictionary<UpgradeButtonType, int> SetDefaultValue()
+        {
+            return new Dictionary<UpgradeButtonType, int>
+            {
+                { UpgradeButtonType.Damage, DefaultValue},
+                { UpgradeButtonType.Health, DefaultValue},
+                { UpgradeButtonType.Speed, DefaultValue}
+            };
         }
     }
 }
