@@ -7,31 +7,31 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.Progress.Data
 {
-    public sealed class StatsData : ISaveLoad<IDictionary<UpgradeButtonType, int>>
+    public sealed class StatsData : ISaveLoad<Stats>
     {
         private readonly CompositeDisposable _disposable;
         
         private const int DefaultValue = 1;
 
-        public IReactiveProperty<IDictionary<UpgradeButtonType, int>> Data { get; }
+        public IReactiveProperty<Stats> Data { get; }
 
         public StatsData()
         {
-            Data = new ReactiveProperty<IDictionary<UpgradeButtonType, int>>(Load());
+            Data = new ReactiveProperty<Stats>(Load());
             
             _disposable = new CompositeDisposable();
             
-            Data.Value.Keys.Foreach(SubscribeOnDataChanged);
+            Data.Value.Data.Keys.Foreach(SubscribeOnDataChanged);
         }
         
-        public void Save(IDictionary<UpgradeButtonType, int> data)
+        public void Save(Stats data)
         {
             PlayerPrefs.SetString(DataKeys.Stats, data.ToSerialize());
             PlayerPrefs.Save();
         }
 
-        public IDictionary<UpgradeButtonType, int> Load() => PlayerPrefs.HasKey(DataKeys.Stats)
-            ? PlayerPrefs.GetString(DataKeys.Stats)?.ToDeserialize<Dictionary<UpgradeButtonType, int>>()
+        public Stats Load() => PlayerPrefs.HasKey(DataKeys.Stats)
+            ? PlayerPrefs.GetString(DataKeys.Stats)?.ToDeserialize<Stats>()
             : SetDefaultValue();
 
         public void Dispose() => _disposable.Clear();
@@ -39,19 +39,24 @@ namespace CodeBase.Infrastructure.Progress.Data
         private void SubscribeOnDataChanged(UpgradeButtonType type)
         {
             Data.Value
-                .ObserveEveryValueChanged(data => data[type])
+                .ObserveEveryValueChanged(data => data.Data[type])
                 .Subscribe(_ => Save(Data.Value))
                 .AddTo(_disposable);
         }
 
-        private Dictionary<UpgradeButtonType, int> SetDefaultValue()
+        private Stats SetDefaultValue()
         {
-            return new Dictionary<UpgradeButtonType, int>
+            Stats stats = new Stats
             {
-                { UpgradeButtonType.Damage, DefaultValue},
-                { UpgradeButtonType.Health, DefaultValue},
-                { UpgradeButtonType.Speed, DefaultValue}
+                Data = new Dictionary<UpgradeButtonType, int>
+                {
+                    { UpgradeButtonType.Damage, DefaultValue },
+                    { UpgradeButtonType.Health, DefaultValue },
+                    { UpgradeButtonType.Speed, DefaultValue }
+                }
             };
+
+            return stats;
         }
     }
 

@@ -34,7 +34,7 @@ namespace CodeBase.Game.SystemsUi
                     component.BuyButton.transform.PunchTransform();
                     
                     _progressService.MoneyData.Data.Value -= component.Cost;
-                    _progressService.StatsData.Data.Value[component.UpgradeButtonType]++;
+                    _progressService.StatsData.Data.Value.Data[component.UpgradeButtonType]++;
                 })
                 .AddTo(component.LifetimeDisposable);
         }
@@ -42,7 +42,7 @@ namespace CodeBase.Game.SystemsUi
         private void SubscribeOnUpdateButton(CUpgradeButton component)
         {
             _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(data => data[component.UpgradeButtonType])
+                .ObserveEveryValueChanged(data => data.Data[component.UpgradeButtonType])
                 .Subscribe(level => UpdateButton(component, level))
                 .AddTo(component.LifetimeDisposable);
         }

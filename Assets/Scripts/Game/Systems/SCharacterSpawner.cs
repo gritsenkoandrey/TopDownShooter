@@ -43,7 +43,7 @@ namespace CodeBase.Game.Systems
             ICharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
 
             _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Health])
+                .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Health])
                 .Subscribe(health =>
                 {
                     character.Health.SetMaxHealth(character.Health.BaseHealth * health);
@@ -52,7 +52,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(character.Entity.LifetimeDisposable);
             
             _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Speed])
+                .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
                 .Subscribe(speed =>
                 {
                     character.Move.SetSpeed(character.Move.BaseSpeed + speed);
