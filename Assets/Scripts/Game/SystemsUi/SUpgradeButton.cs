@@ -54,7 +54,13 @@ namespace CodeBase.Game.SystemsUi
             component.Cost = level * component.BaseCost;
             component.TextLevel.text = $"Level {level}";
             component.TextCost.text = $"{component.Cost}$";
-            component.BuyButton.interactable = _progressService.MoneyData.Data.Value >= component.Cost;
+            
+            Entities.Foreach(SetButtonInteractable);
+        }
+
+        private void SetButtonInteractable(CUpgradeButton button)
+        {
+            button.BuyButton.interactable = _progressService.MoneyData.Data.Value >= button.Cost;
         }
     }
 }
