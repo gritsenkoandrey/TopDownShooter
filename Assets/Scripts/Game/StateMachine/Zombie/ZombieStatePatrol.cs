@@ -10,7 +10,6 @@ namespace CodeBase.Game.StateMachine.Zombie
     {
         private readonly Vector3 _patrolPosition;
         private float _aggroRadius;
-        private ICharacter _target;
         private int _startHealth;
 
         public ZombieStatePatrol(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
@@ -22,7 +21,6 @@ namespace CodeBase.Game.StateMachine.Zombie
         void IState.Enter()
         {
             _aggroRadius = Mathf.Pow(Zombie.Stats.AggroRadius, 2);
-            _target = LevelModel.Character;
             _startHealth = Zombie.Health.CurrentHealth.Value;
             Zombie.Agent.speed = Zombie.Stats.WalkSpeed;
             Zombie.Animator.OnRun.Execute(0f);
@@ -31,7 +29,6 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IState.Exit()
         {
-            _target = null;
             Zombie.Agent.ResetPath();
         }
 
@@ -77,7 +74,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             return Vector3.zero;
         }
 
-        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }

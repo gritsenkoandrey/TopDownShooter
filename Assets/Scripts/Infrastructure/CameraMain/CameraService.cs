@@ -38,6 +38,8 @@ namespace CodeBase.Infrastructure.CameraMain
             }
         }
 
+        bool ICameraService.IsOnScreen(Vector3 viewportPoint) => viewportPoint is { x: > 0f and < 1f, y: > 0f and < 1f };
+
         void ICameraService.CleanUp()
         {
             _cameraZoomIn.Follow = null;

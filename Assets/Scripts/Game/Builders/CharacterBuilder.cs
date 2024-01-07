@@ -71,8 +71,8 @@ namespace CodeBase.Game.Builders
         {
             CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent);
 
-            character.Health.BaseHealth = _health;
-            character.Move.BaseSpeed = _speed;
+            character.Health.SetBaseHealth(_health);
+            character.Move.SetBaseSpeed(_speed);
             
             _cameraService.SetTarget(character.transform);
 

@@ -10,8 +10,11 @@ namespace CodeBase.Game.Components
         public CharacterController CharacterController => _characterController;
         public Vector3 Position => transform.position;
         public float Angle => transform.eulerAngles.y;
-        public float BaseSpeed { get; set; }
-        public float Speed { get; set; }
+        public float BaseSpeed { get; private set; }
+        public float Speed { get; private set; }
         public bool IsGrounded => _characterController.isGrounded;
+
+        public void SetBaseSpeed(float baseSpeed) => BaseSpeed = baseSpeed;
+        public void SetSpeed(float speed) => Speed = speed;
     }
 }

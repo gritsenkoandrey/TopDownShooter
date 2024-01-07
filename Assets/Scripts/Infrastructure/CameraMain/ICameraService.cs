@@ -9,6 +9,7 @@ namespace CodeBase.Infrastructure.CameraMain
         public Camera Camera { get; }
         public void SetTarget(Transform target);
         public void ActivateCamera(ScreenType type);
+        public bool IsOnScreen(Vector3 viewportPoint);
         public void CleanUp();
     }
 }

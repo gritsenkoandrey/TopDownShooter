@@ -54,4 +54,9 @@ namespace CodeBase.Infrastructure.Progress.Data
             };
         }
     }
+
+    public sealed class Stats
+    {
+        public IDictionary<UpgradeButtonType, int> Data;
+    }
 }

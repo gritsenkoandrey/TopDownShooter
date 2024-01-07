@@ -13,9 +13,11 @@ namespace CodeBase.Game.Components
         public LineRenderer LineRenderer => _lineRenderer;
         public float Scale => _scale;
         public float Width => _width;
-        public float Radius { get; set; }
+        public float Radius { get; private set; }
         
         public ReactiveCommand Draw { get; } = new();
         public ReactiveCommand Clear { get; } = new();
+
+        public void SetRadius(float radius) => Radius = radius;
     }
 }

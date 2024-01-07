@@ -10,7 +10,6 @@ namespace CodeBase.Game.StateMachine.Zombie
     {
         private float _minDistanceToTarget;
         private bool _canAttack;
-        private ICharacter _target;
 
         public ZombieStateFight(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
             : base(stateMachine, zombie, levelModel)
@@ -21,18 +20,16 @@ namespace CodeBase.Game.StateMachine.Zombie
         void IState.Enter()
         {
             _minDistanceToTarget = Mathf.Pow(Zombie.Stats.MinDistanceToTarget, 2);
-            _target = LevelModel.Character;
             Zombie.Animator.OnIdle.Execute();
         }
 
         void IState.Exit()
         {
-            _target = null;
         }
 
         void IState.Tick()
         {
-            if (DistanceToTarget() > _minDistanceToTarget && _target.Health.IsAlive)
+            if (DistanceToTarget() > _minDistanceToTarget && LevelModel.Character.Health.IsAlive)
             {
                 StateMachine.Enter<ZombieStatePursuit>();
                 
@@ -55,6 +52,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             DOVirtual.DelayedCall(Zombie.Stats.AttackDelay, () => _canAttack = true);
         }
         
-        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
     }
 }

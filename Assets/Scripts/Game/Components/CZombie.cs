@@ -19,13 +19,19 @@ namespace CodeBase.Game.Components
         public NavMeshAgent Agent => _agent;
         public CAnimator Animator => _animator;
         public CRadar Radar => _radar;
-        public Health Health { get; } = new();
         public CStateMachine StateMachine => _stateMachine;
-        public EnemyStats Stats { get; set; }
+        public Health Health { get; } = new();
         public Vector3 Position => transform.position;
-        public int Damage { get; set; }
+        public EnemyStats Stats { get; private set; }
+        public int Damage { get; private set; }
         public ReactiveCommand Attack { get; } = new();
         public ReactiveCommand OnCheckDamage { get; } = new();
+        
+        /// <summary>
+        /// Animation event
+        /// </summary>
         public void OnAttack() => OnCheckDamage.Execute();
+        public void SetStats(EnemyStats stats) => Stats = stats;
+        public void SetDamage(int damage) => Damage = damage;
     }
 }

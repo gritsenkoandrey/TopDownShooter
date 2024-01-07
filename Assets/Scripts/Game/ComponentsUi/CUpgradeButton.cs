@@ -15,8 +15,12 @@ namespace CodeBase.Game.ComponentsUi
         public Button BuyButton => _buyButton;
         public TextMeshProUGUI TextLevel => _textLevel;
         public TextMeshProUGUI TextCost => _textCost;
-        public UpgradeButtonType UpgradeButtonType { get; set; }
-        public int Cost { get; set; }
-        public int BaseCost { get; set; }
+        public UpgradeButtonType UpgradeButtonType { get; private set; }
+        public int Cost { get; private set; }
+        public int BaseCost { get; private set; }
+
+        public void SetUpgradeButtonType(UpgradeButtonType type) => UpgradeButtonType = type;
+        public void SetCost(int cost) => Cost = cost;
+        public void SetBaseCost(int baseCost) => BaseCost = baseCost;
     }
 }

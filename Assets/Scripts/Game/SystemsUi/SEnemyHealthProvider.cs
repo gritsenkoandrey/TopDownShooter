@@ -62,11 +62,9 @@ namespace CodeBase.Game.SystemsUi
 
                 if (component.EnemyHealths[i].Enemy.Value.Health.IsAlive)
                 {
-                    component.EnemyHealths[i].CanvasGroup.alpha = IsOnScreen(viewportPoint) ? 1f : 0f;
+                    component.EnemyHealths[i].CanvasGroup.alpha = _cameraService.IsOnScreen(viewportPoint) ? 1f : 0f;
                 }
             }
         }
-        
-        private bool IsOnScreen(Vector3 viewportPoint) => viewportPoint is { x: > 0f and < 1f, y: > 0f and < 1f };
     }
 }

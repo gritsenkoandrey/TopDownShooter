@@ -46,7 +46,7 @@ namespace CodeBase.Game.Systems
                 .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Health])
                 .Subscribe(health =>
                 {
-                    character.Health.MaxHealth = character.Health.BaseHealth * health;
+                    character.Health.SetMaxHealth(character.Health.BaseHealth * health);
                     character.Health.CurrentHealth.SetValueAndForceNotify(character.Health.MaxHealth);
                 })
                 .AddTo(character.Entity.LifetimeDisposable);
@@ -55,7 +55,7 @@ namespace CodeBase.Game.Systems
                 .ObserveEveryValueChanged(stats => stats[UpgradeButtonType.Speed])
                 .Subscribe(speed =>
                 {
-                    character.Move.Speed = character.Move.BaseSpeed + speed;
+                    character.Move.SetSpeed(character.Move.BaseSpeed + speed);
                 })
                 .AddTo(character.Entity.LifetimeDisposable);
 

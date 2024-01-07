@@ -10,14 +10,12 @@ namespace CodeBase.Game.StateMachine.Zombie
         private float _aggroRadius;
         private float _delay;
         private int _startHealth;
-        private ICharacter _target;
 
         public ZombieStateIdle(IStateMachine stateMachine, CZombie zombie, LevelModel levelModel) 
             : base(stateMachine, zombie, levelModel) { }
 
         void IState.Enter()
         {
-            _target = LevelModel.Character;
             _aggroRadius = Mathf.Pow(Zombie.Stats.AggroRadius, 2);
             _startHealth = Zombie.Health.CurrentHealth.Value;
             _delay = Zombie.Stats.StayDelay;
@@ -27,7 +25,6 @@ namespace CodeBase.Game.StateMachine.Zombie
 
         void IState.Exit()
         {
-            _target = null;
         }
 
         void IState.Tick()
@@ -49,7 +46,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float DistanceToTarget() => (_target.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }

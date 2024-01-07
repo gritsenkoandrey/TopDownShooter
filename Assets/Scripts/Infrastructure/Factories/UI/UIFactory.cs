@@ -59,8 +59,8 @@ namespace CodeBase.Infrastructure.Factories.UI
 
             CUpgradeButton button = Object.Instantiate(prefab, parent).GetComponent<CUpgradeButton>();
 
-            button.UpgradeButtonType = data.UpgradeButtonType;
-            button.BaseCost = data.BaseCost;
+            button.SetUpgradeButtonType(data.UpgradeButtonType);
+            button.SetBaseCost(data.BaseCost);
 
             return button;
         }
