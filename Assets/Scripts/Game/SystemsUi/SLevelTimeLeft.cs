@@ -25,6 +25,11 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            SubscribeOnUpdateTimeLeft(component);
+        }
+
+        private void SubscribeOnUpdateTimeLeft(CLevelTimeLeft component)
+        {
             int time = _levelModel.Level.LevelTime;
 
             Observable.EveryUpdate()

@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
@@ -17,7 +18,8 @@ namespace CodeBase.Game.Systems
         private readonly IEffectFactory _effectFactory;
         private readonly LevelModel _levelModel;
 
-        public SZombieDeath(IProgressService progressService, ISaveLoadService saveLoadService, IEffectFactory effectFactory, LevelModel levelModel)
+        public SZombieDeath(IProgressService progressService, ISaveLoadService saveLoadService, 
+            IEffectFactory effectFactory, LevelModel levelModel)
         {
             _progressService = progressService;
             _saveLoadService = saveLoadService;
@@ -27,23 +29,30 @@ namespace CodeBase.Game.Systems
         protected override void OnEnableComponent(CZombie component)
         {
             base.OnEnableComponent(component);
-            
+
+            SubscribeOnDeathZombie(component);
+        }
+
+        private void SubscribeOnDeathZombie(CZombie component)
+        {
             component.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
                 .Where(_ => IsDeath(component))
                 .First()
-                .Subscribe(_ =>
-                {
-                    component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
-
-                    _progressService.PlayerProgress.Money.Value += component.Stats.Money;
-                    _saveLoadService.SaveProgress();
-                    _levelModel.RemoveEnemy(component);
-                    _effectFactory.CreateDeathFx(component.Position.AddY(1f));
-                })
+                .Subscribe(_ => Death(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private bool IsDeath(CZombie component) => !component.Health.IsAlive;
+        private bool IsDeath(IEnemy component) => !component.Health.IsAlive;
+
+        private void Death(IEnemy component)
+        {
+            component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
+
+            _progressService.PlayerProgress.Money.Value += component.Stats.Money;
+            _saveLoadService.SaveProgress();
+            _levelModel.RemoveEnemy(component);
+            _effectFactory.CreateDeathFx(component.Position.AddY(1f));
+        }
     }
 }

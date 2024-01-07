@@ -20,12 +20,12 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             component.OnCheckDamage
-                .Where(_ => CheckDamage(component))
+                .Where(_ => IsCanDamage(component))
                 .Subscribe(_ => Damage(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private bool CheckDamage(CZombie component)
+        private bool IsCanDamage(CZombie component)
         {
             float distance = Vector3.Distance(component.Position, _levelModel.Character.Move.Position);
             

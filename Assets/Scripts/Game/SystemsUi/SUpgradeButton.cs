@@ -29,6 +29,11 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            SubscribeOnBuyButtonClick(component);
+        }
+
+        private void SubscribeOnBuyButtonClick(CUpgradeButton component)
+        {
             component.BuyButton
                 .OnClickAsObservable()
                 .ThrottleFirst(Time())
@@ -36,15 +41,15 @@ namespace CodeBase.Game.SystemsUi
                 {
                     component.Level++;
                     component.BuyButton.transform.PunchTransform();
-                    
+
                     _progressService.PlayerProgress.Money.Value -= component.Cost;
                     _saveLoadService.SaveProgress();
-                    
+
                     UpdateProgress();
                 })
                 .AddTo(component.LifetimeDisposable);
         }
-        
+
         private void UpdateProgress()
         {
             _uiFactory.ProgressReaders.Foreach(UpdateProgress);

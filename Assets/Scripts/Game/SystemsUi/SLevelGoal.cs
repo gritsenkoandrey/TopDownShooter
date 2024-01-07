@@ -17,25 +17,32 @@ namespace CodeBase.Game.SystemsUi
         protected override void OnEnableComponent(CLevelGoal component)
         {
             base.OnEnableComponent(component);
-
-            int max = _levelModel.Enemies.Count;
             
-            component.TextLevelGoal.text = max.ToString();
+            SubscribeOnLevelGoal(component);
+        }
 
+        private void SubscribeOnLevelGoal(CLevelGoal component)
+        {
             _levelModel.Enemies
                 .ObserveCountChanged()
-                .Subscribe(count =>
-                {
-                    if (count > 0)
-                    {
-                        component.TextLevelGoal.text = count.ToString();
-                    }
-                    else
-                    {
-                        component.Background.SetActive(false);
-                    }
-                })
+                .DoOnSubscribe(() => SetStartValue(component))
+                .Subscribe(count => UpdateLevelGoal(component, count))
                 .AddTo(component.LifetimeDisposable);
+        }
+
+        private void SetStartValue(CLevelGoal component)
+        {
+            component.TextLevelGoal.text = _levelModel.Enemies.Count.ToString();
+        }
+
+        private void UpdateLevelGoal(CLevelGoal component, int count)
+        {
+            component.TextLevelGoal.text = count.ToString();
+
+            if (count <= 0)
+            {
+                component.Background.SetActive(false);
+            }
         }
     }
 }
