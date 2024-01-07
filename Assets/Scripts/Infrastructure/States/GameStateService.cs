@@ -11,7 +11,6 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.StaticData;
 
 namespace CodeBase.Infrastructure.States
@@ -26,7 +25,6 @@ namespace CodeBase.Infrastructure.States
             ISceneLoaderService sceneLoaderService, 
             IStaticDataService staticDataService, 
             IProgressService progressService, 
-            ISaveLoadService saveLoadService, 
             IGameFactory gameFactory, 
             IUIFactory uiFactory, 
             IAssetService assetService, 
@@ -47,7 +45,6 @@ namespace CodeBase.Infrastructure.States
                     assetService),
                 [typeof(StateLoadProgress)] = new StateLoadProgress(this, 
                     progressService, 
-                    saveLoadService,
                     loadingCurtainService),
                 [typeof(StateLoadLevel)] = new StateLoadLevel(this, 
                     sceneLoaderService, 
@@ -67,8 +64,7 @@ namespace CodeBase.Infrastructure.States
                     uiFactory),
                 [typeof(StateWin)] = new StateWin(this, 
                     uiFactory,
-                    progressService,
-                    saveLoadService),
+                    progressService),
                 [typeof(StatePreview)] = new StatePreview(this, 
                     uiFactory,
                     sceneLoaderService),

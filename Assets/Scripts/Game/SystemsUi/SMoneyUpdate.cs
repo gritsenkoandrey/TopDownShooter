@@ -19,7 +19,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            _progressService.PlayerProgress.Money
+            _progressService.MoneyData.Data
                 .Subscribe(value => component.TextCountMoney.text = value.Trim())
                 .AddTo(component.LifetimeDisposable);
         }

@@ -13,7 +13,6 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
 using VContainer;
@@ -53,7 +52,6 @@ namespace CodeBase.LifeTime
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
             builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
             builder.Register<IEffectFactory, EffectFactory>(Lifetime.Singleton);
-            builder.Register<ISaveLoadService, SaveLoadService>(Lifetime.Singleton);
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
             
             builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);

@@ -68,7 +68,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
         private async UniTaskVoid CreateBullet()
         {
-            int damage = _weaponCharacteristic.Damage * _progressService.PlayerProgress.Stats.Damage;
+            int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Damage;
             Vector3 position = _weapon.SpawnBulletPointPosition;
             Vector3 direction = _weapon.NormalizeForwardDirection * _weaponCharacteristic.ForceBullet;
             

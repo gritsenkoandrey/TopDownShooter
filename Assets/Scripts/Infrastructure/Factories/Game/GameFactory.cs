@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CodeBase.Game.Builders;
+﻿using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
@@ -35,9 +34,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             _assetService = assetService;
             _levelModel = levelModel;
         }
-
-        public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
-        public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
 
         async UniTask<ILevel> IGameFactory.CreateLevel()
         {
@@ -75,9 +71,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             
             _levelModel.SetCharacter(character);
 
-            Registered(character.Health);
-            Registered(character.Move);
-
             return character;
         }
 
@@ -104,23 +97,8 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         void IGameFactory.CleanUp()
         {
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
         }
 
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-        }
-
-        private LevelType GetLevelType() => _progressService.PlayerProgress.Level % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+        private LevelType GetLevelType() => _progressService.LevelData.Data.Value % 5 == 0 ? LevelType.Boss : LevelType.Normal;
     }
 }

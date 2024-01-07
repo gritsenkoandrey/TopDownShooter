@@ -3,8 +3,8 @@ using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
@@ -21,14 +21,14 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            CreateUpgradeButtons(component);
+            CreateUpgradeButtons(component).Forget();
 
             component.IsShowUpgradeShop
                 .Subscribe(value =>
                 {
                     component.Show.SetActive(!value);
                     component.Hide.SetActive(value);
-                    component.Root.transform.localScale = value ? Vector3.one : Vector3.zero;
+                    component.Root.SetActive(value);
                 })
                 .AddTo(component.LifetimeDisposable);
 
@@ -43,11 +43,11 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
         
-        private void CreateUpgradeButtons(CUpgradeShop component)
+        private async UniTaskVoid CreateUpgradeButtons(CUpgradeShop component)
         {
             for (int i = 0; i < component.UpgradeButtonType.Length; i++)
             {
-                _uiFactory.CreateUpgradeButton(component.UpgradeButtonType[i], component.Root);
+                await _uiFactory.CreateUpgradeButton(component.UpgradeButtonType[i], component.Root.transform);
             }
         }
 

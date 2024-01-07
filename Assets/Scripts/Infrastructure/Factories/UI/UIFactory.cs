@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using CodeBase.Game.ComponentsUi;
+﻿using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.GUI;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
@@ -23,9 +21,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly IObjectResolver _objectResolver;
         private readonly IGuiService _guiService;
         private readonly IAssetService _assetService;
-
-        public IList<IProgressReader> ProgressReaders { get; } = new List<IProgressReader>();
-        public IList<IProgressWriter> ProgressWriters { get; } = new List<IProgressWriter>();
         
         private BaseScreen _currentScreen;
 
@@ -67,8 +62,6 @@ namespace CodeBase.Infrastructure.Factories.UI
             button.UpgradeButtonType = data.UpgradeButtonType;
             button.BaseCost = data.BaseCost;
 
-            Registered(button);
-
             return button;
         }
 
@@ -99,22 +92,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         void IUIFactory.CleanUp()
         {
             DestroyCurrentScreen();
-            
-            ProgressReaders.Clear();
-            ProgressWriters.Clear();
-        }
-
-        private void Registered(IProgress progress)
-        {
-            if (progress is IProgressWriter writer)
-            {
-                ProgressWriters.Add(writer);
-            }
-
-            if (progress is IProgressReader reader)
-            {
-                ProgressReaders.Add(reader);
-            }
         }
 
         private void DestroyCurrentScreen()

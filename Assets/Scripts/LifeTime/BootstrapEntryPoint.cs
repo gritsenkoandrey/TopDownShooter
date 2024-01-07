@@ -13,7 +13,6 @@ using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Infrastructure.States;
 using VContainer.Unity;
 
@@ -27,7 +26,6 @@ namespace CodeBase.LifeTime
         private readonly IUIFactory _uiFactory;
         private readonly IGameFactory _gameFactory;
         private readonly IProgressService _progressService;
-        private readonly ISaveLoadService _saveLoadService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
@@ -44,7 +42,6 @@ namespace CodeBase.LifeTime
             IUIFactory uiFactory, 
             IGameFactory gameFactory, 
             IProgressService progressService, 
-            ISaveLoadService saveLoadService, 
             IObjectPoolService objectPoolService, 
             ICameraService cameraService, 
             IJoystickService joystickService,
@@ -59,7 +56,6 @@ namespace CodeBase.LifeTime
             _uiFactory = uiFactory;
             _gameFactory = gameFactory;
             _progressService = progressService;
-            _saveLoadService = saveLoadService;
             _objectPoolService = objectPoolService;
             _cameraService = cameraService;
             _joystickService = joystickService;
@@ -92,11 +88,11 @@ namespace CodeBase.LifeTime
                 new SGroundBuildNavMesh(),
                 new SZombieAnimator(),
                 new SZombieMeleeAttack(_levelModel),
-                new SZombieDeath(_progressService, _saveLoadService, _effectFactory, _levelModel),
+                new SZombieDeath(_progressService, _effectFactory, _levelModel),
                 new SRadarDraw(),
                 new SZombieSelectSkin(),
                 new SUpgradeShop(_uiFactory),
-                new SUpgradeButton(_saveLoadService, _progressService, _uiFactory, _gameFactory),
+                new SUpgradeButton(_progressService),
                 new SLevelGoal(_levelModel),
                 new SMoneyUpdate(_progressService),
                 new SBulletLifeTime(_objectPoolService),
@@ -116,7 +112,7 @@ namespace CodeBase.LifeTime
                 new SCharacterBodyMediator(_inventoryModel),
                 new SCharacterPreviewMediator(_inventoryModel, _guiService),
                 new SCharacterAmmunitionView(_inventoryModel),
-                new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _uiFactory, _progressService, _levelModel),
+                new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _progressService, _levelModel),
                 new SZombieSpawner(_gameFactory, _levelModel),
                 new SPointerArrowProvider(_uiFactory, _levelModel),
                 new SPointerArrowUpdate(_cameraService, _guiService),

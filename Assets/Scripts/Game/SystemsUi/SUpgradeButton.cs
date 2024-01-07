@@ -1,10 +1,8 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Utils;
 using UniRx;
 
@@ -12,17 +10,11 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SUpgradeButton : SystemComponent<CUpgradeButton>
     {
-        private readonly ISaveLoadService _saveLoadService;
         private readonly IProgressService _progressService;
-        private readonly IUIFactory _uiFactory;
-        private readonly IGameFactory _gameFactory;
 
-        public SUpgradeButton(ISaveLoadService saveLoadService, IProgressService progressService, IUIFactory uiFactory, IGameFactory gameFactory)
+        public SUpgradeButton(IProgressService progressService)
         {
-            _saveLoadService = saveLoadService;
             _progressService = progressService;
-            _uiFactory = uiFactory;
-            _gameFactory = gameFactory;
         }
 
         protected override void OnEnableComponent(CUpgradeButton component)
@@ -30,6 +22,19 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             SubscribeOnBuyButtonClick(component);
+            
+            switch (component.UpgradeButtonType)
+            {
+                case UpgradeButtonType.Damage:
+                    SubscribeOnChangeDamage(component);
+                    break;
+                case UpgradeButtonType.Health:
+                    SubscribeOnChangeHealth(component);
+                    break;
+                case UpgradeButtonType.Speed:
+                    SubscribeOnChangeSpeed(component);
+                    break;
+            }
         }
 
         private void SubscribeOnBuyButtonClick(CUpgradeButton component)
@@ -39,25 +44,58 @@ namespace CodeBase.Game.SystemsUi
                 .ThrottleFirst(Time())
                 .Subscribe(_ =>
                 {
-                    component.Level++;
                     component.BuyButton.transform.PunchTransform();
+                    
+                    _progressService.MoneyData.Data.Value -= component.Cost;
 
-                    _progressService.PlayerProgress.Money.Value -= component.Cost;
-                    _saveLoadService.SaveProgress();
-
-                    UpdateProgress();
+                    switch (component.UpgradeButtonType)
+                    {
+                        case UpgradeButtonType.Damage:
+                            _progressService.StatsData.Data.Value.Damage++;
+                            break;
+                        case UpgradeButtonType.Health:
+                            _progressService.StatsData.Data.Value.Health++;
+                            break;
+                        case UpgradeButtonType.Speed:
+                            _progressService.StatsData.Data.Value.Speed++;
+                            break;
+                    }
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void UpdateProgress()
+        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
+
+        private void SubscribeOnChangeHealth(CUpgradeButton component)
         {
-            _uiFactory.ProgressReaders.Foreach(UpdateProgress);
-            _gameFactory.ProgressReaders.Foreach(UpdateProgress);
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Health)
+                .Subscribe(level => UpdateButton(component, level))
+                .AddTo(component.LifetimeDisposable);
+        }
+        
+        private void SubscribeOnChangeDamage(CUpgradeButton component)
+        {
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Damage)
+                .Subscribe(level => UpdateButton(component, level))
+                .AddTo(component.LifetimeDisposable);
+        }
+        
+        private void SubscribeOnChangeSpeed(CUpgradeButton component)
+        {
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Speed)
+                .Subscribe(level => UpdateButton(component, level))
+                .AddTo(component.LifetimeDisposable);
         }
 
-        private void UpdateProgress(IProgressReader progress) => progress.Read(_progressService.PlayerProgress);
-
-        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
+        private void UpdateButton(CUpgradeButton component, int level)
+        {
+            component.Cost = level * component.BaseCost;
+            component.TextLevel.text = $"Level {level}";
+            component.TextCost.text = $"{component.Cost}$";
+            component.BuyButton.interactable = _progressService.MoneyData.Data.Value >= component.Cost;
+        }
     }
 }

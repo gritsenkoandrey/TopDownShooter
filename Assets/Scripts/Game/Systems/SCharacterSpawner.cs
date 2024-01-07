@@ -4,11 +4,9 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
-using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
 
@@ -19,17 +17,15 @@ namespace CodeBase.Game.Systems
         private readonly IGameFactory _gameFactory;
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
-        private readonly IUIFactory _uiFactory;
         private readonly IProgressService _progressService;
         private readonly LevelModel _levelModel;
 
         public SCharacterSpawner(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
-            IUIFactory uiFactory, IProgressService progressService, LevelModel levelModel)
+            IProgressService progressService, LevelModel levelModel)
         {
             _gameFactory = gameFactory;
             _cameraService = cameraService;
             _joystickService = joystickService;
-            _uiFactory = uiFactory;
             _progressService = progressService;
             _levelModel = levelModel;
         }
@@ -45,7 +41,23 @@ namespace CodeBase.Game.Systems
         {
             ICharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
 
-            ReadProgress();
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Health)
+                .Subscribe(health =>
+                {
+                    character.Health.MaxHealth = character.Health.BaseHealth * health;
+                    character.Health.CurrentHealth.SetValueAndForceNotify(character.Health.MaxHealth);
+                })
+                .AddTo(character.Entity.LifetimeDisposable);
+            
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Speed)
+                .Subscribe(speed =>
+                {
+                    character.Move.Speed = character.Move.BaseSpeed + speed;
+                })
+                .AddTo(character.Entity.LifetimeDisposable);
+
             CreateStateMachine(character);
         }
 
@@ -56,17 +68,6 @@ namespace CodeBase.Game.Systems
             character.StateMachine.UpdateStateMachine
                 .Subscribe(_ => character.StateMachine.StateMachine.Tick())
                 .AddTo(character.Entity.LifetimeDisposable);
-        }
-        
-        private void ReadProgress()
-        {
-            _uiFactory.ProgressReaders.Foreach(ReadProgress);
-            _gameFactory.ProgressReaders.Foreach(ReadProgress);
-        }
-
-        private void ReadProgress(IProgressReader progress)
-        {
-            progress.Read(_progressService.PlayerProgress);
         }
     }
 }
