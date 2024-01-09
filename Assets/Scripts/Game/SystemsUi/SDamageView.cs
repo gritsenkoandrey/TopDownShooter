@@ -1,11 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
-using DG.Tweening;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
@@ -13,52 +9,44 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SDamageView : SystemComponent<CDamageView>
     {
         private readonly ICameraService _cameraService;
-        private readonly LevelModel _levelModel;
 
-        public SDamageView(ICameraService cameraService, LevelModel levelModel)
+        public SDamageView(ICameraService cameraService)
         {
             _cameraService = cameraService;
-            _levelModel = levelModel;
         }
 
-        protected override void OnEnableComponent(CDamageView component)
+        protected override void OnUpdate()
         {
-            base.OnEnableComponent(component);
+            base.OnUpdate();
             
-            _levelModel.Enemies.Foreach(enemy => SubscribeOnEnemyDamage(component, enemy));
+            Entities.Foreach(UpdateDamageViewPosition);
         }
 
-        protected override void OnDisableComponent(CDamageView component)
+        private void UpdateDamageViewPosition(CDamageView component)
         {
-            base.OnDisableComponent(component);
+            if (component.Settings.IsActive == false)
+            {
+                return;
+            }
             
-            component.Sequence?.Kill();
-        }
+            if (component.Settings.Index > component.Points)
+            {
+                component.Settings.IsActive = false;
+                
+                return;
+            }
 
-        private void SubscribeOnEnemyDamage(CDamageView component, IEnemy enemy)
-        {
-            enemy.Health.CurrentHealth
-                .Pairwise()
-                .Where(health => health.Current < health.Previous)
-                .Subscribe(health =>
-                {
-                    Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(enemy.Position);
+            float elapsedTime = component.Settings.Index / (float)component.Points;
+            
+            Vector3 targetPosition = component.Settings.Target.Position.AddY(component.Settings.Target.Stats.Height);
+            Vector3 targetScreenPosition = _cameraService.Camera.WorldToScreenPoint(targetPosition);
+            
+            Vector3 to = BezierCurves
+                .Quadratic(component.Settings.From, component.Settings.Center, component.Settings.To, elapsedTime);
 
-                    component.Text.text = (health.Previous - health.Current).ToString();
-                    component.transform.position = screenPoint;
-
-                    StartAnimation(component);
-                })
-                .AddTo(component.LifetimeDisposable);
-        }
-
-        private void StartAnimation(CDamageView component)
-        {
-            component.Sequence?.Kill();
-
-            component.Sequence = DOTween.Sequence()
-                .Append(component.transform.DOMoveY(350f, 1f).SetRelative().SetEase(Ease.OutCirc))
-                .Join(component.CanvasGroup.DOFade(0f, 1f).From(1f).SetEase(Ease.Linear));
+            component.transform.position = to + targetScreenPosition;
+            component.CanvasGroup.alpha = Mathematics.Remap(0f, 1f, 1f, 0f, elapsedTime);
+            component.Settings.Index++;
         }
     }
 }

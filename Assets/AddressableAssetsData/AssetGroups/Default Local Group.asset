@@ -157,6 +157,10 @@ MonoBehaviour:
     m_Address: PointerArrow
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 62e74e5697293f141a34c4846babc81e
+    m_Address: DamageView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

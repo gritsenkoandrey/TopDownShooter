@@ -98,7 +98,7 @@ namespace CodeBase.LifeTime
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
-                new SDamageView(_cameraService, _levelModel),
+                new SDamageView(_cameraService),
                 new SEnemyHealthProvider(_uiFactory, _cameraService, _levelModel),
                 new SEnemyHealth(),
                 new SCharacterHealth(_levelModel),
@@ -116,6 +116,7 @@ namespace CodeBase.LifeTime
                 new SZombieSpawner(_gameFactory, _levelModel),
                 new SPointerArrowProvider(_uiFactory, _levelModel),
                 new SPointerArrowUpdate(_cameraService, _guiService),
+                new SDamageViewProvider(_uiFactory, _cameraService, _guiService, _levelModel),
             };
         }
 

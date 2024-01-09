@@ -182,7 +182,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5697311007610410384}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -200,3 +200,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 9073864728452456360}
   _canvasGroup: {fileID: 9011589239860250152}
+  _points: 50
+  _offset: 125

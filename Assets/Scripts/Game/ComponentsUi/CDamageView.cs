@@ -1,5 +1,5 @@
 ﻿using CodeBase.ECSCore;
-using DG.Tweening;
+using CodeBase.Game.Interfaces;
 using TMPro;
 using UnityEngine;
 
@@ -9,9 +9,24 @@ namespace CodeBase.Game.ComponentsUi
     {
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private int _points;
+        [SerializeField] private float _offset;
 
         public TextMeshProUGUI Text => _text;
         public CanvasGroup CanvasGroup => _canvasGroup;
-        public Sequence Sequence { get; set; }
+        public int Points => _points;
+        public float Offset => _offset;
+
+        public readonly DamageViewSettings Settings = new ();
+    }
+
+    public sealed class DamageViewSettings
+    {
+        public IEnemy Target;
+        public bool IsActive;
+        public int Index;
+        public Vector3 From;
+        public Vector3 To;
+        public Vector3 Center;
     }
 }

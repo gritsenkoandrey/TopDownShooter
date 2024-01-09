@@ -22,3 +22,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  DamageViewPrefabReference:
+    m_AssetGUID: 62e74e5697293f141a34c4846babc81e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
