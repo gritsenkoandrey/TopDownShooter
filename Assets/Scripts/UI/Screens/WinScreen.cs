@@ -22,10 +22,8 @@ namespace CodeBase.UI.Screens
                 .First()
                 .Subscribe(_ => NextGame().Forget())
                 .AddTo(this);
-            
-            ShowButton();
-            
-            FadeCanvas(0f, 1f, 0.25f);
+
+            ScreenAnimation().Forget();
         }
 
         protected override void OnDisable()
@@ -40,9 +38,14 @@ namespace CodeBase.UI.Screens
             GameStateService.Enter<StatePreview, string>(SceneName.Lobby);
         }
 
-        private void ShowButton()
+        private async UniTaskVoid ScreenAnimation()
         {
+            _button.gameObject.SetActive(false);
+
+            await FadeCanvas(0f, 1f, 0.5f).AsyncWaitForCompletion().AsUniTask();
+            
             _button.gameObject.SetActive(true);
+
             _button.transform.PunchTransform();
         }
     }

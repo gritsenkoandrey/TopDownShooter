@@ -20,11 +20,10 @@ namespace CodeBase.UI.Screens
             
             _button
                 .OnClickAsObservable()
+                .DoOnSubscribe(ScreenAnimation)
                 .First()
                 .Subscribe(_ => RestartGame().Forget())
                 .AddTo(this);
-
-            ShowLoseScreen();
 
             FadeCanvas(0f, 1f, 0.25f);
         }
@@ -41,7 +40,7 @@ namespace CodeBase.UI.Screens
             GameStateService.Enter<StatePreview, string>(SceneName.Lobby);
         }
 
-        private void ShowLoseScreen()
+        private void ScreenAnimation()
         {
             _button.gameObject.SetActive(false);
             _splat.localScale = Vector3.zero;

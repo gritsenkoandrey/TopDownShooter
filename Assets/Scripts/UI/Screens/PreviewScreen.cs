@@ -23,27 +23,24 @@ namespace CodeBase.UI.Screens
 
             _button
                 .OnClickAsObservable()
+                .DoOnSubscribe(ScreenAnimation)
                 .First()
                 .Subscribe(_ => StartGame().Forget())
                 .AddTo(this);
             
             FadeCanvas(0f, 1f, 0.2f);
-            
-            BounceButton();
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            Dispose();
         }
 
         private async UniTaskVoid StartGame()
         {
             _characterPreviewMediator.SelectCharacter.Execute();
             
-            Dispose();
+            _bounceTween?.Kill();
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
@@ -52,17 +49,9 @@ namespace CodeBase.UI.Screens
             GameStateService.Enter<StateLoadLevel, string>(SceneName.Main);
         }
 
-        private void BounceButton()
+        private void ScreenAnimation()
         {
-            _bounceTween = _button.transform
-                .DOScale(Vector3.one * 1.05f, 0.5f)
-                .SetEase(Ease.InOutQuad)
-                .SetLoops(-1, LoopType.Yoyo);
-        }
-
-        private void Dispose()
-        {
-            _bounceTween?.Kill();
+            _bounceTween = BounceButton(_button);
         }
     }
 }
