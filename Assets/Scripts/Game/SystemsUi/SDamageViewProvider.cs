@@ -54,14 +54,12 @@ namespace CodeBase.Game.SystemsUi
                 .Where(health => health.Current < health.Previous)
                 .Subscribe(health =>
                 {
-                    int difference = health.Previous - health.Current;
-
-                    ActivateDamageView(component, enemy, difference);
+                    ActivateDamageView(component, enemy, health.Previous - health.Current);
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void ActivateDamageView(CDamageViewProvider component, IEnemy enemy, int difference)
+        private void ActivateDamageView(CDamageViewProvider component, IEnemy enemy, int damage)
         {
             if (component.DamageViews.Count == 0)
             {
@@ -76,23 +74,23 @@ namespace CodeBase.Game.SystemsUi
                         continue;
                     }
                     
-                    ActivateUpdateDamageView(component.DamageViews[i], enemy, difference);
+                    ActivateUpdateDamageView(component.DamageViews[i], enemy, damage);
                     
                     return;
                 }
             }
             
-            InstantiateDamageView(component, enemy, difference).Forget();
+            InstantiateDamageView(component, enemy, damage).Forget();
         }
 
-        private async UniTaskVoid InstantiateDamageView(CDamageViewProvider component, IEnemy enemy, int difference)
+        private async UniTaskVoid InstantiateDamageView(CDamageViewProvider component, IEnemy enemy, int damage)
         {
             CDamageView damageView = await _uiFactory.CreateDamageView(component.transform);
-            ActivateUpdateDamageView(damageView, enemy, difference);
+            ActivateUpdateDamageView(damageView, enemy, damage);
             component.DamageViews.Add(damageView);
         }
 
-        private void ActivateUpdateDamageView(CDamageView component, IEnemy enemy, int difference)
+        private void ActivateUpdateDamageView(CDamageView component, IEnemy enemy, int damage)
         {
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemy.Position.AddY(enemy.Stats.Height));
             float offset = _scaleFactor * component.Offset;
@@ -110,7 +108,7 @@ namespace CodeBase.Game.SystemsUi
             component.Settings.Target = enemy;
             component.Settings.IsActive = true;
 
-            component.Text.text = difference.ToString();
+            component.Text.text = damage.ToString();
         }
     }
 }
