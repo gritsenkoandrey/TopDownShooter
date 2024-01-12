@@ -32,10 +32,10 @@ namespace CodeBase.UI.Screens
                 .SetEase(Ease.Linear);
         }
 
-        private protected Tween BounceButton(Button button)
+        private protected Tween BounceButton(Button button, float to, float duration)
         {
             return button.transform
-                .DOScale(Vector3.one * 1.05f, 0.5f)
+                .DOScale(Vector3.one * to, duration)
                 .SetEase(Ease.InOutQuad)
                 .SetLoops(-1, LoopType.Yoyo);
         }

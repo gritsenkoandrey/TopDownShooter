@@ -51,7 +51,7 @@ namespace CodeBase.UI.Screens
 
         private void ScreenAnimation()
         {
-            _bounceTween = BounceButton(_button);
+            _bounceTween = BounceButton(_button, 1.05f, 0.5f);
         }
     }
 }
