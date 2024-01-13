@@ -1,8 +1,10 @@
 ﻿using CodeBase.Infrastructure.StaticData;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.TextureArray
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class TextureArrayFactory : ITextureArrayFactory
     {
         private readonly IStaticDataService _staticDataService;

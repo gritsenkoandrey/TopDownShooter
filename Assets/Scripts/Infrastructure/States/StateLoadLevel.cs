@@ -7,9 +7,12 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.States
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateLoadLevel : IEnterLoadState<string>
     {
         private readonly IGameStateService _stateService;
@@ -43,6 +46,8 @@ namespace CodeBase.Infrastructure.States
             _textureArrayFactory = textureArrayFactory;
             _levelModel = levelModel;
         }
+        
+        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterLoadState<string>.Enter(string sceneName)
         {

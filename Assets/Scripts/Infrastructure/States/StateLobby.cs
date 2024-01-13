@@ -2,10 +2,13 @@
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UniRx;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.States
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateLobby : IEnterState
     {
         private readonly IGameStateService _stateService;
@@ -18,6 +21,8 @@ namespace CodeBase.Infrastructure.States
             _stateService = stateService;
             _uiFactory = uiFactory;
         }
+        
+        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterState.Enter()
         {

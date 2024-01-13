@@ -5,9 +5,12 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.States
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateBootstrap : IEnterState
     {
         private readonly IGameStateService _stateService;
@@ -32,7 +35,9 @@ namespace CodeBase.Infrastructure.States
             _objectPoolService = objectPoolService;
             _assetService = assetService;
         }
-        
+
+        void IInitializable.Initialize() => _stateService.AddState(this);
+
         async void IEnterState.Enter()
         {
             LoadResources();

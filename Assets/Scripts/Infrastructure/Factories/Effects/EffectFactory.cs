@@ -3,10 +3,12 @@ using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Effects
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class EffectFactory : IEffectFactory
     {
         private readonly IStaticDataService _staticDataService;

@@ -8,10 +8,12 @@ using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.UI
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class UIFactory : IUIFactory
     {
         private readonly IStaticDataService _staticDataService;

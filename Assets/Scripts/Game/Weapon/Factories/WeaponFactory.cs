@@ -8,10 +8,12 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Game.Weapon.Factories
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class WeaponFactory : IWeaponFactory
     {
         private readonly IStaticDataService _staticDataService;

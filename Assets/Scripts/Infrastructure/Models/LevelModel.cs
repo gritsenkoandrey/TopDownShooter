@@ -1,8 +1,10 @@
 ﻿using CodeBase.Game.Interfaces;
+using JetBrains.Annotations;
 using UniRx;
 
 namespace CodeBase.Infrastructure.Models
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class LevelModel
     {
         private readonly ReactiveCollection<IEnemy> _enemies = new ();

@@ -3,10 +3,13 @@ using CodeBase.App;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UniRx;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.States
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateFail : IEnterState
     {
         private readonly IGameStateService _stateService;
@@ -14,13 +17,13 @@ namespace CodeBase.Infrastructure.States
 
         private IDisposable _transitionDisposable;
 
-        public StateFail(
-            IGameStateService stateService, 
-            IUIFactory uiFactory)
+        public StateFail(IGameStateService stateService, IUIFactory uiFactory)
         {
             _stateService = stateService;
             _uiFactory = uiFactory;
         }
+        
+        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterState.Enter()
         {

@@ -1,9 +1,11 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.Loader
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class SceneLoaderService : ISceneLoaderService
     {
         void ISceneLoaderService.Load(string name, Action onLoaded)

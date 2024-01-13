@@ -9,10 +9,12 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class GameFactory : IGameFactory
     {
         private readonly IStaticDataService _staticDataService;

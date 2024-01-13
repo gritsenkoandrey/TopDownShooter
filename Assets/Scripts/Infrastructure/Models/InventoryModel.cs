@@ -1,8 +1,10 @@
 ﻿using CodeBase.Game.Weapon;
+using JetBrains.Annotations;
 using UniRx;
 
 namespace CodeBase.Infrastructure.Models
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class InventoryModel
     {
         public readonly ReactiveProperty<WeaponType> SelectedWeapon = new();

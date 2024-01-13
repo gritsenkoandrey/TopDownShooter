@@ -5,10 +5,12 @@ using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
 {
+	[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class ObjectPoolService : IObjectPoolService
     {
 	    private Transform _root;

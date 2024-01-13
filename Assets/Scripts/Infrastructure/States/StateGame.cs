@@ -7,10 +7,13 @@ using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
 using CodeBase.Utils;
+using JetBrains.Annotations;
 using UniRx;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.States
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateGame : IEnterState
     {
         private readonly IGameStateService _stateService;
@@ -20,17 +23,15 @@ namespace CodeBase.Infrastructure.States
 
         private readonly CompositeDisposable _transitionDisposable = new();
 
-        public StateGame(
-            IGameStateService stateService, 
-            IJoystickService joystickService, 
-            IUIFactory uiFactory,
-            LevelModel levelModel)
+        public StateGame(IGameStateService stateService, IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
         {
             _stateService = stateService;
             _joystickService = joystickService;
             _uiFactory = uiFactory;
             _levelModel = levelModel;
         }
+        
+        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterState.Enter()
         {
@@ -99,11 +100,8 @@ namespace CodeBase.Infrastructure.States
         }
 
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
-
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
-
         private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
-        
         private TimeSpan TimeLeft() => TimeSpan.FromSeconds(_levelModel.Level.LevelTime);
     }
 }

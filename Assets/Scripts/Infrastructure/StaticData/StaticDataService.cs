@@ -5,9 +5,11 @@ using CodeBase.Game.Weapon;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
+using JetBrains.Annotations;
 
 namespace CodeBase.Infrastructure.StaticData
 {
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StaticDataService : IStaticDataService
     {
         private readonly IAssetService _assetService;
