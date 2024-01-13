@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d361fe8cb04d78a7f998508c40325c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _zombieType: 4
+  _zombieType: 3
 --- !u!1 &3495192746181472548
 GameObject:
   m_ObjectHideFlags: 0
