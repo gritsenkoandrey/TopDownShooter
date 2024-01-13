@@ -3,10 +3,11 @@
     [System.Serializable]
     public enum ZombieType : byte
     {
-        None   = byte.MaxValue,
         Easy   = 0,
         Normal = 1,
         Hard   = 2,
-        Boss   = 4,
+        Boss   = 3,
+        
+        None   = byte.MaxValue
     }
 }

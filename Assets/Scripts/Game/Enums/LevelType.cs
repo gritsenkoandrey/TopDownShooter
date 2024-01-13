@@ -3,8 +3,9 @@
     [System.Serializable]
     public enum LevelType : byte
     {
-        None   = byte.MaxValue,
         Normal = 0,
         Boss   = 1,
+        
+        None   = byte.MaxValue
     }
 }

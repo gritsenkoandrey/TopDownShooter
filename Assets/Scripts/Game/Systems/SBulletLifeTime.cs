@@ -25,7 +25,7 @@ namespace CodeBase.Game.Systems
                 .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
 
-            Observable.Interval(Time())
+            Observable.Timer(Time())
                 .First()
                 .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);

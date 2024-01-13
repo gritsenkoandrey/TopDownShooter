@@ -19,6 +19,7 @@
         GravityGun   = 13,
         FlameThrower = 14,
         ChemicalGun  = 15,
+        
         None         = byte.MaxValue
     }
 }

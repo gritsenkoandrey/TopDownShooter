@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576f5d209ec14c0087c2fca465cd1c35, type: 3}
   m_Name: ScreenData_05
   m_EditorClassIdentifier: 
-  ScreenType: 8
+  ScreenType: 4
   PrefabReference:
     m_AssetGUID: 442db06ab34b2c949b10e10d8ff9e8d9
     m_SubObjectName: 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4aa2abe0a18453490ec025cc7e20e07, type: 3}
   m_Name: ZombieData_04
   m_EditorClassIdentifier: 
-  ZombieType: 4
+  ZombieType: 3
   Health: 999
   Damage: 25
   Stats:

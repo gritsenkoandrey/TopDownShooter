@@ -13,6 +13,6 @@ namespace CodeBase.Game.Models
         public void SetMaxHealth(int maxHealth) => MaxHealth = maxHealth;
         public void SetBaseHealth(int baseHealth) => BaseHealth = baseHealth;
         
-        public override string ToString() => $"{Mathf.Clamp(CurrentHealth.Value, 0, MaxHealth)}/{MaxHealth}";
+        public override string ToString() => $"{Mathf.Clamp(CurrentHealth.Value, 0, MaxHealth)} | {MaxHealth}";
     }
 }

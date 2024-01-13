@@ -17,5 +17,7 @@
         Teal    = 12,
         Blue    = 13,
         Navy    = 14,
+        
+        None = byte.MaxValue
     }
 }

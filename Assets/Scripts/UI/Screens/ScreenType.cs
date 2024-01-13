@@ -3,12 +3,12 @@
     [System.Serializable]
     public enum ScreenType : byte
     {
-        None = byte.MaxValue,
-        
         Lobby     = 0,
         Game      = 1,
         Win       = 2,
-        Lose      = 4,
-        Preview   = 8,
+        Lose      = 3,
+        Preview   = 4,
+        
+        None = byte.MaxValue
     }
 }
