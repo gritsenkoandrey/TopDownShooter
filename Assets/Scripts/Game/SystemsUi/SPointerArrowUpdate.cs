@@ -36,16 +36,23 @@ namespace CodeBase.Game.SystemsUi
         
         private void UpdatePointerArrow(CPointerArrow pointerArrow)
         {
-            if (!pointerArrow.Target.Health.IsAlive)
+            if (pointerArrow.Target.Health.IsAlive == false)
             {
                 pointerArrow.CanvasGroup.alpha = 0f;
+                
                 return;
             }
             
             Vector3 indicatorPosition = _cameraService.Camera.WorldToScreenPoint(pointerArrow.Target.Position);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(pointerArrow.Target.Position);
+            bool isOnScreen = _cameraService.IsOnScreen(viewportPoint);
             
-            pointerArrow.CanvasGroup.alpha = _cameraService.IsOnScreen(viewportPoint) ? 0f : 1f;
+            pointerArrow.CanvasGroup.alpha = isOnScreen ? 0f : 1f;
+
+            if (isOnScreen)
+            {
+                return;
+            }
 
             if (indicatorPosition.z > 0f & indicatorPosition.x < pointerArrow.Rect.width * _scaleFactor
                                          & indicatorPosition.y < pointerArrow.Rect.height * _scaleFactor

@@ -28,6 +28,6 @@ namespace CodeBase.Infrastructure.Progress.Data
 
         public int Load() => PlayerPrefs.GetInt(DataKeys.Money, DefaultValue);
 
-        public void Dispose() => _disposable?.Dispose();
+        void IDisposable.Dispose() => _disposable?.Dispose();
     }
 }

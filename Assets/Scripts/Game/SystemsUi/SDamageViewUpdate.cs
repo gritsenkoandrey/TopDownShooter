@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SDamageView : SystemComponent<CDamageView>
+    public sealed class SDamageViewUpdate : SystemComponent<CDamageView>
     {
         private readonly ICameraService _cameraService;
 
-        public SDamageView(ICameraService cameraService)
+        public SDamageViewUpdate(ICameraService cameraService)
         {
             _cameraService = cameraService;
         }

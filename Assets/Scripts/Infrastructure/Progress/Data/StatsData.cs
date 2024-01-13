@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Utils;
@@ -34,7 +35,7 @@ namespace CodeBase.Infrastructure.Progress.Data
             ? PlayerPrefs.GetString(DataKeys.Stats)?.ToDeserialize<Stats>()
             : SetDefaultValue();
 
-        public void Dispose() => _disposable.Clear();
+        void IDisposable.Dispose() => _disposable.Clear();
 
         private void SubscribeOnDataChanged(UpgradeButtonType type)
         {
