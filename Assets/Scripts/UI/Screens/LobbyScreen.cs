@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure.States;
-using CodeBase.Utils;
+﻿using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
@@ -13,7 +12,7 @@ namespace CodeBase.UI.Screens
         [SerializeField] private Button _button;
         [SerializeField] private Transform _text;
 
-        protected override void OnEnable()
+        private protected override void OnEnable()
         {
             base.OnEnable();
 
@@ -24,18 +23,13 @@ namespace CodeBase.UI.Screens
                 .AddTo(this);
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
         private async UniTaskVoid StartGame()
         {
             _text.PunchTransform();
             
             await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion().AsUniTask();
-            
-            GameStateService.Enter<StateGame>();
+
+            ChangeState.Execute();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using CodeBase.App;
-using CodeBase.Game.ComponentsUi;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Game.ComponentsUi;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -17,7 +15,7 @@ namespace CodeBase.UI.Screens
 
         private Tween _bounceTween;
 
-        protected override void OnEnable()
+        private protected override void OnEnable()
         {
             base.OnEnable();
 
@@ -31,11 +29,6 @@ namespace CodeBase.UI.Screens
             FadeCanvas(0f, 1f, 0.2f);
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
         private async UniTaskVoid StartGame()
         {
             _characterPreviewMediator.SelectCharacter.Execute();
@@ -45,8 +38,8 @@ namespace CodeBase.UI.Screens
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
             await UniTask.WaitUntil(() => _characterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation);
-            
-            GameStateService.Enter<StateLoadLevel, string>(SceneName.Main);
+
+            ChangeState.Execute();
         }
 
         private void ScreenAnimation()

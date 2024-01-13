@@ -1,9 +1,8 @@
-﻿using CodeBase.Infrastructure.States;
-using CodeBase.Utils;
+﻿using CodeBase.Utils;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace CodeBase.UI.Screens
 {
@@ -11,18 +10,11 @@ namespace CodeBase.UI.Screens
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private RectTransform _safeArea;
+        
+        public readonly ReactiveCommand ChangeState = new ();
 
-        private protected IGameStateService GameStateService { get; private set; }
-
-        [Inject]
-        public void Construct(IGameStateService gameStateService)
-        {
-            GameStateService = gameStateService;
-        }
-
-        protected virtual void OnEnable() => _safeArea.ApplySafeArea();
-
-        protected virtual void OnDisable() { }
+        private protected virtual void OnEnable() => _safeArea.ApplySafeArea();
+        private protected virtual void OnDisable() { }
         
         private protected Tween FadeCanvas(float from, float to, float duration)
         {

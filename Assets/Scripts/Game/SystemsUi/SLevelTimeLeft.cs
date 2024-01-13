@@ -1,11 +1,7 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Game.Interfaces;
-using CodeBase.Game.StateMachine.Character;
-using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.States;
 using CodeBase.Utils;
 using UniRx;
 
@@ -13,12 +9,10 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
-        private readonly IGameStateService _gameStateService;
         private readonly LevelModel _levelModel;
 
-        public SLevelTimeLeft(IGameStateService gameStateService, LevelModel levelModel)
+        public SLevelTimeLeft(LevelModel levelModel)
         {
-            _gameStateService = gameStateService;
             _levelModel = levelModel;
         }
 
@@ -33,8 +27,9 @@ namespace CodeBase.Game.SystemsUi
         {
             int time = _levelModel.Level.LevelTime;
 
-            Observable.EveryUpdate()
-                .ThrottleFirst(Time())
+            Observable.Timer(Time())
+                .Repeat()
+                .DoOnSubscribe(() => component.TimeLeftText.text = FormatTime.SecondsToTime(time))
                 .Subscribe(_ => UpdateTime(component, ref time))
                 .AddTo(component.LifetimeDisposable);
         }
@@ -45,8 +40,6 @@ namespace CodeBase.Game.SystemsUi
         {
             if (time == 0)
             {
-                TimeLeft();
-                
                 return;
             }
                     
@@ -54,15 +47,5 @@ namespace CodeBase.Game.SystemsUi
 
             component.TimeLeftText.text = FormatTime.SecondsToTime(time);
         }
-
-        private void TimeLeft()
-        {
-            _gameStateService.Enter<StateFail>();
-            
-            _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
-            _levelModel.Enemies.Foreach(EnemyStateNone);
-        }
-
-        private void EnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
     }
 }

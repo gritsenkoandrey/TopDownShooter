@@ -9,8 +9,6 @@ using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.Factories.UI
 {
@@ -18,18 +16,16 @@ namespace CodeBase.Infrastructure.Factories.UI
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICameraService _cameraService;
-        private readonly IObjectResolver _objectResolver;
         private readonly IGuiService _guiService;
         private readonly IAssetService _assetService;
         
         private BaseScreen _currentScreen;
 
-        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, 
-            IObjectResolver objectResolver, IGuiService guiService, IAssetService assetService)
+        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGuiService guiService, 
+            IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _cameraService = cameraService;
-            _objectResolver = objectResolver;
             _guiService = guiService;
             _assetService = assetService;
         }
@@ -42,9 +38,7 @@ namespace CodeBase.Infrastructure.Factories.UI
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            _currentScreen = _objectResolver
-                .Instantiate(prefab, _guiService.StaticCanvas.transform)
-                .GetComponent<BaseScreen>();
+            _currentScreen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
             
             _cameraService.ActivateCamera(type);
 

@@ -6,7 +6,6 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
-using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
@@ -62,7 +61,6 @@ namespace CodeBase.Infrastructure.States
         private void Next()
         {
             CreateTextureArray();
-            CreateScreen();
             CreateLevel().Forget();
         }
 
@@ -81,11 +79,6 @@ namespace CodeBase.Infrastructure.States
             await _gameFactory.CreateLevel();
             
             _stateService.Enter<StateLobby>();
-        }
-
-        private void CreateScreen()
-        {
-            _uiFactory.CreateScreen(ScreenType.Lobby);
         }
 
         private void CreateTextureArray()

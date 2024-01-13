@@ -1,6 +1,4 @@
-﻿using CodeBase.App;
-using CodeBase.Infrastructure.States;
-using CodeBase.Utils;
+﻿using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
@@ -13,7 +11,7 @@ namespace CodeBase.UI.Screens
     {
         [SerializeField] private Button _button;
 
-        protected override void OnEnable()
+        private protected override void OnEnable()
         {
             base.OnEnable();
             
@@ -26,16 +24,11 @@ namespace CodeBase.UI.Screens
             ScreenAnimation().Forget();
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
         private async UniTaskVoid NextGame()
         {
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
-            
-            GameStateService.Enter<StatePreview, string>(SceneName.Lobby);
+
+            ChangeState.Execute();
         }
 
         private async UniTaskVoid ScreenAnimation()
