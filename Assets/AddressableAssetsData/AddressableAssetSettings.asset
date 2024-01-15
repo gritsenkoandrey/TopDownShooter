@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
@@ -34,11 +34,11 @@ MonoBehaviour:
   m_MonoScriptBundleNaming: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 1c5c25f2adcc3694b99a370afdb08b35
+    m_Id: 8d8f2fd99c0957a4e9eba6963664844d
   m_RemoteCatalogLoadPath:
-    m_Id: 0cce08be57e0e4c4f8b6b92529e3c43f
+    m_Id: 9b1262748f8c7994681a60654c7b25a3
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 1
+  m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 5a30031dfd813a74a992bf3b9e9cc782, type: 2}
