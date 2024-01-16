@@ -22,21 +22,16 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            CreateEnemyHealths(component);
+            CreateEnemyHealths(component).Forget();
         }
 
-        private void CreateEnemyHealths(CEnemyHealthProvider component)
+        private async UniTaskVoid CreateEnemyHealths(CEnemyHealthProvider component)
         {
             foreach (IEnemy enemy in _levelModel.Enemies)
             {
-                Initialize(component, enemy).Forget();
+                CEnemyHealth enemyHealth = await _uiFactory.CreateEnemyHealth(enemy, component.transform);
+                enemyHealth.CanvasGroup.alpha = 0f;
             }
-        }
-
-        private async UniTaskVoid Initialize(CEnemyHealthProvider component, IEnemy enemy)
-        {
-            CEnemyHealth enemyHealth = await _uiFactory.CreateEnemyHealth(enemy, component.transform);
-            enemyHealth.CanvasGroup.alpha = 0f;
         }
     }
 }

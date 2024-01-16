@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
@@ -45,6 +46,13 @@ namespace CodeBase.Game.SystemsUi
             {
                 SubscribeOnDamageEnemy(component, enemy);
             }
+        }
+
+        protected override void OnDisableComponent(CDamageViewProvider component)
+        {
+            base.OnDisableComponent(component);
+            
+            component.DamageViews = Array.Empty<CDamageView>(); 
         }
 
         private void SubscribeOnDamageEnemy(CDamageViewProvider component, IEnemy enemy)

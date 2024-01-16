@@ -11,8 +11,11 @@ namespace CodeBase.Infrastructure.AssetData
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class AssetService : IAssetService
     {
-        private readonly Dictionary<string, AsyncOperationHandle> _cashHandles = new ();
-        private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new ();
+        private readonly IDictionary<string, AsyncOperationHandle> _cashedHandles = 
+            new Dictionary<string, AsyncOperationHandle>();
+
+        private readonly IDictionary<string, IList<AsyncOperationHandle>> _allHandles =
+            new Dictionary<string, IList<AsyncOperationHandle>>();
 
         async UniTask IAssetService.Init() => await Addressables.InitializeAsync();
 
@@ -35,43 +38,43 @@ namespace CodeBase.Infrastructure.AssetData
 
         private async UniTask<T> Load<T>(AsyncOperationHandle<T> handle, string key) where T : class
         {
-            if (_cashHandles.TryGetValue(key, out AsyncOperationHandle cashedHandle))
+            AddHandle(handle, key);
+
+            if (_cashedHandles.TryGetValue(key, out AsyncOperationHandle cashedHandle))
             {
                 return cashedHandle.Result as T;
             }
             
             handle.Completed += OnHandleCompleted<T>(key);
 
-            AddHandle(handle, key);
-
             return await handle.ToUniTask();
         }
 
-        private Action<AsyncOperationHandle<T>> OnHandleCompleted<T>(string address) where T : class 
-            => handle => _cashHandles[address] = handle;
-
         private void AddHandle<T>(AsyncOperationHandle<T> handle, string key) where T : class
         {
-            if (!_handles.TryGetValue(key, out List<AsyncOperationHandle> handles))
+            if (!_allHandles.TryGetValue(key, out IList<AsyncOperationHandle> handles))
             {
                 handles = new List<AsyncOperationHandle>();
 
-                _handles[key] = handles;
+                _allHandles[key] = handles;
             }
 
             handles.Add(handle);
         }
 
+        private Action<AsyncOperationHandle<T>> OnHandleCompleted<T>(string address) where T : class => 
+            handle => _cashedHandles[address] = handle;
+
         private void ReleaseHandles()
         {
-            foreach (List<AsyncOperationHandle> handles in _handles.Values)
+            foreach (IList<AsyncOperationHandle> handles in _allHandles.Values)
             foreach (AsyncOperationHandle handle in handles)
             {
                 Addressables.Release(handle);
             }
             
-            _cashHandles.Clear();
-            _handles.Clear();
+            _cashedHandles.Clear();
+            _allHandles.Clear();
         }
     }
 }
