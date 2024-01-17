@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnBulletPoint: {fileID: 8605051522705072692}
-  _animatorController: {fileID: 0}
+  _projectileType: 0
+  _spawnPoints:
+  - {fileID: 8605051522705072692}
+  _spawnBulletPoint: {fileID: 0}
   _runtimeAnimatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}

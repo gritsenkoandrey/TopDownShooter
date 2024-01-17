@@ -34,7 +34,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         {
             _canAttack = false;
 
-            DOVirtual.DelayedCall(_weaponCharacteristic.SpeedAttack, SetCanAttack);
+            DOVirtual.DelayedCall(_weaponCharacteristic.FireInterval, SetCanAttack);
         }
 
         bool IWeapon.CanAttack() => _canAttack;

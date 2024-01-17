@@ -2,7 +2,6 @@
 {
     public static class AssetAddress
     {
-        public const string Bullet = "Bullet";
         public const string DeathFx = "DeathFx";
         public const string HitFx = "HitFx";
         
@@ -12,7 +11,7 @@
         public const string UpgradeButtonDataPath = "StaticData/UpgradeButtonData";
         public const string LevelDataPath = "StaticData/LevelData";
         public const string FxDataPath = "StaticData/FxData/FxData";
-        public const string BulletDataPath = "StaticData/BulletData/BulletData";
+        public const string ProjectileDataPath = "StaticData/ProjectileData";
         public const string TextureArrayDataPath = "StaticData/TextureArrayData/TextureArrayData";
         public const string UiDataPath = "StaticData/UiData/UiData";
         public const string PoolDataPath = "StaticData/PoolData/PoolData";

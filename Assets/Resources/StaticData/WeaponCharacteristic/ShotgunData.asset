@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponType: 7
   WeaponCharacteristic:
-    Damage: 5
+    Damage: 1
     ClipCount: 2
-    ForceBullet: 0.75
+    ForceBullet: 0.35
     RechargeTime: 2.5
-    SpeedAttack: 1
+    FireInterval: 1
+    CriticalChance: 5
+    CriticalMultiplier: 2
     DetectionDistance: 7.5
     AttackDistance: 5
     IsDetectThroughObstacle: 1

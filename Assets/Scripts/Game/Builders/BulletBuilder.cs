@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ namespace CodeBase.Game.Builders
     public sealed class BulletBuilder
     {
         private GameObject _prefab;
-        private float _collisionDistance;
+        private Transform _spawnPoint;
         private Vector3 _position;
         private Vector3 _direction;
+        private Quaternion _rotation;
+        private float _collisionDistance;
         private int _damage;
 
         private readonly IObjectPoolService _objectPoolService;
@@ -26,17 +29,17 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
+        public BulletBuilder SetSpawnPoint(Transform spawnPoint)
+        {
+            _spawnPoint = spawnPoint;
+
+            return this;
+        }
+
         public BulletBuilder SetCollisionDistance(float collisionDistance)
         {
             _collisionDistance = collisionDistance;
             
-            return this;
-        }
-
-        public BulletBuilder SetPosition(Vector3 position)
-        {
-            _position = position;
-
             return this;
         }
 
@@ -56,11 +59,14 @@ namespace CodeBase.Game.Builders
 
         public IBullet Build()
         {
-            IBullet bullet = _objectPoolService
-                .SpawnObject(_prefab, _position, Quaternion.identity)
-                .GetComponent<IBullet>();
+            Vector3 position = _spawnPoint.position;
+            Quaternion rotation = _spawnPoint.rotation;
+            
+            CBullet bullet = _objectPoolService
+                .SpawnObject(_prefab, position, rotation)
+                .GetComponent<CBullet>();
 
-            bullet.Damage = _damage;
+            bullet.SetDamage(_damage);
             bullet.SetDirection(_direction);
             bullet.SetCollisionDistance(_collisionDistance);
 

@@ -83,7 +83,11 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
+    - UI
+    - FX
+    - Weapon
+    - Character
+    - Environment
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 77e24a6898111ca42b9df83a876f6306, type: 2}

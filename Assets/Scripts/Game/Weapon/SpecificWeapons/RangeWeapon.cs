@@ -48,7 +48,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             _canAttack = false;
 
             _speedAttackTween?.Kill();
-            _speedAttackTween = DOVirtual.DelayedCall(_weaponCharacteristic.SpeedAttack, SetCanAttack);
+            _speedAttackTween = DOVirtual.DelayedCall(_weaponCharacteristic.FireInterval, SetCanAttack);
             
             _clipCount--;
 
@@ -70,10 +70,13 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private async UniTaskVoid CreateBullet()
         {
             int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
-            Vector3 position = _weapon.SpawnBulletPointPosition;
-            Vector3 direction = _weapon.NormalizeForwardDirection * _weaponCharacteristic.ForceBullet;
-            
-            await _weaponFactory.CreateBullet(damage, position, direction);
+
+            for (int i = 0; i < _weapon.SpawnPoints.Length; i++)
+            {
+                Vector3 direction = _weapon.SpawnPoints[i].forward.normalized * _weaponCharacteristic.ForceBullet;
+                
+                await _weaponFactory.CreateProjectile(_weapon.ProjectileType, _weapon.SpawnPoints[i], CalculateCriticalDamage(damage), direction);
+            }
         }
 
         private void SetClipCount()
@@ -83,7 +86,20 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         }
 
         private void SetCanAttack() => _canAttack = true;
+        
         private void SetAttackDistance() => _attackDistance = Mathf.Pow(_weaponCharacteristic.AttackDistance, 2);
+
+        private int CalculateCriticalDamage(int damage)
+        {
+            bool isCriticalDamage = _weaponCharacteristic.CriticalChance > UnityEngine.Random.Range(0, 100);
+
+            if (isCriticalDamage)
+            {
+                return Mathf.RoundToInt(damage * _weaponCharacteristic.CriticalMultiplier);
+            }
+
+            return damage;
+        }
         
         void IDisposable.Dispose()
         {

@@ -19,8 +19,8 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
         private IDictionary<LevelType, LevelData> _levels;
         private IDictionary<WeaponType, WeaponCharacteristicData> _weaponCharacteristics;
+        private IDictionary<ProjectileType, ProjectileData> _projectiles;
         private CharacterData _character;
-        private BulletData _bullet;
         private FxData _fxData;
         private TextureArrayData _textureArrayData;
         private UiData _uiData;
@@ -53,8 +53,11 @@ namespace CodeBase.Infrastructure.StaticData
                 .LoadAllFromResources<WeaponCharacteristicData>(AssetAddress.WeaponCharacteristicDataPath)
                 .ToDictionary(data => data.WeaponType, data => data);
 
+            _projectiles = _assetService
+                .LoadAllFromResources<ProjectileData>(AssetAddress.ProjectileDataPath)
+                .ToDictionary(data => data.ProjectileType, data => data);
+            
             _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
-            _bullet = _assetService.LoadFromResources<BulletData>(AssetAddress.BulletDataPath);
             _fxData = _assetService.LoadFromResources<FxData>(AssetAddress.FxDataPath);
             _textureArrayData = _assetService.LoadFromResources<TextureArrayData>(AssetAddress.TextureArrayDataPath);
             _uiData = _assetService.LoadFromResources<UiData>(AssetAddress.UiDataPath);
@@ -76,9 +79,10 @@ namespace CodeBase.Infrastructure.StaticData
         WeaponCharacteristicData IStaticDataService.WeaponCharacteristicData(WeaponType type) => 
             _weaponCharacteristics.TryGetValue(type, out WeaponCharacteristicData staticData) ? staticData : null;
 
-        CharacterData IStaticDataService.CharacterData() => _character;
+        public ProjectileData ProjectileData(ProjectileType type) => 
+            _projectiles.TryGetValue(type, out var projectileData) ? projectileData : null;
 
-        BulletData IStaticDataService.BulletData() => _bullet;
+        CharacterData IStaticDataService.CharacterData() => _character;
 
         FxData IStaticDataService.FxData() => _fxData;
 

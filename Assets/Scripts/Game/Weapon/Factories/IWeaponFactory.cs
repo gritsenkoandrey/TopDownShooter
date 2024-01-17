@@ -9,6 +9,6 @@ namespace CodeBase.Game.Weapon.Factories
     public interface IWeaponFactory : IService
     {
         public UniTask<CWeapon> CreateWeapon(WeaponType type, Transform parent);
-        public UniTask<IBullet> CreateBullet(int damage, Vector3 position, Vector3 direction);
+        public UniTask<IBullet> CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction);
     }
 }

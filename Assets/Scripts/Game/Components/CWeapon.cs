@@ -6,12 +6,13 @@ namespace CodeBase.Game.Components
 {
     public sealed class CWeapon : EntityComponent<CWeapon>
     {
-        [SerializeField] private Transform _spawnBulletPoint;
+        [SerializeField] private ProjectileType _projectileType;
+        [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private RuntimeAnimatorController _runtimeAnimatorController;
-        
+
+        public ProjectileType ProjectileType => _projectileType;
+        public Transform[] SpawnPoints => _spawnPoints;
         public RuntimeAnimatorController RuntimeAnimatorController => _runtimeAnimatorController;
-        public Vector3 SpawnBulletPointPosition => _spawnBulletPoint.position;
-        public Vector3 NormalizeForwardDirection => _spawnBulletPoint.forward.normalized;
         public IWeapon Weapon { get; private set; }
         
         public void SetWeapon(IWeapon weapon)

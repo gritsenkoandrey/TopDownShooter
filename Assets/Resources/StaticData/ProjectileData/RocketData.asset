@@ -10,6 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eef34116efd42fcbdaa1c80dea6e253, type: 3}
-  m_Name: BulletData
+  m_Name: RocketData
   m_EditorClassIdentifier: 
-  CollisionRadius: 1.5
+  ProjectileType: 1
+  CollisionRadius: 2
+  PrefabReference:
+    m_AssetGUID: 154af25b7b5b4c24eac3a323bb19644c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

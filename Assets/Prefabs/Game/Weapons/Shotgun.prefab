@@ -182,6 +182,8 @@ Transform:
   - {fileID: 194822161500323114}
   - {fileID: 194822161500323116}
   - {fileID: 5341390461832228467}
+  - {fileID: 651335525644677407}
+  - {fileID: 141469245813095663}
   m_Father: {fileID: 8224645384314734721}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -250,9 +252,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnBulletPoint: {fileID: 5341390461832228467}
-  _animatorController: {fileID: 0}
+  _projectileType: 0
+  _spawnPoints:
+  - {fileID: 5341390461832228467}
+  - {fileID: 651335525644677407}
+  - {fileID: 141469245813095663}
   _runtimeAnimatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}
+--- !u!1 &2430523146552781896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 651335525644677407}
+  m_Layer: 0
+  m_Name: SpawnBullet_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &651335525644677407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430523146552781896}
+  m_LocalRotation: {x: 0, y: -0.08715578, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.95}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 194822161500323118}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -10, z: 0}
 --- !u!1 &2783902474224364099
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5341390461832228467}
   m_Layer: 0
-  m_Name: SpawnBullet
+  m_Name: SpawnBullet_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,3 +320,34 @@ Transform:
   m_Father: {fileID: 194822161500323118}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6734871648491811614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 141469245813095663}
+  m_Layer: 0
+  m_Name: SpawnBullet_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &141469245813095663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6734871648491811614}
+  m_LocalRotation: {x: 0, y: 0.08715578, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.95}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 194822161500323118}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 10, z: 0}

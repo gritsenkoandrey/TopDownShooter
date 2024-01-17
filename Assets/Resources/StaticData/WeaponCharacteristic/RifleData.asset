@@ -18,7 +18,9 @@ MonoBehaviour:
     ClipCount: 20
     ForceBullet: 0.5
     RechargeTime: 5
-    SpeedAttack: 0.2
+    FireInterval: 0.2
+    CriticalChance: 10
+    CriticalMultiplier: 2
     DetectionDistance: 10
     AttackDistance: 7.5
     IsDetectThroughObstacle: 1

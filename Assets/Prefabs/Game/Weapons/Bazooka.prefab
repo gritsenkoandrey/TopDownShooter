@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnBulletPoint: {fileID: 7915787244823588626}
-  _animatorController: {fileID: 0}
+  _projectileType: 1
+  _spawnPoints:
+  - {fileID: 7915787244823588626}
+  _spawnBulletPoint: {fileID: 0}
   _runtimeAnimatorController: {fileID: 9100000, guid: d1be6fbfdbbb17147a988884a05c0d21, type: 2}
 --- !u!1 &7047083843194152240
 GameObject:

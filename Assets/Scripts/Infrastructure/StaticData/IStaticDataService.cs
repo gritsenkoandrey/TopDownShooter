@@ -14,8 +14,8 @@ namespace CodeBase.Infrastructure.StaticData
         public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
         public LevelData LevelData(LevelType type);
         public WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
+        public ProjectileData ProjectileData(ProjectileType type);
         public CharacterData CharacterData();
-        public BulletData BulletData();
         public FxData FxData();
         public TextureArrayData TextureArrayData();
         public UiData UiData();

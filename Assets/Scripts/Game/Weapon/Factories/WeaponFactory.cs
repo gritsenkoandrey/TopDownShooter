@@ -49,16 +49,16 @@ namespace CodeBase.Game.Weapon.Factories
                 .Build();
         }
 
-        async UniTask<IBullet> IWeaponFactory.CreateBullet(int damage, Vector3 position, Vector3 direction)
+        async UniTask<IBullet> IWeaponFactory.CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction)
         {
-            BulletData data = _staticDataService.BulletData();
+            ProjectileData data = _staticDataService.ProjectileData(type);
             
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Bullet);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             return new BulletBuilder(_objectPoolService)
                 .SetPrefab(prefab)
+                .SetSpawnPoint(spawnPoint)
                 .SetDamage(damage)
-                .SetPosition(position)
                 .SetDirection(direction)
                 .SetCollisionDistance(data.CollisionRadius)
                 .Build();
