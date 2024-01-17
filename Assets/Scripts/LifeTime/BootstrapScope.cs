@@ -15,6 +15,7 @@ using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -22,6 +23,11 @@ namespace CodeBase.LifeTime
 {
     public sealed class BootstrapScope : LifetimeScope
     {
+        [SerializeField] private LoadingCurtain _loadingCurtain;
+        [SerializeField] private CameraService _cameraService;
+        [SerializeField] private GuiService _guiService;
+        [SerializeField] private JoystickService _joystickService;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -35,10 +41,10 @@ namespace CodeBase.LifeTime
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterComponentInHierarchy<LoadingCurtain>().As<ILoadingCurtainService>();
-            builder.RegisterComponentInHierarchy<CameraService>().As<ICameraService>();
-            builder.RegisterComponentInHierarchy<GuiService>().As<IGuiService>();
-            builder.RegisterComponentInHierarchy<JoystickService>().As<IJoystickService>();
+            builder.RegisterComponentInNewPrefab(_loadingCurtain, Lifetime.Singleton).UnderTransform(transform).As<ILoadingCurtainService>();
+            builder.RegisterComponentInNewPrefab(_cameraService, Lifetime.Singleton).UnderTransform(transform).As<ICameraService>();
+            builder.RegisterComponentInNewPrefab(_guiService, Lifetime.Singleton).UnderTransform(transform).As<IGuiService>();
+            builder.RegisterComponentInNewPrefab(_joystickService, Lifetime.Singleton).UnderTransform(transform).As<IJoystickService>();
 
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
@@ -69,4 +75,4 @@ namespace CodeBase.LifeTime
             builder.RegisterEntryPoint<BootstrapEntryPoint>().AsSelf();
         }
     }
-}
+} 
