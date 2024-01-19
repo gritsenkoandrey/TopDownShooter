@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using UniRx;
 
 namespace CodeBase.Game.Systems
@@ -47,7 +48,7 @@ namespace CodeBase.Game.Systems
 
             _progressService.MoneyData.Data.Value += component.Stats.Money;
             _levelModel.RemoveEnemy(component);
-            _effectFactory.CreateDeathFx(component.Position.AddY(1f));
+            _effectFactory.CreateDeathFx(component.Position.AddY(1f)).Forget();
         }
     }
 }

@@ -85,15 +85,15 @@ namespace CodeBase.Infrastructure.Factories.UI
             return pointerArrow;
         }
 
-        async UniTask<CDamageView> IUIFactory.CreateDamageView(Transform parent)
+        async UniTask<CDamageCombatLogView> IUIFactory.CreateDamageView(Transform parent)
         {
             UiData data = _staticDataService.UiData();
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.DamageViewPrefabReference);
 
-            CDamageView damageView = Object.Instantiate(prefab, parent).GetComponent<CDamageView>();
+            CDamageCombatLogView damageCombatLogView = Object.Instantiate(prefab, parent).GetComponent<CDamageCombatLogView>();
 
-            return damageView;
+            return damageCombatLogView;
         }
 
         void IUIFactory.CleanUp()

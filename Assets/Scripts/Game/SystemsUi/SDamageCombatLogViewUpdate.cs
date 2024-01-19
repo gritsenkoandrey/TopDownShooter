@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SDamageViewUpdate : SystemComponent<CDamageView>
+    public sealed class SDamageCombatLogViewUpdate : SystemComponent<CDamageCombatLogView>
     {
         private readonly ICameraService _cameraService;
 
-        public SDamageViewUpdate(ICameraService cameraService)
+        public SDamageCombatLogViewUpdate(ICameraService cameraService)
         {
             _cameraService = cameraService;
         }
@@ -22,7 +22,7 @@ namespace CodeBase.Game.SystemsUi
             Entities.Foreach(UpdateDamageViewPosition);
         }
 
-        private void UpdateDamageViewPosition(CDamageView component)
+        private void UpdateDamageViewPosition(CDamageCombatLogView component)
         {
             if (component.Settings.IsActive == false)
             {

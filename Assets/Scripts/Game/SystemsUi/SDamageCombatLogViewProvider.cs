@@ -9,26 +9,27 @@ using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SDamageViewProvider : SystemComponent<CDamageViewProvider>
+    public sealed class SDamageCombatLogViewProvider : SystemComponent<CDamageCombatLogViewProvider>
     {
         private readonly IUIFactory _uiFactory;
         private readonly ICameraService _cameraService;
         private readonly IGuiService _guiService;
-        private readonly LevelModel _levelModel;
+        private readonly DamageCombatLog _damageCombatLog;
 
         private float _scaleFactor;
+        private float _time;
 
-        public SDamageViewProvider(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, LevelModel levelModel)
+        public SDamageCombatLogViewProvider(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, 
+            DamageCombatLog damageCombatLog)
         {
             _uiFactory = uiFactory;
             _cameraService = cameraService;
             _guiService = guiService;
-            _levelModel = levelModel;
+            _damageCombatLog = damageCombatLog;
         }
 
         protected override void OnEnableSystem()
@@ -38,51 +39,55 @@ namespace CodeBase.Game.SystemsUi
             _scaleFactor = _guiService.StaticCanvas.Canvas.scaleFactor;
         }
 
-        protected override void OnEnableComponent(CDamageViewProvider component)
+        protected override void OnLateUpdate()
         {
-            base.OnEnableComponent(component);
+            base.OnLateUpdate();
             
-            foreach (IEnemy enemy in _levelModel.Enemies)
-            {
-                SubscribeOnDamageEnemy(component, enemy);
-            }
+            Entities.Foreach(UpdateDamageView);
         }
 
-        protected override void OnDisableComponent(CDamageViewProvider component)
+        protected override void OnDisableComponent(CDamageCombatLogViewProvider component)
         {
             base.OnDisableComponent(component);
             
-            component.DamageViews = Array.Empty<CDamageView>(); 
+            component.DamageCombatLogViews = Array.Empty<CDamageCombatLogView>();
         }
 
-        private void SubscribeOnDamageEnemy(CDamageViewProvider component, IEnemy enemy)
+        private void UpdateDamageView(CDamageCombatLogViewProvider component)
         {
-            enemy.Health.CurrentHealth
-                .Pairwise()
-                .Where(health => health.Current < health.Previous)
-                .Subscribe(health =>
-                {
-                    ActivateDamageView(component, enemy, health.Previous - health.Current);
-                })
-                .AddTo(component.LifetimeDisposable);
-        }
-
-        private void ActivateDamageView(CDamageViewProvider component, IEnemy enemy, int damage)
-        {
-            if (component.DamageViews.Count == 0)
+            if (_damageCombatLog.HasDamage() == false)
             {
-                component.DamageViews = new List<CDamageView>();
+                return;
+            }
+            
+            _time += Time.deltaTime;
+
+            if (_time > 0.1f)
+            {
+                _time = 0f;
+                    
+                ActivateDamageView(component);
+            }
+        }
+
+        private void ActivateDamageView(CDamageCombatLogViewProvider component)
+        {
+            (IEnemy enemy, int damage) = _damageCombatLog.Dequeue();
+            
+            if (component.DamageCombatLogViews.Count == 0)
+            {
+                component.DamageCombatLogViews = new List<CDamageCombatLogView>();
             }
             else
             {
-                for (int i = 0; i < component.DamageViews.Count; i++)
+                for (int i = 0; i < component.DamageCombatLogViews.Count; i++)
                 {
-                    if (component.DamageViews[i].Settings.IsActive)
+                    if (component.DamageCombatLogViews[i].Settings.IsActive)
                     {
                         continue;
                     }
                     
-                    ActivateUpdateDamageView(component.DamageViews[i], enemy, damage);
+                    ActivateUpdateDamageView(component.DamageCombatLogViews[i], enemy, damage);
                     
                     return;
                 }
@@ -91,14 +96,14 @@ namespace CodeBase.Game.SystemsUi
             InstantiateDamageView(component, enemy, damage).Forget();
         }
 
-        private async UniTaskVoid InstantiateDamageView(CDamageViewProvider component, IEnemy enemy, int damage)
+        private async UniTaskVoid InstantiateDamageView(CDamageCombatLogViewProvider component, IEnemy enemy, int damage)
         {
-            CDamageView damageView = await _uiFactory.CreateDamageView(component.transform);
-            ActivateUpdateDamageView(damageView, enemy, damage);
-            component.DamageViews.Add(damageView);
+            CDamageCombatLogView damageCombatLogView = await _uiFactory.CreateDamageView(component.transform);
+            ActivateUpdateDamageView(damageCombatLogView, enemy, damage);
+            component.DamageCombatLogViews.Add(damageCombatLogView);
         }
 
-        private void ActivateUpdateDamageView(CDamageView component, IEnemy enemy, int damage)
+        private void ActivateUpdateDamageView(CDamageCombatLogView component, IEnemy enemy, int damage)
         {
             Vector3 enemyPosition = enemy.Position.AddY(enemy.Stats.Height);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemyPosition);

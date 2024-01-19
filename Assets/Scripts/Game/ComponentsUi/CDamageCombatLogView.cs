@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.ComponentsUi
 {
-    public sealed class CDamageView : EntityComponent<CDamageView>
+    public sealed class CDamageCombatLogView : EntityComponent<CDamageCombatLogView>
     {
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private CanvasGroup _canvasGroup;
@@ -17,10 +17,10 @@ namespace CodeBase.Game.ComponentsUi
         public int Points => _points;
         public float Offset => _offset;
 
-        public readonly DamageViewSettings Settings = new ();
+        public readonly CombatLogSettings Settings = new ();
     }
 
-    public sealed class DamageViewSettings
+    public sealed class CombatLogSettings
     {
         public IEnemy Target;
         public bool IsActive;

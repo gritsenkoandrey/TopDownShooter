@@ -12,16 +12,18 @@ namespace CodeBase.Game.Systems
     {
         private readonly IEffectFactory _effectFactory;
         private readonly LevelModel _levelModel;
+        private readonly DamageCombatLog _damageCombatLog;
 
-        public SBulletCollision(IEffectFactory effectFactory, LevelModel levelModel)
+        public SBulletCollision(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
         {
             _effectFactory = effectFactory;
             _levelModel = levelModel;
+            _damageCombatLog = damageCombatLog;
         }
 
-        protected override void OnLateUpdate()
+        protected override void OnUpdate()
         {
-            base.OnLateUpdate();
+            base.OnUpdate();
             
             Entities.Foreach(CheckCollision);
         }
@@ -39,14 +41,15 @@ namespace CodeBase.Game.Systems
             }
         }
 
-        private async UniTaskVoid Collision(IBullet bullet, ITarget target)
+        private async UniTaskVoid Collision(IBullet bullet, IEnemy target)
         {
             await UniTask.Yield();
             
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
-                
-            _effectFactory.CreateHitFx(bullet.Object.transform.position);
+               
+            _damageCombatLog.Enqueue(target, bullet.Damage);
+            _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
         }
     }
 }

@@ -36,6 +36,7 @@ namespace CodeBase.LifeTime
 
         private readonly InventoryModel _inventoryModel;
         private readonly LevelModel _levelModel;
+        private readonly DamageCombatLog _damageCombatLog;
 
         public SystemEntryPoint(
             IUIFactory uiFactory, 
@@ -49,7 +50,8 @@ namespace CodeBase.LifeTime
             IWeaponFactory weaponFactory,
             IEffectFactory effectFactory,
             InventoryModel inventoryModel,
-            LevelModel levelModel)
+            LevelModel levelModel,
+            DamageCombatLog damageCombatLog)
         {
             _uiFactory = uiFactory;
             _gameFactory = gameFactory;
@@ -63,6 +65,7 @@ namespace CodeBase.LifeTime
             _effectFactory = effectFactory;
             _inventoryModel = inventoryModel;
             _levelModel = levelModel;
+            _damageCombatLog = damageCombatLog;
         }
 
         void IInitializable.Initialize() => CreateSystems();
@@ -89,12 +92,12 @@ namespace CodeBase.LifeTime
                 new SBulletLifeTime(_objectPoolService),
                 new SCurrentLevel(_progressService),
                 new SGroundMesh(_textureArrayFactory),
-                new SDamageViewUpdate(_cameraService),
+                new SDamageCombatLogViewUpdate(_cameraService),
                 new SEnemyHealthProvider(_uiFactory, _levelModel),
                 new SEnemyHealthUpdate(_cameraService),
                 new SCharacterHealth(_levelModel),
                 new SBulletProvider(),
-                new SBulletCollision(_effectFactory, _levelModel),
+                new SBulletCollision(_effectFactory, _levelModel, _damageCombatLog),
                 new SLevelTimeLeft(_levelModel),
                 new SStateMachineUpdate(),
                 new SCharacterAnimation(),
@@ -107,7 +110,7 @@ namespace CodeBase.LifeTime
                 new SZombieSpawner(_gameFactory, _levelModel),
                 new SPointerArrowProvider(_uiFactory, _levelModel),
                 new SPointerArrowUpdate(_cameraService, _guiService),
-                new SDamageViewProvider(_uiFactory, _cameraService, _guiService, _levelModel),
+                new SDamageCombatLogViewProvider(_uiFactory, _cameraService, _guiService, _damageCombatLog),
             };
         }
 

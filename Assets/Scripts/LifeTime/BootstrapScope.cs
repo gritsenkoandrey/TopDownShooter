@@ -48,6 +48,7 @@ namespace CodeBase.LifeTime
 
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
+            builder.Register<DamageCombatLog>(Lifetime.Singleton).AsSelf();
             
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
