@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Builders
 {
-    public sealed class BulletBuilder
+    public sealed class ProjectileBuilder
     {
         private GameObject _prefab;
         private Transform _spawnPoint;
@@ -17,40 +17,40 @@ namespace CodeBase.Game.Builders
 
         private readonly IObjectPoolService _objectPoolService;
 
-        public BulletBuilder(IObjectPoolService objectPoolService)
+        public ProjectileBuilder(IObjectPoolService objectPoolService)
         {
             _objectPoolService = objectPoolService;
         }
 
-        public BulletBuilder SetPrefab(GameObject prefab)
+        public ProjectileBuilder SetPrefab(GameObject prefab)
         {
             _prefab = prefab;
             
             return this;
         }
 
-        public BulletBuilder SetSpawnPoint(Transform spawnPoint)
+        public ProjectileBuilder SetSpawnPoint(Transform spawnPoint)
         {
             _spawnPoint = spawnPoint;
 
             return this;
         }
 
-        public BulletBuilder SetCollisionDistance(float collisionDistance)
+        public ProjectileBuilder SetCollisionDistance(float collisionDistance)
         {
             _collisionDistance = collisionDistance;
             
             return this;
         }
 
-        public BulletBuilder SetDirection(Vector3 direction)
+        public ProjectileBuilder SetDirection(Vector3 direction)
         {
             _direction = direction;
             
             return this;
         }
 
-        public BulletBuilder SetDamage(int damage)
+        public ProjectileBuilder SetDamage(int damage)
         {
             _damage = damage;
             

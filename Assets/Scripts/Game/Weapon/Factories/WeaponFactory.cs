@@ -55,7 +55,7 @@ namespace CodeBase.Game.Weapon.Factories
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new BulletBuilder(_objectPoolService)
+            return new ProjectileBuilder(_objectPoolService)
                 .SetPrefab(prefab)
                 .SetSpawnPoint(spawnPoint)
                 .SetDamage(damage)
