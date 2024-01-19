@@ -7,26 +7,29 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateLoadLevel : IEnterLoadState<string>
     {
         private readonly IGameStateService _stateService;
-        private readonly ISceneLoaderService _sceneLoaderService;
-        private readonly IGameFactory _gameFactory;
-        private readonly IUIFactory _uiFactory;
-        private readonly IAssetService _assetService;
-        private readonly ILoadingCurtainService _curtain;
-        private readonly ICameraService _cameraService;
-        private readonly ITextureArrayFactory _textureArrayFactory;
-        private readonly LevelModel _levelModel;
+        private ISceneLoaderService _sceneLoaderService;
+        private IGameFactory _gameFactory;
+        private IUIFactory _uiFactory;
+        private IAssetService _assetService;
+        private ILoadingCurtainService _curtain;
+        private ICameraService _cameraService;
+        private ITextureArrayFactory _textureArrayFactory;
+        private LevelModel _levelModel;
 
-        public StateLoadLevel(
-            IGameStateService stateService, 
+        public StateLoadLevel(IGameStateService stateService)
+        {
+            _stateService = stateService;
+        }
+
+        [Inject]
+        public void Construct(
             ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, 
             IUIFactory uiFactory, 
@@ -36,7 +39,6 @@ namespace CodeBase.Infrastructure.States
             ITextureArrayFactory textureArrayFactory,
             LevelModel levelModel)
         {
-            _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
@@ -46,8 +48,6 @@ namespace CodeBase.Infrastructure.States
             _textureArrayFactory = textureArrayFactory;
             _levelModel = levelModel;
         }
-        
-        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterLoadState<string>.Enter(string sceneName)
         {

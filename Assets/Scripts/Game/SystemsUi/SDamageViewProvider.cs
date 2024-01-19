@@ -100,7 +100,8 @@ namespace CodeBase.Game.SystemsUi
 
         private void ActivateUpdateDamageView(CDamageView component, IEnemy enemy, int damage)
         {
-            Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemy.Position.AddY(enemy.Stats.Height));
+            Vector3 enemyPosition = enemy.Position.AddY(enemy.Stats.Height);
+            Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemyPosition);
             float offset = _scaleFactor * component.Offset;
             float dirX = viewportPoint.x > 0.5f ? 1f : -1f;
             float dirY = viewportPoint.y > 0.5f ? 1f : -1f;

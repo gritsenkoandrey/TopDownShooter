@@ -5,38 +5,38 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateBootstrap : IEnterState
     {
         private readonly IGameStateService _stateService;
-        private readonly ISceneLoaderService _sceneLoaderService;
-        private readonly IStaticDataService _staticDataService;
-        private readonly IJoystickService _joystickService;
-        private readonly IObjectPoolService _objectPoolService;
-        private readonly IAssetService _assetService;
+        private ISceneLoaderService _sceneLoaderService;
+        private IStaticDataService _staticDataService;
+        private IJoystickService _joystickService;
+        private IObjectPoolService _objectPoolService;
+        private IAssetService _assetService;
 
-        public StateBootstrap(
-            IGameStateService stateService, 
+        public StateBootstrap(IGameStateService stateService)
+        {
+            _stateService = stateService;
+        }
+
+        [Inject]
+        public void Construct(
             ISceneLoaderService sceneLoaderService, 
             IStaticDataService staticDataService, 
             IJoystickService joystickService, 
             IObjectPoolService objectPoolService, 
             IAssetService assetService)
         {
-            _stateService = stateService;
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
             _joystickService = joystickService;
             _objectPoolService = objectPoolService;
             _assetService = assetService;
         }
-
-        void IInitializable.Initialize() => _stateService.AddState(this);
 
         async void IEnterState.Enter()
         {

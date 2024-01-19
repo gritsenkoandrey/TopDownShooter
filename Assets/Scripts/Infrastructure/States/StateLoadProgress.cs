@@ -2,26 +2,27 @@
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Progress;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateLoadProgress : IEnterState
     {
         private readonly IGameStateService _stateService;
-        private readonly IProgressService _progressService;
-        private readonly ILoadingCurtainService _loadingCurtainService;
+        private IProgressService _progressService;
+        private ILoadingCurtainService _loadingCurtainService;
 
-        public StateLoadProgress(IGameStateService stateService, IProgressService progressService, ILoadingCurtainService loadingCurtainService)
+        public StateLoadProgress(IGameStateService stateService)
         {
             _stateService = stateService;
+        }
+        
+        [Inject]
+        public void Construct(IProgressService progressService, ILoadingCurtainService loadingCurtainService)
+        {
             _progressService = progressService;
             _loadingCurtainService = loadingCurtainService;
         }
-        
-        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterState.Enter()
         {

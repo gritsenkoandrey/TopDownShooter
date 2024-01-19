@@ -3,41 +3,30 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SBulletProvider : SystemComponent<CBullet>
+    public sealed class SBulletCollision : SystemComponent<CBullet>
     {
         private readonly IEffectFactory _effectFactory;
         private readonly LevelModel _levelModel;
 
-        public SBulletProvider(IEffectFactory effectFactory, LevelModel levelModel)
+        public SBulletCollision(IEffectFactory effectFactory, LevelModel levelModel)
         {
             _effectFactory = effectFactory;
             _levelModel = levelModel;
         }
 
-        protected override void OnUpdate()
+        protected override void OnLateUpdate()
         {
-            base.OnUpdate();
-
-            foreach (CBullet bullet in Entities)
-            {
-                Move(bullet);
-                
-                if (CheckCollision(bullet))
-                {
-                    return;
-                }
-            }
+            base.OnLateUpdate();
+            
+            Entities.Foreach(CheckCollision);
         }
 
-        private void Move(IBullet bullet)
-        {
-            bullet.Object.transform.position += bullet.Direction;
-        }
-
-        private bool CheckCollision(IBullet bullet)
+        private void CheckCollision(IBullet bullet)
         {
             for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
@@ -45,17 +34,15 @@ namespace CodeBase.Game.Systems
 
                 if (isCollision)
                 {
-                    Collision(bullet, _levelModel.Enemies[i]);
-                        
-                    return true;
+                    Collision(bullet, _levelModel.Enemies[i]).Forget();
                 }
             }
-
-            return false;
         }
 
-        private void Collision(IBullet bullet, ITarget target)
+        private async UniTaskVoid Collision(IBullet bullet, ITarget target)
         {
+            await UniTask.Yield();
+            
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
                 

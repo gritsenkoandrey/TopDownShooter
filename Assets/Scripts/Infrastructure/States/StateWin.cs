@@ -4,29 +4,30 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using UniRx;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateWin : IEnterState
     {
         private readonly IGameStateService _stateService;
-        private readonly IUIFactory _uiFactory;
-        private readonly IProgressService _progressService;
+        private IUIFactory _uiFactory;
+        private IProgressService _progressService;
         
         private IDisposable _transitionDisposable;
 
-        public StateWin(IGameStateService stateService, IUIFactory uiFactory, IProgressService progressService)
+        public StateWin(IGameStateService stateService)
         {
             _stateService = stateService;
+        }
+        
+        [Inject]
+        public void Construct(IUIFactory uiFactory, IProgressService progressService)
+        {
             _uiFactory = uiFactory;
             _progressService = progressService;
         }
-        
-        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterState.Enter()
         {

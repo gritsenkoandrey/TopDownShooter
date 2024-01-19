@@ -1,8 +1,6 @@
-﻿using VContainer.Unity;
-
-namespace CodeBase.Infrastructure.States
+﻿namespace CodeBase.Infrastructure.States
 {
-    public interface IExitState : IInitializable
+    public interface IExitState
     {
         public void Exit();
     }

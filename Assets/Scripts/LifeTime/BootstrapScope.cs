@@ -62,14 +62,6 @@ namespace CodeBase.LifeTime
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
             
             builder.Register<IGameStateService, GameStateService>(Lifetime.Singleton);
-            builder.Register<StateBootstrap>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateFail>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateGame>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateLoadLevel>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateLoadProgress>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateLobby>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StatePreview>(Lifetime.Singleton).As<IInitializable>();
-            builder.Register<StateWin>(Lifetime.Singleton).As<IInitializable>();
 
             builder.RegisterEntryPoint<SystemEntryPoint>().AsSelf();
             builder.RegisterEntryPoint<BootstrapEntryPoint>().AsSelf();

@@ -7,32 +7,33 @@ using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
 using CodeBase.Utils;
-using JetBrains.Annotations;
 using UniRx;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateGame : IEnterState
     {
         private readonly IGameStateService _stateService;
-        private readonly IJoystickService _joystickService;
-        private readonly IUIFactory _uiFactory;
-        private readonly LevelModel _levelModel;
+        private IJoystickService _joystickService;
+        private IUIFactory _uiFactory;
+        private LevelModel _levelModel;
 
         private readonly CompositeDisposable _transitionDisposable = new();
 
-        public StateGame(IGameStateService stateService, IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
+        public StateGame(IGameStateService stateService)
         {
             _stateService = stateService;
+        }
+
+        [Inject]
+        public void Construct(IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
+        {
             _joystickService = joystickService;
             _uiFactory = uiFactory;
             _levelModel = levelModel;
         }
         
-        void IInitializable.Initialize() => _stateService.AddState(this);
-
         void IEnterState.Enter()
         {
             _uiFactory.CreateScreen(ScreenType.Game);

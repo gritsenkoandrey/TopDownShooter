@@ -4,29 +4,30 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using UniRx;
-using VContainer.Unity;
+using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class StatePreview : IEnterLoadState<string>
     {
         private readonly IGameStateService _stateService;
-        private readonly IUIFactory _uiFactory;
-        private readonly ISceneLoaderService _sceneLoaderService;
+        private IUIFactory _uiFactory;
+        private ISceneLoaderService _sceneLoaderService;
         
         private IDisposable _transitionDisposable;
 
-        public StatePreview(IGameStateService stateService, IUIFactory uiFactory, ISceneLoaderService sceneLoaderService)
+        public StatePreview(IGameStateService stateService)
         {
             _stateService = stateService;
+        }
+
+        [Inject]
+        public void Construct(IUIFactory uiFactory, ISceneLoaderService sceneLoaderService)
+        {
             _uiFactory = uiFactory;
             _sceneLoaderService = sceneLoaderService;
         }
-        
-        void IInitializable.Initialize() => _stateService.AddState(this);
 
         void IEnterLoadState<string>.Enter(string sceneName)
         {

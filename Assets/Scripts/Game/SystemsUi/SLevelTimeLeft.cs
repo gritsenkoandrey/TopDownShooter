@@ -2,7 +2,6 @@
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Utils;
 using UniRx;
 
 namespace CodeBase.Game.SystemsUi
@@ -29,7 +28,8 @@ namespace CodeBase.Game.SystemsUi
 
             Observable.Timer(Time())
                 .Repeat()
-                .DoOnSubscribe(() => component.TimeLeftText.text = FormatTime.SecondsToTime(time))
+                .Where(_ => time > 0)
+                .DoOnSubscribe(() => component.SetTimeLeftText(time))
                 .Subscribe(_ => UpdateTime(component, ref time))
                 .AddTo(component.LifetimeDisposable);
         }
@@ -38,14 +38,8 @@ namespace CodeBase.Game.SystemsUi
 
         private void UpdateTime(CLevelTimeLeft component, ref int time)
         {
-            if (time == 0)
-            {
-                return;
-            }
-                    
             time -= 1;
-
-            component.TimeLeftText.text = FormatTime.SecondsToTime(time);
+            component.SetTimeLeftText(time);
         }
     }
 }
