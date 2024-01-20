@@ -12,19 +12,10 @@ namespace CodeBase.Game.SystemsUi
         private readonly ICameraService _cameraService;
         private readonly IGuiService _guiService;
 
-        private float _scaleFactor;
-
         public SPointerArrowUpdate(ICameraService cameraService, IGuiService guiService)
         {
             _cameraService = cameraService;
             _guiService = guiService;
-        }
-
-        protected override void OnEnableSystem()
-        {
-            base.OnEnableSystem();
-
-            _scaleFactor = _guiService.StaticCanvas.Canvas.scaleFactor;
         }
 
         protected override void OnLateUpdate()
@@ -54,8 +45,8 @@ namespace CodeBase.Game.SystemsUi
                 return;
             }
 
-            if (indicatorPosition.z > 0f & indicatorPosition.x < pointerArrow.Rect.width * _scaleFactor
-                                         & indicatorPosition.y < pointerArrow.Rect.height * _scaleFactor
+            if (indicatorPosition.z > 0f & indicatorPosition.x < pointerArrow.Rect.width * _guiService.ScaleFactor
+                                         & indicatorPosition.y < pointerArrow.Rect.height * _guiService.ScaleFactor
                                          & indicatorPosition.x > 0f
                                          & indicatorPosition.y > 0f)
             {
@@ -80,7 +71,7 @@ namespace CodeBase.Game.SystemsUi
             float offset = pointerArrow.Offset;
             Rect rect = pointerArrow.Rect;
             
-            Vector3 canvasCenter = new Vector3(rect.width / 2f, rect.height / 2f, 0f) * _scaleFactor;
+            Vector3 canvasCenter = new Vector3(rect.width / 2f, rect.height / 2f, 0f) * _guiService.ScaleFactor;
             
             indicatorPosition.z = 0f;
             indicatorPosition -= canvasCenter;
@@ -89,13 +80,13 @@ namespace CodeBase.Game.SystemsUi
             if (divX < divY)
             {
                 float angle = Vector3.SignedAngle(Vector3.right, indicatorPosition, Vector3.forward);
-                indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (rect.width * 0.5f - offset) * _scaleFactor;
+                indicatorPosition.x = Mathf.Sign(indicatorPosition.x) * (rect.width * 0.5f - offset) * _guiService.ScaleFactor;
                 indicatorPosition.y = Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.x;
             }
             else
             {
                 float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition, Vector3.forward);
-                indicatorPosition.y = Mathf.Sign(indicatorPosition.y) * (rect.height / 2f - offset) * _scaleFactor;
+                indicatorPosition.y = Mathf.Sign(indicatorPosition.y) * (rect.height / 2f - offset) * _guiService.ScaleFactor;
                 indicatorPosition.x = -Mathf.Tan(Mathf.Deg2Rad * angle) * indicatorPosition.y;
             }
             indicatorPosition += canvasCenter;
@@ -106,7 +97,7 @@ namespace CodeBase.Game.SystemsUi
         {
             Rect rect = pointerArrow.Rect;
             
-            Vector3 canvasCenter = new Vector3(rect.width / 2f, rect.height / 2f, 0f) * _scaleFactor;
+            Vector3 canvasCenter = new Vector3(rect.width / 2f, rect.height / 2f, 0f) * _guiService.ScaleFactor;
             
             float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
             return Quaternion.Euler(new Vector3(0f, 0f, angle));

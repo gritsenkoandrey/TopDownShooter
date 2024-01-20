@@ -13,7 +13,7 @@ namespace CodeBase.Game.Systems
         private readonly IEffectFactory _effectFactory;
         private readonly LevelModel _levelModel;
         private readonly DamageCombatLog _damageCombatLog;
-
+        
         public SBulletCollision(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
         {
             _effectFactory = effectFactory;
@@ -48,7 +48,7 @@ namespace CodeBase.Game.Systems
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
                
-            _damageCombatLog.Enqueue(target, bullet.Damage);
+            _damageCombatLog.AddLog(target, bullet.Damage);
             _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
         }
     }

@@ -190,7 +190,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void SetOrthographicSizeOnPreviewCamera(CCharacterPreviewMediator component)
         {
-            component.PreviewCamera.orthographicSize *= _guiService.StaticCanvas.Canvas.scaleFactor;
+            component.PreviewCamera.orthographicSize *= _guiService.ScaleFactor;
         }
     }
 }

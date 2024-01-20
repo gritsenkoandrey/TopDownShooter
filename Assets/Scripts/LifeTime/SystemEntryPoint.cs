@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
+using CodeBase.Game.SystemsBase;
 using CodeBase.Game.SystemsUi;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.CameraMain;
@@ -111,6 +112,9 @@ namespace CodeBase.LifeTime
                 new SPointerArrowProvider(_uiFactory, _levelModel),
                 new SPointerArrowUpdate(_cameraService, _guiService),
                 new SDamageCombatLogViewProvider(_uiFactory, _cameraService, _guiService, _damageCombatLog),
+                new SDamageCombatLogUpdate(_damageCombatLog),
+                new SJoystickUpdate(_joystickService),
+                new SObjectPoolLog(_objectPoolService),
             };
         }
 
@@ -136,9 +140,6 @@ namespace CodeBase.LifeTime
             {
                 _systems[i].Update();
             }
-            
-            _joystickService.Execute();
-            _objectPoolService.Log();
         }
         
         private void FixedUpdateSystems()
@@ -162,8 +163,6 @@ namespace CodeBase.LifeTime
             DisableSystems();
             
             _systems = Array.Empty<SystemBase>();
-            
-            _objectPoolService.CleanUp();
         }
     }
 }

@@ -8,7 +8,6 @@ namespace CodeBase.Infrastructure.Pool
     {
         public UniTask Init();
         public void Log();
-        public void CleanUp();
         public GameObject SpawnObject(GameObject prefab);
         public GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation);
         public void ReleaseObject(GameObject clone);

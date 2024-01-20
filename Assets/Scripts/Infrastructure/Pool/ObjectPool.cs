@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeBase.Utils.CustomDebug;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
@@ -87,7 +88,7 @@ namespace CodeBase.Infrastructure.Pool
             }
             else
             {
-                Debug.LogWarning($"This object pool does not contain the item provided: {item}");
+                CustomDebug.LogWarning($"This object pool does not contain the item provided: {item}");
             }
         }
     }

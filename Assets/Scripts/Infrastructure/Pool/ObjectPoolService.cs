@@ -4,6 +4,7 @@ using System.Threading;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
+using CodeBase.Utils.CustomDebug;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine;
 namespace CodeBase.Infrastructure.Pool
 {
 	[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public sealed class ObjectPoolService : IObjectPoolService
+    public sealed class ObjectPoolService : IObjectPoolService, IDisposable
     {
 	    private Transform _root;
 	    private readonly Transform _parent;
@@ -73,7 +74,7 @@ namespace CodeBase.Infrastructure.Pool
 		    {
 			    if (exception.CancellationToken == _token)
 			    {
-				    Debug.LogWarning($"{exception.CancellationToken}");
+				    CustomDebug.LogWarning($"{exception.CancellationToken}");
 			    }
 		    }
 	    }
@@ -86,15 +87,6 @@ namespace CodeBase.Infrastructure.Pool
 			    
 			    _dirty = false;
 		    }
-	    }
-
-	    void IObjectPoolService.CleanUp()
-	    {
-		    _prefabLookup.Clear();
-		    _instanceLookup.Clear();
-		    _token.ThrowIfCancellationRequested();
-
-		    SetActivePoolPrefabs();
 	    }
 
 	    private async UniTask LoadPoolItems()
@@ -168,7 +160,7 @@ namespace CodeBase.Infrastructure.Pool
 		    }
 		    else
 		    {
-			    Debug.LogWarning($"No pool contains the object: {clone.name}");
+			    CustomDebug.LogWarning($"No pool contains the object: {clone.name}");
 		    }
 	    }
 
@@ -188,7 +180,9 @@ namespace CodeBase.Infrastructure.Pool
 	    {
 		    foreach (KeyValuePair<GameObject, ObjectPool<GameObject>> dictionary in _prefabLookup)
 		    {
-			    Debug.Log($"Object Pool for Prefab: {dictionary.Key.name} In Use: {dictionary.Value.CountUsedItems} Total: {dictionary.Value.Count}");
+			    string message = $"Object Pool for Prefab: {dictionary.Key.name} In Use: {dictionary.Value.CountUsedItems} Total: {dictionary.Value.Count}";
+			    
+			    CustomDebug.Log(message, DebugColorType.Lime);
 		    }
 	    }
 
@@ -211,6 +205,15 @@ namespace CodeBase.Infrastructure.Pool
 		    {
 			    _poolItems[i].Prefab.SetActive(true);
 		    }
+	    }
+
+	    void IDisposable.Dispose()
+	    {
+		    _prefabLookup.Clear();
+		    _instanceLookup.Clear();
+		    _token.ThrowIfCancellationRequested();
+
+		    SetActivePoolPrefabs();
 	    }
     }
 }

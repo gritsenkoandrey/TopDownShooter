@@ -1,4 +1,5 @@
-﻿using CodeBase.App;
+﻿using System;
+using CodeBase.App;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
