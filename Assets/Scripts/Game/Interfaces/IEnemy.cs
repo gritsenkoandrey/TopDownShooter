@@ -1,11 +1,6 @@
-﻿using CodeBase.Game.Components;
-using CodeBase.Infrastructure.StaticData.Data;
-
-namespace CodeBase.Game.Interfaces
+﻿namespace CodeBase.Game.Interfaces
 {
-    public interface IEnemy : ITarget, IPosition
+    public interface IEnemy : IStateMachine, IHealth, IPosition, IHeight, ILoot
     {
-        public EnemyStats Stats { get; }
-        public CStateMachine StateMachine { get; }
     }
 }

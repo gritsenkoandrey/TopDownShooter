@@ -79,7 +79,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void InitializeDamageView(CDamageCombatLogView component, IEnemy enemy, int damage)
         {
-            Vector3 enemyPosition = enemy.Position.AddY(enemy.Stats.Height);
+            Vector3 enemyPosition = enemy.Position.AddY(enemy.Height);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemyPosition);
             float offset = _guiService.ScaleFactor * component.Offset;
             float dirX = viewportPoint.x > 0.5f ? 1f : -1f;

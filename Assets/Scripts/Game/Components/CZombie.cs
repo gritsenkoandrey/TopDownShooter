@@ -22,11 +22,13 @@ namespace CodeBase.Game.Components
         public CStateMachine StateMachine => _stateMachine;
         public Health Health { get; } = new();
         public Vector3 Position => transform.position;
+        public float Height => Stats.Height;
+        public int Money => Stats.Money;
         public EnemyStats Stats { get; private set; }
         public int Damage { get; private set; }
         public ReactiveCommand Attack { get; } = new();
         public ReactiveCommand OnCheckDamage { get; } = new();
-        
+
         /// <summary>
         /// Animation event
         /// </summary>

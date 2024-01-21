@@ -46,7 +46,7 @@ namespace CodeBase.Game.Systems
         {
             component.StateMachine.StateMachine.Enter<ZombieStateDeath>();
 
-            _progressService.MoneyData.Data.Value += component.Stats.Money;
+            _progressService.MoneyData.Data.Value += component.Money;
             _levelModel.RemoveEnemy(component);
             _effectFactory.CreateDeathFx(component.Position.AddY(1f)).Forget();
         }

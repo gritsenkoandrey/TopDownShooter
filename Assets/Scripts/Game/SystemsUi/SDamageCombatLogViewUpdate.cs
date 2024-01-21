@@ -38,7 +38,7 @@ namespace CodeBase.Game.SystemsUi
 
             float elapsedTime = component.Settings.Index / (float)component.Points;
             
-            Vector3 targetPosition = component.Settings.Target.Position.AddY(component.Settings.Target.Stats.Height);
+            Vector3 targetPosition = component.Settings.Target.Position.AddY(component.Settings.Target.Height);
             Vector3 targetScreenPosition = _cameraService.Camera.WorldToScreenPoint(targetPosition);
             
             Vector3 to = BezierCurves

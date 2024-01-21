@@ -2,7 +2,7 @@
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface ITarget
+    public interface IHealth
     {
         public Health Health { get; }
     }

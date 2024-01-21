@@ -57,7 +57,7 @@ namespace CodeBase.Game.SystemsUi
                 return;
             }
             
-            float height = component.Enemy.Value.Stats.Height;
+            float height = component.Enemy.Value.Height;
             Vector3 position = component.Enemy.Value.Position.AddY(height);
             Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(position);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(position);
