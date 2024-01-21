@@ -163,5 +163,4 @@ MonoBehaviour:
   _projectileType: 0
   _spawnPoints:
   - {fileID: 8605051522705072692}
-  _spawnBulletPoint: {fileID: 0}
-  _runtimeAnimatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}
+  _runtimeAnimatorController: {fileID: 9100000, guid: 9b036f4516c7c65419d108678bb12b32, type: 2}

@@ -76,11 +76,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileType: 0
+  _projectileType: 5
   _spawnPoints:
   - {fileID: 2969008874939231804}
-  _spawnBulletPoint: {fileID: 0}
-  _runtimeAnimatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}
+  _runtimeAnimatorController: {fileID: 9100000, guid: 9b036f4516c7c65419d108678bb12b32, type: 2}
 --- !u!1 &4852372542590106216
 GameObject:
   m_ObjectHideFlags: 0

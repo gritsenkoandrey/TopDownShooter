@@ -25,15 +25,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3923527503629329301}
-  m_LocalRotation: {x: 0.49885774, y: 0.49935082, z: 0.49930805, w: 0.5024751}
-  m_LocalPosition: {x: 0.07500012, y: -0.031000063, z: -0.010999875}
+  m_LocalRotation: {x: 0.45973417, y: 0.4570752, z: 0.53552437, w: 0.5412398}
+  m_LocalPosition: {x: 0.09071085, y: -0.029454555, z: -0.05444388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 742233285011325887}
   m_Father: {fileID: 5155786554833656439}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.464, y: 80.825, z: 89.787}
 --- !u!33 &3923527503632596885
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,10 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932da064db3d460cbc2d2c2d0f377ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileType: 0
+  _projectileType: 7
   _spawnPoints:
   - {fileID: 742233285011325887}
-  _spawnBulletPoint: {fileID: 0}
   _runtimeAnimatorController: {fileID: 9100000, guid: 3f3dac1d2cf510d469b3919cd6f954e0, type: 2}
 --- !u!1 &7959701668493719748
 GameObject:

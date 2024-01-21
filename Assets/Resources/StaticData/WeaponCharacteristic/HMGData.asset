@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponType: 12
   WeaponCharacteristic:
-    Damage: 5
-    ClipCount: 2
-    ForceBullet: 0.75
+    Damage: 1
+    ClipCount: 40
+    ForceBullet: 0.55
     RechargeTime: 2.5
-    FireInterval: 1
+    FireInterval: 0.2
     CriticalChance: 5
     CriticalMultiplier: 2
     DetectionDistance: 20

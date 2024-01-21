@@ -46,7 +46,7 @@ MonoBehaviour:
     m_Address: Bullet
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Weapon
+    - Projectile
   - m_GUID: cca79b260878071418290367024a6716
     m_Address: DeathFx
     m_ReadOnly: 0
@@ -201,7 +201,37 @@ MonoBehaviour:
     m_Address: Rocket
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Weapon
+    - Projectile
+  - m_GUID: 2a6c671eff9a71a418bd43aa8d6188d2
+    m_Address: LaserFire
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+  - m_GUID: 4c41ec3ab37ac8b4c9490c39838a71d1
+    m_Address: LaserBlue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+  - m_GUID: 7e9a3591984cda1499dc675622a57b0b
+    m_Address: Frost
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+  - m_GUID: 153ff601b9ac43240921bf65f009e220
+    m_Address: Lighting
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+  - m_GUID: deec2987c8cae8c4a97dea31b6ddb2c5
+    m_Address: Fireball
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+  - m_GUID: 1468a051063648a4ba29b56af532b72d
+    m_Address: Chemical
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

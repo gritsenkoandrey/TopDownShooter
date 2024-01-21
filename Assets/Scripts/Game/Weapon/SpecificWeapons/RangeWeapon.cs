@@ -73,8 +73,9 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
             for (int i = 0; i < _weapon.SpawnPoints.Length; i++)
             {
-                Vector3 direction = _weapon.SpawnPoints[i].forward.normalized * _weaponCharacteristic.ForceBullet;
-                
+                Vector3 normalized = _weapon.SpawnPoints[i].forward.normalized;
+                Vector3 direction = new Vector3(normalized.x, 0f, normalized.z) * _weaponCharacteristic.ForceBullet;
+
                 await _weaponFactory.CreateProjectile(_weapon.ProjectileType, _weapon.SpawnPoints[i], CalculateCriticalDamage(damage), direction);
             }
         }
