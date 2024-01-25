@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Models;
-using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 using UnityEngine.AI;
