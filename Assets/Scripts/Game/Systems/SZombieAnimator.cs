@@ -12,15 +12,6 @@ namespace CodeBase.Game.Systems
         {
             base.OnEnableComponent(component);
 
-            component.Health.CurrentHealth
-                .Pairwise()
-                .Where(health => health.Current < health.Previous && health.Current > 0)
-                .Subscribe(_ =>
-                {
-                    component.Animator.Animator.SetTrigger(Animations.Hit);
-                })
-                .AddTo(component.LifetimeDisposable);
-
             component.Animator.OnAttack
                 .Subscribe(_ =>
                 {
