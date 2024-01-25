@@ -25,7 +25,7 @@ namespace CodeBase.Game.Weapon.Factories
         public WeaponFactory(
             IStaticDataService staticDataService, 
             IAssetService assetService, 
-            IObjectPoolService objectPoolService, 
+            IObjectPoolService objectPoolService,
             IProgressService progressService,
             InventoryModel inventoryModel)
         {
@@ -36,16 +36,27 @@ namespace CodeBase.Game.Weapon.Factories
             _inventoryModel = inventoryModel;
         }
 
-        async UniTask<CWeapon> IWeaponFactory.CreateWeapon(WeaponType type, Transform parent)
+        async UniTask<CWeapon> IWeaponFactory.CreateCharacterWeapon(WeaponType type, Transform parent)
         {
             WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponBuilder(this, _progressService, data.WeaponCharacteristic, _inventoryModel)
+            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _progressService, _inventoryModel)
                 .SetPrefab(prefab)
                 .SetParent(parent)
-                .SetWeaponType(type)
+                .Build();
+        }
+
+        async UniTask<CWeapon> IWeaponFactory.CreateUnitWeapon(WeaponType type, Transform parent)
+        {
+            WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+
+            return new WeaponUnitBuilder(this, data.WeaponCharacteristic)
+                .SetPrefab(prefab)
+                .SetParent(parent)
                 .Build();
         }
 

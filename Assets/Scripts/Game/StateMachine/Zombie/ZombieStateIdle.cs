@@ -1,5 +1,4 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Models;
 using UnityEngine;
 
@@ -23,9 +22,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             Zombie.Radar.Draw.Execute();
         }
 
-        void IState.Exit()
-        {
-        }
+        void IState.Exit() { }
 
         void IState.Tick()
         {

@@ -48,7 +48,6 @@ MonoBehaviour:
   _projectileType: 1
   _spawnPoints:
   - {fileID: 7915787244823588626}
-  _spawnBulletPoint: {fileID: 0}
   _runtimeAnimatorController: {fileID: 9100000, guid: d1be6fbfdbbb17147a988884a05c0d21, type: 2}
 --- !u!1 &7047083843194152240
 GameObject:
@@ -279,7 +278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8583808764565210277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 1.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

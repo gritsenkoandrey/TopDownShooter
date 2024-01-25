@@ -97,9 +97,18 @@ namespace CodeBase.Infrastructure.Factories.Game
             return zombie;
         }
 
-        void IGameFactory.CleanUp()
+        async UniTask<CUnit> IGameFactory.CreateUnit(Vector3 position, Transform parent)
         {
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Unit);
+
+            CUnit unit = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CUnit>();
+            
+            _levelModel.AddEnemy(unit);
+
+            return unit;
         }
+
+        void IGameFactory.CleanUp() { }
 
         private LevelType GetLevelType() => _progressService.LevelData.Data.Value % 5 == 0 ? LevelType.Boss : LevelType.Normal;
     }

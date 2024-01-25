@@ -8,5 +8,6 @@ namespace CodeBase.Game.Weapon
         public bool CanAttack();
         public bool IsDetectThroughObstacle();
         public float AttackDistance();
+        public float DetectionDistance();
     }
 }

@@ -33,7 +33,7 @@ namespace CodeBase.Game.Systems
 
         private async UniTaskVoid CreateWeapon(CCharacter component)
         {
-            CWeapon weapon = await _weaponFactory.CreateWeapon(_inventoryModel.SelectedWeapon.Value, component.WeaponMediator.Container);
+            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, component.WeaponMediator.Container);
             
             component.WeaponMediator.SetWeapon(weapon);
             component.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;

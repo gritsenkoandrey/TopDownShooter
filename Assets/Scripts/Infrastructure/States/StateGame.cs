@@ -1,6 +1,8 @@
 ﻿using System;
+using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
+using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
@@ -55,7 +57,18 @@ namespace CodeBase.Infrastructure.States
         private void ActivateUnitStateMachine()
         {
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateIdle>();
-            _levelModel.Enemies.Foreach(enemy => enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>());
+
+            foreach (IEnemy enemy in _levelModel.Enemies)
+            {
+                if (enemy is CZombie)
+                {
+                    enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>();
+                }
+                else
+                {
+                    enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
+                }
+            }
         }
 
         private void SubscribeOnWin()
@@ -66,7 +79,6 @@ namespace CodeBase.Infrastructure.States
                 .First()
                 .Subscribe(_ => Win())
                 .AddTo(_transitionDisposable);
-
         }
 
         private void SubscribeOnLose()
@@ -102,7 +114,18 @@ namespace CodeBase.Infrastructure.States
 
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
-        private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
+        private void SetEnemyStateNone(IEnemy enemy)
+        {
+            if (enemy is CZombie)
+            {
+                enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
+            }
+            else
+            {
+                enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
+            }
+        }
+
         private TimeSpan TimeLeft() => TimeSpan.FromSeconds(_levelModel.Level.LevelTime);
     }
 }

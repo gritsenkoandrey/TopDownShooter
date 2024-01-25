@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441637769238999089}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0.85}
+  m_LocalPosition: {x: -0, y: 0.1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -163,5 +163,4 @@ MonoBehaviour:
   _projectileType: 0
   _spawnPoints:
   - {fileID: 8897237902421334359}
-  _spawnBulletPoint: {fileID: 0}
   _runtimeAnimatorController: {fileID: 9100000, guid: 84493d78fa7af024caee6a04f78f0812, type: 2}

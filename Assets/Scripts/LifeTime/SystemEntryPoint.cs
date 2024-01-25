@@ -115,6 +115,9 @@ namespace CodeBase.LifeTime
                 new SDamageCombatLogUpdate(_damageCombatLog),
                 new SJoystickUpdate(_joystickService),
                 new SObjectPoolLog(_objectPoolService),
+                new SUnitSpawner(_gameFactory, _weaponFactory, _levelModel),
+                new SUnitAnimator(),
+                new SUnitDeath(_progressService, _effectFactory, _levelModel),
             };
         }
 

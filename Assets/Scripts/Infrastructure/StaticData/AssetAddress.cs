@@ -4,6 +4,7 @@
     {
         public const string DeathFx = "DeathFx";
         public const string HitFx = "HitFx";
+        public const string Unit = "Unit";
         
         public const string ZombieDataPath = "StaticData/ZombieData";
         public const string ScreenDataPath = "StaticData/ScreenData";

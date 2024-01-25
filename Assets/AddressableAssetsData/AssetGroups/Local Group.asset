@@ -232,6 +232,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Projectile
+  - m_GUID: 3453138ddd414b3438fff9aaf10d6d0e
+    m_Address: Unit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Character
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

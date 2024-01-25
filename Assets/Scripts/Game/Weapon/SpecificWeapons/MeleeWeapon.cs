@@ -18,12 +18,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private float _attackDistance;
         private bool _canAttack;
 
-        public MeleeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, IProgressService progressService, WeaponCharacteristic weaponCharacteristic) 
-            : base(weaponFactory, progressService)
+        public MeleeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) 
+            : base(weaponFactory)
         {
             _weapon = weapon;
             _weaponFactory = weaponFactory;
-            _progressService = progressService;
             _weaponCharacteristic = weaponCharacteristic;
             
             SetCanAttack();
@@ -40,6 +39,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         bool IWeapon.CanAttack() => _canAttack;
         bool IWeapon.IsDetectThroughObstacle() => true;
         float IWeapon.AttackDistance() => _attackDistance;
+        float IWeapon.DetectionDistance() => _weaponCharacteristic.DetectionDistance;
+
         void IDisposable.Dispose() { }
 
         private void SetCanAttack() => _canAttack = true;
