@@ -37,39 +37,33 @@ namespace CodeBase.Game.Systems
 
                 if (isCollision)
                 {
-                    EnemyCollision(bullet, _levelModel.Enemies[i]).Forget();
+                    Collision(bullet, _levelModel.Enemies[i]).Forget();
                 }
             }
         }
 
         private void CheckCharacterCollision(IBullet bullet)
         {
-            bool isCollision = (bullet.Position - _levelModel.Character.Move.Position).sqrMagnitude < bullet.CollisionDistance;
+            bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance;
 
             if (isCollision)
             {
-                CharacterCollision(bullet, _levelModel.Character).Forget();
+                Collision(bullet, _levelModel.Character).Forget();
             }
         }
 
-        private async UniTaskVoid EnemyCollision(IBullet bullet, IEnemy target)
+        private async UniTaskVoid Collision(IBullet bullet, ITarget target)
         {
             await UniTask.Yield();
 
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
-               
-            _damageCombatLog.AddLog(target, bullet.Damage);
-            _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
-        }
-        
-        private async UniTaskVoid CharacterCollision(IBullet bullet, ICharacter character)
-        {
-            await UniTask.Yield();
+
+            if (target is not ICharacter)
+            {
+                _damageCombatLog.AddLog(target, bullet.Damage);
+            }
             
-            character.Health.CurrentHealth.Value -= bullet.Damage;
-            bullet.OnDestroy.Execute();
-               
             _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
         }
     }

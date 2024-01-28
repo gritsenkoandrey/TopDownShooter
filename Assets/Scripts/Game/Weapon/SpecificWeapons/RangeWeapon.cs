@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using Cysharp.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private Tween _speedAttackTween;
         private Tween _rechargeTimeTween;
 
-        protected RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) 
-            : base(weaponFactory)
+        protected RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic)
+            : base(weapon, weaponCharacteristic)
         {
             _weapon = weapon;
             _weaponFactory = weaponFactory;
@@ -32,7 +33,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             SetCanAttack();
         }
 
-        public void Attack() => Shoot();
+        public void Attack(ITarget target) => Shoot();
         public bool CanAttack() => _clipCount > 0 && _canAttack;
         public bool IsDetectThroughObstacle() => _weaponCharacteristic.IsDetectThroughObstacle;
         public float AttackDistance() => _attackDistance;

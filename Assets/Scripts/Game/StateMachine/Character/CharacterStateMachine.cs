@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Game.Interfaces;
+using CodeBase.Game.Components;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -9,7 +9,7 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateMachine : StateMachine
     {
-        public CharacterStateMachine(ICharacter character, ICameraService cameraService, IJoystickService joystickService, LevelModel levelModel)
+        public CharacterStateMachine(CCharacter character, ICameraService cameraService, IJoystickService joystickService, LevelModel levelModel)
         {
             States = new Dictionary<Type, IState>
             {

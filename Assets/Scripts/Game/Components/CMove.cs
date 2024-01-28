@@ -8,7 +8,6 @@ namespace CodeBase.Game.Components
         [SerializeField] private CharacterController _characterController;
         
         public CharacterController CharacterController => _characterController;
-        public Vector3 Position => transform.position;
         public float Angle => transform.eulerAngles.y;
         public float BaseSpeed { get; private set; }
         public float Speed { get; private set; }

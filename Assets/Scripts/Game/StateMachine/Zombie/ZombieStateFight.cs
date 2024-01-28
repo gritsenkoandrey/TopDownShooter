@@ -49,6 +49,6 @@ namespace CodeBase.Game.StateMachine.Zombie
             DOVirtual.DelayedCall(Zombie.Stats.AttackDelay, () => _canAttack = true);
         }
         
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Zombie.Position).sqrMagnitude;
     }
 }

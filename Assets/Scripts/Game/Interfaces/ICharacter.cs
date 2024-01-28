@@ -1,11 +1,6 @@
-﻿using CodeBase.Game.Components;
-
-namespace CodeBase.Game.Interfaces
+﻿namespace CodeBase.Game.Interfaces
 {
-    public interface ICharacter : IEntity, IHealth, IStateMachine
+    public interface ICharacter : IEntity, IStateMachine, ITarget
     {
-        public CAnimator Animator { get; }
-        public CWeaponMediator WeaponMediator { get; }
-        public CMove Move { get; }
     }
 }

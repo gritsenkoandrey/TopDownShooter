@@ -55,7 +55,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             return level;
         }
 
-        async UniTask<ICharacter> IGameFactory.CreateCharacter(Vector3 position, Transform parent)
+        async UniTask<CCharacter> IGameFactory.CreateCharacter(Vector3 position, Transform parent)
         {
             CharacterData data = _staticDataService.CharacterData();
             

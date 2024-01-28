@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -11,7 +11,7 @@ namespace CodeBase.Game.StateMachine.Character
     {
         private float _angle;
 
-        public CharacterStateRun(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
+        public CharacterStateRun(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
             IJoystickService joystickService, LevelModel levelModel) 
             : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
@@ -49,7 +49,7 @@ namespace CodeBase.Game.StateMachine.Character
 
             Vector3 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
-            Vector3 next = Character.Move.Position + move * Character.Move.Speed * Time.deltaTime;
+            Vector3 next = Character.Position + move * Character.Move.Speed * Time.deltaTime;
                         
             Ray ray = new Ray { origin = next, direction = Vector3.down };
 

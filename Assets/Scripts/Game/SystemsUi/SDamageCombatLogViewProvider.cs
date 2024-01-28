@@ -70,16 +70,16 @@ namespace CodeBase.Game.SystemsUi
             InstantiateDamageView(component, combatLog.Target, combatLog.Damage).Forget();
         }
 
-        private async UniTaskVoid InstantiateDamageView(CDamageCombatLogViewProvider component, IEnemy enemy, int damage)
+        private async UniTaskVoid InstantiateDamageView(CDamageCombatLogViewProvider component, ITarget target, int damage)
         {
             CDamageCombatLogView damageCombatLogView = await _uiFactory.CreateDamageView(component.transform);
-            InitializeDamageView(damageCombatLogView, enemy, damage);
+            InitializeDamageView(damageCombatLogView, target, damage);
             component.DamageCombatLogViews.Add(damageCombatLogView);
         }
 
-        private void InitializeDamageView(CDamageCombatLogView component, IEnemy enemy, int damage)
+        private void InitializeDamageView(CDamageCombatLogView component, ITarget target, int damage)
         {
-            Vector3 enemyPosition = enemy.Position.AddY(enemy.Height);
+            Vector3 enemyPosition = target.Position.AddY(target.Height);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemyPosition);
             float offset = _guiService.ScaleFactor * component.Offset;
             float dirX = viewportPoint.x > 0.5f ? 1f : -1f;
@@ -93,7 +93,7 @@ namespace CodeBase.Game.SystemsUi
             component.Settings.Center = center;
             component.Settings.To = to;
             component.Settings.Index = 0;
-            component.Settings.Target = enemy;
+            component.Settings.Target = target;
             component.Settings.IsActive = true;
 
             component.CanvasGroup.alpha = 0f;

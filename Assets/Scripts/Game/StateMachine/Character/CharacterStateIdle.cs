@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -8,7 +8,7 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateIdle : CharacterState, IState
     {
-        public CharacterStateIdle(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
+        public CharacterStateIdle(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
             IJoystickService joystickService, LevelModel levelModel) 
             : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
@@ -68,6 +68,6 @@ namespace CodeBase.Game.StateMachine.Character
         }
         
         
-        private float DistanceToTarget(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
+        private float DistanceToTarget(Vector3 target) => (Character.Position - target).sqrMagnitude;
     }
 }

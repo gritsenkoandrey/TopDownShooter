@@ -20,7 +20,7 @@ namespace CodeBase.Infrastructure.Models
             _damageCombatLog = new Queue<CombatLog>();
         }
 
-        public void AddLog(IEnemy target, int damage)
+        public void AddLog(ITarget target, int damage)
         {
             _damageCombatLog.Enqueue(new CombatLog(target, damage));
         }
@@ -48,10 +48,10 @@ namespace CodeBase.Infrastructure.Models
 
     public readonly struct CombatLog
     {
-        public readonly IEnemy Target;
+        public readonly ITarget Target;
         public readonly int Damage;
 
-        public CombatLog(IEnemy target, int damage)
+        public CombatLog(ITarget target, int damage)
         {
             Target = target;
             Damage = damage;

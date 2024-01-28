@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
@@ -40,7 +39,7 @@ namespace CodeBase.Game.Systems
 
         private async UniTaskVoid CreateCharacter(CCharacterSpawner component)
         {
-            ICharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
+            CCharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
 
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Health])
@@ -62,7 +61,7 @@ namespace CodeBase.Game.Systems
             CreateStateMachine(character);
         }
 
-        private void CreateStateMachine(ICharacter character)
+        private void CreateStateMachine(CCharacter character)
         {
             character.StateMachine.SetStateMachine(new CharacterStateMachine(character, _cameraService, _joystickService, _levelModel));
 

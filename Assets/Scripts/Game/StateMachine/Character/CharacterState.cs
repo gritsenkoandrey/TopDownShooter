@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -10,10 +10,10 @@ namespace CodeBase.Game.StateMachine.Character
         protected readonly ICameraService CameraService;
         protected readonly IJoystickService JoystickService;
         protected readonly IStateMachine StateMachine;
-        protected readonly ICharacter Character;
+        protected readonly CCharacter Character;
         protected readonly LevelModel LevelModel;
 
-        protected CharacterState(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
+        protected CharacterState(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
             IJoystickService joystickService, LevelModel levelModel)
         {
             StateMachine = stateMachine;

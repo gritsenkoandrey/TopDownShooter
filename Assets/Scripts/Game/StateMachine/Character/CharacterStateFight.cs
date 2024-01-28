@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using CodeBase.Game.Components;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -11,7 +12,7 @@ namespace CodeBase.Game.StateMachine.Character
     {
         private IEnemy _target;
         
-        public CharacterStateFight(IStateMachine stateMachine, ICharacter character, ICameraService cameraService, 
+        public CharacterStateFight(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
             IJoystickService joystickService, LevelModel levelModel) 
             : base(stateMachine, character, cameraService, joystickService, levelModel)
         {
@@ -59,7 +60,7 @@ namespace CodeBase.Game.StateMachine.Character
         private void Attack()
         {
             Character.Animator.OnAttack.Execute();
-            Character.WeaponMediator.CurrentWeapon.Weapon.Attack();
+            Character.WeaponMediator.CurrentWeapon.Weapon.Attack(_target);
         }
 
         private bool HasInput()
@@ -69,7 +70,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private void LockAtTarget()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(_target.Position - Character.Move.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(_target.Position - Character.Position);
             Character.Move.transform.rotation = lookRotation;
         }
 
@@ -115,7 +116,7 @@ namespace CodeBase.Game.StateMachine.Character
             return index;
         }
 
-        private float DistanceToTarget(Vector3 target) => (Character.Move.Position - target).sqrMagnitude;
+        private float DistanceToTarget(Vector3 target) => (Character.Position - target).sqrMagnitude;
 
         private bool HasObstacleOnAttackPath(Vector3 target)
         {
@@ -124,7 +125,7 @@ namespace CodeBase.Game.StateMachine.Character
                 return false;
             }
 
-            return Physics.Linecast(Character.Move.Position, target, Layers.Wall);
+            return Physics.Linecast(Character.Position, target, Layers.Wall);
         }
     }
 }

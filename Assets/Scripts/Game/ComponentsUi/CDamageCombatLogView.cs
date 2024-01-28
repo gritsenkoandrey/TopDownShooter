@@ -22,7 +22,7 @@ namespace CodeBase.Game.ComponentsUi
 
     public sealed class CombatLogSettings
     {
-        public IEnemy Target;
+        public ITarget Target;
         public bool IsActive;
         public int Index;
         public Vector3 From;

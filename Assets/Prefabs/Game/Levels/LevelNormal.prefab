@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 3
+  _weaponType: 0
   _unitStats:
     Money: 100
     Health: 100
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 10
+  _weaponType: 0
   _unitStats:
     Money: 100
     Health: 50

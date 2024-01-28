@@ -27,7 +27,7 @@ namespace CodeBase.Game.Systems
 
         private bool IsCanDamage(CZombie component)
         {
-            float distance = Vector3.Distance(component.Position, _levelModel.Character.Move.Position);
+            float distance = Vector3.Distance(component.Position, _levelModel.Character.Position);
             
             if (distance > component.Stats.MinDistanceToTarget || !component.Health.IsAlive)
             {

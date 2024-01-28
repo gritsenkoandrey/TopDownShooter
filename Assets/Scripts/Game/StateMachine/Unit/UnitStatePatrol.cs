@@ -75,7 +75,7 @@ namespace CodeBase.Game.StateMachine.Unit
             return Vector3.zero;
         }
 
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Unit.Health.CurrentHealth.Value;
     }

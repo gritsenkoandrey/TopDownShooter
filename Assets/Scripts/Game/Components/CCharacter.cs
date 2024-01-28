@@ -20,5 +20,8 @@ namespace CodeBase.Game.Components
         public CBodyMediator BodyMediator => _bodyMediator;
         public Health Health { get; } = new();
         public Entity Entity => this;
+        public Vector3 Position => transform.position;
+        public float Height => 2.75f;
+        public int Money => default;
     } 
 }

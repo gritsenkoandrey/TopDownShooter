@@ -21,19 +21,22 @@ namespace CodeBase.Game.Weapon.Factories
         private readonly IObjectPoolService _objectPoolService;
         private readonly IProgressService _progressService;
         private readonly InventoryModel _inventoryModel;
+        private readonly DamageCombatLog _damageCombatLog;
 
         public WeaponFactory(
             IStaticDataService staticDataService, 
             IAssetService assetService, 
             IObjectPoolService objectPoolService,
             IProgressService progressService,
-            InventoryModel inventoryModel)
+            InventoryModel inventoryModel,
+            DamageCombatLog damageCombatLog)
         {
             _staticDataService = staticDataService;
             _assetService = assetService;
             _objectPoolService = objectPoolService;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
+            _damageCombatLog = damageCombatLog;
         }
 
         async UniTask<CWeapon> IWeaponFactory.CreateCharacterWeapon(WeaponType type, Transform parent)
@@ -42,9 +45,10 @@ namespace CodeBase.Game.Weapon.Factories
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _progressService, _inventoryModel)
+            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel)
                 .SetPrefab(prefab)
                 .SetParent(parent)
+                .SetWeaponType(type)
                 .Build();
         }
 
@@ -54,9 +58,10 @@ namespace CodeBase.Game.Weapon.Factories
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponUnitBuilder(this, data.WeaponCharacteristic)
+            return new WeaponUnitBuilder(this, data.WeaponCharacteristic, _damageCombatLog)
                 .SetPrefab(prefab)
                 .SetParent(parent)
+                .SetWeaponType(type)
                 .Build();
         }
 

@@ -42,16 +42,16 @@ namespace CodeBase.Game.StateMachine.Zombie
                 }
                 else
                 {
-                    Zombie.Agent.SetDestination(LevelModel.Character.Move.Position);
+                    Zombie.Agent.SetDestination(LevelModel.Character.Position);
                 }
             }
         }
 
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Zombie.Position).sqrMagnitude;
 
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Move.Position - Zombie.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Position - Zombie.Position);
 
             Zombie.transform.rotation = Quaternion.Slerp(Zombie.transform.rotation, lookRotation, 0.5f);
         }

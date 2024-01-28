@@ -37,12 +37,12 @@ namespace CodeBase.Game.StateMachine.Unit
             
             if (Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath() == false)
             {
-                Unit.WeaponMediator.CurrentWeapon.Weapon.Attack();
+                Unit.WeaponMediator.CurrentWeapon.Weapon.Attack(LevelModel.Character);
                 Unit.Animator.OnAttack.Execute();
             }
         }
         
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
         
         private bool HasObstacleOnAttackPath()
         {
@@ -51,12 +51,12 @@ namespace CodeBase.Game.StateMachine.Unit
                 return false;
             }
 
-            return Physics.Linecast(Unit.Position, LevelModel.Character.Move.Position, Layers.Wall);
+            return Physics.Linecast(Unit.Position, LevelModel.Character.Position, Layers.Wall);
         }
         
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Move.Position - Unit.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Position - Unit.Position);
 
             Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 0.5f);
         }

@@ -15,13 +15,15 @@ namespace CodeBase.Game.Builders
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly IProgressService _progressService;
         private readonly InventoryModel _inventoryModel;
+        private readonly DamageCombatLog _damageCombatLog;
 
-        public WeaponCharacterBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic,
+        public WeaponCharacterBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog,
             IProgressService progressService, InventoryModel inventoryModel) 
-            : base(weaponFactory, weaponCharacteristic)
+            : base(weaponFactory, weaponCharacteristic, damageCombatLog)
         {
             _weaponFactory = weaponFactory;
             _weaponCharacteristic = weaponCharacteristic;
+            _damageCombatLog = damageCombatLog;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
         }
@@ -29,8 +31,19 @@ namespace CodeBase.Game.Builders
         public override CWeapon Build()
         {
             CWeapon weapon = Object.Instantiate(Prefab, Parent).GetComponent<CWeapon>();
-            IWeapon rangeWeapon = new CharacterRangeWeapon(weapon, _weaponFactory, _weaponCharacteristic, _inventoryModel, _progressService);
-            weapon.SetWeapon(rangeWeapon);
+
+            IWeapon currentWeapon;
+
+            if (WeaponType == WeaponType.Knife)
+            {
+                currentWeapon = new CharacterMeleeWeapon(weapon, _weaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel);
+            }
+            else
+            {
+                currentWeapon = new CharacterRangeWeapon(weapon, _weaponFactory, _weaponCharacteristic, _inventoryModel, _progressService);
+            }
+            
+            weapon.SetWeapon(currentWeapon);
             return weapon;
         }
     }

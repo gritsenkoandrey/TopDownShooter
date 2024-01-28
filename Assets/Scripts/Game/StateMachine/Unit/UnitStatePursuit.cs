@@ -44,16 +44,16 @@ namespace CodeBase.Game.StateMachine.Unit
                 }
                 else
                 {
-                    Unit.Agent.SetDestination(LevelModel.Character.Move.Position);
+                    Unit.Agent.SetDestination(LevelModel.Character.Position);
                 }
             }
         }
         
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
 
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Move.Position - Unit.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Position - Unit.Position);
 
             Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 0.5f);
         }

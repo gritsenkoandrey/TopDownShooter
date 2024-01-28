@@ -237,6 +237,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Character
+  - m_GUID: 5cc48214d33788f41ae63abdfe70f77f
+    m_Address: Knife
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Weapon
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

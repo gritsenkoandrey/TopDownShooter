@@ -43,7 +43,7 @@ namespace CodeBase.Game.StateMachine.Zombie
             }
         }
 
-        private float DistanceToTarget() => (LevelModel.Character.Move.Position - Zombie.Position).sqrMagnitude;
+        private float DistanceToTarget() => (LevelModel.Character.Position - Zombie.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Zombie.Health.CurrentHealth.Value;
     }
