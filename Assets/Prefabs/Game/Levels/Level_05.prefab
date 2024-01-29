@@ -155,16 +155,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 11
+  _weaponType: 10
   _unitStats:
-    Money: 200
-    Health: 300
-    WalkSpeed: 2
-    PursuitSpeed: 2.5
+    Money: 100
+    Health: 100
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
     StayDelay: 2
-    PursuitRadius: 15
-    PatrolRadius: 7.5
+    PursuitRadius: 20
+    PatrolRadius: 5
     Height: 2.75
+  _weaponCharacteristic:
+    Damage: 5
+    ClipCount: 20
+    ForceBullet: 1
+    RechargeTime: 5
+    FireInterval: 0.4
+    CriticalChance: 5
+    CriticalMultiplier: 2
+    DetectionDistance: 15
+    AttackDistance: 10
+    IsDetectThroughObstacle: 1
 --- !u!1 &3495192746181472548
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +187,7 @@ GameObject:
   - component: {fileID: 3495192746181472549}
   - component: {fileID: 3495192746181472546}
   m_Layer: 0
-  m_Name: LevelFive
+  m_Name: Level_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

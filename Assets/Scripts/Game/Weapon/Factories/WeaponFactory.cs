@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
+using CodeBase.Game.Weapon.Data;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
@@ -52,13 +53,13 @@ namespace CodeBase.Game.Weapon.Factories
                 .Build();
         }
 
-        async UniTask<CWeapon> IWeaponFactory.CreateUnitWeapon(WeaponType type, Transform parent)
+        async UniTask<CWeapon> IWeaponFactory.CreateUnitWeapon(WeaponType type, WeaponCharacteristic weaponCharacteristic, Transform parent)
         {
             WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponUnitBuilder(this, data.WeaponCharacteristic)
+            return new WeaponUnitBuilder(this, weaponCharacteristic)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)

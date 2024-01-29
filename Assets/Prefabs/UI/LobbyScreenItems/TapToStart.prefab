@@ -383,6 +383,10 @@ PrefabInstance:
       propertyPath: m_Maskable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5800532306397213406, guid: 8e6e65865e9b40f44a6a454a918616bf, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: ef0b7bd65b811f24892a0dabd9c2ae40, type: 2}
     - target: {fileID: 6504155630538057554, guid: 8e6e65865e9b40f44a6a454a918616bf, type: 3}
       propertyPath: m_Name
       value: Reflection

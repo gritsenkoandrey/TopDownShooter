@@ -46,14 +46,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponType: 0
   _unitStats:
-    Money: 100
-    Health: 100
-    WalkSpeed: 3
-    PursuitSpeed: 5
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
     StayDelay: 2
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &938712237504906776
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,6 +74,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5772974435270278232}
+  - component: {fileID: 2467263422668561233}
   m_Layer: 0
   m_Name: Spawner_05
   m_TagString: Untagged
@@ -85,6 +97,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2467263422668561233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938712237504906776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &1217535731094729564
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1217535731094729565}
+  - component: {fileID: 4658966899767195909}
   m_Layer: 0
   m_Name: Spawner_03
   m_TagString: Untagged
@@ -116,6 +162,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4658966899767195909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217535731094729564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &1217535731190819507
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1217535731190819506}
+  - component: {fileID: 2042286201464389231}
   m_Layer: 0
   m_Name: Spawner_02
   m_TagString: Untagged
@@ -147,6 +227,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2042286201464389231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217535731190819507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &2952027866381491214
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,6 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 11427313489141680}
+  - component: {fileID: 2948379600918911974}
   m_Layer: 0
   m_Name: Spawner_06
   m_TagString: Untagged
@@ -178,6 +292,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2948379600918911974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2952027866381491214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &3090631558419144556
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2131747639853343087}
+  - component: {fileID: 3015252422741742408}
   m_Layer: 0
   m_Name: Spawner_04
   m_TagString: Untagged
@@ -320,6 +468,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3015252422741742408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3341741569394944011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &3495192745013290555
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3495192745563475485}
+  - component: {fileID: 635273519299932925}
   m_Layer: 0
   m_Name: Spawner_01
   m_TagString: Untagged
@@ -463,6 +645,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635273519299932925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495192745563475484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &3495192746181472548
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +689,7 @@ GameObject:
   - component: {fileID: 3495192746181472549}
   - component: {fileID: 3495192746181472546}
   m_Layer: 0
-  m_Name: LevelOne
+  m_Name: Level_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -785,6 +1000,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1413200268930321182}
+  - component: {fileID: 768931220552186055}
   m_Layer: 0
   m_Name: Spawner_08
   m_TagString: Untagged
@@ -807,6 +1023,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &768931220552186055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565890868735052645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &4960690108983774036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,14 +1597,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponType: 0
   _unitStats:
-    Money: 100
+    Money: 75
     Health: 50
-    WalkSpeed: 3
-    PursuitSpeed: 5
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
     StayDelay: 2
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &6305297679400116547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1847,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 76859001972817621}
+  - component: {fileID: 9109396075118160952}
   m_Layer: 0
   m_Name: Spawner_07
   m_TagString: Untagged
@@ -1609,6 +1870,39 @@ Transform:
   m_Father: {fileID: 3495192746181472549}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9109396075118160952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7966159252173522332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponType: 0
+  _unitStats:
+    Money: 75
+    Health: 50
+    WalkSpeed: 2.5
+    PursuitSpeed: 3
+    StayDelay: 2
+    PursuitRadius: 20
+    PatrolRadius: 5
+    Height: 2.75
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 1
+    ForceBullet: 0
+    RechargeTime: 1
+    FireInterval: 1
+    CriticalChance: 50
+    CriticalMultiplier: 2
+    DetectionDistance: 5
+    AttackDistance: 2.5
+    IsDetectThroughObstacle: 1
 --- !u!1 &8774896596059937272
 GameObject:
   m_ObjectHideFlags: 0

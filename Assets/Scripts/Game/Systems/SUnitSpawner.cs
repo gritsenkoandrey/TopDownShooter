@@ -33,8 +33,7 @@ namespace CodeBase.Game.Systems
         private async UniTaskVoid CreateUnit(CUnitSpawner component)
         {
             CUnit unit = await _gameFactory.CreateUnit(component.Position, component.transform.parent);
-            
-            CWeapon weapon = await _weaponFactory.CreateUnitWeapon(component.WeaponType, unit.WeaponMediator.Container);
+            CWeapon weapon = await _weaponFactory.CreateUnitWeapon(component.WeaponType, component.WeaponCharacteristic, unit.WeaponMediator.Container);
             
             unit.WeaponMediator.SetWeapon(weapon);
             unit.UnitStats = component.UnitStats;

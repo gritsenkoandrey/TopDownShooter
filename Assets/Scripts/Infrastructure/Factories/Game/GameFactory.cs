@@ -95,7 +95,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             }
             else
             {
-                index = _progressService.LevelData.Data.Value;
+                index = _progressService.LevelData.Data.Value - 1;
             }
             
             return data.Levels[index];
