@@ -40,15 +40,15 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private bool IsDeath(IEnemy component) => !component.Health.IsAlive;
+        private bool IsDeath(CUnit component) => !component.Health.IsAlive;
 
-        private void Death(IEnemy component)
+        private void Death(CUnit component)
         {
             component.StateMachine.StateMachine.Enter<UnitStateDeath>();
 
             _progressService.MoneyData.Data.Value += component.Money;
             _levelModel.RemoveEnemy(component);
-            _effectFactory.CreateDeathFx(component.Position.AddY(1f)).Forget();
+            _effectFactory.CreateDeathFx(component.Position.AddY(component.Height)).Forget();
         }
     }
 }

@@ -81,11 +81,8 @@ namespace CodeBase.LifeTime
             _systems = new SystemBase[]
             {
                 new SGroundBuildNavMesh(),
-                new SZombieAnimator(),
-                new SZombieMeleeAttack(_levelModel),
-                new SZombieDeath(_progressService, _effectFactory, _levelModel),
                 new SRadarDraw(),
-                new SZombieSelectSkin(),
+                new SSelectMesh(),
                 new SUpgradeShop(_uiFactory),
                 new SUpgradeButton(_progressService),
                 new SLevelGoal(_levelModel),
@@ -101,14 +98,11 @@ namespace CodeBase.LifeTime
                 new SBulletCollision(_effectFactory, _levelModel, _damageCombatLog),
                 new SLevelTimeLeft(_levelModel),
                 new SStateMachineUpdate(),
-                new SCharacterAnimation(),
+                new SAnimator(),
                 new SCharacterPreviewRotation(),
-                new SCharacterWeaponMediator(_weaponFactory, _inventoryModel),
-                new SCharacterBodyMediator(_inventoryModel),
                 new SCharacterPreviewMediator(_inventoryModel, _guiService),
                 new SCharacterAmmunitionView(_inventoryModel),
-                new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _progressService, _levelModel),
-                new SZombieSpawner(_gameFactory, _levelModel),
+                new SCharacterSpawner(_gameFactory, _cameraService, _joystickService, _progressService, _weaponFactory, _inventoryModel, _levelModel),
                 new SPointerArrowProvider(_uiFactory, _levelModel),
                 new SPointerArrowUpdate(_cameraService, _guiService),
                 new SDamageCombatLogViewProvider(_uiFactory, _cameraService, _guiService, _damageCombatLog),
@@ -116,7 +110,6 @@ namespace CodeBase.LifeTime
                 new SJoystickUpdate(_joystickService),
                 new SObjectPoolLog(_objectPoolService),
                 new SUnitSpawner(_gameFactory, _weaponFactory, _levelModel),
-                new SUnitAnimator(),
                 new SUnitDeath(_progressService, _effectFactory, _levelModel),
             };
         }

@@ -9,9 +9,6 @@ namespace CodeBase.Utils
         public static int Death => Animator.StringToHash(nameof(Death));
         public static int Victory => Animator.StringToHash(nameof(Victory));
         public static int Preview => Animator.StringToHash(nameof(Preview));
-        public static int RunBlend => Animator.StringToHash(nameof(RunBlend));
-        public static int ShootBlend => Animator.StringToHash(nameof(ShootBlend));
-        public static int DeathBlend => Animator.StringToHash(nameof(DeathBlend));
         public static int PreviewBlend => Animator.StringToHash(nameof(PreviewBlend));
     }
 }

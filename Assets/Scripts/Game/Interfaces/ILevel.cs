@@ -1,10 +1,7 @@
-﻿using CodeBase.Game.Enums;
-
-namespace CodeBase.Game.Interfaces
+﻿namespace CodeBase.Game.Interfaces
 {
-    public interface ILevel : IEntity
+    public interface ILevel
     {
-        public LevelType LevelType { get; }
-        public int LevelTime { get; }
+        public int Time { get; }
     }
 }

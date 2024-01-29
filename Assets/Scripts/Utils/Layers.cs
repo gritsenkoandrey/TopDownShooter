@@ -6,8 +6,5 @@ namespace CodeBase.Utils
     {
         public static int Ground => LayerMask.GetMask(nameof(Ground));
         public static int Wall => LayerMask.GetMask(nameof(Wall));
-        public static int Character => LayerMask.NameToLayer(nameof(Character));
-        public static int Enemy => LayerMask.NameToLayer(nameof(Enemy));
-        public static int Projectile => LayerMask.NameToLayer(nameof(Projectile));
     }
 }

@@ -3,7 +3,6 @@ using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Game.Weapon.SpecificWeapons;
-using CodeBase.Infrastructure.Models;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders

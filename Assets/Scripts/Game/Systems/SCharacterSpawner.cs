@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.StateMachine.Character;
+using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Input;
@@ -18,15 +19,19 @@ namespace CodeBase.Game.Systems
         private readonly ICameraService _cameraService;
         private readonly IJoystickService _joystickService;
         private readonly IProgressService _progressService;
+        private readonly IWeaponFactory _weaponFactory;
+        private readonly InventoryModel _inventoryModel;
         private readonly LevelModel _levelModel;
 
         public SCharacterSpawner(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
-            IProgressService progressService, LevelModel levelModel)
+            IProgressService progressService, IWeaponFactory weaponFactory, InventoryModel inventoryModel, LevelModel levelModel)
         {
             _gameFactory = gameFactory;
             _cameraService = cameraService;
             _joystickService = joystickService;
             _progressService = progressService;
+            _weaponFactory = weaponFactory;
+            _inventoryModel = inventoryModel;
             _levelModel = levelModel;
         }
         
@@ -41,6 +46,23 @@ namespace CodeBase.Game.Systems
         {
             CCharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
 
+            SubscribeOnUpgradeHealth(character);
+            SubscribeOnUpgradeSpeed(character);
+            CreateStateMachine(character);
+            CreateWeapon(character).Forget();
+            SetEquipment(character);
+        }
+
+        private void SubscribeOnUpgradeSpeed(CCharacter character)
+        {
+            _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
+                .Subscribe(speed => character.Move.SetSpeed(character.Move.BaseSpeed + speed))
+                .AddTo(character.Entity.LifetimeDisposable);
+        }
+
+        private void SubscribeOnUpgradeHealth(CCharacter character)
+        {
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Health])
                 .Subscribe(health =>
@@ -49,16 +71,6 @@ namespace CodeBase.Game.Systems
                     character.Health.CurrentHealth.SetValueAndForceNotify(character.Health.MaxHealth);
                 })
                 .AddTo(character.Entity.LifetimeDisposable);
-            
-            _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
-                .Subscribe(speed =>
-                {
-                    character.Move.SetSpeed(character.Move.BaseSpeed + speed);
-                })
-                .AddTo(character.Entity.LifetimeDisposable);
-
-            CreateStateMachine(character);
         }
 
         private void CreateStateMachine(CCharacter character)
@@ -68,6 +80,27 @@ namespace CodeBase.Game.Systems
             character.StateMachine.UpdateStateMachine
                 .Subscribe(_ => character.StateMachine.StateMachine.Tick())
                 .AddTo(character.Entity.LifetimeDisposable);
+        }
+        
+        private async UniTaskVoid CreateWeapon(CCharacter character)
+        {
+            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, character.WeaponMediator.Container);
+            
+            character.WeaponMediator.SetWeapon(weapon);
+            character.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
+        }
+        
+        private void SetEquipment(CCharacter character)
+        {
+            for (int i = 0; i < character.BodyMediator.Bodies.Length; i++)
+            {
+                character.BodyMediator.Bodies[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
+            }
+
+            for (int i = 0; i < character.BodyMediator.Heads.Length; i++)
+            {
+                character.BodyMediator.Heads[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
+            }
         }
     }
 }

@@ -17,31 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 8d208fa770f25ab4e94d81359758fbef
   m_SerializeEntries:
-  - m_GUID: f2fdb6d646174fd4c91e92d6fd0a3b88
-    m_Address: LevelBoss
+  - m_GUID: 22c9ac0e5b0c1b3409623bf357334d3e
+    m_Address: LevelFour
     m_ReadOnly: 0
     m_SerializedLabels:
     - Environment
-  - m_GUID: 348a9e1474e40ec4da07575d55c638ad
-    m_Address: ZombieHard
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Character
-  - m_GUID: c6d60fcd31540b84681d1580dae357ac
-    m_Address: ZombieEasy
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Character
-  - m_GUID: 48c5591f64bfe8341b05269663b11831
-    m_Address: ZombieNormal
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Character
-  - m_GUID: ed507b4fe7e559f4283e282e97d9e458
-    m_Address: ZombieBoss
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Character
   - m_GUID: ed28e53c93fc7d2449d7c68bb8409223
     m_Address: Bullet
     m_ReadOnly: 0
@@ -97,8 +77,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
-  - m_GUID: 49325226d79f3ef4c93a9dab7ee7075e
-    m_Address: LevelNormal
+  - m_GUID: 5f76a553a46ef9444866759f7504594f
+    m_Address: LevelThree
     m_ReadOnly: 0
     m_SerializedLabels:
     - Environment
@@ -242,6 +222,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Weapon
+  - m_GUID: 2463ffd2c59fe6a459e18bb8da78d43b
+    m_Address: LevelTwo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+  - m_GUID: 49325226d79f3ef4c93a9dab7ee7075e
+    m_Address: LevelOne
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
+  - m_GUID: f2fdb6d646174fd4c91e92d6fd0a3b88
+    m_Address: LevelFive
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Environment
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

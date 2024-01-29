@@ -24,7 +24,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnUpdateTimeLeft(CLevelTimeLeft component)
         {
-            int time = _levelModel.Level.LevelTime;
+            int time = _levelModel.Level.Time;
 
             Observable.Timer(Time())
                 .Repeat()

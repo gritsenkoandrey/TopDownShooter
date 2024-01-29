@@ -1,6 +1,5 @@
 ﻿using CodeBase.Game.Builders;
 using CodeBase.Game.Components;
-using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
@@ -39,14 +38,12 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         async UniTask<ILevel> IGameFactory.CreateLevel()
         {
-            LevelData data = _staticDataService.LevelData(GetLevelType());
+            Level data = GetLevel(_staticDataService.LevelData());
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             CLevel level = new LevelBuilder()
-                .Reset()
                 .SetPrefab(prefab.GetComponent<CLevel>())
-                .SetLevelType(data.LevelType)
                 .SetLevelTime(data.LevelTime)
                 .Build();
             
@@ -62,7 +59,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             CCharacter character = new CharacterBuilder()
-                .Reset()
                 .SetPrefab(prefab.GetComponent<CCharacter>())
                 .SetParent(parent)
                 .SetCamera(_cameraService)
@@ -75,28 +71,7 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             return character;
         }
-
-        async UniTask<CZombie> IGameFactory.CreateZombie(ZombieType zombieType, Vector3 position, Transform parent)
-        {
-            ZombieData data = _staticDataService.ZombieData(zombieType);
-            
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            CZombie zombie = new ZombieBuilder()
-                .Reset()
-                .SetPrefab(prefab.GetComponent<CZombie>())
-                .SetPosition(position)
-                .SetParent(parent)
-                .SetHealth(data.Health)
-                .SetDamage(data.Damage)
-                .SetStats(data.Stats)
-                .Build();
-            
-            _levelModel.AddEnemy(zombie);
-
-            return zombie;
-        }
-
+        
         async UniTask<CUnit> IGameFactory.CreateUnit(Vector3 position, Transform parent)
         {
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Unit);
@@ -110,6 +85,20 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         void IGameFactory.CleanUp() { }
 
-        private LevelType GetLevelType() => _progressService.LevelData.Data.Value % 5 == 0 ? LevelType.Boss : LevelType.Normal;
+        private Level GetLevel(LevelData data)
+        {
+            int index;
+
+            if (_progressService.LevelData.Data.Value >= data.Levels.Length)
+            {
+                index = _progressService.LevelData.Data.Value % data.Levels.Length;
+            }
+            else
+            {
+                index = _progressService.LevelData.Data.Value;
+            }
+            
+            return data.Levels[index];
+        }
     }
 }

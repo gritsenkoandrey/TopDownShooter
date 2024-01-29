@@ -1,9 +1,7 @@
 ﻿using System;
-using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Unit;
-using CodeBase.Game.StateMachine.Zombie;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
@@ -57,18 +55,7 @@ namespace CodeBase.Infrastructure.States
         private void ActivateUnitStateMachine()
         {
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateIdle>();
-
-            foreach (IEnemy enemy in _levelModel.Enemies)
-            {
-                if (enemy is CZombie)
-                {
-                    enemy.StateMachine.StateMachine.Enter<ZombieStateIdle>();
-                }
-                else
-                {
-                    enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
-                }
-            }
+            _levelModel.Enemies.Foreach(SetEnemyStateIdle);
         }
 
         private void SubscribeOnWin()
@@ -114,18 +101,9 @@ namespace CodeBase.Infrastructure.States
 
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
-        private void SetEnemyStateNone(IEnemy enemy)
-        {
-            if (enemy is CZombie)
-            {
-                enemy.StateMachine.StateMachine.Enter<ZombieStateNone>();
-            }
-            else
-            {
-                enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
-            }
-        }
+        private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
+        private void SetEnemyStateIdle(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
 
-        private TimeSpan TimeLeft() => TimeSpan.FromSeconds(_levelModel.Level.LevelTime);
+        private TimeSpan TimeLeft() => TimeSpan.FromSeconds(_levelModel.Level.Time);
     }
 }

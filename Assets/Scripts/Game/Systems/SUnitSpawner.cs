@@ -56,18 +56,18 @@ namespace CodeBase.Game.Systems
                 .AddTo(unit.LifetimeDisposable);
         }
         
-        private void SetEquipment(CUnit component)
+        private void SetEquipment(CUnit unit)
         {
-            int index = Random.Range(0, component.BodyMediator.Bodies.Length);
+            int index = Random.Range(0, unit.BodyMediator.Bodies.Length);
             
-            for (int i = 0; i < component.BodyMediator.Bodies.Length; i++)
+            for (int i = 0; i < unit.BodyMediator.Bodies.Length; i++)
             {
-                component.BodyMediator.Bodies[i].SetActive(index == i);
+                unit.BodyMediator.Bodies[i].SetActive(index == i);
             }
 
-            for (int i = 0; i < component.BodyMediator.Heads.Length; i++)
+            for (int i = 0; i < unit.BodyMediator.Heads.Length; i++)
             {
-                component.BodyMediator.Heads[i].SetActive(index == i);
+                unit.BodyMediator.Heads[i].SetActive(index == i);
             }
         }
     }

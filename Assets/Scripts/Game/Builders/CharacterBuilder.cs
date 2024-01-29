@@ -56,17 +56,6 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
-        public CharacterBuilder Reset()
-        {
-            _prefab = null;
-            _cameraService = null;
-            _position = default;
-            _health = default;
-            _speed = default;
-
-            return this;
-        }
-
         public CCharacter Build()
         {
             CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent);
