@@ -12,14 +12,12 @@ namespace CodeBase.Game.Builders
     {
         private readonly IWeaponFactory _weaponFactory;
         private readonly WeaponCharacteristic _weaponCharacteristic;
-        private readonly DamageCombatLog _damageCombatLog;
 
-        public WeaponUnitBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog) 
-            : base(weaponFactory, weaponCharacteristic, damageCombatLog)
+        public WeaponUnitBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) 
+            : base(weaponFactory, weaponCharacteristic)
         {
             _weaponFactory = weaponFactory;
             _weaponCharacteristic = weaponCharacteristic;
-            _damageCombatLog = damageCombatLog;
         }
 
         public override CWeapon Build()
@@ -29,7 +27,7 @@ namespace CodeBase.Game.Builders
 
             if (WeaponType == WeaponType.Knife)
             {
-                currentWeapon = new UnitMeleeWeapon(weapon, _weaponCharacteristic, _damageCombatLog);
+                currentWeapon = new UnitMeleeWeapon(weapon, _weaponCharacteristic);
             }
             else
             {

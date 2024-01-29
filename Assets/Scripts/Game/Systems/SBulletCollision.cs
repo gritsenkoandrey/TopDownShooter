@@ -38,6 +38,7 @@ namespace CodeBase.Game.Systems
                 if (isCollision)
                 {
                     Collision(bullet, _levelModel.Enemies[i]).Forget();
+                    AddLog(bullet, _levelModel.Enemies[i]);
                 }
             }
         }
@@ -58,13 +59,13 @@ namespace CodeBase.Game.Systems
 
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
-
-            if (target is not ICharacter)
-            {
-                _damageCombatLog.AddLog(target, bullet.Damage);
-            }
             
             _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
+        }
+
+        private void AddLog(IBullet bullet, ITarget target)
+        {
+            _damageCombatLog.AddLog(target, bullet.Damage);
         }
     }
 }

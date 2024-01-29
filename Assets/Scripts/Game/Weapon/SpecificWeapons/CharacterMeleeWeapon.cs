@@ -1,5 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
@@ -11,21 +12,28 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly IProgressService _progressService;
         private readonly InventoryModel _inventoryModel;
+        private readonly DamageCombatLog _damageCombatLog;
+
 
         public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog, 
             IProgressService progressService, InventoryModel inventoryModel)
-            : base(weapon, weaponCharacteristic, damageCombatLog)
+            : base(weapon, weaponCharacteristic)
         {
             _weaponCharacteristic = weaponCharacteristic;
+            _damageCombatLog = damageCombatLog;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
             
             ReloadClip();
         }
 
-        private protected override int SetDamage()
+        private protected override int SetDamage(ITarget target)
         {
-            return _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+            int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+            
+            _damageCombatLog.AddLog(target, damage);
+            
+            return damage;
         }
 
         private protected override void ReloadClip()

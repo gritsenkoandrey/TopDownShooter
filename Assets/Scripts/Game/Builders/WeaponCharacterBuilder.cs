@@ -19,7 +19,7 @@ namespace CodeBase.Game.Builders
 
         public WeaponCharacterBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog,
             IProgressService progressService, InventoryModel inventoryModel) 
-            : base(weaponFactory, weaponCharacteristic, damageCombatLog)
+            : base(weaponFactory, weaponCharacteristic)
         {
             _weaponFactory = weaponFactory;
             _weaponCharacteristic = weaponCharacteristic;

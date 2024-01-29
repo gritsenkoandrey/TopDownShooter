@@ -2,7 +2,6 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
-using CodeBase.Infrastructure.Models;
 using DG.Tweening;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
     {
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly CWeapon _weapon;
-        private readonly DamageCombatLog _damageCombatLog;
 
         private float _attackDistance;
         private int _clipCount;
@@ -24,12 +22,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         
         private ITarget _target;
 
-        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog)
+        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
             : base(weapon, weaponCharacteristic)
         {
             _weapon = weapon;
             _weaponCharacteristic = weaponCharacteristic;
-            _damageCombatLog = damageCombatLog;
 
             SetCanAttack();
             SetAttackDistance();
@@ -41,7 +38,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         float IWeapon.AttackDistance() => _attackDistance;
         float IWeapon.DetectionDistance() => _weaponCharacteristic.DetectionDistance;
 
-        private protected virtual int SetDamage() => _weaponCharacteristic.Damage;
+        private protected virtual int SetDamage(ITarget target) => _weaponCharacteristic.Damage;
         private protected virtual void ReloadClip() => _clipCount = _weaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
 
@@ -76,14 +73,9 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
                 if (distance < _attackDistance && _target.Health.IsAlive)
                 {
-                    int damage = SetDamage();
+                    int damage = SetDamage(_target);
                     
                     _target.Health.CurrentHealth.Value -= damage;
-
-                    if (_target is not ICharacter)
-                    {
-                        _damageCombatLog.AddLog(_target, damage);
-                    }
                 }
             }
         }

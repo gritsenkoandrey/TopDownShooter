@@ -58,7 +58,7 @@ namespace CodeBase.Game.Weapon.Factories
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponUnitBuilder(this, data.WeaponCharacteristic, _damageCombatLog)
+            return new WeaponUnitBuilder(this, data.WeaponCharacteristic)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)
