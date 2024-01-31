@@ -10,20 +10,22 @@ using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SCharacterSpawner : SystemComponent<CCharacterSpawner>
     {
-        private readonly IGameFactory _gameFactory;
-        private readonly ICameraService _cameraService;
-        private readonly IJoystickService _joystickService;
-        private readonly IProgressService _progressService;
-        private readonly IWeaponFactory _weaponFactory;
-        private readonly InventoryModel _inventoryModel;
-        private readonly LevelModel _levelModel;
+        private IGameFactory _gameFactory;
+        private ICameraService _cameraService;
+        private IJoystickService _joystickService;
+        private IProgressService _progressService;
+        private IWeaponFactory _weaponFactory;
+        private InventoryModel _inventoryModel;
+        private LevelModel _levelModel;
 
-        public SCharacterSpawner(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
+        [Inject]
+        public void Construct(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
             IProgressService progressService, IWeaponFactory weaponFactory, InventoryModel inventoryModel, LevelModel levelModel)
         {
             _gameFactory = gameFactory;

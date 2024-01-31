@@ -7,16 +7,18 @@ using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SUnitSpawner : SystemComponent<CUnitSpawner>
     {
-        private readonly IGameFactory _gameFactory;
-        private readonly IWeaponFactory _weaponFactory;
-        private readonly LevelModel _levelModel;
+        private IGameFactory _gameFactory;
+        private IWeaponFactory _weaponFactory;
+        private LevelModel _levelModel;
 
-        public SUnitSpawner(IGameFactory gameFactory, IWeaponFactory weaponFactory, LevelModel levelModel)
+        [Inject]
+        public void Construct(IGameFactory gameFactory, IWeaponFactory weaponFactory, LevelModel levelModel)
         {
             _gameFactory = gameFactory;
             _weaponFactory = weaponFactory;

@@ -1,13 +1,15 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Infrastructure.Input;
+using VContainer;
 
 namespace CodeBase.Game.SystemsBase
 {
     public sealed class SJoystickUpdate : SystemBase
     {
-        private readonly IJoystickService _joystickService;
+        private IJoystickService _joystickService;
 
-        public SJoystickUpdate(IJoystickService joystickService)
+        [Inject]
+        public void Construct(IJoystickService joystickService)
         {
             _joystickService = joystickService;
         }

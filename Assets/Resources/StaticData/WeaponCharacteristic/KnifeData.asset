@@ -17,7 +17,7 @@ MonoBehaviour:
     Damage: 10
     ClipCount: 1
     ForceBullet: 0
-    RechargeTime: 1
+    RechargeTime: 0.5
     FireInterval: 1
     CriticalChance: 25
     CriticalMultiplier: 2

@@ -52,6 +52,5 @@ namespace CodeBase.Infrastructure.States
         }
 
         private void ChangeState(Unit _) => _stateService.Enter<StateLoadLevel, string>(SceneName.Main);
-
     }
 }

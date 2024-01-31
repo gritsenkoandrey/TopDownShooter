@@ -11,17 +11,19 @@ using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SDamageCombatLogViewProvider : SystemComponent<CDamageCombatLogViewProvider>
     {
-        private readonly IUIFactory _uiFactory;
-        private readonly ICameraService _cameraService;
-        private readonly IGuiService _guiService;
-        private readonly DamageCombatLog _damageCombatLog;
+        private IUIFactory _uiFactory;
+        private ICameraService _cameraService;
+        private IGuiService _guiService;
+        private DamageCombatLog _damageCombatLog;
 
-        public SDamageCombatLogViewProvider(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, 
+        [Inject]
+        public void Construct(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, 
             DamageCombatLog damageCombatLog)
         {
             _uiFactory = uiFactory;

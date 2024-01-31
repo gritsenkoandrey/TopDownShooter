@@ -3,14 +3,16 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using DG.Tweening;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SBloodEffect : SystemComponent<CBloodEffect>
     {
-        private readonly LevelModel _levelModel;
+        private LevelModel _levelModel;
 
-        public SBloodEffect(LevelModel levelModel)
+        [Inject]
+        public void Construct(LevelModel levelModel)
         {
             _levelModel = levelModel;
         }

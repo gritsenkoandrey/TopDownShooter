@@ -3,14 +3,16 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SCharacterHealth : SystemComponent<CCharacterHealth>
     {
-        private readonly LevelModel _levelModel;
+        private LevelModel _levelModel;
 
-        public SCharacterHealth(LevelModel levelModel)
+        [Inject]
+        public void Construct(LevelModel levelModel)
         {
             _levelModel = levelModel;
         }

@@ -3,14 +3,16 @@ using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
-        private readonly LevelModel _levelModel;
+        private LevelModel _levelModel;
 
-        public SLevelTimeLeft(LevelModel levelModel)
+        [Inject]
+        public void Construct(LevelModel levelModel)
         {
             _levelModel = levelModel;
         }

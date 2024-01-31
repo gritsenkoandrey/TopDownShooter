@@ -5,15 +5,17 @@ using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SCharacterPreviewMediator : SystemComponent<CCharacterPreviewMediator>
     {
-        private readonly InventoryModel _inventoryModel;
-        private readonly IGuiService _guiService;
+        private InventoryModel _inventoryModel;
+        private IGuiService _guiService;
 
-        public SCharacterPreviewMediator(InventoryModel inventoryModel, IGuiService guiService)
+        [Inject]
+        public void Construct(InventoryModel inventoryModel, IGuiService guiService)
         {
             _inventoryModel = inventoryModel;
             _guiService = guiService;

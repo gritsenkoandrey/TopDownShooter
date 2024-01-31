@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
@@ -8,21 +7,24 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SUnitDeath : SystemComponent<CUnit>
     {
-        private readonly IProgressService _progressService;
-        private readonly IEffectFactory _effectFactory;
-        private readonly LevelModel _levelModel;
+        private IProgressService _progressService;
+        private IEffectFactory _effectFactory;
+        private LevelModel _levelModel;
 
-        public SUnitDeath(IProgressService progressService, IEffectFactory effectFactory, LevelModel levelModel)
+        [Inject]
+        public void Construct(IProgressService progressService, IEffectFactory effectFactory, LevelModel levelModel)
         {
             _progressService = progressService;
             _effectFactory = effectFactory;
             _levelModel = levelModel;
         }
+        
         protected override void OnEnableComponent(CUnit component)
         {
             base.OnEnableComponent(component);

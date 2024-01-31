@@ -2,14 +2,16 @@
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Utils;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SGroundMesh : SystemComponent<CMesh>
     {
-        private readonly ITextureArrayFactory _textureArrayFactory;
+        private ITextureArrayFactory _textureArrayFactory;
 
-        public SGroundMesh(ITextureArrayFactory textureArrayFactory)
+        [Inject]
+        public void Construct(ITextureArrayFactory textureArrayFactory)
         {
             _textureArrayFactory = textureArrayFactory;
         }

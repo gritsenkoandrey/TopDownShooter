@@ -1,13 +1,15 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Infrastructure.Models;
+using VContainer;
 
 namespace CodeBase.Game.SystemsBase
 {
     public sealed class SDamageCombatLogUpdate : SystemBase
     {
-        private readonly DamageCombatLog _damageCombatLog;
+        private DamageCombatLog _damageCombatLog;
 
-        public SDamageCombatLogUpdate(DamageCombatLog damageCombatLog)
+        [Inject]
+        public void Construct(DamageCombatLog damageCombatLog)
         {
             _damageCombatLog = damageCombatLog;
         }

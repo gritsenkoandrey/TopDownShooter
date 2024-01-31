@@ -4,14 +4,16 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SBulletLifeTime : SystemComponent<CBullet>
     {
-        private readonly IObjectPoolService _objectPoolService;
+        private IObjectPoolService _objectPoolService;
 
-        public SBulletLifeTime(IObjectPoolService objectPoolService)
+        [Inject]
+        public void Construct(IObjectPoolService objectPoolService)
         {
             _objectPoolService = objectPoolService;
         }

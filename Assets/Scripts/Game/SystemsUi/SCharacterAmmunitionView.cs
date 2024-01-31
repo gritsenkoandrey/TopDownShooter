@@ -2,14 +2,16 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SCharacterAmmunitionView : SystemComponent<CCharacterAmmunitionView>
     {
-        private readonly InventoryModel _inventoryModel;
+        private InventoryModel _inventoryModel;
 
-        public SCharacterAmmunitionView(InventoryModel inventoryModel)
+        [Inject]
+        public void Construct(InventoryModel inventoryModel)
         {
             _inventoryModel = inventoryModel;
         }

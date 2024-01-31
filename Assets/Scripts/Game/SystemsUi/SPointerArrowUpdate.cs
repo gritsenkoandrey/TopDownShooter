@@ -4,15 +4,17 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SPointerArrowUpdate : SystemComponent<CPointerArrow>
     {
-        private readonly ICameraService _cameraService;
-        private readonly IGuiService _guiService;
+        private ICameraService _cameraService;
+        private IGuiService _guiService;
 
-        public SPointerArrowUpdate(ICameraService cameraService, IGuiService guiService)
+        [Inject]
+        public void Construct(ICameraService cameraService, IGuiService guiService)
         {
             _cameraService = cameraService;
             _guiService = guiService;

@@ -4,14 +4,16 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SUpgradeButton : SystemComponent<CUpgradeButton>
     {
-        private readonly IProgressService _progressService;
+        private IProgressService _progressService;
 
-        public SUpgradeButton(IProgressService progressService)
+        [Inject]
+        public void Construct(IProgressService progressService)
         {
             _progressService = progressService;
         }

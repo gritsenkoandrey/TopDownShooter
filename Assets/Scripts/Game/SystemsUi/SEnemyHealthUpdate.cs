@@ -5,14 +5,16 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Utils;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SEnemyHealthUpdate : SystemComponent<CEnemyHealth>
     {
-        private readonly ICameraService _cameraService;
+        private ICameraService _cameraService;
 
-        public SEnemyHealthUpdate(ICameraService cameraService)
+        [Inject]
+        public void Construct(ICameraService cameraService)
         {
             _cameraService = cameraService;
         }

@@ -14,9 +14,6 @@ namespace CodeBase.LifeTime
             _gameStateService = gameStateService;
         }
         
-        void IStartable.Start()
-        {
-            _gameStateService.Enter<StateBootstrap>();
-        }
+        void IStartable.Start() => _gameStateService.Enter<StateBootstrap>();
     }
 }

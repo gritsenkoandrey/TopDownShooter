@@ -2,14 +2,16 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SLevelGoal : SystemComponent<CLevelGoal>
     {
-        private readonly LevelModel _levelModel;
+        private LevelModel _levelModel;
 
-        public SLevelGoal(LevelModel levelModel)
+        [Inject]
+        public void Construct(LevelModel levelModel)
         {
             _levelModel = levelModel;
         }

@@ -5,16 +5,18 @@ using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 namespace CodeBase.Game.Systems
 {
     public sealed class SBulletCollision : SystemComponent<CBullet>
     {
-        private readonly IEffectFactory _effectFactory;
-        private readonly LevelModel _levelModel;
-        private readonly DamageCombatLog _damageCombatLog;
+        private IEffectFactory _effectFactory;
+        private LevelModel _levelModel;
+        private DamageCombatLog _damageCombatLog;
         
-        public SBulletCollision(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
+        [Inject]
+        public void Construct(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
         {
             _effectFactory = effectFactory;
             _levelModel = levelModel;

@@ -5,14 +5,16 @@ using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SUpgradeShop : SystemComponent<CUpgradeShop>
     {
-        private readonly IUIFactory _uiFactory;
+        private IUIFactory _uiFactory;
 
-        public SUpgradeShop(IUIFactory uiFactory)
+        [Inject]
+        public void Construct(IUIFactory uiFactory)
         {
             _uiFactory = uiFactory;
         }

@@ -3,14 +3,16 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
     public sealed class SDamageCombatLogViewUpdate : SystemComponent<CDamageCombatLogView>
     {
-        private readonly ICameraService _cameraService;
+        private ICameraService _cameraService;
 
-        public SDamageCombatLogViewUpdate(ICameraService cameraService)
+        [Inject]
+        public void Construct(ICameraService cameraService)
         {
             _cameraService = cameraService;
         }
