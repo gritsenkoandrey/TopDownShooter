@@ -111,6 +111,8 @@ namespace CodeBase.LifeTime
                 new SObjectPoolLog(_objectPoolService),
                 new SUnitSpawner(_gameFactory, _weaponFactory, _levelModel),
                 new SUnitDeath(_progressService, _effectFactory, _levelModel),
+                new SBloodEffect(_levelModel),
+                new SCameraShake(_cameraService, _damageCombatLog),
             };
         }
 

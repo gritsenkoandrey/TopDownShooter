@@ -1,5 +1,6 @@
 ﻿using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
@@ -17,6 +18,7 @@ namespace CodeBase.Infrastructure.States
         private IJoystickService _joystickService;
         private IObjectPoolService _objectPoolService;
         private IAssetService _assetService;
+        private ICameraService _cameraService;
 
         public StateBootstrap(IGameStateService stateService)
         {
@@ -29,13 +31,15 @@ namespace CodeBase.Infrastructure.States
             IStaticDataService staticDataService, 
             IJoystickService joystickService, 
             IObjectPoolService objectPoolService, 
-            IAssetService assetService)
+            IAssetService assetService,
+            ICameraService cameraService)
         {
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
             _joystickService = joystickService;
             _objectPoolService = objectPoolService;
             _assetService = assetService;
+            _cameraService = cameraService;
         }
 
         async void IEnterState.Enter()
@@ -44,6 +48,7 @@ namespace CodeBase.Infrastructure.States
             await InitAsset();
             await InitObjectPool();
             InitJoystick();
+            InitCameraService();
 
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
@@ -55,5 +60,6 @@ namespace CodeBase.Infrastructure.States
         private async UniTask InitAsset() => await _assetService.Init();
         private async UniTask InitObjectPool() => await _objectPoolService.Init();
         private void InitJoystick() => _joystickService.Init();
+        private void InitCameraService() => _cameraService.Init();
     }
 }

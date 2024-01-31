@@ -83,11 +83,10 @@ namespace CodeBase.Game.SystemsUi
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(enemyPosition);
             float offset = _guiService.ScaleFactor * component.Offset;
             float dirX = viewportPoint.x > 0.5f ? 1f : -1f;
-            float dirY = viewportPoint.y > 0.5f ? 1f : -1f;
             
             Vector3 from = Vector3.zero;
-            Vector3 to = new Vector3(dirX, dirY, 0f) * offset;
-            Vector3 center = Vector3.Lerp(from, to, 0.25f).AddY(offset * dirY * 2f);
+            Vector3 to = new Vector3(dirX, 1f, 0f) * offset;
+            Vector3 center = Vector3.Lerp(from, to, 0.25f).AddY(offset * 2f);
             
             component.Settings.From = from;
             component.Settings.Center = center;

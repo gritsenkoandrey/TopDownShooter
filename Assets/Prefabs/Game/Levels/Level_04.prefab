@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 0
+  _weaponType: 10
   _unitStats:
     Money: 100
     Health: 100
@@ -477,14 +477,14 @@ MonoBehaviour:
     Height: 2.75
   _weaponCharacteristic:
     Damage: 1
-    ClipCount: 1
-    ForceBullet: 0
-    RechargeTime: 1
-    FireInterval: 1
+    ClipCount: 20
+    ForceBullet: 0.5
+    RechargeTime: 3
+    FireInterval: 0.3
     CriticalChance: 50
     CriticalMultiplier: 2
-    DetectionDistance: 5
-    AttackDistance: 2.5
+    DetectionDistance: 10
+    AttackDistance: 7.5
     IsDetectThroughObstacle: 1
 --- !u!1 &4222668565432276768
 GameObject:
@@ -639,7 +639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516569833924804095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 0, z: 0}
+  m_LocalPosition: {x: -30, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -54,6 +54,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: bb33f5920fac3bd4181a3840cbbaf4f9, type: 3}
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: 2079b87688256f748be41055895c942b, type: 3}
+  - {fileID: 21300000, guid: 17f3599798e793a47898c58e7838fdd3, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
   - {fileID: 21300000, guid: eb8c115bc40e94b47aad4e9121ed3bd1, type: 3}
@@ -71,6 +72,7 @@ SpriteAtlas:
   - up
   - shop_weapon
   - money
+  - damage
   - shop_speedometer
   - square
   - left
