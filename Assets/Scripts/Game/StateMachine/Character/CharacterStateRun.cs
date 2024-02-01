@@ -1,7 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
-using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
 
@@ -9,12 +8,16 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateRun : CharacterState, IState
     {
+        private readonly IJoystickService _joystickService;
+        private readonly ICameraService _cameraService;
+        
         private float _angle;
 
-        public CharacterStateRun(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, LevelModel levelModel) 
-            : base(stateMachine, character, cameraService, joystickService, levelModel)
+        public CharacterStateRun(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, ICameraService cameraService) 
+            : base(stateMachine, character)
         {
+            _joystickService = joystickService;
+            _cameraService = cameraService;
         }
 
         void IState.Enter()
@@ -39,13 +42,13 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasNoInput()
         {
-            return JoystickService.GetAxis().sqrMagnitude < 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude < 0.1f;
         }
 
         private void Move()
         {
-            _angle = Mathf.Atan2(JoystickService.GetAxis().x, JoystickService.GetAxis().y) * 
-                Mathf.Rad2Deg + CameraService.Camera.transform.eulerAngles.y;
+            _angle = Mathf.Atan2(_joystickService.GetAxis().x, _joystickService.GetAxis().y) * 
+                Mathf.Rad2Deg + _cameraService.Camera.transform.eulerAngles.y; 
 
             Vector3 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 

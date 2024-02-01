@@ -1,6 +1,5 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
-using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
@@ -10,12 +9,16 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateFight : CharacterState, IState
     {
+        private readonly IJoystickService _joystickService;
+        private readonly LevelModel _levelModel;
+
         private IEnemy _target;
         
-        public CharacterStateFight(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, LevelModel levelModel) 
-            : base(stateMachine, character, cameraService, joystickService, levelModel)
+        public CharacterStateFight(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, LevelModel levelModel) 
+            : base(stateMachine, character)
         {
+            _joystickService = joystickService;
+            _levelModel = levelModel;
         }
 
         void IState.Enter() { }
@@ -65,7 +68,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return JoystickService.GetAxis().sqrMagnitude > 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude > 0.1f;
         }
 
         private void LockAtTarget()
@@ -76,7 +79,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool TrySetTarget()
         {
-            if (LevelModel.Enemies.Count == 0)
+            if (_levelModel.Enemies.Count == 0)
             {
                 return false;
             }
@@ -85,7 +88,7 @@ namespace CodeBase.Game.StateMachine.Character
 
             if (index >= 0)
             {
-                _target = LevelModel.Enemies[index];
+                _target = _levelModel.Enemies[index];
                 
                 return true;
             }
@@ -99,13 +102,13 @@ namespace CodeBase.Game.StateMachine.Character
             
             float minDistance = Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance();
 
-            for (int i = 0; i < LevelModel.Enemies.Count; i++)
+            for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
-                float distance = DistanceToTarget(LevelModel.Enemies[i].Position);
+                float distance = DistanceToTarget(_levelModel.Enemies[i].Position);
 
                 if (distance < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
-                    if (distance < minDistance && HasObstacleOnAttackPath(LevelModel.Enemies[i].Position) == false)
+                    if (distance < minDistance && HasObstacleOnAttackPath(_levelModel.Enemies[i].Position) == false)
                     {
                         index = i;
                         minDistance = distance;

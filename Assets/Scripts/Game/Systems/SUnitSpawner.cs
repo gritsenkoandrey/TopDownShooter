@@ -1,9 +1,8 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.Factories.Game;
-using CodeBase.Infrastructure.Models;
+using CodeBase.Infrastructure.Factories.StateMachine;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -15,14 +14,14 @@ namespace CodeBase.Game.Systems
     {
         private IGameFactory _gameFactory;
         private IWeaponFactory _weaponFactory;
-        private LevelModel _levelModel;
+        private IStateMachineFactory _stateMachineFactory;
 
         [Inject]
-        private void Construct(IGameFactory gameFactory, IWeaponFactory weaponFactory, LevelModel levelModel)
+        private void Construct(IGameFactory gameFactory, IWeaponFactory weaponFactory, IStateMachineFactory stateMachineFactory)
         {
             _gameFactory = gameFactory;
             _weaponFactory = weaponFactory;
-            _levelModel = levelModel;
+            _stateMachineFactory = stateMachineFactory;
         }
 
         protected override void OnEnableComponent(CUnitSpawner component)
@@ -50,7 +49,7 @@ namespace CodeBase.Game.Systems
 
         private void CreateStateMachine(CUnit unit)
         {
-            unit.StateMachine.SetStateMachine(new UnitStateMachine(unit, _levelModel));
+            unit.StateMachine.SetStateMachine(_stateMachineFactory.CreateUnitStateMachine(unit));
 
             unit.StateMachine.UpdateStateMachine
                 .Subscribe(_ => unit.StateMachine.StateMachine.Tick())

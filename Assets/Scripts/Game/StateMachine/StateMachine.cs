@@ -6,7 +6,7 @@ namespace CodeBase.Game.StateMachine
     public abstract class StateMachine : IStateMachine
     {
         private IState _activeState;
-        
+
         protected IDictionary<Type, IState> States;
         
         void IStateMachine.Enter<T>()

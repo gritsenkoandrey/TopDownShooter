@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Factories.Game;
+using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.GUI;
@@ -55,6 +56,7 @@ namespace CodeBase.LifeTime
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
             
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
+            builder.Register<IStateMachineFactory, StateMachineFactory>(Lifetime.Singleton);
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);

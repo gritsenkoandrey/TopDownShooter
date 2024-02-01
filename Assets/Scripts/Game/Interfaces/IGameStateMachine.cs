@@ -2,7 +2,7 @@
 
 namespace CodeBase.Game.Interfaces
 {
-    public interface IStateMachine
+    public interface IGameStateMachine
     {
         public CStateMachine StateMachine { get; }
     }

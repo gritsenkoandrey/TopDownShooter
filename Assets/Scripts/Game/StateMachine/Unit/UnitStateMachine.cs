@@ -9,21 +9,14 @@ namespace CodeBase.Game.StateMachine.Unit
     {
         public UnitStateMachine(CUnit unit, LevelModel levelModel)
         {
-            UnitStateIdle unitStateIdle = new UnitStateIdle(this, unit, levelModel);
-            UnitStateDeath unitStateDeath = new UnitStateDeath(this, unit, levelModel);
-            UnitStateFight unitStateFight = new UnitStateFight(this, unit, levelModel);
-            UnitStateNone unitStateNone = new UnitStateNone(this, unit, levelModel);
-            UnitStatePatrol unitStatePatrol = new UnitStatePatrol(this, unit, levelModel);
-            UnitStatePursuit unitStatePursuit = new UnitStatePursuit(this, unit, levelModel);
-            
             States = new Dictionary<Type, IState>
             {
-                [typeof(UnitStateIdle)] = unitStateIdle,
-                [typeof(UnitStateDeath)] = unitStateDeath,
-                [typeof(UnitStateFight)] = unitStateFight,
-                [typeof(UnitStateNone)] = unitStateNone,
-                [typeof(UnitStatePatrol)] = unitStatePatrol,
-                [typeof(UnitStatePursuit)] = unitStatePursuit,
+                {typeof(UnitStateIdle), new UnitStateIdle(this, unit, levelModel)},
+                {typeof(UnitStateDeath), new UnitStateDeath(this, unit, levelModel)},
+                {typeof(UnitStateFight), new UnitStateFight(this, unit, levelModel)},
+                {typeof(UnitStateNone), new UnitStateNone(this, unit, levelModel)},
+                {typeof(UnitStatePatrol), new UnitStatePatrol(this, unit, levelModel)},
+                {typeof(UnitStatePursuit), new UnitStatePursuit(this, unit, levelModel)},
             };
         }
     }

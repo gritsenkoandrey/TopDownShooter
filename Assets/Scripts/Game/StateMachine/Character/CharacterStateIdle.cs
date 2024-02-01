@@ -1,5 +1,4 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using UnityEngine;
@@ -8,10 +7,14 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateIdle : CharacterState, IState
     {
-        public CharacterStateIdle(IStateMachine stateMachine, CCharacter character, ICameraService cameraService, 
-            IJoystickService joystickService, LevelModel levelModel) 
-            : base(stateMachine, character, cameraService, joystickService, levelModel)
+        private readonly IJoystickService _joystickService;
+        private readonly LevelModel _levelModel;
+        
+        public CharacterStateIdle(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, LevelModel levelModel) 
+            : base(stateMachine, character)
         {
+            _joystickService = joystickService;
+            _levelModel = levelModel;
         }
 
         void IState.Enter()
@@ -51,14 +54,14 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return JoystickService.GetAxis().sqrMagnitude > 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude > 0.1f;
         }
 
         private bool HasDetectedTarget()
         {
-            for (int i = 0; i < LevelModel.Enemies.Count; i++)
+            for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
-                if (DistanceToTarget(LevelModel.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
+                if (DistanceToTarget(_levelModel.Enemies[i].Position) < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
                     return true;
                 }

@@ -9,15 +9,15 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateMachine : StateMachine
     {
-        public CharacterStateMachine(CCharacter character, ICameraService cameraService, IJoystickService joystickService, LevelModel levelModel)
+        public CharacterStateMachine(CCharacter character, IJoystickService joystickService, ICameraService cameraService, LevelModel levelModel)
         {
             States = new Dictionary<Type, IState>
             {
-                [typeof(CharacterStateIdle)] = new CharacterStateIdle(this, character, cameraService, joystickService, levelModel),
-                [typeof(CharacterStateRun)] = new CharacterStateRun(this, character, cameraService, joystickService, levelModel),
-                [typeof(CharacterStateFight)] = new CharacterStateFight(this, character, cameraService, joystickService, levelModel),
-                [typeof(CharacterStateDeath)] = new CharacterStateDeath(this, character, cameraService, joystickService, levelModel),
-                [typeof(CharacterStateNone)] = new CharacterStateNone(this, character, cameraService, joystickService, levelModel),
+                {typeof(CharacterStateIdle), new CharacterStateIdle(this, character, joystickService, levelModel)},
+                {typeof(CharacterStateRun), new CharacterStateRun(this, character, joystickService, cameraService)},
+                {typeof(CharacterStateFight), new CharacterStateFight(this, character, joystickService, levelModel)},
+                {typeof(CharacterStateDeath), new CharacterStateDeath(this, character)},
+                {typeof(CharacterStateNone), new CharacterStateNone(this, character)},
             };
         }
     }
