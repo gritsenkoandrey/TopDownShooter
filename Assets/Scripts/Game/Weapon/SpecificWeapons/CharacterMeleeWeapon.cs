@@ -14,7 +14,6 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private readonly InventoryModel _inventoryModel;
         private readonly DamageCombatLog _damageCombatLog;
 
-
         public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog, 
             IProgressService progressService, InventoryModel inventoryModel)
             : base(weapon, weaponCharacteristic)
@@ -48,6 +47,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             base.ReduceClip();
 
             _inventoryModel.ClipCount.Value--;
+            
+            if (_inventoryModel.ClipCount.Value <= 0)
+            {
+                _inventoryModel.Reloading.Execute(_weaponCharacteristic.RechargeTime);
+            }
         }
     }
 }

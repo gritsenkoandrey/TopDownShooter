@@ -36,6 +36,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             base.ReduceClip();
             
             _inventoryModel.ClipCount.Value--;
+
+            if (_inventoryModel.ClipCount.Value <= 0)
+            {
+                _inventoryModel.Reloading.Execute(_weaponCharacteristic.RechargeTime);
+            }
         }
 
         private protected override int SetDamage()

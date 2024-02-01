@@ -10,7 +10,8 @@ namespace CodeBase.UI.Screens
     public sealed class LoseScreen : BaseScreen
     {
         [SerializeField] private Button _button;
-        [SerializeField] private Transform _splat;
+
+        private Tween _showButton;
 
         private protected override void OnEnable()
         {
@@ -18,12 +19,19 @@ namespace CodeBase.UI.Screens
             
             _button
                 .OnClickAsObservable()
-                .DoOnSubscribe(ScreenAnimation)
+                .DoOnSubscribe(AwaitScreenAnimation)
                 .First()
                 .Subscribe(_ => RestartGame().Forget())
                 .AddTo(this);
 
             FadeCanvas(0f, 1f, 0.25f);
+        }
+
+        private protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            _showButton?.Kill();
         }
 
         private async UniTaskVoid RestartGame()
@@ -33,14 +41,11 @@ namespace CodeBase.UI.Screens
             ChangeState.Execute();
         }
 
-        private void ScreenAnimation()
+        private void AwaitScreenAnimation()
         {
             _button.gameObject.SetActive(false);
-            _splat.localScale = Vector3.zero;
-            _splat
-                .DOScale(Vector3.one * 1.5f, 1f)
-                .SetEase(Ease.OutBack)
-                .OnComplete(ShowButton);
+
+            _showButton = DOVirtual.DelayedCall(2f, ShowButton);
         }
 
         private void ShowButton()

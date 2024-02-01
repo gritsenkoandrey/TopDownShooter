@@ -11,5 +11,6 @@ namespace CodeBase.Infrastructure.Models
         public readonly ReactiveProperty<int> WeaponIndex = new(0);
         public readonly ReactiveProperty<int> EquipmentIndex = new(0);
         public readonly ReactiveProperty<int> ClipCount = new();
+        public readonly ReactiveCommand<float> Reloading = new();
     }
 }

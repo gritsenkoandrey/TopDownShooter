@@ -10,6 +10,8 @@ namespace CodeBase.UI.Screens
     public sealed class WinScreen : BaseScreen
     {
         [SerializeField] private Button _button;
+        
+        private Tween _showButton;
 
         private protected override void OnEnable()
         {
@@ -17,11 +19,19 @@ namespace CodeBase.UI.Screens
             
             _button
                 .OnClickAsObservable()
+                .DoOnSubscribe(AwaitScreenAnimation)
                 .First()
                 .Subscribe(_ => NextGame().Forget())
                 .AddTo(this);
 
-            ScreenAnimation().Forget();
+            FadeCanvas(0f, 1f, 0.25f);
+        }
+
+        private protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            _showButton?.Kill();
         }
 
         private async UniTaskVoid NextGame()
@@ -30,15 +40,17 @@ namespace CodeBase.UI.Screens
 
             ChangeState.Execute();
         }
-
-        private async UniTaskVoid ScreenAnimation()
+        
+        private void AwaitScreenAnimation()
         {
             _button.gameObject.SetActive(false);
 
-            await FadeCanvas(0f, 1f, 0.5f).AsyncWaitForCompletion().AsUniTask();
-            
-            _button.gameObject.SetActive(true);
+            _showButton = DOVirtual.DelayedCall(2f, ShowButton);
+        }
 
+        private void ShowButton()
+        {
+            _button.gameObject.SetActive(true);
             _button.transform.PunchTransform();
         }
     }

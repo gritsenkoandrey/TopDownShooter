@@ -65,6 +65,8 @@ namespace CodeBase.LifeTime
                 new SUnitDeath(),
                 new SBloodEffect(),
                 new SCameraShake(),
+                new SPrintResultText(),
+                new SWeaponReloadingView(),
             };
 
             for (int i = 0; i < _systems.Length; i++)
