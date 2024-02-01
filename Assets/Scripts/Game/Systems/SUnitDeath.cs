@@ -18,7 +18,7 @@ namespace CodeBase.Game.Systems
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(IProgressService progressService, IEffectFactory effectFactory, LevelModel levelModel)
+        private void Construct(IProgressService progressService, IEffectFactory effectFactory, LevelModel levelModel)
         {
             _progressService = progressService;
             _effectFactory = effectFactory;

@@ -11,7 +11,7 @@ namespace CodeBase.Game.SystemsUi
         private InventoryModel _inventoryModel;
 
         [Inject]
-        public void Construct(InventoryModel inventoryModel)
+        private void Construct(InventoryModel inventoryModel)
         {
             _inventoryModel = inventoryModel;
         }

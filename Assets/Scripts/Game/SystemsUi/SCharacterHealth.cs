@@ -12,7 +12,7 @@ namespace CodeBase.Game.SystemsUi
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(LevelModel levelModel)
+        private void Construct(LevelModel levelModel)
         {
             _levelModel = levelModel;
         }

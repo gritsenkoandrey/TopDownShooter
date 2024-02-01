@@ -14,7 +14,7 @@ namespace CodeBase.Game.SystemsUi
         private IUIFactory _uiFactory;
 
         [Inject]
-        public void Construct(IUIFactory uiFactory)
+        private void Construct(IUIFactory uiFactory)
         {
             _uiFactory = uiFactory;
         }

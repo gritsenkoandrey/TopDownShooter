@@ -9,7 +9,7 @@ namespace CodeBase.Game.SystemsBase
         private DamageCombatLog _damageCombatLog;
 
         [Inject]
-        public void Construct(DamageCombatLog damageCombatLog)
+        private void Construct(DamageCombatLog damageCombatLog)
         {
             _damageCombatLog = damageCombatLog;
         }

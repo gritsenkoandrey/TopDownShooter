@@ -18,7 +18,7 @@ namespace CodeBase.Infrastructure.States
         }
         
         [Inject]
-        public void Construct(IProgressService progressService, ILoadingCurtainService loadingCurtainService)
+        private void Construct(IProgressService progressService, ILoadingCurtainService loadingCurtainService)
         {
             _progressService = progressService;
             _loadingCurtainService = loadingCurtainService;

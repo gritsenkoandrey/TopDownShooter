@@ -25,7 +25,7 @@ namespace CodeBase.Game.Systems
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
+        private void Construct(IGameFactory gameFactory, ICameraService cameraService, IJoystickService joystickService, 
             IProgressService progressService, IWeaponFactory weaponFactory, InventoryModel inventoryModel, LevelModel levelModel)
         {
             _gameFactory = gameFactory;

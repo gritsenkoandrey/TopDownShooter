@@ -27,7 +27,7 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        public void Construct(IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
+        private void Construct(IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
         {
             _joystickService = joystickService;
             _uiFactory = uiFactory;

@@ -13,7 +13,7 @@ namespace CodeBase.Game.SystemsUi
         private IProgressService _progressService;
 
         [Inject]
-        public void Construct(IProgressService progressService)
+        private void Construct(IProgressService progressService)
         {
             _progressService = progressService;
         }

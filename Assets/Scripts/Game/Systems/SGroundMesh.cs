@@ -11,7 +11,7 @@ namespace CodeBase.Game.Systems
         private ITextureArrayFactory _textureArrayFactory;
 
         [Inject]
-        public void Construct(ITextureArrayFactory textureArrayFactory)
+        private void Construct(ITextureArrayFactory textureArrayFactory)
         {
             _textureArrayFactory = textureArrayFactory;
         }

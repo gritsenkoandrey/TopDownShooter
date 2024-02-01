@@ -12,7 +12,7 @@ namespace CodeBase.Game.SystemsBase
         private DamageCombatLog _damageCombatLog;
 
         [Inject]
-        public void Construct(ICameraService cameraService, DamageCombatLog damageCombatLog)
+        private void Construct(ICameraService cameraService, DamageCombatLog damageCombatLog)
         {
             _cameraService = cameraService;
             _damageCombatLog = damageCombatLog;

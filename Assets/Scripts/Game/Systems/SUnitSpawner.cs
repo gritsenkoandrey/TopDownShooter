@@ -18,7 +18,7 @@ namespace CodeBase.Game.Systems
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IWeaponFactory weaponFactory, LevelModel levelModel)
+        private void Construct(IGameFactory gameFactory, IWeaponFactory weaponFactory, LevelModel levelModel)
         {
             _gameFactory = gameFactory;
             _weaponFactory = weaponFactory;

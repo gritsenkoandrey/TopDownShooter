@@ -14,7 +14,7 @@ namespace CodeBase.Game.SystemsUi
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(IUIFactory uiFactory, LevelModel levelModel)
+        private void Construct(IUIFactory uiFactory, LevelModel levelModel)
         {
             _uiFactory = uiFactory;
             _levelModel = levelModel;

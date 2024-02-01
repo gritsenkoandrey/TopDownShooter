@@ -15,7 +15,7 @@ namespace CodeBase.Game.SystemsUi
         private IGuiService _guiService;
 
         [Inject]
-        public void Construct(InventoryModel inventoryModel, IGuiService guiService)
+        private void Construct(InventoryModel inventoryModel, IGuiService guiService)
         {
             _inventoryModel = inventoryModel;
             _guiService = guiService;

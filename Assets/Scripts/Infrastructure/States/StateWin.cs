@@ -23,7 +23,7 @@ namespace CodeBase.Infrastructure.States
         }
         
         [Inject]
-        public void Construct(IUIFactory uiFactory, IProgressService progressService)
+        private void Construct(IUIFactory uiFactory, IProgressService progressService)
         {
             _uiFactory = uiFactory;
             _progressService = progressService;

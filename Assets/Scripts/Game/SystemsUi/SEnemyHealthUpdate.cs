@@ -14,7 +14,7 @@ namespace CodeBase.Game.SystemsUi
         private ICameraService _cameraService;
 
         [Inject]
-        public void Construct(ICameraService cameraService)
+        private void Construct(ICameraService cameraService)
         {
             _cameraService = cameraService;
         }

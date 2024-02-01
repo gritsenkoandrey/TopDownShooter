@@ -9,7 +9,7 @@ namespace CodeBase.Game.SystemsBase
         private IJoystickService _joystickService;
 
         [Inject]
-        public void Construct(IJoystickService joystickService)
+        private void Construct(IJoystickService joystickService)
         {
             _joystickService = joystickService;
         }

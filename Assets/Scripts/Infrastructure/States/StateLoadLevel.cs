@@ -30,7 +30,7 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        public void Construct(
+        private void Construct(
             ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, 
             IUIFactory uiFactory, 

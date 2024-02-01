@@ -20,7 +20,7 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        public void Construct(IUIFactory uiFactory)
+        private void Construct(IUIFactory uiFactory)
         {
             _uiFactory = uiFactory;
         }

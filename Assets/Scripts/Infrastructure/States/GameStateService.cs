@@ -14,35 +14,19 @@ namespace CodeBase.Infrastructure.States
 
         public GameStateService(IObjectResolver objectResolver)
         {
-            StateBootstrap stateBootstrap = new StateBootstrap(this);
-            StateFail stateFail = new StateFail(this);
-            StateGame stateGame = new StateGame(this);
-            StateLoadLevel stateLoadLevel = new StateLoadLevel(this);
-            StateLoadProgress stateLoadProgress = new StateLoadProgress(this);
-            StateLobby stateLobby = new StateLobby(this);
-            StatePreview statePreview = new StatePreview(this);
-            StateWin stateWin = new StateWin(this);
-            
             _states = new Dictionary<Type, IExitState>
             {
-                {typeof(StateBootstrap), stateBootstrap},
-                {typeof(StateFail), stateFail},
-                {typeof(StateGame), stateGame},
-                {typeof(StateLoadLevel), stateLoadLevel},
-                {typeof(StateLoadProgress), stateLoadProgress},
-                {typeof(StateLobby), stateLobby},
-                {typeof(StatePreview), statePreview},
-                {typeof(StateWin), stateWin},
+                {typeof(StateBootstrap), new StateBootstrap(this)},
+                {typeof(StateFail), new StateFail(this)},
+                {typeof(StateGame), new StateGame(this)},
+                {typeof(StateLoadLevel), new StateLoadLevel(this)},
+                {typeof(StateLoadProgress), new StateLoadProgress(this)},
+                {typeof(StateLobby), new StateLobby(this)},
+                {typeof(StatePreview), new StatePreview(this)},
+                {typeof(StateWin), new StateWin(this)},
             };
-            
-            objectResolver.Inject(stateBootstrap);
-            objectResolver.Inject(stateFail);
-            objectResolver.Inject(stateGame);
-            objectResolver.Inject(stateLoadLevel);
-            objectResolver.Inject(stateLoadProgress);
-            objectResolver.Inject(stateLobby);
-            objectResolver.Inject(statePreview);
-            objectResolver.Inject(stateWin);
+
+            InjectStates(objectResolver);
         }
 
         void IGameStateService.Enter<TState>()
@@ -66,5 +50,13 @@ namespace CodeBase.Infrastructure.States
         }
 
         private TState GetState<TState>() where TState : class, IExitState => _states[typeof(TState)] as TState;
+
+        private void InjectStates(IObjectResolver objectResolver)
+        {
+            foreach (IExitState state in _states.Values)
+            {
+                objectResolver.Inject(state);
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace CodeBase.Game.SystemsUi
         private LevelModel _levelModel;
 
         [Inject]
-        public void Construct(ICameraService cameraService, InventoryModel inventoryModel, LevelModel levelModel)
+        private void Construct(ICameraService cameraService, InventoryModel inventoryModel, LevelModel levelModel)
         {
             _cameraService = cameraService;
             _inventoryModel = inventoryModel;

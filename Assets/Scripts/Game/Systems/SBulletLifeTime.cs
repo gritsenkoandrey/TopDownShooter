@@ -13,7 +13,7 @@ namespace CodeBase.Game.Systems
         private IObjectPoolService _objectPoolService;
 
         [Inject]
-        public void Construct(IObjectPoolService objectPoolService)
+        private void Construct(IObjectPoolService objectPoolService)
         {
             _objectPoolService = objectPoolService;
         }

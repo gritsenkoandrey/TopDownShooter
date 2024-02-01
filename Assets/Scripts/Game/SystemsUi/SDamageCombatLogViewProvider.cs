@@ -23,7 +23,7 @@ namespace CodeBase.Game.SystemsUi
         private DamageCombatLog _damageCombatLog;
 
         [Inject]
-        public void Construct(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, 
+        private void Construct(IUIFactory uiFactory, ICameraService cameraService, IGuiService guiService, 
             DamageCombatLog damageCombatLog)
         {
             _uiFactory = uiFactory;

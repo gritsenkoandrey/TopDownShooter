@@ -16,7 +16,7 @@ namespace CodeBase.Game.Systems
         private DamageCombatLog _damageCombatLog;
         
         [Inject]
-        public void Construct(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
+        private void Construct(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
         {
             _effectFactory = effectFactory;
             _levelModel = levelModel;
