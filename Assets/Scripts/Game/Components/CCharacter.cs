@@ -21,7 +21,7 @@ namespace CodeBase.Game.Components
         public Health Health { get; } = new();
         public Entity Entity => this;
         public Vector3 Position => transform.position;
-        public float Height => 2.75f;
+        public float Height => 3f;
         public int Money => default;
     } 
 }

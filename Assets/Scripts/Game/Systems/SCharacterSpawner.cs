@@ -54,7 +54,7 @@ namespace CodeBase.Game.Systems
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
                 .Subscribe(speed => character.Move.SetSpeed(character.Move.BaseSpeed + speed))
-                .AddTo(character.Entity.LifetimeDisposable);
+                .AddTo(character.LifetimeDisposable);
         }
 
         private void SubscribeOnUpgradeHealth(CCharacter character)
@@ -66,7 +66,7 @@ namespace CodeBase.Game.Systems
                     character.Health.SetMaxHealth(character.Health.BaseHealth * health);
                     character.Health.CurrentHealth.SetValueAndForceNotify(character.Health.MaxHealth);
                 })
-                .AddTo(character.Entity.LifetimeDisposable);
+                .AddTo(character.LifetimeDisposable);
         }
 
         private void CreateStateMachine(CCharacter character)
@@ -75,7 +75,7 @@ namespace CodeBase.Game.Systems
 
             character.StateMachine.UpdateStateMachine
                 .Subscribe(_ => character.StateMachine.StateMachine.Tick())
-                .AddTo(character.Entity.LifetimeDisposable);
+                .AddTo(character.LifetimeDisposable);
         }
         
         private async UniTaskVoid CreateWeapon(CCharacter character)
