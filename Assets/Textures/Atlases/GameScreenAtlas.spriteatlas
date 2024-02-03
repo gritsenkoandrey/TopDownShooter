@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ScreenAtlas
+  m_Name: GameScreenAtlas
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -33,6 +33,18 @@ SpriteAtlas:
       m_Overridden: 0
       m_AndroidETC2FallbackOverride: 0
       m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 8
@@ -44,65 +56,29 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 3627eeb159e4c1344933f99bd0999f63, type: 3}
+    - {fileID: 102900000, guid: 3b4052928ff3b3043852b4d81834375e, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: cfc5ea7037e30f04ea076cfd71eba05f, type: 3}
   - {fileID: 21300000, guid: bb33f5920fac3bd4181a3840cbbaf4f9, type: 3}
-  - {fileID: 21300000, guid: 9ca2bc92a8951664b94a28c6fa333999, type: 3}
-  - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: fe11974361ecb474abda0f5b8adb3729, type: 3}
-  - {fileID: 21300000, guid: 98e8132453a73b74b9a187e9313f0ed4, type: 3}
-  - {fileID: 21300000, guid: 43eef46616b80d847a192d598961d47b, type: 3}
   - {fileID: 21300000, guid: 2079b87688256f748be41055895c942b, type: 3}
   - {fileID: 21300000, guid: 17f3599798e793a47898c58e7838fdd3, type: 3}
   - {fileID: 21300000, guid: 96edcdb727aa06b459e217e2a23e1ed3, type: 3}
-  - {fileID: 21300000, guid: 18c1d1185d5662744b55d237738b94a3, type: 3}
-  - {fileID: 21300000, guid: c8a005a85868d444aba2efa8fb2452df, type: 3}
-  - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
-  - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
-  - {fileID: 21300000, guid: 621b5c49911be1e4e9e1221410239f82, type: 3}
-  - {fileID: 21300000, guid: eb8c115bc40e94b47aad4e9121ed3bd1, type: 3}
   - {fileID: 21300000, guid: 0e54d4ab857026e46af697e6823f9fb7, type: 3}
-  - {fileID: 21300000, guid: 83fecabbbbbad3542999e3530f5b25a5, type: 3}
-  - {fileID: 21300000, guid: 452d12cb27da9b74fb9366cb0f2a34e3, type: 3}
-  - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
-  - {fileID: 21300000, guid: aa36eb0e80293c84d843d9c6662aace5, type: 3}
   - {fileID: 21300000, guid: 998d196ee78bdfd4dbc1b513d936938a, type: 3}
-  - {fileID: 21300000, guid: f813018f9361f9948bbffb2b7f016bf9, type: 3}
-  - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
-  - {fileID: 21300000, guid: b3ee4aafec0ec2d4084afb64faad54d1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - shop_hide
-  - up
-  - keyboard_s
-  - shop_weapon
-  - circle_big
-  - keyboard_o
-  - keyboard_l
-  - money
-  - damage
-  - circle_small
-  - keyboard_n
-  - keyboard_i
-  - shop_speedometer
-  - square
-  - keyboard_r
-  - left
-  - ammunition
-  - keyboard_e
-  - down
-  - shop_medical_pack
-  - target
-  - keyboard_w
-  - watch
-  - right
-  - shop_show
-  - circle
+  - game_screen_arrow_up
+  - game_screen_circle_big
+  - game_screen_money
+  - game_screen_damage
+  - game_screen_circle_small
+  - game_screen_ammunition
+  - game_screen_target
+  - game_screen_watch
   m_RenderDataMap: {}
-  m_Tag: ScreenAtlas
+  m_Tag: GameScreenAtlas
   m_IsVariant: 0

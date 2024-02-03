@@ -6,15 +6,12 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using JetBrains.Annotations;
-using VContainer;
 
 namespace CodeBase.Infrastructure.Factories.StateMachine
 {
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class StateMachineFactory : IStateMachineFactory
     {
-        private readonly IObjectResolver _objectResolver;
-
         private readonly IJoystickService _joystickService;
         private readonly ICameraService _cameraService;
         private readonly LevelModel _levelModel;
