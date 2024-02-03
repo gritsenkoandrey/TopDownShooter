@@ -27,7 +27,7 @@ namespace CodeBase.Game.Systems
                 .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
 
-            Observable.Timer(Time())
+            Observable.Timer(Time(component.LifeTime))
                 .First()
                 .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
@@ -35,6 +35,6 @@ namespace CodeBase.Game.Systems
 
         private void ReturnToPool(IObject component) => _objectPoolService.ReleaseObject(component.Object);
         
-        private TimeSpan Time() => TimeSpan.FromSeconds(2f);
+        private TimeSpan Time(float lifeTime) => TimeSpan.FromSeconds(lifeTime);
     }
 }

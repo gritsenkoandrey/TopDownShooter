@@ -13,6 +13,7 @@ namespace CodeBase.Game.Builders
         private Vector3 _direction;
         private Quaternion _rotation;
         private float _collisionDistance;
+        private float _lifeTime;
         private int _damage;
 
         private readonly IObjectPoolService _objectPoolService;
@@ -57,6 +58,13 @@ namespace CodeBase.Game.Builders
             return this;
         }
 
+        public ProjectileBuilder SetLifeTime(float lifeTime)
+        {
+            _lifeTime = lifeTime;
+
+            return this;
+        }
+
         public IBullet Build()
         {
             Vector3 position = _spawnPoint.position;
@@ -69,6 +77,7 @@ namespace CodeBase.Game.Builders
             bullet.SetDamage(_damage);
             bullet.SetDirection(_direction);
             bullet.SetCollisionDistance(_collisionDistance);
+            bullet.SetLifeTime(_lifeTime);
 
             return bullet;
         }

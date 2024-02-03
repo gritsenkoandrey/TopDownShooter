@@ -5,7 +5,7 @@ using CodeBase.Utils;
 
 namespace CodeBase.Game.Systems
 {
-    public sealed class SBulletProvider : SystemComponent<CBullet>
+    public sealed class SBulletMove : SystemComponent<CBullet>
     {
         protected override void OnUpdate()
         {

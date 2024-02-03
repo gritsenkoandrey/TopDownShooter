@@ -55,7 +55,7 @@ namespace CodeBase.Game.SystemsUi
         {
             component.SetCost(level * component.BaseCost);
             component.TextLevel.text = $"Level {level}";
-            component.TextCost.text = $"{component.Cost}$";
+            component.TextCost.text = $"{component.Cost.Trim()}$";
             
             Entities.Foreach(SetButtonInteractable);
         }

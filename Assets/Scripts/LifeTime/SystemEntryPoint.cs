@@ -16,10 +16,7 @@ namespace CodeBase.LifeTime
 
         private readonly IObjectResolver _objectResolver;
 
-        public SystemEntryPoint(IObjectResolver objectResolver)
-        {
-            _objectResolver = objectResolver;
-        }
+        public SystemEntryPoint(IObjectResolver objectResolver) => _objectResolver = objectResolver;
 
         void IInitializable.Initialize() => CreateSystems();
         void IStartable.Start() => EnableSystems();
@@ -46,7 +43,7 @@ namespace CodeBase.LifeTime
                 new SEnemyHealthProvider(),
                 new SEnemyHealthUpdate(),
                 new SCharacterHealth(),
-                new SBulletProvider(),
+                new SBulletMove(),
                 new SBulletCollision(),
                 new SLevelTimeLeft(),
                 new SStateMachineUpdate(),

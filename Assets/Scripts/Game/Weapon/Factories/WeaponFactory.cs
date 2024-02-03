@@ -78,6 +78,7 @@ namespace CodeBase.Game.Weapon.Factories
                 .SetDamage(damage)
                 .SetDirection(direction)
                 .SetCollisionDistance(data.CollisionRadius)
+                .SetLifeTime(data.LifeTime)
                 .Build();
         }
     }
