@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
 using UniRx;
 using VContainer;
 
@@ -27,19 +28,19 @@ namespace CodeBase.Game.SystemsUi
         {
             _levelModel.Enemies
                 .ObserveCountChanged()
-                .DoOnSubscribe(() => SetStartValue(component))
+                .DoOnSubscribe(() => SetLevelGoalText(component, _levelModel.Enemies.Count))
                 .Subscribe(count => UpdateLevelGoal(component, count))
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void SetStartValue(CLevelGoal component)
+        private void SetLevelGoalText(CLevelGoal component, int count)
         {
-            component.TextLevelGoal.text = _levelModel.Enemies.Count.ToString();
+            component.TextLevelGoal.text = count + SpriteAssetExtension.Target;
         }
 
         private void UpdateLevelGoal(CLevelGoal component, int count)
         {
-            component.TextLevelGoal.text = count.ToString();
+            SetLevelGoalText(component, count);
 
             if (count <= 0)
             {

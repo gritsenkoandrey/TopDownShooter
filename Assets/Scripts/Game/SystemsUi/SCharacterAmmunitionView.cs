@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
 using UniRx;
 using VContainer;
 
@@ -23,7 +24,9 @@ namespace CodeBase.Game.SystemsUi
             _inventoryModel.ClipCount
                 .Subscribe(count =>
                 {
-                    component.AmmunitionCount.text = count > 0 ? count.ToString() : "R";
+                    string text = count > 0 ? count.ToString() : "R";
+                    
+                    component.AmmunitionCount.text = text + SpriteAssetExtension.Ammunition;
                 })
                 .AddTo(component.LifetimeDisposable);
         }
