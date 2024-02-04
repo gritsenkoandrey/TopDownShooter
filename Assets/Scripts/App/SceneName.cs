@@ -3,7 +3,7 @@
     public static class SceneName
     {
         public const string Bootstrap = "Bootstrap";
-        public const string Main = "Main";
-        public const string Lobby = "Lobby";
+        public const string Game = "Game";
+        public const string Preview = "Preview";
     }
 }

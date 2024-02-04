@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            StartAnimation(component).Forget();
+            StartAnimation(component);
         }
 
         protected override void OnDisableComponent(CPrintResultText component)
@@ -24,15 +23,11 @@ namespace CodeBase.Game.SystemsUi
             KillTwins(component);
         }
 
-        private async UniTaskVoid StartAnimation(CPrintResultText component)
+        private void StartAnimation(CPrintResultText component)
         {
             float delay = 0f;
             
             InAnimation(component, ref delay);
-
-            await UniTask.WaitUntil(() => AllTwinsCompleted(component));
-            
-            OutAnimation(component, ref delay);
         }
 
         private void InAnimation(CPrintResultText component, ref float delay)

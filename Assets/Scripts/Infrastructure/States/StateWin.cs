@@ -48,6 +48,6 @@ namespace CodeBase.Infrastructure.States
             _transitionDisposable = screen.ChangeState.First().Subscribe(ChangeState);
         }
 
-        private void ChangeState(Unit _) => _stateService.Enter<StatePreview, string>(SceneName.Lobby);
+        private void ChangeState(Unit _) => _stateService.Enter<StatePreview, string>(SceneName.Preview);
     }
 }

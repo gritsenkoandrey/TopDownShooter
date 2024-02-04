@@ -13,7 +13,7 @@ namespace CodeBase.UI.Screens
         [SerializeField] private Button _button;
         [SerializeField] private CCharacterPreviewMediator _characterPreviewMediator;
 
-        private Tween _bounceTween;
+        private Tween _tween;
 
         private protected override void OnEnable()
         {
@@ -21,19 +21,25 @@ namespace CodeBase.UI.Screens
 
             _button
                 .OnClickAsObservable()
-                .DoOnSubscribe(ScreenAnimation)
                 .First()
-                .Subscribe(_ => StartGame().Forget())
-                .AddTo(this);
+                .Subscribe(_ => NextState().Forget())
+                .AddTo(LifeTimeDisposable);
             
-            FadeCanvas(0f, 1f, 0.2f);
+            ShowButton().Forget();
         }
 
-        private async UniTaskVoid StartGame()
+        private protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            _tween?.Kill();
+        }
+
+        private async UniTaskVoid NextState()
         {
             _characterPreviewMediator.SelectCharacter.Execute();
             
-            _bounceTween?.Kill();
+            _tween?.Kill();
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
@@ -41,10 +47,14 @@ namespace CodeBase.UI.Screens
 
             ChangeState.Execute();
         }
-
-        private void ScreenAnimation()
+        
+        private async UniTaskVoid ShowButton()
         {
-            _bounceTween = BounceButton(_button, 1.05f, 0.5f);
+            _tween = FadeCanvas(0f, 1f, 0.5f);
+            
+            await _tween.AsyncWaitForCompletion().AsUniTask();
+            
+            _tween = BounceButton(_button, 1.05f, 0.5f);
         }
     }
 }

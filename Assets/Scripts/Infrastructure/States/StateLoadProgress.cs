@@ -27,7 +27,7 @@ namespace CodeBase.Infrastructure.States
         void IEnterState.Enter()
         {
             _progressService.Load();
-            _stateService.Enter<StatePreview, string>(SceneName.Lobby);
+            _stateService.Enter<StatePreview, string>(SceneName.Preview);
         }
 
         void IExitState.Exit()

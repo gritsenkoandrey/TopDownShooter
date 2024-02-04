@@ -12,9 +12,11 @@ namespace CodeBase.UI.Screens
         [SerializeField] private RectTransform _safeArea;
         
         public readonly ReactiveCommand ChangeState = new ();
+        
+        private protected readonly CompositeDisposable LifeTimeDisposable = new();
 
         private protected virtual void OnEnable() => _safeArea.ApplySafeArea();
-        private protected virtual void OnDisable() { }
+        private protected virtual void OnDisable() => LifeTimeDisposable.Clear();
         
         private protected Tween FadeCanvas(float from, float to, float duration)
         {
