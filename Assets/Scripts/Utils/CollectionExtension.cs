@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
 
 namespace CodeBase.Utils
 {
@@ -18,7 +17,12 @@ namespace CodeBase.Utils
 
         public static int GetRandomIndex<T>(this IList<T> collection)
         {
-            return Random.Range(0, collection.Count);
+            return UnityEngine.Random.Range(0, collection.Count);
+        }
+        
+        public static T GetRandomElement<T>(this IList<T> collection)
+        {
+            return collection[UnityEngine.Random.Range(0, collection.Count)];
         }
     }
 }

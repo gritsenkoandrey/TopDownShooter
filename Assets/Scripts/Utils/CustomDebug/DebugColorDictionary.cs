@@ -20,11 +20,9 @@ namespace CodeBase.Utils.CustomDebug
         private const string Blue    = "0000FF";
         private const string Navy    = "000080";
 
-        private static readonly Dictionary<DebugColorType, string> _colors;
-        
         static DebugColorDictionary()
         {
-            _colors = new Dictionary<DebugColorType, string>
+            Colors = new Dictionary<DebugColorType, string>
             {
                 { DebugColorType.Gray, Gray },
                 { DebugColorType.Silver, Silver },
@@ -44,6 +42,6 @@ namespace CodeBase.Utils.CustomDebug
             };
         }
 
-        public static IReadOnlyDictionary<DebugColorType, string> Colors => _colors;
+        public static IReadOnlyDictionary<DebugColorType, string> Colors { get; }
     }
 }

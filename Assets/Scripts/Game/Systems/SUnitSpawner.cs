@@ -5,7 +5,6 @@ using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -43,18 +42,9 @@ namespace CodeBase.Game.Systems
             unit.Health.CurrentHealth.SetValueAndForceNotify(unit.UnitStats.Health);
             unit.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
             unit.Radar.SetRadius(weapon.Weapon.DetectionDistance());
+            unit.StateMachine.CreateStateMachine(_stateMachineFactory.CreateUnitStateMachine(unit));
             
-            CreateStateMachine(unit);
             SetEquipment(unit);
-        }
-
-        private void CreateStateMachine(CUnit unit)
-        {
-            unit.StateMachine.SetStateMachine(_stateMachineFactory.CreateUnitStateMachine(unit));
-
-            unit.StateMachine.UpdateStateMachine
-                .Subscribe(_ => unit.StateMachine.StateMachine.Tick())
-                .AddTo(unit.LifetimeDisposable);
         }
         
         private void SetEquipment(CUnit unit)

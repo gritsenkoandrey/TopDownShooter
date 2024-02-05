@@ -45,11 +45,10 @@ namespace CodeBase.Game.Systems
 
             character.WeaponMediator.SetWeapon(weapon);
             character.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
-            character.StateMachine.SetStateMachine(_stateMachineFactory.CreateCharacterStateMachine(character));
+            character.StateMachine.CreateStateMachine(_stateMachineFactory.CreateCharacterStateMachine(character));
 
             SubscribeOnUpgradeHealth(character);
             SubscribeOnUpgradeSpeed(character);
-            SubscribeOnUpdateStateMachine(character);
             SetEquipment(character);
         }
 
@@ -70,13 +69,6 @@ namespace CodeBase.Game.Systems
                     character.Health.SetMaxHealth(character.Health.BaseHealth * health);
                     character.Health.CurrentHealth.SetValueAndForceNotify(character.Health.MaxHealth);
                 })
-                .AddTo(character.LifetimeDisposable);
-        }
-
-        private void SubscribeOnUpdateStateMachine(CCharacter character)
-        {
-            character.StateMachine.UpdateStateMachine
-                .Subscribe(_ => character.StateMachine.StateMachine.Tick())
                 .AddTo(character.LifetimeDisposable);
         }
         

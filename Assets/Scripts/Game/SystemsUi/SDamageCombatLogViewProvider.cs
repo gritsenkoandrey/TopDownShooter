@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
@@ -40,14 +39,7 @@ namespace CodeBase.Game.SystemsUi
                 .Subscribe(combatLog => ActivateDamageView(component, combatLog))
                 .AddTo(component.LifetimeDisposable);
         }
-
-        protected override void OnDisableComponent(CDamageCombatLogViewProvider component)
-        {
-            base.OnDisableComponent(component);
-            
-            component.DamageCombatLogViews = Array.Empty<CDamageCombatLogView>();
-        }
-
+        
         private void ActivateDamageView(CDamageCombatLogViewProvider component, CombatLog combatLog)
         {
             if (component.DamageCombatLogViews.Count == 0)

@@ -15,7 +15,10 @@ namespace CodeBase.Game.Systems
 
         private void UpdateStateMachine(CStateMachine stateMachine)
         {
-            stateMachine.UpdateStateMachine.Execute();
+            if (stateMachine.IsCreated)
+            {
+                stateMachine.StateMachine.Tick();
+            }
         }
     }
 }
