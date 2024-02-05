@@ -43,7 +43,6 @@ namespace CodeBase.Infrastructure.States
             
             SubscribeOnWin();
             SubscribeOnLose();
-            SubscribeOnTimeLeft();
         }
 
         void IExitState.Exit()
@@ -75,10 +74,7 @@ namespace CodeBase.Infrastructure.States
                 .First()
                 .Subscribe(_ => Lose())
                 .AddTo(_transitionDisposable);
-        }
-
-        private void SubscribeOnTimeLeft()
-        {
+            
             Observable.Timer(TimeLeft())
                 .First()
                 .Delay(TimeSpan.FromSeconds(1f))

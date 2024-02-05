@@ -12,7 +12,7 @@ namespace CodeBase.Game.StateMachine.Character
         void IState.Enter()
         {
             Character.Animator.OnDeath.Execute();
-            Character.Entity.CleanSubscribe();
+            Character.CleanSubscribe();
         }
 
         void IState.Exit() { }

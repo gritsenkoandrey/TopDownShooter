@@ -18,12 +18,13 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
         private IDictionary<WeaponType, WeaponCharacteristicData> _weaponCharacteristics;
         private IDictionary<ProjectileType, ProjectileData> _projectiles;
+        private IDictionary<EffectType, EffectData> _effects;
         private LevelData _level;
         private CharacterData _character;
-        private FxData _fxData;
         private TextureArrayData _textureArrayData;
         private UiData _uiData;
         private PoolData _poolData;
+        private UnitData _unitData;
 
         public StaticDataService(IAssetService assetService)
         {
@@ -48,12 +49,16 @@ namespace CodeBase.Infrastructure.StaticData
                 .LoadAllFromResources<ProjectileData>(AssetAddress.ProjectileDataPath)
                 .ToDictionary(data => data.ProjectileType, data => data);
 
+            _effects = _assetService
+                .LoadAllFromResources<EffectData>(AssetAddress.EffectDataPath)
+                .ToDictionary(data => data.EffectType, data => data);
+
             _level = _assetService.LoadFromResources<LevelData>(AssetAddress.LevelDataPath);
             _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
-            _fxData = _assetService.LoadFromResources<FxData>(AssetAddress.FxDataPath);
             _textureArrayData = _assetService.LoadFromResources<TextureArrayData>(AssetAddress.TextureArrayDataPath);
             _uiData = _assetService.LoadFromResources<UiData>(AssetAddress.UiDataPath);
             _poolData = _assetService.LoadFromResources<PoolData>(AssetAddress.PoolDataPath);
+            _unitData = _assetService.LoadFromResources<UnitData>(AssetAddress.UnitDataPath);
         }
         
         ScreenData IStaticDataService.ScreenData(ScreenType type) => 
@@ -68,16 +73,14 @@ namespace CodeBase.Infrastructure.StaticData
         public ProjectileData ProjectileData(ProjectileType type) => 
             _projectiles.TryGetValue(type, out var projectileData) ? projectileData : null;
 
+        EffectData IStaticDataService.EffectData(EffectType type) => 
+            _effects.TryGetValue(type, out EffectData staticData) ? staticData : null;
+
         LevelData IStaticDataService.LevelData() => _level;
-
         CharacterData IStaticDataService.CharacterData() => _character;
-
-        FxData IStaticDataService.FxData() => _fxData;
-
         TextureArrayData IStaticDataService.TextureArrayData() => _textureArrayData;
-
         UiData IStaticDataService.UiData() => _uiData;
-
         PoolData IStaticDataService.PoolData() => _poolData;
+        UnitData IStaticDataService.UnitData() => _unitData;
     }
 }

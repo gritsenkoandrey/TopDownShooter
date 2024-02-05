@@ -19,9 +19,7 @@ namespace CodeBase.Game.Components
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
         public Health Health { get; } = new();
-        public Entity Entity => this;
         public Vector3 Position => transform.position;
         public float Height => 3f;
-        public int Money => default;
     } 
 }

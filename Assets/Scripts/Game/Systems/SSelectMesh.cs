@@ -1,6 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using UnityEngine;
+using CodeBase.Utils;
 
 namespace CodeBase.Game.Systems
 {
@@ -15,7 +15,7 @@ namespace CodeBase.Game.Systems
 
         private void SelectRandomSkin(CSelectMesh component)
         {
-            int index = Random.Range(0, component.Meshes.Length);
+            int index = component.Meshes.GetRandomIndex();
 
             for (int i = 0; i < component.Meshes.Length; i++)
             {

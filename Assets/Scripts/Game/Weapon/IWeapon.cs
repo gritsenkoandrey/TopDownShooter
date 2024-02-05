@@ -5,7 +5,7 @@ namespace CodeBase.Game.Weapon
 {
     public interface IWeapon : IDisposable
     {
-        public void Attack(ITarget target = default);
+        public void Attack(ITarget target = null);
         public bool CanAttack();
         public bool IsDetectThroughObstacle();
         public float AttackDistance();

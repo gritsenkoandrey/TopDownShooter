@@ -4,7 +4,7 @@ using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using UnityEngine;
 
-namespace CodeBase.Game.Builders
+namespace CodeBase.Game.Builders.Weapon
 {
     public abstract class BaseWeaponBuilder
     {

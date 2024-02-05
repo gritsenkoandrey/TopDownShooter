@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
@@ -50,7 +51,7 @@ namespace CodeBase.Game.Systems
 
             _progressService.MoneyData.Data.Value += component.Money;
             _levelModel.RemoveEnemy(component);
-            _effectFactory.CreateDeathFx(component.Position.AddY(component.Height)).Forget();
+            _effectFactory.CreateEffect(EffectType.Death, component.Position.AddY(component.Height)).Forget();
         }
     }
 }

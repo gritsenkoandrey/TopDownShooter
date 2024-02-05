@@ -5,7 +5,7 @@ using CodeBase.Game.Weapon.Factories;
 using CodeBase.Game.Weapon.SpecificWeapons;
 using UnityEngine;
 
-namespace CodeBase.Game.Builders
+namespace CodeBase.Game.Builders.Weapon
 {
     public sealed class WeaponUnitBuilder : BaseWeaponBuilder
     {

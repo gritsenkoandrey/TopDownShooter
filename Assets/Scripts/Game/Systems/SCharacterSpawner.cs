@@ -41,11 +41,15 @@ namespace CodeBase.Game.Systems
         private async UniTaskVoid CreateCharacter(CCharacterSpawner component)
         {
             CCharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
+            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, character.WeaponMediator.Container);
+
+            character.WeaponMediator.SetWeapon(weapon);
+            character.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
+            character.StateMachine.SetStateMachine(_stateMachineFactory.CreateCharacterStateMachine(character));
 
             SubscribeOnUpgradeHealth(character);
             SubscribeOnUpgradeSpeed(character);
-            CreateStateMachine(character);
-            CreateWeapon(character).Forget();
+            SubscribeOnUpdateStateMachine(character);
             SetEquipment(character);
         }
 
@@ -69,21 +73,11 @@ namespace CodeBase.Game.Systems
                 .AddTo(character.LifetimeDisposable);
         }
 
-        private void CreateStateMachine(CCharacter character)
+        private void SubscribeOnUpdateStateMachine(CCharacter character)
         {
-            character.StateMachine.SetStateMachine(_stateMachineFactory.CreateCharacterStateMachine(character));
-
             character.StateMachine.UpdateStateMachine
                 .Subscribe(_ => character.StateMachine.StateMachine.Tick())
                 .AddTo(character.LifetimeDisposable);
-        }
-        
-        private async UniTaskVoid CreateWeapon(CCharacter character)
-        {
-            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, character.WeaponMediator.Container);
-            
-            character.WeaponMediator.SetWeapon(weapon);
-            character.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
         }
         
         private void SetEquipment(CCharacter character)

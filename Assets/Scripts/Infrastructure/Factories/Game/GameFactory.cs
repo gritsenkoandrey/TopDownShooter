@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Builders;
+﻿using CodeBase.Game.Builders.Level;
+using CodeBase.Game.Builders.Player;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
@@ -43,7 +44,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             CLevel level = new LevelBuilder()
-                .SetPrefab(prefab.GetComponent<CLevel>())
+                .SetPrefab(prefab)
                 .SetLevelTime(data.LevelTime)
                 .Build();
             
@@ -59,7 +60,7 @@ namespace CodeBase.Infrastructure.Factories.Game
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             CCharacter character = new CharacterBuilder()
-                .SetPrefab(prefab.GetComponent<CCharacter>())
+                .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetCamera(_cameraService)
                 .SetPosition(position)
@@ -74,9 +75,15 @@ namespace CodeBase.Infrastructure.Factories.Game
         
         async UniTask<CUnit> IGameFactory.CreateUnit(Vector3 position, Transform parent)
         {
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.Unit);
+            UnitData data = _staticDataService.UnitData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.Prefabreference);
 
-            CUnit unit = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CUnit>();
+            CUnit unit = new UnitBuilder()
+                .SetPrefab(prefab)
+                .SetParent(parent)
+                .SetPosition(position)
+                .Build();
             
             _levelModel.AddEnemy(unit);
 

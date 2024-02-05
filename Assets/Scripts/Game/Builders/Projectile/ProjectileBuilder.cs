@@ -3,7 +3,7 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
 using UnityEngine;
 
-namespace CodeBase.Game.Builders
+namespace CodeBase.Game.Builders.Projectile
 {
     public sealed class ProjectileBuilder
     {
@@ -26,42 +26,36 @@ namespace CodeBase.Game.Builders
         public ProjectileBuilder SetPrefab(GameObject prefab)
         {
             _prefab = prefab;
-            
             return this;
         }
 
         public ProjectileBuilder SetSpawnPoint(Transform spawnPoint)
         {
             _spawnPoint = spawnPoint;
-
             return this;
         }
 
         public ProjectileBuilder SetCollisionDistance(float collisionDistance)
         {
             _collisionDistance = collisionDistance;
-            
             return this;
         }
 
         public ProjectileBuilder SetDirection(Vector3 direction)
         {
             _direction = direction;
-            
             return this;
         }
 
         public ProjectileBuilder SetDamage(int damage)
         {
             _damage = damage;
-            
             return this;
         }
 
         public ProjectileBuilder SetLifeTime(float lifeTime)
         {
             _lifeTime = lifeTime;
-
             return this;
         }
 

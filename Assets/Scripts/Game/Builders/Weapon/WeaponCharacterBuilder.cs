@@ -7,7 +7,7 @@ using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using UnityEngine;
 
-namespace CodeBase.Game.Builders
+namespace CodeBase.Game.Builders.Weapon
 {
     public sealed class WeaponCharacterBuilder : BaseWeaponBuilder
     {

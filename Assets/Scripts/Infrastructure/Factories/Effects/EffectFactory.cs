@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.AssetData;
+﻿using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -25,30 +26,17 @@ namespace CodeBase.Infrastructure.Factories.Effects
             _assetService = assetService;
         }
         
-        async UniTask<GameObject> IEffectFactory.CreateHitFx(Vector3 position)
+        async UniTask<GameObject> IEffectFactory.CreateEffect(EffectType type, Vector3 position)
         {
-            FxData data = _staticDataService.FxData();
+            EffectData data = _staticDataService.EffectData(type);
             
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.HitFx);
-
-            GameObject hitFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             
-            _objectPoolService.ReleaseObjectAfterTime(hitFx, data.HitFxReleaseTime).Forget();
+            GameObject effect = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
             
-            return hitFx;
-        }
-
-        async UniTask<GameObject> IEffectFactory.CreateDeathFx(Vector3 position)
-        {
-            FxData data = _staticDataService.FxData();
+            _objectPoolService.ReleaseObjectAfterTime(effect, data.LifeTime).Forget();
             
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(AssetAddress.DeathFx);
-
-            GameObject deathFx = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
-            _objectPoolService.ReleaseObjectAfterTime(deathFx, data.DeathFxReleaseTime).Forget();
-
-            return deathFx;
+            return effect;
         }
     }
 }

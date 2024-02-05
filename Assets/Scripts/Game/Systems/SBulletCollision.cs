@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
@@ -62,12 +63,9 @@ namespace CodeBase.Game.Systems
             target.Health.CurrentHealth.Value -= bullet.Damage;
             bullet.OnDestroy.Execute();
             
-            _effectFactory.CreateHitFx(bullet.Object.transform.position).Forget();
+            _effectFactory.CreateEffect(EffectType.Hit, bullet.Object.transform.position).Forget();
         }
 
-        private void AddLog(IBullet bullet, ITarget target)
-        {
-            _damageCombatLog.AddLog(target, bullet.Damage);
-        }
+        private void AddLog(IBullet bullet, ITarget target) => _damageCombatLog.AddLog(target, bullet.Damage);
     }
 }

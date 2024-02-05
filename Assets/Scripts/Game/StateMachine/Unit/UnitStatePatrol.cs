@@ -1,5 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -49,22 +50,12 @@ namespace CodeBase.Game.StateMachine.Unit
                 StateMachine.Enter<UnitStateIdle>();
             }
         }
-        
-        private Vector3 GenerateRandomPoint(float radius)
-        {
-            float angle = Random.Range(0f, 1f) * (2f * Mathf.PI) - Mathf.PI;
-                    
-            float x = Mathf.Sin(angle) * radius;
-            float z = Mathf.Cos(angle) * radius;
-
-            return new Vector3(x, 0f, z);
-        }
 
         private Vector3 GeneratePointOnNavmesh()
         {
             for (int i = 0; i < 10; i++)
             {
-                Vector3 center = _patrolPosition + GenerateRandomPoint(_patrolRadius);
+                Vector3 center = _patrolPosition + Mathematics.GenerateRandomPoint(_patrolRadius);
 
                 if (NavMesh.SamplePosition(center, out NavMeshHit hit, 1f, 1))
                 {

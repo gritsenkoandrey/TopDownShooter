@@ -99,9 +99,13 @@ namespace CodeBase.Infrastructure.Pool
 		    for (int i = 0; i < data.PoolItems.Length; i++)
 		    {
 			    int count = data.PoolItems[i].Count;
-			    GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PoolItems[i].PrefabReference);
 
-			    _poolItems.Add(new ObjectPoolItem(prefab, count));
+			    if (count > 0)
+			    {
+				    GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PoolItems[i].PrefabReference);
+
+				    _poolItems.Add(new ObjectPoolItem(prefab, count));
+			    }
 		    }
 	    }
 

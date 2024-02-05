@@ -43,7 +43,8 @@ namespace CodeBase.UI.Screens
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
-            await UniTask.WaitUntil(() => _characterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation);
+            await UniTask.WaitUntil(() => _characterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation, 
+                cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
             ChangeState.Execute();
         }

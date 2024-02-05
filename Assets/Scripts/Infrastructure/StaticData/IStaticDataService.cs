@@ -13,11 +13,12 @@ namespace CodeBase.Infrastructure.StaticData
         public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
         public WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
         public ProjectileData ProjectileData(ProjectileType type);
+        public EffectData EffectData(EffectType type);
         public LevelData LevelData();
         public CharacterData CharacterData();
-        public FxData FxData();
         public TextureArrayData TextureArrayData();
         public UiData UiData();
         public PoolData PoolData();
+        public UnitData UnitData();
     }
 }

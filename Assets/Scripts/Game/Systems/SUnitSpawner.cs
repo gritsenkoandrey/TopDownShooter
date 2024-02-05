@@ -3,9 +3,9 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
+using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
-using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -34,7 +34,8 @@ namespace CodeBase.Game.Systems
         private async UniTaskVoid CreateUnit(CUnitSpawner component)
         {
             CUnit unit = await _gameFactory.CreateUnit(component.Position, component.transform.parent);
-            CWeapon weapon = await _weaponFactory.CreateUnitWeapon(component.WeaponType, component.WeaponCharacteristic, unit.WeaponMediator.Container);
+            CWeapon weapon = await _weaponFactory
+                .CreateUnitWeapon(component.WeaponType, component.WeaponCharacteristic, unit.WeaponMediator.Container);
             
             unit.WeaponMediator.SetWeapon(weapon);
             unit.UnitStats = component.UnitStats;
@@ -58,7 +59,7 @@ namespace CodeBase.Game.Systems
         
         private void SetEquipment(CUnit unit)
         {
-            int index = Random.Range(0, unit.BodyMediator.Bodies.Length);
+            int index = unit.BodyMediator.Bodies.GetRandomIndex();
             
             for (int i = 0; i < unit.BodyMediator.Bodies.Length; i++)
             {

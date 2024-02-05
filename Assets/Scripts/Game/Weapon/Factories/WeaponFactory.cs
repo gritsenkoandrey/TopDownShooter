@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Builders;
+﻿using CodeBase.Game.Builders.Projectile;
+using CodeBase.Game.Builders.Weapon;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
