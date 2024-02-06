@@ -9,14 +9,14 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class StateLobby : IEnterState
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;
 
         private IDisposable _transitionDisposable;
 
-        public StateLobby(IGameStateService stateService)
+        public StateLobby(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
 
         [Inject]
@@ -42,6 +42,6 @@ namespace CodeBase.Infrastructure.States
             _transitionDisposable = screen.ChangeState.First().Subscribe(ChangeState);
         }
 
-        private void ChangeState(Unit _) => _stateService.Enter<StateGame>();
+        private void ChangeState(Unit _) => _gameStateMachine.Enter<StateGame>();
     }
 }

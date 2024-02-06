@@ -1,6 +1,6 @@
 ﻿namespace CodeBase.Game.Interfaces
 {
-    public interface ICharacter : ITarget, IGameStateMachine
+    public interface ICharacter : ITarget, IStateMachineComponent
     {
     }
 }

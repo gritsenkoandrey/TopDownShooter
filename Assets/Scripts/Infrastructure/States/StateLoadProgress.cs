@@ -8,13 +8,13 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class StateLoadProgress : IEnterState
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private IProgressService _progressService;
         private ILoadingCurtainService _loadingCurtainService;
 
-        public StateLoadProgress(IGameStateService stateService)
+        public StateLoadProgress(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
         
         [Inject]
@@ -27,7 +27,7 @@ namespace CodeBase.Infrastructure.States
         void IEnterState.Enter()
         {
             _progressService.Load();
-            _stateService.Enter<StatePreview, string>(SceneName.Preview);
+            _gameStateMachine.Enter<StatePreview, string>(SceneName.Preview);
         }
 
         void IExitState.Exit()

@@ -13,7 +13,7 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class StateLoadLevel : IEnterLoadState<string>
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private ISceneLoaderService _sceneLoaderService;
         private IGameFactory _gameFactory;
         private IUIFactory _uiFactory;
@@ -24,9 +24,9 @@ namespace CodeBase.Infrastructure.States
         private LevelModel _levelModel;
         private DamageCombatLog _damageCombatLog;
 
-        public StateLoadLevel(IGameStateService stateService)
+        public StateLoadLevel(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
 
         [Inject]
@@ -87,7 +87,7 @@ namespace CodeBase.Infrastructure.States
         {
             await _gameFactory.CreateLevel();
             
-            _stateService.Enter<StateLobby>();
+            _gameStateMachine.Enter<StateLobby>();
         }
 
         private void CreateTextureArray()

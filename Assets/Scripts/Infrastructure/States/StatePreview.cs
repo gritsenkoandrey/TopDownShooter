@@ -11,15 +11,15 @@ namespace CodeBase.Infrastructure.States
 {
     public class StatePreview : IEnterLoadState<string>
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;
         private ISceneLoaderService _sceneLoaderService;
         
         private IDisposable _transitionDisposable;
 
-        public StatePreview(IGameStateService stateService)
+        public StatePreview(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
 
         [Inject]
@@ -51,6 +51,6 @@ namespace CodeBase.Infrastructure.States
             _transitionDisposable = screen.ChangeState.First().Subscribe(ChangeState);
         }
 
-        private void ChangeState(Unit _) => _stateService.Enter<StateLoadLevel, string>(SceneName.Game);
+        private void ChangeState(Unit _) => _gameStateMachine.Enter<StateLoadLevel, string>(SceneName.Game);
     }
 }

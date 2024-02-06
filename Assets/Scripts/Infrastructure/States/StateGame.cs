@@ -14,16 +14,16 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class StateGame : IEnterState
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private IJoystickService _joystickService;
         private IUIFactory _uiFactory;
         private LevelModel _levelModel;
 
         private readonly CompositeDisposable _transitionDisposable = new();
 
-        public StateGame(IGameStateService stateService)
+        public StateGame(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
 
         [Inject]
@@ -84,13 +84,13 @@ namespace CodeBase.Infrastructure.States
 
         private void Win()
         {
-            _stateService.Enter<StateWin>();
+            _gameStateMachine.Enter<StateWin>();
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
         }
 
         private void Lose()
         {
-            _stateService.Enter<StateFail>();
+            _gameStateMachine.Enter<StateFail>();
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateDeath>();
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
         }

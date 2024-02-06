@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.Factories.StateMachine;
+using CodeBase.Infrastructure.States;
 using JetBrains.Annotations;
 using VContainer.Unity;
 
@@ -7,13 +8,18 @@ namespace CodeBase.LifeTime
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class BootstrapEntryPoint : IStartable
     {
-        private readonly IGameStateService _gameStateService;
+        private readonly IStateMachineFactory _stateMachineFactory;
 
-        public BootstrapEntryPoint(IGameStateService gameStateService)
+        public BootstrapEntryPoint(IStateMachineFactory stateMachineFactory)
         {
-            _gameStateService = gameStateService;
+            _stateMachineFactory = stateMachineFactory;
         }
         
-        void IStartable.Start() => _gameStateService.Enter<StateBootstrap>();
+        void IStartable.Start()
+        {
+            IGameStateMachine stateMachine = _stateMachineFactory.CreateGameStateMachine();
+            
+            stateMachine.Enter<StateBootstrap>();
+        }
     }
 }

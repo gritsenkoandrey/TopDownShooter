@@ -12,7 +12,7 @@ namespace CodeBase.Infrastructure.States
 {
     public sealed class StateBootstrap : IEnterState
     {
-        private readonly IGameStateService _stateService;
+        private readonly IGameStateMachine _gameStateMachine;
         private ISceneLoaderService _sceneLoaderService;
         private IStaticDataService _staticDataService;
         private IJoystickService _joystickService;
@@ -20,9 +20,9 @@ namespace CodeBase.Infrastructure.States
         private IAssetService _assetService;
         private ICameraService _cameraService;
 
-        public StateBootstrap(IGameStateService stateService)
+        public StateBootstrap(IGameStateMachine gameStateMachine)
         {
-            _stateService = stateService;
+            _gameStateMachine = gameStateMachine;
         }
 
         [Inject]
@@ -55,7 +55,7 @@ namespace CodeBase.Infrastructure.States
 
         void IExitState.Exit() { }
 
-        private void Next() => _stateService.Enter<StateLoadProgress>();
+        private void Next() => _gameStateMachine.Enter<StateLoadProgress>();
         private void LoadResources() => _staticDataService.Load();
         private async UniTask InitAsset() => await _assetService.Init();
         private async UniTask InitObjectPool() => await _objectPoolService.Init();

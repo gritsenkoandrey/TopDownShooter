@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public sealed class GameStateService : IGameStateService
+    public sealed class GameStateMachine : IGameStateMachine
     {
-        private readonly IDictionary<Type, IExitState> _states;
+        public IReadOnlyDictionary<Type, IExitState> States { get; }
 
         private IExitState _activeState;
 
-        public GameStateService(IObjectResolver objectResolver)
+        public GameStateMachine()
         {
-            _states = new Dictionary<Type, IExitState>
+            States = new Dictionary<Type, IExitState>
             {
                 {typeof(StateBootstrap), new StateBootstrap(this)},
                 {typeof(StateFail), new StateFail(this)},
@@ -25,17 +22,15 @@ namespace CodeBase.Infrastructure.States
                 {typeof(StatePreview), new StatePreview(this)},
                 {typeof(StateWin), new StateWin(this)},
             };
-
-            InjectStates(objectResolver);
         }
 
-        void IGameStateService.Enter<TState>()
+        void IGameStateMachine.Enter<TState>()
         {
             TState state = ChangeState<TState>();
             state.Enter();
         }
 
-        void IGameStateService.Enter<TState, TLoad>(TLoad load)
+        void IGameStateMachine.Enter<TState, TLoad>(TLoad load)
         {
             TState state = ChangeState<TState>();
             state.Enter(load);
@@ -49,14 +44,6 @@ namespace CodeBase.Infrastructure.States
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitState => _states[typeof(TState)] as TState;
-
-        private void InjectStates(IObjectResolver objectResolver)
-        {
-            foreach (IExitState state in _states.Values)
-            {
-                objectResolver.Inject(state);
-            }
-        }
+        private TState GetState<TState>() where TState : class, IExitState => States[typeof(TState)] as TState;
     }
 }
