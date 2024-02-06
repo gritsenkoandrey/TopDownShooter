@@ -3,6 +3,7 @@ using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Game.Weapon.SpecificWeapons;
+using CodeBase.Infrastructure.Factories.Effects;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders.Weapon
@@ -11,12 +12,14 @@ namespace CodeBase.Game.Builders.Weapon
     {
         private readonly IWeaponFactory _weaponFactory;
         private readonly WeaponCharacteristic _weaponCharacteristic;
+        private readonly IEffectFactory _effectFactory;
 
-        public WeaponUnitBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) 
-            : base(weaponFactory, weaponCharacteristic)
+        public WeaponUnitBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory) 
+            : base(weaponFactory, weaponCharacteristic, effectFactory)
         {
             _weaponFactory = weaponFactory;
             _weaponCharacteristic = weaponCharacteristic;
+            _effectFactory = effectFactory;
         }
 
         public override CWeapon Build()
@@ -26,7 +29,7 @@ namespace CodeBase.Game.Builders.Weapon
 
             if (WeaponType == WeaponType.Knife)
             {
-                currentWeapon = new UnitMeleeWeapon(weapon, _weaponCharacteristic);
+                currentWeapon = new UnitMeleeWeapon(weapon, _weaponCharacteristic, _effectFactory);
             }
             else
             {

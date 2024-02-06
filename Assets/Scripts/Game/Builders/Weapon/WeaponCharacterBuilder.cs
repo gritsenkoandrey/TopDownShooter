@@ -3,6 +3,7 @@ using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
 using CodeBase.Game.Weapon.SpecificWeapons;
+using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using UnityEngine;
@@ -13,19 +14,21 @@ namespace CodeBase.Game.Builders.Weapon
     {
         private readonly IWeaponFactory _weaponFactory;
         private readonly WeaponCharacteristic _weaponCharacteristic;
+        private readonly IEffectFactory _effectFactory;
         private readonly IProgressService _progressService;
         private readonly InventoryModel _inventoryModel;
         private readonly DamageCombatLog _damageCombatLog;
 
         public WeaponCharacterBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog,
-            IProgressService progressService, InventoryModel inventoryModel) 
-            : base(weaponFactory, weaponCharacteristic)
+            IProgressService progressService, InventoryModel inventoryModel, IEffectFactory effectFactory) 
+            : base(weaponFactory, weaponCharacteristic, effectFactory)
         {
             _weaponFactory = weaponFactory;
             _weaponCharacteristic = weaponCharacteristic;
             _damageCombatLog = damageCombatLog;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
+            _effectFactory = effectFactory;
         }
 
         public override CWeapon Build()
@@ -36,7 +39,7 @@ namespace CodeBase.Game.Builders.Weapon
 
             if (WeaponType == WeaponType.Knife)
             {
-                currentWeapon = new CharacterMeleeWeapon(weapon, _weaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel);
+                currentWeapon = new CharacterMeleeWeapon(weapon, _weaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel, _effectFactory);
             }
             else
             {

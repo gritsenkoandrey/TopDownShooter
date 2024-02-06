@@ -2,6 +2,7 @@
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
+using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 
@@ -15,8 +16,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private readonly DamageCombatLog _damageCombatLog;
 
         public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog, 
-            IProgressService progressService, InventoryModel inventoryModel)
-            : base(weapon, weaponCharacteristic)
+            IProgressService progressService, InventoryModel inventoryModel, IEffectFactory effectFactory)
+            : base(weapon, weaponCharacteristic, effectFactory)
         {
             _weaponCharacteristic = weaponCharacteristic;
             _damageCombatLog = damageCombatLog;

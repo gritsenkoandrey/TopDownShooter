@@ -4,6 +4,7 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
@@ -22,6 +23,7 @@ namespace CodeBase.Game.Weapon.Factories
         private readonly IAssetService _assetService;
         private readonly IObjectPoolService _objectPoolService;
         private readonly IProgressService _progressService;
+        private readonly IEffectFactory _effectFactory;
         private readonly InventoryModel _inventoryModel;
         private readonly DamageCombatLog _damageCombatLog;
 
@@ -30,6 +32,7 @@ namespace CodeBase.Game.Weapon.Factories
             IAssetService assetService, 
             IObjectPoolService objectPoolService,
             IProgressService progressService,
+            IEffectFactory effectFactory,
             InventoryModel inventoryModel,
             DamageCombatLog damageCombatLog)
         {
@@ -37,6 +40,7 @@ namespace CodeBase.Game.Weapon.Factories
             _assetService = assetService;
             _objectPoolService = objectPoolService;
             _progressService = progressService;
+            _effectFactory = effectFactory;
             _inventoryModel = inventoryModel;
             _damageCombatLog = damageCombatLog;
         }
@@ -47,7 +51,7 @@ namespace CodeBase.Game.Weapon.Factories
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel)
+            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel, _effectFactory)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)
@@ -60,7 +64,7 @@ namespace CodeBase.Game.Weapon.Factories
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponUnitBuilder(this, weaponCharacteristic)
+            return new WeaponUnitBuilder(this, weaponCharacteristic, _effectFactory)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)

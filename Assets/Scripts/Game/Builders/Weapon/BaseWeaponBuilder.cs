@@ -2,6 +2,7 @@
 using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.Data;
 using CodeBase.Game.Weapon.Factories;
+using CodeBase.Infrastructure.Factories.Effects;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders.Weapon
@@ -12,7 +13,7 @@ namespace CodeBase.Game.Builders.Weapon
         private protected Transform Parent;
         private protected WeaponType WeaponType;
 
-        protected BaseWeaponBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) { }
+        protected BaseWeaponBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory) { }
 
         public BaseWeaponBuilder SetPrefab(GameObject prefab)
         {

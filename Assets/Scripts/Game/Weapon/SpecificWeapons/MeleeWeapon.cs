@@ -1,7 +1,10 @@
 ﻿using System;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon.Data;
+using CodeBase.Infrastructure.Factories.Effects;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,6 +14,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
     {
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly CWeapon _weapon;
+        private readonly IEffectFactory _effectFactory;
 
         private float _attackDistance;
         private int _clipCount;
@@ -22,11 +26,12 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         
         private ITarget _target;
 
-        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
+        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory)
             : base(weapon, weaponCharacteristic)
         {
             _weapon = weapon;
             _weaponCharacteristic = weaponCharacteristic;
+            _effectFactory = effectFactory;
 
             SetCanAttack();
             SetAttackDistance();
@@ -76,6 +81,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
                     int damage = SetDamage(_target);
                     
                     _target.Health.CurrentHealth.Value -= damage;
+                    
+                    _effectFactory.CreateEffect(EffectType.Hit, _target.Position).Forget();
                 }
             }
         }
