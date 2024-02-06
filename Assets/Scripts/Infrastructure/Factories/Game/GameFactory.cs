@@ -3,7 +3,6 @@ using CodeBase.Game.Builders.Player;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
-using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
@@ -19,20 +18,17 @@ namespace CodeBase.Infrastructure.Factories.Game
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IProgressService _progressService;
-        private readonly ICameraService _cameraService;
         private readonly IAssetService _assetService;
         private readonly LevelModel _levelModel;
 
         public GameFactory(
             IStaticDataService staticDataService, 
             IProgressService progressService, 
-            ICameraService cameraService, 
             IAssetService assetService,
             LevelModel levelModel)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
-            _cameraService = cameraService;
             _assetService = assetService;
             _levelModel = levelModel;
         }
@@ -66,7 +62,6 @@ namespace CodeBase.Infrastructure.Factories.Game
                 .SetPosition(position)
                 .Build();
             
-            _cameraService.SetTarget(character.transform);
             _levelModel.SetCharacter(character);
 
             return character;

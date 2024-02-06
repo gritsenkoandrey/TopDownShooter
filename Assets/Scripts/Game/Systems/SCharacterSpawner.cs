@@ -2,6 +2,7 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Weapon.Factories;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Models;
@@ -18,17 +19,19 @@ namespace CodeBase.Game.Systems
         private IProgressService _progressService;
         private IWeaponFactory _weaponFactory;
         private IStateMachineFactory _stateMachineFactory;
+        private ICameraService _cameraService;
         private InventoryModel _inventoryModel;
 
         [Inject]
         private void Construct(IGameFactory gameFactory, IProgressService progressService, IWeaponFactory weaponFactory, 
-            IStateMachineFactory stateMachineFactory, InventoryModel inventoryModel)
+            IStateMachineFactory stateMachineFactory, ICameraService cameraService, InventoryModel inventoryModel)
         {
             _gameFactory = gameFactory;
             _progressService = progressService;
             _weaponFactory = weaponFactory;
             _stateMachineFactory = stateMachineFactory;
             _inventoryModel = inventoryModel;
+            _cameraService = cameraService;
         }
         
         protected override void OnEnableComponent(CCharacterSpawner component)
@@ -50,6 +53,7 @@ namespace CodeBase.Game.Systems
             SubscribeOnUpgradeHealth(character);
             SubscribeOnUpgradeSpeed(character);
             SetEquipment(character);
+            SetCameraTarget(character);
         }
 
         private void SubscribeOnUpgradeSpeed(CCharacter character)
@@ -71,7 +75,7 @@ namespace CodeBase.Game.Systems
                 })
                 .AddTo(character.LifetimeDisposable);
         }
-        
+
         private void SetEquipment(CCharacter character)
         {
             for (int i = 0; i < character.BodyMediator.Bodies.Length; i++)
@@ -83,6 +87,11 @@ namespace CodeBase.Game.Systems
             {
                 character.BodyMediator.Heads[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
             }
+        }
+
+        private void SetCameraTarget(CCharacter character)
+        {
+            _cameraService.SetTarget(character.transform);
         }
     }
 }

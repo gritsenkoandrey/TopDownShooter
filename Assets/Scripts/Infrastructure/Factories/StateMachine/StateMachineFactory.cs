@@ -21,11 +21,11 @@ namespace CodeBase.Infrastructure.Factories.StateMachine
 
         IGameStateMachine IStateMachineFactory.CreateGameStateMachine()
         {
-            GameStateMachine gameStateService = new GameStateMachine();
+            GameStateMachine gameStateMachine = new GameStateMachine();
             
-            gameStateService.States.Values.Foreach(_objectResolver.Inject);
+            gameStateMachine.States.Values.Foreach(_objectResolver.Inject);
             
-            return gameStateService;
+            return gameStateMachine;
         }
 
         IStateMachine IStateMachineFactory.CreateCharacterStateMachine(CCharacter character)
