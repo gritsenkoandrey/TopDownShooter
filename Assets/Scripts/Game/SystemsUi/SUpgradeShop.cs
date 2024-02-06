@@ -13,6 +13,8 @@ namespace CodeBase.Game.SystemsUi
     {
         private IUIFactory _uiFactory;
 
+        private const float DelayClick = 0.25f;
+
         [Inject]
         private void Construct(IUIFactory uiFactory)
         {
@@ -53,6 +55,6 @@ namespace CodeBase.Game.SystemsUi
             }
         }
 
-        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
+        private TimeSpan Time() => TimeSpan.FromSeconds(DelayClick);
     }
 }

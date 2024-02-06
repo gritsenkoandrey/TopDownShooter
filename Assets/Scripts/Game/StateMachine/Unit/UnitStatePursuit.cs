@@ -38,6 +38,13 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
+            if (Unit.Health.IsAlive == false)
+            {
+                StateMachine.Enter<UnitStateDeath>();
+                
+                return;
+            }
+
             if (DistanceToTarget() > _pursuitRadius)
             {
                 StateMachine.Enter<UnitStateIdle>();

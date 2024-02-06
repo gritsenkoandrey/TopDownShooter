@@ -34,6 +34,13 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
+            if (Unit.Health.IsAlive == false)
+            {
+                StateMachine.Enter<UnitStateDeath>();
+                
+                return;
+            }
+            
             if (DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive)
             {
                 StateMachine.Enter<UnitStatePursuit>();

@@ -19,7 +19,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            component.TextLevel.SetText("Level {0}", _progressService.LevelData.Data.Value);
+            component.TextLevel.text = $"Level {_progressService.LevelData.Data.Value}";
         }
     }
 }

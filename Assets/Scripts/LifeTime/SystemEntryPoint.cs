@@ -60,7 +60,6 @@ namespace CodeBase.LifeTime
                 new SJoystickUpdate(),
                 new SObjectPoolLog(),
                 new SUnitSpawner(),
-                new SUnitDeath(),
                 new SBloodEffect(),
                 new SCameraShake(),
                 new SPrintResultText(),

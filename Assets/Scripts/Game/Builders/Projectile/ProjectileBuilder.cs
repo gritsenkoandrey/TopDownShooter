@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
+using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders.Projectile
@@ -9,11 +10,10 @@ namespace CodeBase.Game.Builders.Projectile
     {
         private GameObject _prefab;
         private Transform _spawnPoint;
+        private ProjectileData _data;
         private Vector3 _position;
         private Vector3 _direction;
         private Quaternion _rotation;
-        private float _collisionDistance;
-        private float _lifeTime;
         private int _damage;
 
         private readonly IObjectPoolService _objectPoolService;
@@ -35,12 +35,6 @@ namespace CodeBase.Game.Builders.Projectile
             return this;
         }
 
-        public ProjectileBuilder SetCollisionDistance(float collisionDistance)
-        {
-            _collisionDistance = collisionDistance;
-            return this;
-        }
-
         public ProjectileBuilder SetDirection(Vector3 direction)
         {
             _direction = direction;
@@ -53,9 +47,9 @@ namespace CodeBase.Game.Builders.Projectile
             return this;
         }
 
-        public ProjectileBuilder SetLifeTime(float lifeTime)
+        public ProjectileBuilder SetData(ProjectileData data)
         {
-            _lifeTime = lifeTime;
+            _data = data;
             return this;
         }
 
@@ -70,8 +64,8 @@ namespace CodeBase.Game.Builders.Projectile
 
             bullet.SetDamage(_damage);
             bullet.SetDirection(_direction);
-            bullet.SetCollisionDistance(_collisionDistance);
-            bullet.SetLifeTime(_lifeTime);
+            bullet.SetCollisionDistance(_data.CollisionRadius);
+            bullet.SetLifeTime(_data.LifeTime);
 
             return bullet;
         }

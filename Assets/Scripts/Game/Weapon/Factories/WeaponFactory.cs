@@ -75,11 +75,10 @@ namespace CodeBase.Game.Weapon.Factories
 
             return new ProjectileBuilder(_objectPoolService)
                 .SetPrefab(prefab)
+                .SetData(data)
                 .SetSpawnPoint(spawnPoint)
                 .SetDamage(damage)
                 .SetDirection(direction)
-                .SetCollisionDistance(data.CollisionRadius)
-                .SetLifeTime(data.LifeTime)
                 .Build();
         }
     }

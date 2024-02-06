@@ -12,6 +12,8 @@ namespace CodeBase.Game.SystemsUi
     {
         private IProgressService _progressService;
 
+        private const float DelayClick = 0.25f;
+
         [Inject]
         private void Construct(IProgressService progressService)
         {
@@ -49,7 +51,7 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private TimeSpan Time() => TimeSpan.FromSeconds(0.25f);
+        private TimeSpan Time() => TimeSpan.FromSeconds(DelayClick);
 
         private void UpdateButton(CUpgradeButton component, int level)
         {
