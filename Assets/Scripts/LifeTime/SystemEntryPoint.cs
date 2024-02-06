@@ -3,6 +3,7 @@ using CodeBase.ECSCore;
 using CodeBase.Game.Systems;
 using CodeBase.Game.SystemsBase;
 using CodeBase.Game.SystemsUi;
+using CodeBase.Utils;
 using JetBrains.Annotations;
 using VContainer;
 using VContainer.Unity;
@@ -65,11 +66,8 @@ namespace CodeBase.LifeTime
                 new SPrintResultText(),
                 new SWeaponReloadingView(),
             };
-
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _objectResolver.Inject(_systems[i]);
-            }
+            
+            _systems.Foreach(_objectResolver.Inject);
         }
 
         private void EnableSystems()

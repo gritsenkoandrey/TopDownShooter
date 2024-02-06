@@ -2,16 +2,21 @@
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateIdle : CharacterState, IState
     {
-        private readonly IJoystickService _joystickService;
-        private readonly LevelModel _levelModel;
+        private IJoystickService _joystickService;
+        private LevelModel _levelModel;
+
+        public CharacterStateIdle(IStateMachine stateMachine, CCharacter character) : base(stateMachine, character)
+        {
+        }
         
-        public CharacterStateIdle(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, LevelModel levelModel) 
-            : base(stateMachine, character)
+        [Inject]
+        private void Construct(IJoystickService joystickService, LevelModel levelModel)
         {
             _joystickService = joystickService;
             _levelModel = levelModel;
@@ -54,7 +59,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return _joystickService.GetAxis().sqrMagnitude > 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude > MinInputMagnitude;
         }
 
         private bool HasDetectedTarget()

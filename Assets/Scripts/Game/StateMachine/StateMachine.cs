@@ -7,7 +7,7 @@ namespace CodeBase.Game.StateMachine
     {
         private IState _activeState;
 
-        protected IDictionary<Type, IState> States;
+        public IReadOnlyDictionary<Type, IState> States { get; protected set; }
         
         void IStateMachine.Enter<T>()
         {

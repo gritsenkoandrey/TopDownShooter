@@ -1,5 +1,4 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Infrastructure.Models;
 
 namespace CodeBase.Game.StateMachine.Unit
 {
@@ -7,13 +6,13 @@ namespace CodeBase.Game.StateMachine.Unit
     {
         private protected readonly IStateMachine StateMachine;
         private protected readonly CUnit Unit;
-        private protected readonly LevelModel LevelModel;
+        
+        private protected const float LerpRotate = 0.25f;
 
-        private protected UnitState(IStateMachine stateMachine, CUnit unit, LevelModel levelModel)
+        private protected UnitState(IStateMachine stateMachine, CUnit unit)
         {
             StateMachine = stateMachine;
             Unit = unit;
-            LevelModel = levelModel;
         }
     }
 }

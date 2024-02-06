@@ -2,16 +2,24 @@
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Unit
 {
     public sealed class UnitStateFight : UnitState, IState
     {
+        private LevelModel _levelModel;
+
         private float _attackDistance;
 
-        public UnitStateFight(IStateMachine stateMachine, CUnit unit, LevelModel levelModel) 
-            : base(stateMachine, unit, levelModel)
+        public UnitStateFight(IStateMachine stateMachine, CUnit unit) : base(stateMachine, unit)
         {
+        }
+
+        [Inject]
+        private void Construct(LevelModel levelModel)
+        {
+            _levelModel = levelModel;
         }
 
         public void Enter()
@@ -26,7 +34,7 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
-            if (DistanceToTarget() > _attackDistance && LevelModel.Character.Health.IsAlive)
+            if (DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive)
             {
                 StateMachine.Enter<UnitStatePursuit>();
                 
@@ -37,12 +45,12 @@ namespace CodeBase.Game.StateMachine.Unit
             
             if (Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath() == false)
             {
-                Unit.WeaponMediator.CurrentWeapon.Weapon.Attack(LevelModel.Character);
+                Unit.WeaponMediator.CurrentWeapon.Weapon.Attack(_levelModel.Character);
                 Unit.Animator.OnAttack.Execute();
             }
         }
         
-        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
         
         private bool HasObstacleOnAttackPath()
         {
@@ -51,14 +59,14 @@ namespace CodeBase.Game.StateMachine.Unit
                 return false;
             }
 
-            return Physics.Linecast(Unit.Position, LevelModel.Character.Position, Layers.Wall);
+            return Physics.Linecast(Unit.Position, _levelModel.Character.Position, Layers.Wall);
         }
         
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Position - Unit.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
 
-            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 0.5f);
+            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, LerpRotate);
         }
     }
 }

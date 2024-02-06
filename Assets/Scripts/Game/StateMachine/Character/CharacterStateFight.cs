@@ -4,18 +4,22 @@ using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateFight : CharacterState, IState
     {
-        private readonly IJoystickService _joystickService;
-        private readonly LevelModel _levelModel;
-
+        private IJoystickService _joystickService;
+        private LevelModel _levelModel;
         private IEnemy _target;
-        
-        public CharacterStateFight(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, LevelModel levelModel) 
-            : base(stateMachine, character)
+
+        public CharacterStateFight(IStateMachine stateMachine, CCharacter character) : base(stateMachine, character)
+        {
+        }
+
+        [Inject]
+        private void Construct(IJoystickService joystickService, LevelModel levelModel)
         {
             _joystickService = joystickService;
             _levelModel = levelModel;
@@ -68,7 +72,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return _joystickService.GetAxis().sqrMagnitude > 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude > MinInputMagnitude;
         }
 
         private void LockAtTarget()

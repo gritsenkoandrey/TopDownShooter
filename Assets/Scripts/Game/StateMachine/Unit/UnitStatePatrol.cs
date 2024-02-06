@@ -3,20 +3,28 @@ using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UnityEngine;
 using UnityEngine.AI;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Unit
 {
     public sealed class UnitStatePatrol : UnitState, IState
     {
+        private LevelModel _levelModel;
+
         private readonly Vector3 _patrolPosition;
         private float _aggroRadius;
         private float _patrolRadius;
         private int _startHealth;
 
-        public UnitStatePatrol(IStateMachine stateMachine, CUnit unit, LevelModel levelModel) 
-            : base(stateMachine, unit, levelModel)
+        public UnitStatePatrol(IStateMachine stateMachine, CUnit unit) : base(stateMachine, unit)
         {
             _patrolPosition = Unit.Position;
+        }
+        
+        [Inject]
+        private void Construct(LevelModel levelModel)
+        {
+            _levelModel = levelModel;
         }
 
         public void Enter()
@@ -66,7 +74,7 @@ namespace CodeBase.Game.StateMachine.Unit
             return Vector3.zero;
         }
 
-        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
 
         private bool IsAggro() => _startHealth > Unit.Health.CurrentHealth.Value;
     }

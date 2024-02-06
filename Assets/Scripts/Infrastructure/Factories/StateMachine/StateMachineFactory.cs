@@ -2,10 +2,8 @@
 using CodeBase.Game.StateMachine;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Unit;
-using CodeBase.Infrastructure.CameraMain;
-using CodeBase.Infrastructure.Input;
-using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.States;
+using CodeBase.Utils;
 using JetBrains.Annotations;
 using VContainer;
 
@@ -15,34 +13,37 @@ namespace CodeBase.Infrastructure.Factories.StateMachine
     public sealed class StateMachineFactory : IStateMachineFactory
     {
         private readonly IObjectResolver _objectResolver;
-        private readonly IJoystickService _joystickService;
-        private readonly ICameraService _cameraService;
-        private readonly LevelModel _levelModel;
 
-        public StateMachineFactory(IObjectResolver objectResolver, IJoystickService joystickService, 
-            ICameraService cameraService, LevelModel levelModel)
+        public StateMachineFactory(IObjectResolver objectResolver)
         {
             _objectResolver = objectResolver;
-            _joystickService = joystickService;
-            _cameraService = cameraService;
-            _levelModel = levelModel;
         }
 
         IGameStateMachine IStateMachineFactory.CreateGameStateMachine()
         {
             GameStateMachine gameStateService = new GameStateMachine();
-
-            foreach (IExitState state in gameStateService.States.Values)
-            {
-                _objectResolver.Inject(state);
-            }
+            
+            gameStateService.States.Values.Foreach(_objectResolver.Inject);
             
             return gameStateService;
         }
 
-        IStateMachine IStateMachineFactory.CreateCharacterStateMachine(CCharacter character) => 
-            new CharacterStateMachine(character, _joystickService, _cameraService, _levelModel);
+        IStateMachine IStateMachineFactory.CreateCharacterStateMachine(CCharacter character)
+        {
+            CharacterStateMachine characterStateMachine = new CharacterStateMachine(character);
+            
+            characterStateMachine.States.Values.Foreach(_objectResolver.Inject);
+            
+            return characterStateMachine;
+        }
 
-        IStateMachine IStateMachineFactory.CreateUnitStateMachine(CUnit unit) => new UnitStateMachine(unit, _levelModel);
+        IStateMachine IStateMachineFactory.CreateUnitStateMachine(CUnit unit)
+        {
+            UnitStateMachine unitStateMachine = new UnitStateMachine(unit);
+            
+            unitStateMachine.States.Values.Foreach(_objectResolver.Inject);
+            
+            return unitStateMachine;
+        }
     }
 }

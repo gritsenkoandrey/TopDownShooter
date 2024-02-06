@@ -3,18 +3,26 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Utils;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Character
 {
     public sealed class CharacterStateRun : CharacterState, IState
     {
-        private readonly IJoystickService _joystickService;
-        private readonly ICameraService _cameraService;
+        private IJoystickService _joystickService;
+        private ICameraService _cameraService;
+
+        private const float RayDistance = 5f;
+        private const float LerpRotate = 0.25f;
         
         private float _angle;
 
-        public CharacterStateRun(IStateMachine stateMachine, CCharacter character, IJoystickService joystickService, ICameraService cameraService) 
-            : base(stateMachine, character)
+        public CharacterStateRun(IStateMachine stateMachine, CCharacter character) : base(stateMachine, character)
+        {
+        }
+        
+        [Inject]
+        private void Construct(IJoystickService joystickService, ICameraService cameraService)
         {
             _joystickService = joystickService;
             _cameraService = cameraService;
@@ -42,7 +50,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasNoInput()
         {
-            return _joystickService.GetAxis().sqrMagnitude < 0.1f;
+            return _joystickService.GetAxis().sqrMagnitude < MinInputMagnitude;
         }
 
         private void Move()
@@ -56,7 +64,7 @@ namespace CodeBase.Game.StateMachine.Character
                         
             Ray ray = new Ray { origin = next, direction = Vector3.down };
 
-            if (!Physics.Raycast(ray, 5f, Layers.Ground))
+            if (!Physics.Raycast(ray, RayDistance, Layers.Ground))
             {
                 return;
             }
@@ -68,7 +76,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private void Rotate()
         {
-            float lerpAngle = Mathf.LerpAngle(Character.Move.Angle, _angle, 0.25f);
+            float lerpAngle = Mathf.LerpAngle(Character.Move.Angle, _angle, LerpRotate);
             Character.Move.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
         }
     }

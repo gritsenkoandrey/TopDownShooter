@@ -1,17 +1,25 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Models;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.StateMachine.Unit
 {
     public sealed class UnitStatePursuit : UnitState, IState
     {
+        private LevelModel _levelModel;
+
         private float _pursuitRadius;
         private float _attackDistance;
         
-        public UnitStatePursuit(IStateMachine stateMachine, CUnit unit, LevelModel levelModel) 
-            : base(stateMachine, unit, levelModel)
+        public UnitStatePursuit(IStateMachine stateMachine, CUnit unit) : base(stateMachine, unit)
         {
+        }
+        
+        [Inject]
+        private void Construct(LevelModel levelModel)
+        {
+            _levelModel = levelModel;
         }
 
         public void Enter()
@@ -44,18 +52,18 @@ namespace CodeBase.Game.StateMachine.Unit
                 }
                 else
                 {
-                    Unit.Agent.SetDestination(LevelModel.Character.Position);
+                    Unit.Agent.SetDestination(_levelModel.Character.Position);
                 }
             }
         }
         
-        private float DistanceToTarget() => (LevelModel.Character.Position - Unit.Position).sqrMagnitude;
+        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
 
         private void LookAt()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(LevelModel.Character.Position - Unit.Position);
+            Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
 
-            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, 0.5f);
+            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, LerpRotate);
         }
     }
 }
