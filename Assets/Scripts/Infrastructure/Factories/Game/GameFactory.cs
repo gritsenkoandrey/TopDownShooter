@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Builders.Level;
+﻿using CodeBase.Game.Builders.Levels;
 using CodeBase.Game.Builders.Player;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
@@ -45,7 +45,7 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             CLevel level = new LevelBuilder()
                 .SetPrefab(prefab)
-                .SetLevelTime(data.LevelTime)
+                .SetData(data)
                 .Build();
             
             _levelModel.SetLevel(level);
@@ -61,13 +61,12 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             CCharacter character = new CharacterBuilder()
                 .SetPrefab(prefab)
+                .SetData(data)
                 .SetParent(parent)
-                .SetCamera(_cameraService)
                 .SetPosition(position)
-                .SetHealth(data.Health)
-                .SetSpeed(data.Speed)
                 .Build();
             
+            _cameraService.SetTarget(character.transform);
             _levelModel.SetCharacter(character);
 
             return character;

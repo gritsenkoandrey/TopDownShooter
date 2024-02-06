@@ -40,7 +40,7 @@ namespace CodeBase.Game.Builders.Weapon
             }
             else
             {
-                currentWeapon = new CharacterRangeWeapon(weapon, _weaponFactory, _weaponCharacteristic, _inventoryModel, _progressService);
+                currentWeapon = new CharacterRangeWeapon(weapon, _weaponCharacteristic, _weaponFactory, _inventoryModel, _progressService);
             }
             
             weapon.SetWeapon(currentWeapon);

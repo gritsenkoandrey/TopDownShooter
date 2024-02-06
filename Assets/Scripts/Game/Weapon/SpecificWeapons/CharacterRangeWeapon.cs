@@ -13,7 +13,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         private readonly WeaponCharacteristic _weaponCharacteristic;
         private readonly InventoryModel _inventoryModel;
         
-        public CharacterRangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, 
+        public CharacterRangeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, IWeaponFactory weaponFactory, 
             InventoryModel inventoryModel, IProgressService progressService)
             : base(weapon, weaponFactory, weaponCharacteristic)
         {

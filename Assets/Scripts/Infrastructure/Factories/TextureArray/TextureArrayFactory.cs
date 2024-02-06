@@ -1,4 +1,5 @@
 ﻿using CodeBase.Infrastructure.StaticData;
+using CodeBase.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -43,7 +44,7 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
             _textureArray.Apply();
         }
 
-        void ITextureArrayFactory.GenerateRandomTextureIndex() => _index = Random.Range(0, _staticDataService.TextureArrayData().Textures.Length);
+        void ITextureArrayFactory.GenerateRandomTextureIndex() => _index = _staticDataService.TextureArrayData().Textures.GetRandomIndex();
 
         void ITextureArrayFactory.CleanUp()
         {

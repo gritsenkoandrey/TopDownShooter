@@ -1,5 +1,5 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders.Player
@@ -7,12 +7,9 @@ namespace CodeBase.Game.Builders.Player
     public sealed class CharacterBuilder
     {
         private GameObject _prefab;
-        private ICameraService _cameraService;
-
+        private CharacterData _data;
         private Transform _parent;
         private Vector3 _position;
-        private int _health;
-        private float _speed;
 
         public CharacterBuilder SetPrefab(GameObject prefab)
         {
@@ -32,33 +29,20 @@ namespace CodeBase.Game.Builders.Player
             return this;
         }
 
-        public CharacterBuilder SetHealth(int health)
+        public CharacterBuilder SetData(CharacterData data)
         {
-            _health = health;
-            return this;
-        }
-        
-        public CharacterBuilder SetSpeed(float speed)
-        {
-            _speed = speed;
-            return this;
-        }
-
-        public CharacterBuilder SetCamera(ICameraService cameraService)
-        {
-            _cameraService = cameraService;
+            _data = data;
             return this;
         }
 
         public CCharacter Build()
         {
-            CCharacter character = Object.Instantiate(_prefab, _position, Quaternion.identity, _parent)
+            CCharacter character = Object
+                .Instantiate(_prefab, _position, Quaternion.identity, _parent)
                 .GetComponent<CCharacter>();
 
-            character.Health.SetBaseHealth(_health);
-            character.Move.SetBaseSpeed(_speed);
-            
-            _cameraService.SetTarget(character.transform);
+            character.Health.SetBaseHealth(_data.Health);
+            character.Move.SetBaseSpeed(_data.Speed);
 
             return character;
         }

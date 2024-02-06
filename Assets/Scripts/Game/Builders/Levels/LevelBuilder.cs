@@ -1,12 +1,13 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
-namespace CodeBase.Game.Builders.Level
+namespace CodeBase.Game.Builders.Levels
 {
     public sealed class LevelBuilder
     {
         private GameObject _prefab;
-        private int _levelTime;
+        private Level _data;
 
         public LevelBuilder SetPrefab(GameObject prefab)
         {
@@ -15,9 +16,9 @@ namespace CodeBase.Game.Builders.Level
             return this;
         }
         
-        public LevelBuilder SetLevelTime(int levelTime)
+        public LevelBuilder SetData(Level data)
         {
-            _levelTime = levelTime;
+            _data = data;
 
             return this;
         }
@@ -26,7 +27,7 @@ namespace CodeBase.Game.Builders.Level
         {
             CLevel level = Object.Instantiate(_prefab).GetComponent<CLevel>();
             
-            level.SetLevelTime(_levelTime);
+            level.SetLevelTime(_data.LevelTime);
 
             return level;
         }
