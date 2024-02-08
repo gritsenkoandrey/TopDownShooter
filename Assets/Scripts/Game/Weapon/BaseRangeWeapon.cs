@@ -26,40 +26,17 @@ namespace CodeBase.Game.Weapon
         private void Shoot()
         {
             CreateBullet().Forget();
-            NotReadyAttack();
-            ReduceClip();
-            UpdateFireInterval();
-
-            if (ClipIsEmpty())
-            {
-                UpdateRechargeTime();
-            }
         }
 
         private async UniTaskVoid CreateBullet()
         {
-            int damage = GetDamage(null);
-            
             for (int i = 0; i < Weapon.SpawnPoints.Length; i++)
             {
                 Vector3 normalized = Weapon.SpawnPoints[i].forward.normalized;
                 Vector3 direction = new Vector3(normalized.x, 0f, normalized.z) * WeaponCharacteristic.ForceBullet;
-            
-                await WeaponFactory.CreateProjectile(Weapon.ProjectileType, Weapon.SpawnPoints[i], 
-                    CalculateCriticalDamage(damage), direction);
+                int damage = CalculateCriticalDamage(GetDamage());
+                await WeaponFactory.CreateProjectile(Weapon.ProjectileType, Weapon.SpawnPoints[i], damage, direction);
             }
-        }
-
-        private int CalculateCriticalDamage(int damage)
-        {
-            bool isCriticalDamage = WeaponCharacteristic.CriticalChance > Random.Range(0, 100);
-
-            if (isCriticalDamage)
-            {
-                return Mathf.RoundToInt(damage * WeaponCharacteristic.CriticalMultiplier);
-            }
-
-            return damage;
         }
     }
 }

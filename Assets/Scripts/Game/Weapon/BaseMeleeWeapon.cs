@@ -35,15 +35,7 @@ namespace CodeBase.Game.Weapon
         
         private void Hit(ITarget target)
         {
-            NotReadyAttack();
-            ReduceClip();
-            UpdateFireInterval();
             CheckDamage(target);
-
-            if (ClipIsEmpty())
-            {
-                UpdateRechargeTime();
-            }
         }
 
         private void CheckDamage(ITarget target)
@@ -61,10 +53,9 @@ namespace CodeBase.Game.Weapon
 
                 if (distance < AttackDistance() && target.Health.IsAlive)
                 {
-                    int damage = GetDamage(target);
-                    
+                    int damage = CalculateCriticalDamage(GetDamage());
+                    SendCombatLog(target, damage);
                     target.Health.CurrentHealth.Value -= damage;
-                    
                     EffectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
                 }
             }

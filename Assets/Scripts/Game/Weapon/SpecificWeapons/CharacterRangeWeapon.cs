@@ -1,6 +1,5 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
@@ -37,6 +36,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             
             ReloadClip();
         }
+        
+        private protected override int GetDamage()
+        {
+            return WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+        }
 
         private protected override void ReloadClip()
         {
@@ -55,11 +59,6 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             {
                 _inventoryModel.Reloading.Execute(WeaponCharacteristic.RechargeTime);
             }
-        }
-
-        private protected override int GetDamage(ITarget target)
-        {
-            return WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
         }
     }
 }

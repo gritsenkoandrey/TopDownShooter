@@ -28,9 +28,9 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         {
             EffectFactory = effectFactory;
             
-            _damageCombatLog = damageCombatLog;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
+            _damageCombatLog = damageCombatLog;
         }
         
         public override void Initialize()
@@ -40,13 +40,16 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             ReloadClip();
         }
 
-        private protected override int GetDamage(ITarget target)
+        private protected override int GetDamage()
         {
-            int damage = WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+            return WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+        }
+
+        private protected override void SendCombatLog(ITarget target, int damage)
+        {
+            base.SendCombatLog(target, damage);
             
             _damageCombatLog.AddLog(target, damage);
-            
-            return damage;
         }
 
         private protected override void ReloadClip()

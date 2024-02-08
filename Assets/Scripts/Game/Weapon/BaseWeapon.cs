@@ -28,7 +28,18 @@ namespace CodeBase.Game.Weapon
             ReloadClip();
         }
 
-        public virtual void Attack(ITarget target = null) { }
+        public virtual void Attack(ITarget target = null)
+        {
+            NotReadyAttack();
+            ReduceClip();
+            UpdateFireInterval();
+            
+            if (ClipIsEmpty())
+            {
+                UpdateRechargeTime();
+            }
+        }
+        
         public bool CanAttack() => _clipCount > 0 && _canAttack;
         public bool IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
         public float AttackDistance() => _attackDistance;
@@ -36,20 +47,32 @@ namespace CodeBase.Game.Weapon
         
         private protected virtual void ReloadClip() => _clipCount = WeaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
-        private protected virtual int GetDamage(ITarget target) => WeaponCharacteristic.Damage;
+        private protected virtual int GetDamage() => WeaponCharacteristic.Damage;
+        private protected virtual void SendCombatLog(ITarget target, int damage) { }
+        
+        private protected int CalculateCriticalDamage(int damage)
+        {
+            bool isCriticalDamage = WeaponCharacteristic.CriticalChance > Random.Range(0, 100);
+
+            if (isCriticalDamage)
+            {
+                return Mathf.RoundToInt(damage * WeaponCharacteristic.CriticalMultiplier);
+            }
+
+            return damage;
+        }
 
         private void ReadyAttack() => _canAttack = true;
-        
-        private protected void NotReadyAttack() => _canAttack = false;
-        private protected bool ClipIsEmpty() => _clipCount <= 0;
+        private void NotReadyAttack() => _canAttack = false;
+        private bool ClipIsEmpty() => _clipCount <= 0;
 
-        private protected void UpdateRechargeTime()
+        private void UpdateRechargeTime()
         {
             _rechargeTimeTween?.Kill();
             _rechargeTimeTween = DOVirtual.DelayedCall(WeaponCharacteristic.RechargeTime, ReloadClip);
         }
 
-        private protected void UpdateFireInterval()
+        private void UpdateFireInterval()
         {
             _fireIntervalTween?.Kill();
             _fireIntervalTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval, ReadyAttack);
