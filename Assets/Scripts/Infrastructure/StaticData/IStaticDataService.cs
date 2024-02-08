@@ -1,12 +1,10 @@
 ﻿using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
 
 namespace CodeBase.Infrastructure.StaticData
 {
-    public interface IStaticDataService : IService
+    public interface IStaticDataService
     {
         public void Load();
         public ScreenData ScreenData(ScreenType type);

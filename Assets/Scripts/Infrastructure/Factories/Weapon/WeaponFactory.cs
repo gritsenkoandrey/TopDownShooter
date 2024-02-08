@@ -1,8 +1,8 @@
 ﻿using CodeBase.Game.Builders.Projectile;
 using CodeBase.Game.Builders.Weapon;
 using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon.Data;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
@@ -14,7 +14,7 @@ using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace CodeBase.Game.Weapon.Factories
+namespace CodeBase.Infrastructure.Factories.Weapon
 {
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class WeaponFactory : IWeaponFactory

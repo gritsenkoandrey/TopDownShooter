@@ -1,5 +1,4 @@
-﻿using CodeBase.Game.Weapon;
-using CodeBase.Game.Weapon.Data;
+﻿using CodeBase.Game.Enums;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

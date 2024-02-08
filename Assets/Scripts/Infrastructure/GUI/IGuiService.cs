@@ -1,9 +1,8 @@
-﻿using CodeBase.Infrastructure.Services;
-using CodeBase.UI;
+﻿using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.GUI
 {
-    public interface IGuiService : IService
+    public interface IGuiService
     {
         public StaticCanvas StaticCanvas { get; }
         public float ScaleFactor { get; }

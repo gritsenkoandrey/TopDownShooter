@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Weapon.Data;
-using CodeBase.Game.Weapon.Factories;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Factories.Weapon;
+using CodeBase.Infrastructure.StaticData.Data;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {

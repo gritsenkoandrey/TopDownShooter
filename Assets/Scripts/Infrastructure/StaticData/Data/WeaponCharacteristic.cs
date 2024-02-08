@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Game.Weapon.Data
+namespace CodeBase.Infrastructure.StaticData.Data
 {
     [System.Serializable]
     public struct WeaponCharacteristic

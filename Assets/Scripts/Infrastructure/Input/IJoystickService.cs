@@ -1,9 +1,8 @@
-﻿using CodeBase.Infrastructure.Services;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Infrastructure.Input
 {
-    public interface IJoystickService : IService
+    public interface IJoystickService
     {
         public Vector2 GetAxis();
         public void Init();

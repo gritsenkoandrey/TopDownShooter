@@ -1,10 +1,9 @@
-﻿using CodeBase.Infrastructure.Services;
-using CodeBase.UI.Screens;
+﻿using CodeBase.UI.Screens;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.CameraMain
 {
-    public interface ICameraService : IService
+    public interface ICameraService
     {
         public Camera Camera { get; }
         public void Init();

@@ -1,9 +1,11 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon;
-using CodeBase.Game.Weapon.Data;
-using CodeBase.Game.Weapon.Factories;
 using CodeBase.Game.Weapon.SpecificWeapons;
 using CodeBase.Infrastructure.Factories.Effects;
+using CodeBase.Infrastructure.Factories.Weapon;
+using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
 namespace CodeBase.Game.Builders.Weapon

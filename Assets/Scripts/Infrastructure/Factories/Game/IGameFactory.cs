@@ -1,12 +1,11 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
-using CodeBase.Infrastructure.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
 {
-    public interface IGameFactory : IService
+    public interface IGameFactory
     {
         public UniTask<ILevel> CreateLevel();
         public UniTask<CCharacter> CreateCharacter(Vector3 position, Transform parent);

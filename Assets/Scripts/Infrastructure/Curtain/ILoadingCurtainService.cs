@@ -1,9 +1,8 @@
-﻿using CodeBase.Infrastructure.Services;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.Curtain
 {
-    public interface ILoadingCurtainService : IService
+    public interface ILoadingCurtainService
     {
         public void Show();
         public UniTask Hide();

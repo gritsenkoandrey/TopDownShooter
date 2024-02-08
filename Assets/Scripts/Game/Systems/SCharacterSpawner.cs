@@ -1,10 +1,10 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
+using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using Cysharp.Threading.Tasks;

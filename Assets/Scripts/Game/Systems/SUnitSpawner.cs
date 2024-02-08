@@ -1,8 +1,8 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
+using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using VContainer;

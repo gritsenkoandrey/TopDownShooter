@@ -1,9 +1,10 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon.Data;
-using CodeBase.Game.Weapon.Factories;
+using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
+using CodeBase.Infrastructure.StaticData.Data;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {

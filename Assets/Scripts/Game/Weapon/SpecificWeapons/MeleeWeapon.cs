@@ -2,8 +2,8 @@
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon.Data;
 using CodeBase.Infrastructure.Factories.Effects;
+using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;

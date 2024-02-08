@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Game.Weapon
+﻿namespace CodeBase.Game.Enums
 {
     [System.Serializable]
     public enum WeaponType : byte

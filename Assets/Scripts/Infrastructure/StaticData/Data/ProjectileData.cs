@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Weapon;
+﻿using CodeBase.Game.Enums;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

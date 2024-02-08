@@ -1,5 +1,4 @@
 ﻿using CodeBase.App;
-using CodeBase.Game.Weapon.Factories;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
@@ -8,6 +7,7 @@ using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;

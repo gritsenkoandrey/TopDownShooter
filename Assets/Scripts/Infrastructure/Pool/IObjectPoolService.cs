@@ -1,10 +1,9 @@
-﻿using CodeBase.Infrastructure.Services;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Pool
 {
-    public interface IObjectPoolService : IService
+    public interface IObjectPoolService
     {
         public UniTask Init();
         public void Log();

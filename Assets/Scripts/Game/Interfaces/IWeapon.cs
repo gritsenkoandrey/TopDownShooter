@@ -1,7 +1,6 @@
 ﻿using System;
-using CodeBase.Game.Interfaces;
 
-namespace CodeBase.Game.Weapon
+namespace CodeBase.Game.Interfaces
 {
     public interface IWeapon : IDisposable
     {

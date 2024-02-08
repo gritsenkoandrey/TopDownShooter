@@ -1,13 +1,13 @@
 ﻿using CodeBase.Game.Components;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon.Data;
-using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace CodeBase.Game.Weapon.Factories
+namespace CodeBase.Infrastructure.Factories.Weapon
 {
-    public interface IWeaponFactory : IService
+    public interface IWeaponFactory
     {
         public UniTask<CWeapon> CreateCharacterWeapon(WeaponType type, Transform parent);
         public UniTask<CWeapon> CreateUnitWeapon(WeaponType type, WeaponCharacteristic weaponCharacteristic, Transform parent);
