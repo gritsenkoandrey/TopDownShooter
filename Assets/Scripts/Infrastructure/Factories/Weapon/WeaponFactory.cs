@@ -1,8 +1,9 @@
 ﻿using CodeBase.Game.Builders.Projectile;
-using CodeBase.Game.Builders.Weapon;
 using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
+using CodeBase.Game.Weapon;
+using CodeBase.Game.Weapon.SpecificWeapons;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData;
@@ -37,33 +38,24 @@ namespace CodeBase.Infrastructure.Factories.Weapon
         async UniTask<CWeapon> IWeaponFactory.CreateCharacterWeapon(WeaponType type, Transform parent)
         {
             WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
-
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            return new WeaponCharacterBuilder(_objectResolver, data.WeaponCharacteristic)
-                .SetPrefab(prefab)
-                .SetParent(parent)
-                .SetWeaponType(type)
-                .Build();
+            CWeapon weapon = Object.Instantiate(prefab, parent).GetComponent<CWeapon>();
+            weapon.SetWeapon(CreateSpecificCharacterWeapon(type, weapon, data.WeaponCharacteristic));
+            return weapon;
         }
 
         async UniTask<CWeapon> IWeaponFactory.CreateUnitWeapon(WeaponType type, WeaponCharacteristic weaponCharacteristic, Transform parent)
         {
             WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            return new WeaponUnitBuilder(_objectResolver, weaponCharacteristic)
-                .SetPrefab(prefab)
-                .SetParent(parent)
-                .SetWeaponType(type)
-                .Build();
+            CWeapon weapon = Object.Instantiate(prefab, parent).GetComponent<CWeapon>();
+            weapon.SetWeapon(CreateSpecificUnitWeapon(type, weapon, weaponCharacteristic));
+            return weapon;
         }
 
         async UniTask<IBullet> IWeaponFactory.CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction)
         {
             ProjectileData data = _staticDataService.ProjectileData(type);
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
             return new ProjectileBuilder(_objectPoolService)
@@ -73,6 +65,44 @@ namespace CodeBase.Infrastructure.Factories.Weapon
                 .SetDamage(damage)
                 .SetDirection(direction)
                 .Build();
+        }
+
+        private IWeapon CreateSpecificCharacterWeapon(WeaponType type, CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
+        {
+            BaseWeapon currentWeapon;
+
+            if (type == WeaponType.Knife)
+            {
+                currentWeapon = new CharacterMeleeWeapon(weapon, weaponCharacteristic);
+            }
+            else
+            {
+                currentWeapon = new CharacterRangeWeapon(weapon, weaponCharacteristic);
+            }
+            
+            _objectResolver.Inject(currentWeapon);
+            
+            currentWeapon.Initialize();
+            return currentWeapon;
+        }
+
+        private IWeapon CreateSpecificUnitWeapon(WeaponType type, CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
+        {
+            BaseWeapon currentWeapon;
+
+            if (type == WeaponType.Knife)
+            {
+                currentWeapon = new UnitMeleeWeapon(weapon, weaponCharacteristic);
+            }
+            else
+            {
+                currentWeapon = new UnitRangeWeapon(weapon, weaponCharacteristic);
+            }
+            
+            _objectResolver.Inject(currentWeapon);
+            
+            currentWeapon.Initialize();
+            return currentWeapon;
         }
     }
 }
