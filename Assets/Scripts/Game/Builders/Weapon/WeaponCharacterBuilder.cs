@@ -1,36 +1,18 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.SpecificWeapons;
-using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.Factories.Weapon;
-using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.Builders.Weapon
 {
     public sealed class WeaponCharacterBuilder : BaseWeaponBuilder
     {
-        private readonly IWeaponFactory _weaponFactory;
-        private readonly WeaponCharacteristic _weaponCharacteristic;
-        private readonly IEffectFactory _effectFactory;
-        private readonly IProgressService _progressService;
-        private readonly InventoryModel _inventoryModel;
-        private readonly DamageCombatLog _damageCombatLog;
-
-        public WeaponCharacterBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog,
-            IProgressService progressService, InventoryModel inventoryModel, IEffectFactory effectFactory) 
-            : base(weaponFactory, weaponCharacteristic, effectFactory)
+        public WeaponCharacterBuilder(IObjectResolver objectResolver, WeaponCharacteristic weaponCharacteristic) 
+            : base(objectResolver, weaponCharacteristic)
         {
-            _weaponFactory = weaponFactory;
-            _weaponCharacteristic = weaponCharacteristic;
-            _damageCombatLog = damageCombatLog;
-            _progressService = progressService;
-            _inventoryModel = inventoryModel;
-            _effectFactory = effectFactory;
         }
 
         public override CWeapon Build()
@@ -41,14 +23,21 @@ namespace CodeBase.Game.Builders.Weapon
 
             if (WeaponType == WeaponType.Knife)
             {
-                currentWeapon = new CharacterMeleeWeapon(weapon, _weaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel, _effectFactory);
+                MeleeWeapon meleeWeapon = new CharacterMeleeWeapon(weapon, WeaponCharacteristic);
+                currentWeapon = meleeWeapon;
+                ObjectResolver.Inject(meleeWeapon);
+                meleeWeapon.Initialize();
             }
             else
             {
-                currentWeapon = new CharacterRangeWeapon(weapon, _weaponCharacteristic, _weaponFactory, _inventoryModel, _progressService);
+                RangeWeapon rangeWeapon = new CharacterRangeWeapon(weapon, WeaponCharacteristic);
+                currentWeapon = rangeWeapon;
+                ObjectResolver.Inject(rangeWeapon);
+                rangeWeapon.Initialize();
             }
             
             weapon.SetWeapon(currentWeapon);
+            
             return weapon;
         }
     }

@@ -48,7 +48,8 @@ namespace CodeBase.Game.Systems
 
         private void CheckCharacterCollision(IBullet bullet)
         {
-            bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance;
+            bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance 
+                               && _levelModel.Character.Health.IsAlive;
 
             if (isCollision)
             {

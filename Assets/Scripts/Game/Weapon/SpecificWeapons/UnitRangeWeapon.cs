@@ -1,16 +1,23 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.StaticData.Data;
+using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public sealed class UnitRangeWeapon : RangeWeapon, IWeapon
+    public sealed class UnitRangeWeapon : RangeWeapon
     {
-        public UnitRangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic) 
-            : base(weapon, weaponFactory, weaponCharacteristic)
+        public UnitRangeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
+            : base(weapon, weaponCharacteristic)
         {
-            ReloadClip();
+            Weapon = weapon;
+            WeaponCharacteristic = weaponCharacteristic;
+        }
+
+        [Inject]
+        private void Construct(IWeaponFactory weaponFactory)
+        {
+            WeaponFactory = weaponFactory;
         }
     }
 }

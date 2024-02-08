@@ -4,15 +4,13 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
-using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Infrastructure.Factories.Weapon
 {
@@ -22,27 +20,18 @@ namespace CodeBase.Infrastructure.Factories.Weapon
         private readonly IStaticDataService _staticDataService;
         private readonly IAssetService _assetService;
         private readonly IObjectPoolService _objectPoolService;
-        private readonly IProgressService _progressService;
-        private readonly IEffectFactory _effectFactory;
-        private readonly InventoryModel _inventoryModel;
-        private readonly DamageCombatLog _damageCombatLog;
+        private readonly IObjectResolver _objectResolver;
 
         public WeaponFactory(
             IStaticDataService staticDataService, 
             IAssetService assetService, 
             IObjectPoolService objectPoolService,
-            IProgressService progressService,
-            IEffectFactory effectFactory,
-            InventoryModel inventoryModel,
-            DamageCombatLog damageCombatLog)
+            IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _assetService = assetService;
             _objectPoolService = objectPoolService;
-            _progressService = progressService;
-            _effectFactory = effectFactory;
-            _inventoryModel = inventoryModel;
-            _damageCombatLog = damageCombatLog;
+            _objectResolver = objectResolver;
         }
 
         async UniTask<CWeapon> IWeaponFactory.CreateCharacterWeapon(WeaponType type, Transform parent)
@@ -51,7 +40,7 @@ namespace CodeBase.Infrastructure.Factories.Weapon
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponCharacterBuilder(this, data.WeaponCharacteristic, _damageCombatLog, _progressService, _inventoryModel, _effectFactory)
+            return new WeaponCharacterBuilder(_objectResolver, data.WeaponCharacteristic)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)
@@ -64,7 +53,7 @@ namespace CodeBase.Infrastructure.Factories.Weapon
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            return new WeaponUnitBuilder(this, weaponCharacteristic, _effectFactory)
+            return new WeaponUnitBuilder(_objectResolver, weaponCharacteristic)
                 .SetPrefab(prefab)
                 .SetParent(parent)
                 .SetWeaponType(type)

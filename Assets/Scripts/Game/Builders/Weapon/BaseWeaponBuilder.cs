@@ -1,20 +1,25 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon;
-using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
+using VContainer;
 
 namespace CodeBase.Game.Builders.Weapon
 {
     public abstract class BaseWeaponBuilder
     {
+        private protected readonly IObjectResolver ObjectResolver;
+        private protected readonly WeaponCharacteristic WeaponCharacteristic;
+        
         private protected GameObject Prefab;
         private protected Transform Parent;
         private protected WeaponType WeaponType;
 
-        protected BaseWeaponBuilder(IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory) { }
+        protected BaseWeaponBuilder(IObjectResolver objectResolver, WeaponCharacteristic weaponCharacteristic)
+        {
+            ObjectResolver = objectResolver;
+            WeaponCharacteristic = weaponCharacteristic;
+        }
 
         public BaseWeaponBuilder SetPrefab(GameObject prefab)
         {

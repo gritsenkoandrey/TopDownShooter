@@ -9,11 +9,9 @@ using UnityEngine;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public abstract class RangeWeapon : BaseWeapon, IDisposable
+    public abstract class RangeWeapon : BaseWeapon, IWeapon
     {
-        private readonly IWeaponFactory _weaponFactory;
-        private readonly CWeapon _weapon;
-        private readonly WeaponCharacteristic _weaponCharacteristic;
+        private protected IWeaponFactory WeaponFactory;
 
         private int _clipCount;
         private float _attackDistance;
@@ -21,30 +19,33 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
         private Tween _speedAttackTween;
         private Tween _rechargeTimeTween;
-
-        protected RangeWeapon(CWeapon weapon, IWeaponFactory weaponFactory, WeaponCharacteristic weaponCharacteristic)
+        
+        protected RangeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
             : base(weapon, weaponCharacteristic)
         {
-            _weapon = weapon;
-            _weaponFactory = weaponFactory;
-            _weaponCharacteristic = weaponCharacteristic;
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
             
-            SetAttackDistance();
             SetCanAttack();
+            SetAttackDistance();
+            ReloadClip();
         }
 
-        public void Attack(ITarget target) => Shoot();
-        public bool CanAttack() => _clipCount > 0 && _canAttack;
-        public bool IsDetectThroughObstacle() => _weaponCharacteristic.IsDetectThroughObstacle;
-        public float AttackDistance() => _attackDistance;
-        public float DetectionDistance() => _weaponCharacteristic.DetectionDistance;
+        void IWeapon.Attack(ITarget target) => Shoot();
+        bool IWeapon.CanAttack() => _clipCount > 0 && _canAttack;
+        bool IWeapon.IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
+        float IWeapon.AttackDistance() => _attackDistance;
+        float IWeapon.DetectionDistance() => WeaponCharacteristic.DetectionDistance;
 
-        private protected virtual void ReloadClip() => _clipCount = _weaponCharacteristic.ClipCount;
+        private protected virtual void ReloadClip() => _clipCount = WeaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
-        private protected virtual int SetDamage() => _weaponCharacteristic.Damage;
+        private protected virtual int SetDamage() => WeaponCharacteristic.Damage;
 
         private void SetCanAttack() => _canAttack = true;
-        private void SetAttackDistance() => _attackDistance = Mathf.Pow(_weaponCharacteristic.AttackDistance, 2);
+        private void SetAttackDistance() => _attackDistance = Mathf.Pow(WeaponCharacteristic.AttackDistance, 2);
 
         private void Shoot()
         {
@@ -53,14 +54,14 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             _canAttack = false;
 
             _speedAttackTween?.Kill();
-            _speedAttackTween = DOVirtual.DelayedCall(_weaponCharacteristic.FireInterval, SetCanAttack);
+            _speedAttackTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval, SetCanAttack);
 
             ReduceClip();
 
             if (_clipCount <= 0)
             {
                 _rechargeTimeTween?.Kill();
-                _rechargeTimeTween = DOVirtual.DelayedCall(_weaponCharacteristic.RechargeTime, ReloadClip);
+                _rechargeTimeTween = DOVirtual.DelayedCall(WeaponCharacteristic.RechargeTime, ReloadClip);
             }
         }
 
@@ -68,22 +69,22 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         {
             int damage = SetDamage();
             
-            for (int i = 0; i < _weapon.SpawnPoints.Length; i++)
+            for (int i = 0; i < Weapon.SpawnPoints.Length; i++)
             {
-                Vector3 normalized = _weapon.SpawnPoints[i].forward.normalized;
-                Vector3 direction = new Vector3(normalized.x, 0f, normalized.z) * _weaponCharacteristic.ForceBullet;
+                Vector3 normalized = Weapon.SpawnPoints[i].forward.normalized;
+                Vector3 direction = new Vector3(normalized.x, 0f, normalized.z) * WeaponCharacteristic.ForceBullet;
             
-                await _weaponFactory.CreateProjectile(_weapon.ProjectileType, _weapon.SpawnPoints[i], CalculateCriticalDamage(damage), direction);
+                await WeaponFactory.CreateProjectile(Weapon.ProjectileType, Weapon.SpawnPoints[i], CalculateCriticalDamage(damage), direction);
             }
         }
 
         private int CalculateCriticalDamage(int damage)
         {
-            bool isCriticalDamage = _weaponCharacteristic.CriticalChance > UnityEngine.Random.Range(0, 100);
+            bool isCriticalDamage = WeaponCharacteristic.CriticalChance > UnityEngine.Random.Range(0, 100);
 
             if (isCriticalDamage)
             {
-                return Mathf.RoundToInt(damage * _weaponCharacteristic.CriticalMultiplier);
+                return Mathf.RoundToInt(damage * WeaponCharacteristic.CriticalMultiplier);
             }
 
             return damage;

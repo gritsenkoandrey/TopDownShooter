@@ -12,9 +12,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 {
     public abstract class MeleeWeapon : BaseWeapon, IWeapon
     {
-        private readonly WeaponCharacteristic _weaponCharacteristic;
-        private readonly CWeapon _weapon;
-        private readonly IEffectFactory _effectFactory;
+        private protected IEffectFactory EffectFactory;
 
         private float _attackDistance;
         private int _clipCount;
@@ -26,26 +24,29 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         
         private ITarget _target;
 
-        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory)
+        protected MeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
             : base(weapon, weaponCharacteristic)
         {
-            _weapon = weapon;
-            _weaponCharacteristic = weaponCharacteristic;
-            _effectFactory = effectFactory;
-
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
+            
             SetCanAttack();
             SetAttackDistance();
+            ReloadClip();
         }
 
         void IWeapon.Attack(ITarget target) => Hit(target);
         bool IWeapon.CanAttack() => _canAttack && _clipCount > 0;
-        bool IWeapon.IsDetectThroughObstacle() => _weaponCharacteristic.IsDetectThroughObstacle;
+        bool IWeapon.IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
         float IWeapon.AttackDistance() => _attackDistance;
-        float IWeapon.DetectionDistance() => _weaponCharacteristic.DetectionDistance;
+        float IWeapon.DetectionDistance() => WeaponCharacteristic.DetectionDistance;
 
-        private protected virtual int SetDamage(ITarget target) => _weaponCharacteristic.Damage;
-        private protected virtual void ReloadClip() => _clipCount = _weaponCharacteristic.ClipCount;
+        private protected virtual void ReloadClip() => _clipCount = WeaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
+        private protected virtual int SetDamage(ITarget target) => WeaponCharacteristic.Damage;
 
         private void Hit(ITarget target)
         {
@@ -55,26 +56,26 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             ReduceClip();
 
             _fireIntervalTween?.Kill();
-            _fireIntervalTween = DOVirtual.DelayedCall(_weaponCharacteristic.FireInterval, SetCanAttack);
+            _fireIntervalTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval, SetCanAttack);
 
             _checkDistanceTween?.Kill();
-            _checkDistanceTween = DOVirtual.DelayedCall(_weaponCharacteristic.FireInterval / 5f, CheckDamage);
+            _checkDistanceTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval / 5f, CheckDamage);
 
             if (_clipCount <= 0)
             {
                 _rechargeTimeTween?.Kill();
-                _rechargeTimeTween = DOVirtual.DelayedCall(_weaponCharacteristic.RechargeTime, ReloadClip);
+                _rechargeTimeTween = DOVirtual.DelayedCall(WeaponCharacteristic.RechargeTime, ReloadClip);
             }
         }
-        
+
         private void SetCanAttack() => _canAttack = true;
-        private void SetAttackDistance() => _attackDistance = Mathf.Pow(_weaponCharacteristic.AttackDistance, 2);
+        private void SetAttackDistance() => _attackDistance = Mathf.Pow(WeaponCharacteristic.AttackDistance, 2);
 
         private void CheckDamage()
         {
-            for (int i = 0; i < _weapon.SpawnPoints.Length; i++)
+            for (int i = 0; i < Weapon.SpawnPoints.Length; i++)
             {
-                float distance = (_weapon.SpawnPoints[i].position - _target.Position).sqrMagnitude;
+                float distance = (Weapon.SpawnPoints[i].position - _target.Position).sqrMagnitude;
 
                 if (distance < _attackDistance && _target.Health.IsAlive)
                 {
@@ -82,7 +83,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
                     
                     _target.Health.CurrentHealth.Value -= damage;
                     
-                    _effectFactory.CreateEffect(EffectType.Hit, _target.Position).Forget();
+                    EffectFactory.CreateEffect(EffectType.Hit, _target.Position).Forget();
                 }
             }
         }

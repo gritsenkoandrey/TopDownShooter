@@ -5,7 +5,14 @@ namespace CodeBase.Game.Weapon
 {
     public abstract class BaseWeapon
     {
-        protected BaseWeapon(CWeapon cWeapon, WeaponCharacteristic weaponCharacteristic)
+        private protected CWeapon Weapon;
+        private protected WeaponCharacteristic WeaponCharacteristic;
+
+        protected BaseWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
+        {
+        }
+
+        public virtual void Initialize()
         {
         }
     }

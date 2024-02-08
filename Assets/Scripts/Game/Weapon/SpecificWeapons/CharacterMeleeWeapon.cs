@@ -5,31 +5,44 @@ using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData.Data;
+using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
     public sealed class CharacterMeleeWeapon : MeleeWeapon
     {
-        private readonly WeaponCharacteristic _weaponCharacteristic;
-        private readonly IProgressService _progressService;
-        private readonly InventoryModel _inventoryModel;
-        private readonly DamageCombatLog _damageCombatLog;
+        private IProgressService _progressService;
+        private InventoryModel _inventoryModel;
+        private DamageCombatLog _damageCombatLog;
 
-        public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, DamageCombatLog damageCombatLog, 
-            IProgressService progressService, InventoryModel inventoryModel, IEffectFactory effectFactory)
-            : base(weapon, weaponCharacteristic, effectFactory)
+        public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
+            : base(weapon, weaponCharacteristic)
         {
-            _weaponCharacteristic = weaponCharacteristic;
+            Weapon = weapon;
+            WeaponCharacteristic = weaponCharacteristic;
+        }
+
+        [Inject]
+        private void Construct(IEffectFactory effectFactory, IProgressService progressService, 
+            DamageCombatLog damageCombatLog, InventoryModel inventoryModel)
+        {
+            EffectFactory = effectFactory;
+            
             _damageCombatLog = damageCombatLog;
             _progressService = progressService;
             _inventoryModel = inventoryModel;
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
             
             ReloadClip();
         }
 
         private protected override int SetDamage(ITarget target)
         {
-            int damage = _weaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
+            int damage = WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
             
             _damageCombatLog.AddLog(target, damage);
             
@@ -40,7 +53,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         {
             base.ReloadClip();
             
-            _inventoryModel.ClipCount.Value = _weaponCharacteristic.ClipCount;
+            _inventoryModel.ClipCount.Value = WeaponCharacteristic.ClipCount;
         }
 
         private protected override void ReduceClip()
@@ -51,7 +64,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             
             if (_inventoryModel.ClipCount.Value <= 0)
             {
-                _inventoryModel.Reloading.Execute(_weaponCharacteristic.RechargeTime);
+                _inventoryModel.Reloading.Execute(WeaponCharacteristic.RechargeTime);
             }
         }
     }

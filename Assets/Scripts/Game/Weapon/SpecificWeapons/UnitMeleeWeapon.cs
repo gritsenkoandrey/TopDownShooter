@@ -1,15 +1,23 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.StaticData.Data;
+using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
     public sealed class UnitMeleeWeapon : MeleeWeapon
     {
-        public UnitMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic, IEffectFactory effectFactory) 
-            : base(weapon, weaponCharacteristic, effectFactory)
+        public UnitMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
+            : base(weapon, weaponCharacteristic)
         {
-            ReloadClip();
+            Weapon = weapon;
+            WeaponCharacteristic = weaponCharacteristic;
+        }
+
+        [Inject]
+        private void Construct(IEffectFactory effectFactory)
+        {
+            EffectFactory = effectFactory;
         }
     }
 }
