@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Weapon;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -21,6 +20,13 @@ namespace CodeBase.Game.Components
         {
             Weapon?.Dispose();
             Weapon = weapon;
+        }
+
+        protected override void OnEntityDisable()
+        {
+            base.OnEntityDisable();
+            
+            Weapon?.Dispose();
         }
     }
 }
