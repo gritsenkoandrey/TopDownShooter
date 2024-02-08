@@ -9,7 +9,7 @@ using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public sealed class CharacterMeleeWeapon : MeleeWeapon
+    public sealed class CharacterMeleeWeapon : BaseMeleeWeapon
     {
         private IProgressService _progressService;
         private InventoryModel _inventoryModel;
@@ -40,7 +40,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             ReloadClip();
         }
 
-        private protected override int SetDamage(ITarget target)
+        private protected override int GetDamage(ITarget target)
         {
             int damage = WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
             

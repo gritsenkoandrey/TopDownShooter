@@ -1,6 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Interfaces;
+using CodeBase.Game.Weapon;
 using CodeBase.Game.Weapon.SpecificWeapons;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
@@ -19,23 +19,19 @@ namespace CodeBase.Game.Builders.Weapon
         {
             CWeapon weapon = Object.Instantiate(Prefab, Parent).GetComponent<CWeapon>();
 
-            IWeapon currentWeapon;
+            BaseWeapon currentWeapon;
 
             if (WeaponType == WeaponType.Knife)
             {
-                MeleeWeapon meleeWeapon = new CharacterMeleeWeapon(weapon, WeaponCharacteristic);
-                currentWeapon = meleeWeapon;
-                ObjectResolver.Inject(meleeWeapon);
-                meleeWeapon.Initialize();
+                currentWeapon = new CharacterMeleeWeapon(weapon, WeaponCharacteristic);
             }
             else
             {
-                RangeWeapon rangeWeapon = new CharacterRangeWeapon(weapon, WeaponCharacteristic);
-                currentWeapon = rangeWeapon;
-                ObjectResolver.Inject(rangeWeapon);
-                rangeWeapon.Initialize();
+                currentWeapon = new CharacterRangeWeapon(weapon, WeaponCharacteristic);
             }
             
+            ObjectResolver.Inject(currentWeapon);
+            currentWeapon.Initialize();
             weapon.SetWeapon(currentWeapon);
             
             return weapon;

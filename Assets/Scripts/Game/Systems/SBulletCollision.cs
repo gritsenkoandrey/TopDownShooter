@@ -36,11 +36,12 @@ namespace CodeBase.Game.Systems
         {
             for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
+                bool targetIsAlive = _levelModel.Enemies[i].Health.IsAlive;
                 bool isCollision = (bullet.Position - _levelModel.Enemies[i].Position).sqrMagnitude < bullet.CollisionDistance;
 
-                if (isCollision)
+                if (targetIsAlive && isCollision)
                 {
-                    Collision(bullet, _levelModel.Enemies[i]).Forget();
+                    Collision(bullet, _levelModel.Enemies[i]);
                     AddLog(bullet, _levelModel.Enemies[i]);
                 }
             }
@@ -48,23 +49,22 @@ namespace CodeBase.Game.Systems
 
         private void CheckCharacterCollision(IBullet bullet)
         {
-            bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance 
-                               && _levelModel.Character.Health.IsAlive;
+            bool targetIsAlive = _levelModel.Character.Health.IsAlive;
+            bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance;
 
-            if (isCollision)
+            if (targetIsAlive && isCollision)
             {
-                Collision(bullet, _levelModel.Character).Forget();
+                Collision(bullet, _levelModel.Character);
             }
         }
 
-        private async UniTaskVoid Collision(IBullet bullet, ITarget target)
+        private void Collision(IBullet bullet, ITarget target)
         {
-            await UniTask.Yield();
-
             target.Health.CurrentHealth.Value -= bullet.Damage;
+
             bullet.OnDestroy.Execute();
             
-            _effectFactory.CreateEffect(EffectType.Hit, bullet.Object.transform.position).Forget();
+            _effectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
         }
 
         private void AddLog(IBullet bullet, ITarget target) => _damageCombatLog.AddLog(target, bullet.Damage);

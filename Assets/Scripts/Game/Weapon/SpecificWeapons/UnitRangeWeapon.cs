@@ -5,7 +5,7 @@ using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public sealed class UnitRangeWeapon : RangeWeapon
+    public sealed class UnitRangeWeapon : BaseRangeWeapon
     {
         public UnitRangeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
             : base(weapon, weaponCharacteristic)

@@ -1,5 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
+using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
@@ -8,7 +9,7 @@ using VContainer;
 
 namespace CodeBase.Game.Weapon.SpecificWeapons
 {
-    public sealed class CharacterRangeWeapon : RangeWeapon
+    public sealed class CharacterRangeWeapon : BaseRangeWeapon
     {
         private IProgressService _progressService;
         private InventoryModel _inventoryModel;
@@ -21,7 +22,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         }
 
         [Inject]
-        private void Construct(IWeaponFactory weaponFactory, InventoryModel inventoryModel, IProgressService progressService)
+        private void Construct(IWeaponFactory weaponFactory, IProgressService progressService, 
+            InventoryModel inventoryModel)
         {
             WeaponFactory = weaponFactory;
             
@@ -55,7 +57,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             }
         }
 
-        private protected override int SetDamage()
+        private protected override int GetDamage(ITarget target)
         {
             return WeaponCharacteristic.Damage * _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
         }
