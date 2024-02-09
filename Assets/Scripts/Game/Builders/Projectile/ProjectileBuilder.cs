@@ -65,7 +65,6 @@ namespace CodeBase.Game.Builders.Projectile
             bullet.SetDamage(_damage);
             bullet.SetDirection(_direction);
             bullet.SetCollisionDistance(_data.CollisionRadius);
-            bullet.SetLifeTime(_data.LifeTime);
 
             return bullet;
         }

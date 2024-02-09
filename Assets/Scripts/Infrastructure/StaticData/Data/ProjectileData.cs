@@ -9,7 +9,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
     {
         public ProjectileType ProjectileType;
         public float CollisionRadius;
-        public float LifeTime;
         public AssetReference PrefabReference;
     }
 }

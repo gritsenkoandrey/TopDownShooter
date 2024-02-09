@@ -1,10 +1,12 @@
-﻿using System;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Pool;
+using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -12,11 +14,20 @@ namespace CodeBase.Game.Systems
     public sealed class SBulletLifeTime : SystemComponent<CBullet>
     {
         private IObjectPoolService _objectPoolService;
+        private ICameraService _cameraService;
 
         [Inject]
-        private void Construct(IObjectPoolService objectPoolService)
+        private void Construct(IObjectPoolService objectPoolService, ICameraService cameraService)
         {
             _objectPoolService = objectPoolService;
+            _cameraService = cameraService;
+        }
+
+        protected override void OnLateUpdate()
+        {
+            base.OnLateUpdate();
+            
+            Entities.Foreach(DestroyBulletBehindScreen);
         }
 
         protected override void OnEnableComponent(CBullet component)
@@ -27,20 +38,23 @@ namespace CodeBase.Game.Systems
                 .First()
                 .Subscribe(_ => ReturnToPool(component).Forget())
                 .AddTo(component.LifetimeDisposable);
+        }
 
-            Observable.Timer(Time(component.LifeTime))
-                .First()
-                .Subscribe(_ => ReturnToPool(component).Forget())
-                .AddTo(component.LifetimeDisposable);
+        private void DestroyBulletBehindScreen(CBullet bullet)
+        {
+            Vector3 viePortPoint = _cameraService.Camera.WorldToViewportPoint(bullet.Position);
+
+            if (_cameraService.IsOnScreen(viePortPoint) == false)
+            {
+                ReturnToPool(bullet).Forget();
+            }
         }
 
         private async UniTaskVoid ReturnToPool(IObject component)
         {
             await UniTask.Yield();
-
+            
             _objectPoolService.ReleaseObject(component.Object);
         }
-
-        private TimeSpan Time(float lifeTime) => TimeSpan.FromSeconds(lifeTime);
     }
 }
