@@ -8,6 +8,6 @@ namespace CodeBase.Infrastructure.GUI
         [SerializeField] private StaticCanvas _staticCanvas;
 
         StaticCanvas IGuiService.StaticCanvas => _staticCanvas;
-        public float ScaleFactor => _staticCanvas.Canvas.scaleFactor;
+        float IGuiService.ScaleFactor => _staticCanvas.Canvas.scaleFactor;
     }
 }

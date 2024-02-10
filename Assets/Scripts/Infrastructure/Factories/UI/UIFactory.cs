@@ -35,6 +35,8 @@ namespace CodeBase.Infrastructure.Factories.UI
         async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
         {
             DestroyCurrentScreen();
+
+            _guiService.StaticCanvas.SetScreenType(type);
             
             ScreenData data = _staticDataService.ScreenData(type);
             
