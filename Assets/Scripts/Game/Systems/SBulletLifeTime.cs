@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
-using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
@@ -14,20 +13,18 @@ namespace CodeBase.Game.Systems
     public sealed class SBulletLifeTime : SystemComponent<CBullet>
     {
         private IObjectPoolService _objectPoolService;
-        private ICameraService _cameraService;
 
         [Inject]
-        private void Construct(IObjectPoolService objectPoolService, ICameraService cameraService)
+        private void Construct(IObjectPoolService objectPoolService)
         {
             _objectPoolService = objectPoolService;
-            _cameraService = cameraService;
         }
 
-        protected override void OnLateUpdate()
+        protected override void OnUpdate()
         {
-            base.OnLateUpdate();
+            base.OnUpdate();
             
-            Entities.Foreach(DestroyBulletBehindScreen);
+            Entities.Foreach(DestroyBulletAfterTime);
         }
 
         protected override void OnEnableComponent(CBullet component)
@@ -40,11 +37,11 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void DestroyBulletBehindScreen(CBullet bullet)
+        private void DestroyBulletAfterTime(CBullet bullet)
         {
-            Vector3 viePortPoint = _cameraService.Camera.WorldToViewportPoint(bullet.Position);
+            bullet.LifeTime -= Time.deltaTime;
 
-            if (_cameraService.IsOnScreen(viePortPoint) == false)
+            if (bullet.LifeTime < 0f)
             {
                 ReturnToPool(bullet).Forget();
             }
