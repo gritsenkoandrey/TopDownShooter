@@ -50,7 +50,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnReloadingClip(CWeaponReloadingView component)
         {
-            _inventoryModel.Reloading
+            _inventoryModel.ReloadingWeapon
                 .Subscribe(delay =>
                 {
                     SetAlpha(component, 1f);

@@ -53,14 +53,15 @@ namespace CodeBase.LifeTime
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
-            
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
+            
             builder.Register<IStateMachineFactory, StateMachineFactory>(Lifetime.Singleton);
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
             builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
             builder.Register<IEffectFactory, EffectFactory>(Lifetime.Singleton);
+            
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
 
             builder.RegisterEntryPoint<SystemEntryPoint>().AsSelf();

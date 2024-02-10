@@ -57,7 +57,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
 
             if (_inventoryModel.ClipCount.Value <= 0)
             {
-                _inventoryModel.Reloading.Execute(WeaponCharacteristic.RechargeTime);
+                _inventoryModel.ReloadingWeapon.Execute(WeaponCharacteristic.RechargeTime);
             }
         }
     }

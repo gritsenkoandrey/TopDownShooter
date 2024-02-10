@@ -2,6 +2,7 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using UniRx;
 using UnityEngine;
@@ -13,12 +14,14 @@ namespace CodeBase.Game.SystemsUi
     {
         private InventoryModel _inventoryModel;
         private IGuiService _guiService;
+        private IProgressService _progressService;
 
         [Inject]
-        private void Construct(InventoryModel inventoryModel, IGuiService guiService)
+        private void Construct(InventoryModel inventoryModel, IGuiService guiService, IProgressService progressService)
         {
             _inventoryModel = inventoryModel;
             _guiService = guiService;
+            _progressService = progressService;
         }
         
         protected override void OnEnableComponent(CCharacterPreviewMediator component)
@@ -40,16 +43,21 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnChangeEquipment(CCharacterPreviewMediator component)
         {
-            _inventoryModel.WeaponIndex
+            _progressService.InventoryData.Data.Value
+                .ObserveEveryValueChanged(data => data.WeaponIndex)
                 .Subscribe(index =>
                 {
                     SetWeapon(component.CharacterPreviewModel, index);
                     SetAnimatorController(component, index);
                 })
                 .AddTo(component.LifetimeDisposable);
-
-            _inventoryModel.EquipmentIndex
-                .Subscribe(index => SetEquipment(component.CharacterPreviewModel, index))
+            
+            _progressService.InventoryData.Data.Value
+                .ObserveEveryValueChanged(data => data.EquipmentIndex)
+                .Subscribe(index =>
+                {
+                    SetEquipment(component.CharacterPreviewModel, index);
+                })
                 .AddTo(component.LifetimeDisposable);
         }
 
@@ -107,7 +115,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void TurnUp(CCharacterPreviewModel component)
         {
-            int index = _inventoryModel.WeaponIndex.Value;
+            int index = _inventoryModel.GetWeaponIndex();
 
             index--;
 
@@ -116,12 +124,12 @@ namespace CodeBase.Game.SystemsUi
                 index = component.Weapons.Length - 1;
             }
             
-            _inventoryModel.WeaponIndex.Value = index;
+            _inventoryModel.SetWeaponIndex(index);
         }
 
         private void TurnDown(CCharacterPreviewModel component)
         {
-            int index = _inventoryModel.WeaponIndex.Value;
+            int index = _inventoryModel.GetWeaponIndex();
 
             index++;
 
@@ -130,12 +138,12 @@ namespace CodeBase.Game.SystemsUi
                 index = 0;
             }
             
-            _inventoryModel.WeaponIndex.Value = index;
+            _inventoryModel.SetWeaponIndex(index);
         }
 
         private void TurnRight(CCharacterPreviewModel component)
         {
-            int index = _inventoryModel.EquipmentIndex.Value;
+            int index = _inventoryModel.GetEquipmentIndex();
 
             index++;
 
@@ -144,12 +152,12 @@ namespace CodeBase.Game.SystemsUi
                 index = 0;
             }
             
-            _inventoryModel.EquipmentIndex.Value = index;
+            _inventoryModel.SetEquipmentIndex(index);
         }
 
         private void TurnLeft(CCharacterPreviewModel component)
         {
-            int index = _inventoryModel.EquipmentIndex.Value;
+            int index = _inventoryModel.GetEquipmentIndex();
 
             index--;
 
@@ -158,7 +166,7 @@ namespace CodeBase.Game.SystemsUi
                 index = component.Heads.Length - 1;
             }
 
-            _inventoryModel.EquipmentIndex.Value = index;
+            _inventoryModel.SetEquipmentIndex(index);
         }
 
         private void SetWeapon(CCharacterPreviewModel component, int index)
@@ -168,7 +176,7 @@ namespace CodeBase.Game.SystemsUi
                 component.Weapons[i].Weapon.SetActive(i == index);
             }
             
-            _inventoryModel.SelectedWeapon.Value = component.Weapons[index].WeaponType;
+            _inventoryModel.SetSelectedWeapon(component.Weapons[index].WeaponType);
         }
 
         private void SetEquipment(CCharacterPreviewModel component, int index)

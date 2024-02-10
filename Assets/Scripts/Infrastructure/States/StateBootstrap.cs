@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.StaticData;
 using Cysharp.Threading.Tasks;
 using VContainer;
@@ -19,6 +20,7 @@ namespace CodeBase.Infrastructure.States
         private IObjectPoolService _objectPoolService;
         private IAssetService _assetService;
         private ICameraService _cameraService;
+        private IProgressService _progressService;
 
         public StateBootstrap(IGameStateMachine gameStateMachine)
         {
@@ -32,7 +34,8 @@ namespace CodeBase.Infrastructure.States
             IJoystickService joystickService, 
             IObjectPoolService objectPoolService, 
             IAssetService assetService,
-            ICameraService cameraService)
+            ICameraService cameraService,
+            IProgressService progressService)
         {
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
@@ -40,6 +43,7 @@ namespace CodeBase.Infrastructure.States
             _objectPoolService = objectPoolService;
             _assetService = assetService;
             _cameraService = cameraService;
+            _progressService = progressService;
         }
 
         async void IEnterState.Enter()
@@ -49,6 +53,7 @@ namespace CodeBase.Infrastructure.States
             await InitObjectPool();
             InitJoystick();
             InitCameraService();
+            InitProgress();
 
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
@@ -61,5 +66,6 @@ namespace CodeBase.Infrastructure.States
         private async UniTask InitObjectPool() => await _objectPoolService.Init();
         private void InitJoystick() => _joystickService.Init();
         private void InitCameraService() => _cameraService.Init();
+        private void InitProgress() => _progressService.Init();
     }
 }

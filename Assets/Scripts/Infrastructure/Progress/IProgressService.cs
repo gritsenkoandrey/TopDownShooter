@@ -8,6 +8,7 @@ namespace CodeBase.Infrastructure.Progress
         public IData<int> LevelData { get; }
         public IData<int> MoneyData { get; }
         public IData<Stats> StatsData { get; }
-        public void Load();
+        public IData<Inventory> InventoryData { get; }
+        public void Init();
     }
 }

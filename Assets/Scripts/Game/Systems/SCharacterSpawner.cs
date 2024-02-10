@@ -44,7 +44,7 @@ namespace CodeBase.Game.Systems
         private async UniTaskVoid CreateCharacter(CCharacterSpawner component)
         {
             CCharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
-            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, character.WeaponMediator.Container);
+            CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.GetSelectedWeapon(), character.WeaponMediator.Container);
 
             character.WeaponMediator.SetWeapon(weapon);
             character.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
@@ -60,7 +60,10 @@ namespace CodeBase.Game.Systems
         {
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
-                .Subscribe(speed => character.Move.SetSpeed(character.Move.BaseSpeed + speed))
+                .Subscribe(speed =>
+                {
+                    character.Move.SetSpeed(character.Move.BaseSpeed + speed);
+                })
                 .AddTo(character.LifetimeDisposable);
         }
 
@@ -80,12 +83,12 @@ namespace CodeBase.Game.Systems
         {
             for (int i = 0; i < character.BodyMediator.Bodies.Length; i++)
             {
-                character.BodyMediator.Bodies[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
+                character.BodyMediator.Bodies[i].SetActive(_inventoryModel.GetEquipmentIndex() == i);
             }
 
             for (int i = 0; i < character.BodyMediator.Heads.Length; i++)
             {
-                character.BodyMediator.Heads[i].SetActive(_inventoryModel.EquipmentIndex.Value == i);
+                character.BodyMediator.Heads[i].SetActive(_inventoryModel.GetEquipmentIndex() == i);
             }
         }
 

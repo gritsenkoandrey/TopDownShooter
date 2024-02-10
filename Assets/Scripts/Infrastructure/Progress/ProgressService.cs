@@ -10,12 +10,14 @@ namespace CodeBase.Infrastructure.Progress
         public IData<int> LevelData { get; private set; }
         public IData<int> MoneyData { get; private set; }
         public IData<Stats> StatsData { get; private set; }
+        public IData<Inventory> InventoryData { get; private set; }
 
-        void IProgressService.Load()
+        void IProgressService.Init()
         {
             LevelData = new LevelData();
             MoneyData = new MoneyData();
             StatsData = new StatsData();
+            InventoryData = new InventoryData();
         }
 
         void IDisposable.Dispose()
@@ -23,6 +25,7 @@ namespace CodeBase.Infrastructure.Progress
             LevelData?.Dispose();
             MoneyData?.Dispose();
             StatsData?.Dispose();
+            InventoryData?.Dispose();
         }
     }
 }

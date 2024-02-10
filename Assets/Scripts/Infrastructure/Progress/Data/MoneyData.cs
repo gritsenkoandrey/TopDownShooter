@@ -8,8 +8,6 @@ namespace CodeBase.Infrastructure.Progress.Data
     public sealed class MoneyData : ISaveLoad<int>
     {
         private readonly IDisposable _disposable;
-        
-        private const int DefaultValue = 0;
 
         public IReactiveProperty<int> Data { get; }
 
@@ -26,7 +24,7 @@ namespace CodeBase.Infrastructure.Progress.Data
             PlayerPrefs.Save();
         }
 
-        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, DefaultValue);
+        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, default);
 
         void IDisposable.Dispose() => _disposable?.Dispose();
     }
