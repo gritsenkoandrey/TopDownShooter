@@ -12,11 +12,13 @@ namespace CodeBase.Infrastructure.Models
         public ICharacter Character { get; private set; }
         public ILevel Level { get; private set; }
         public IReadOnlyReactiveCollection<IEnemy> Enemies => _enemies;
-        
+        public bool IsGamePlay { get; private set; }
+
         public void AddEnemy(IEnemy enemy) => _enemies.Add(enemy);
         public void RemoveEnemy(IEnemy enemy) => _enemies.Remove(enemy);
         public void SetCharacter(ICharacter character) => Character = character;
         public void SetLevel(ILevel level) => Level = level;
+        public void SetGamePlay(bool value) => IsGamePlay = value;
 
         public void CleanUp()
         {

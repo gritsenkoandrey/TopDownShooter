@@ -38,6 +38,7 @@ namespace CodeBase.Infrastructure.States
         {
             _uiFactory.CreateScreen(ScreenType.Game);
             _joystickService.Enable(true);
+            _levelModel.SetGamePlay(true);
             
             ActivateUnitStateMachine();
             
@@ -48,6 +49,7 @@ namespace CodeBase.Infrastructure.States
         void IExitState.Exit()
         {
             _joystickService.Enable(false);
+            _levelModel.SetGamePlay(false);
             _transitionDisposable.Clear();
         }
 

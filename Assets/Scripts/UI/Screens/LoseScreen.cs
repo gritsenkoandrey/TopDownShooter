@@ -44,10 +44,14 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid ShowButton()
         {
+            _button.interactable = false;
+
             _tween = FadeCanvas(0f, 1f, 0.5f);
             
             await _tween.AsyncWaitForCompletion().AsUniTask();
             
+            _button.interactable = true;
+
             _tween = BounceButton(_button, 1.05f, 0.5f);
         }
     }

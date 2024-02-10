@@ -28,6 +28,8 @@ namespace CodeBase.Game.Systems
         {
             base.OnUpdate();
             
+            if (_levelModel.IsGamePlay == false) return;
+            
             Entities.Foreach(CheckEnemyCollision);
             Entities.Foreach(CheckCharacterCollision);
         }
