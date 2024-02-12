@@ -36,8 +36,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         {
             DestroyCurrentScreen();
 
-            _guiService.StaticCanvas.SetScreenType(type);
-            
             ScreenData data = _staticDataService.ScreenData(type);
             
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);

@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1320720474982167358, guid: 5f361011d6b659c47a42036ad9830d3c, type: 3}
       propertyPath: m_Name
-      value: Bootstrap
+      value: BootstrapScope
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f361011d6b659c47a42036ad9830d3c, type: 3}

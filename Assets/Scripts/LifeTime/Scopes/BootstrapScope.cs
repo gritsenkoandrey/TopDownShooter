@@ -19,7 +19,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace CodeBase.LifeTime
+namespace CodeBase.LifeTime.Scopes
 {
     public sealed class BootstrapScope : LifetimeScope
     {
@@ -64,8 +64,7 @@ namespace CodeBase.LifeTime
             
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
 
-            builder.RegisterEntryPoint<SystemEntryPoint>().AsSelf();
-            builder.RegisterEntryPoint<BootstrapEntryPoint>().AsSelf();
+            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Transient).AsSelf();
         }
     }
 } 

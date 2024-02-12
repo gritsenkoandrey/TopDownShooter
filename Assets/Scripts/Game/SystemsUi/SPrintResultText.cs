@@ -7,7 +7,7 @@ namespace CodeBase.Game.SystemsUi
 {
     public class SPrintResultText : SystemComponent<CPrintResultText>
     {
-        private const float Offset = 0.15f;
+        private const float Offset = 0.1f;
 
         protected override void OnEnableComponent(CPrintResultText component)
         {

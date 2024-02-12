@@ -6,27 +6,19 @@ using CodeBase.Game.SystemsUi;
 using CodeBase.Utils;
 using JetBrains.Annotations;
 using VContainer;
-using VContainer.Unity;
 
-namespace CodeBase.LifeTime
+namespace CodeBase.LifeTime.Systems
 {
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public sealed class SystemEntryPoint : IInitializable, IStartable, ITickable, IFixedTickable, ILateTickable, IDisposable
+    public class EntryPointGameSystem : IEntryPointSystem
     {
         private SystemBase[] _systems = Array.Empty<SystemBase>();
 
         private readonly IObjectResolver _objectResolver;
 
-        public SystemEntryPoint(IObjectResolver objectResolver) => _objectResolver = objectResolver;
+        public EntryPointGameSystem(IObjectResolver objectResolver) => _objectResolver = objectResolver;
 
-        void IInitializable.Initialize() => CreateSystems();
-        void IStartable.Start() => EnableSystems();
-        void IDisposable.Dispose() => Clear();
-        void ITickable.Tick() => UpdateSystems();
-        void IFixedTickable.FixedTick() => FixedUpdateSystems();
-        void ILateTickable.LateTick() => LateUpdateSystems();
-
-        private void CreateSystems()
+        public void Initialize()
         {
             _systems = new SystemBase[]
             {
@@ -49,8 +41,6 @@ namespace CodeBase.LifeTime
                 new SLevelTimeLeft(),
                 new SStateMachineUpdate(),
                 new SAnimator(),
-                new SCharacterPreviewRotation(),
-                new SCharacterPreviewMediator(),
                 new SCharacterAmmunitionView(),
                 new SCharacterSpawner(),
                 new SPointerArrowProvider(),
@@ -67,53 +57,38 @@ namespace CodeBase.LifeTime
             };
             
             _systems.Foreach(_objectResolver.Inject);
+            _systems.Foreach(Enable);
         }
-
-        private void EnableSystems()
-        {
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _systems[i].EnableSystem();
-            }
-        }
-
-        private void DisableSystems()
-        {
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _systems[i].DisableSystem();
-            }
-        }
-
-        private void UpdateSystems()
+        
+        public void Tick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
                 _systems[i].Update();
             }
         }
-        
-        private void FixedUpdateSystems()
+        public void FixedTick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
                 _systems[i].FixedUpdate();
             }
         }
-        
-        private void LateUpdateSystems()
+        public void LateTick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
                 _systems[i].LateUpdate();
             }
         }
-
-        private void Clear()
+        
+        public void Dispose()
         {
-            DisableSystems();
-            
+            _systems.Foreach(Disable);
             _systems = Array.Empty<SystemBase>();
         }
+
+        private void Enable(SystemBase system) => system.EnableSystem();
+        private void Disable(SystemBase system) => system.DisableSystem();
     }
 }

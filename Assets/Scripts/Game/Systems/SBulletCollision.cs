@@ -3,9 +3,7 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Effects;
-using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
-using CodeBase.UI.Screens;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using VContainer;
@@ -15,15 +13,13 @@ namespace CodeBase.Game.Systems
     public sealed class SBulletCollision : SystemComponent<CBullet>
     {
         private IEffectFactory _effectFactory;
-        private IGuiService _guiService;
         private LevelModel _levelModel;
         private DamageCombatLog _damageCombatLog;
         
         [Inject]
-        private void Construct(IEffectFactory effectFactory, IGuiService guiService, LevelModel levelModel, DamageCombatLog damageCombatLog)
+        private void Construct(IEffectFactory effectFactory, LevelModel levelModel, DamageCombatLog damageCombatLog)
         {
             _effectFactory = effectFactory;
-            _guiService = guiService;
             _levelModel = levelModel;
             _damageCombatLog = damageCombatLog;
         }
@@ -31,8 +27,6 @@ namespace CodeBase.Game.Systems
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            
-            if (_guiService.StaticCanvas.CurrentScreenType != ScreenType.Game) return;
             
             Entities.Foreach(CheckEnemyCollision);
             Entities.Foreach(CheckCharacterCollision);
