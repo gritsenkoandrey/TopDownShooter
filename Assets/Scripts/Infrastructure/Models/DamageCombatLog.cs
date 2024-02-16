@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Game.Interfaces;
 using JetBrains.Annotations;
 using UniRx;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace CodeBase.Infrastructure.Models
 {
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public sealed class DamageCombatLog
+    public sealed class DamageCombatLog : IDisposable
     {
         public readonly ReactiveCommand<CombatLog> CombatLog = new ();
 
@@ -42,8 +43,7 @@ namespace CodeBase.Infrastructure.Models
             }
         }
 
-
-        public void CleanUp() => _damageCombatLog.Clear();
+        void IDisposable.Dispose() => _damageCombatLog.Clear();
     }
 
     public readonly struct CombatLog

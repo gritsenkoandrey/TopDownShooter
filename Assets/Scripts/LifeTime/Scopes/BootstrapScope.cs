@@ -50,7 +50,6 @@ namespace CodeBase.LifeTime.Scopes
 
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
-            builder.Register<DamageCombatLog>(Lifetime.Singleton).AsSelf();
             
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
@@ -66,7 +65,7 @@ namespace CodeBase.LifeTime.Scopes
             
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
 
-            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Transient).AsSelf().Build();
+            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Scoped).AsSelf().Build();
         }
     }
 } 

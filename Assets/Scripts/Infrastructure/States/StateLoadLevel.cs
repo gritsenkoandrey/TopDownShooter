@@ -22,7 +22,6 @@ namespace CodeBase.Infrastructure.States
         private ICameraService _cameraService;
         private ITextureArrayFactory _textureArrayFactory;
         private LevelModel _levelModel;
-        private DamageCombatLog _damageCombatLog;
 
         public StateLoadLevel(IGameStateMachine gameStateMachine)
         {
@@ -38,8 +37,7 @@ namespace CodeBase.Infrastructure.States
             ILoadingCurtainService curtain, 
             ICameraService cameraService,
             ITextureArrayFactory textureArrayFactory,
-            LevelModel levelModel,
-            DamageCombatLog damageCombatLog)
+            LevelModel levelModel)
         {
             _sceneLoaderService = sceneLoaderService;
             _gameFactory = gameFactory;
@@ -49,7 +47,6 @@ namespace CodeBase.Infrastructure.States
             _cameraService = cameraService;
             _textureArrayFactory = textureArrayFactory;
             _levelModel = levelModel;
-            _damageCombatLog = damageCombatLog;
         }
 
         void IEnterLoadState<string>.Enter(string sceneName)
@@ -80,7 +77,6 @@ namespace CodeBase.Infrastructure.States
             _textureArrayFactory.CleanUp();
             _assetService.CleanUp();
             _levelModel.CleanUp();
-            _damageCombatLog.CleanUp();
         }
 
         private async UniTaskVoid CreateLevel()
