@@ -6,9 +6,9 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
     public interface ITextureArrayFactory
     {
         public Texture2DArray GetTextureArray();
-        public UniTask<RenderTexture> GetRenderTexture();
+        public RenderTexture CreateRenderTexture();
         public int GetIndex();
-        public void CreateTextureArray();
+        public UniTask CreateTextureArray();
         public void GenerateRandomTextureIndex();
         public void CleanUp();
     }

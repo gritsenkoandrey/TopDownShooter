@@ -5,6 +5,7 @@ using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 namespace CodeBase.Infrastructure.Factories.TextureArray
 {
@@ -25,18 +26,24 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
 
         Texture2DArray ITextureArrayFactory.GetTextureArray() => _textureArray;
         
-        async UniTask<RenderTexture> ITextureArrayFactory.GetRenderTexture()
+        RenderTexture ITextureArrayFactory.CreateRenderTexture()
         {
-            PreviewData data = _staticDataService.PreviewData();
-            
-            return await _assetService.LoadFromAddressable<RenderTexture>(data.AssetReferenceRenderTexture);
+            RenderTexture renderTexture = new RenderTexture(512, 512, GraphicsFormat.R8G8B8A8_UNorm, GraphicsFormat.D16_UNorm);
+            renderTexture.Create();
+            return renderTexture;
         }
 
         int ITextureArrayFactory.GetIndex() => _index;
 
-        void ITextureArrayFactory.CreateTextureArray()
+        async UniTask ITextureArrayFactory.CreateTextureArray()
         {
-            Texture2D[] textures = _staticDataService.TextureArrayData().Textures;
+            TextureData data = _staticDataService.TextureArrayData();
+            Texture2D[] textures = new Texture2D[data.Textures.Length];
+            
+            for (int i = 0; i < data.Textures.Length; i++)
+            {
+                textures[i] = await _assetService.LoadFromAddressable<Texture2D>(data.Textures[i]);
+            }
             
             int width = textures[0].width;
             int height = textures[0].height;
@@ -50,10 +57,11 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
 
             for (int i = 0; i < length; i++)
             {
-                _textureArray.SetPixels(_staticDataService.TextureArrayData().Textures[i].GetPixels(0), i, 0);
+                _textureArray.SetPixels(textures[i].GetPixels(0), i, 0);
             }
             
             _textureArray.Apply();
+            await UniTask.Yield();
         }
 
         void ITextureArrayFactory.GenerateRandomTextureIndex() => _index = _staticDataService.TextureArrayData().Textures.GetRandomIndex();

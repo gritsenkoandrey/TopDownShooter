@@ -65,7 +65,12 @@ namespace CodeBase.Infrastructure.States
 
         private void Next()
         {
-            CreateTextureArray();
+            PrepareLevel().Forget();
+        }
+
+        private async UniTaskVoid PrepareLevel()
+        {
+            await CreateTextureArray();
             CreateLevel().Forget();
         }
 
@@ -82,13 +87,12 @@ namespace CodeBase.Infrastructure.States
         private async UniTaskVoid CreateLevel()
         {
             await _gameFactory.CreateLevel();
-            
             _gameStateMachine.Enter<StateLobby>();
         }
 
-        private void CreateTextureArray()
+        private async UniTask CreateTextureArray()
         {
-            _textureArrayFactory.CreateTextureArray();
+            await _textureArrayFactory.CreateTextureArray();
             _textureArrayFactory.GenerateRandomTextureIndex();
         }
     }

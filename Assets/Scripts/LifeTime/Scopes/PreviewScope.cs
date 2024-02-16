@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Models;
+﻿using System;
+using CodeBase.Infrastructure.Models;
 using CodeBase.LifeTime.Systems;
 using VContainer;
 using VContainer.Unity;
@@ -11,7 +12,7 @@ namespace CodeBase.LifeTime.Scopes
         {
             base.Configure(builder);
 
-            builder.Register<CharacterPreviewModel>(Lifetime.Scoped).As<IInitializable>().AsSelf();
+            builder.Register<CharacterPreviewModel>(Lifetime.Scoped).As<IInitializable, IDisposable>().AsSelf();
             builder.RegisterEntryPoint<EntryPointPreviewSystem>(Lifetime.Scoped).AsSelf().Build();
         }
     }

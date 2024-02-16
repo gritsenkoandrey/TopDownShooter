@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.ComponentsUi;
+﻿using System;
+using CodeBase.Game.ComponentsUi;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -14,6 +15,8 @@ namespace CodeBase.UI.Screens
         [SerializeField] private CCharacterPreviewButtons _characterPreviewButtons;
 
         private Tween _tween;
+
+        private const float DelayCharacterAnimation = 2f;
 
         private protected override void OnEnable()
         {
@@ -43,8 +46,8 @@ namespace CodeBase.UI.Screens
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
-            // await UniTask.WaitUntil(() => _characterPreviewModel.CharacterPreview.CharacterPreviewAnimator.IsExitAnimation, 
-            //     cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 
+                cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
             ChangeState.Execute();
         }

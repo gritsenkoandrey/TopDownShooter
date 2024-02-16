@@ -1,8 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
-using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Models;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -13,20 +11,18 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SCharacterPreviewRotation : SystemComponent<CCharacterPreviewRotation>
     {
         private CharacterPreviewModel _characterPreviewModel;
-        private ITextureArrayFactory _textureArrayFactory;
         
         [Inject]
-        private void Construct(CharacterPreviewModel characterPreviewModel, ITextureArrayFactory textureArrayFactory)
+        private void Construct(CharacterPreviewModel characterPreviewModel)
         {
             _characterPreviewModel = characterPreviewModel;
-            _textureArrayFactory = textureArrayFactory;
         }
         
         protected override void OnEnableComponent(CCharacterPreviewRotation component)
         {
             base.OnEnableComponent(component);
             
-            SetRenderTexture(component).Forget();
+            SetRenderTexture(component);
 
             component.OnTouch
                 .Subscribe(eventData =>
@@ -60,11 +56,9 @@ namespace CodeBase.Game.SystemsUi
             component.Tween?.Kill();
         }
 
-        private async UniTaskVoid SetRenderTexture(CCharacterPreviewRotation component)
+        private void SetRenderTexture(CCharacterPreviewRotation component)
         {
-            RenderTexture renderTexture = await _textureArrayFactory.GetRenderTexture();
-
-            component.RawImage.texture = renderTexture;
+            component.RawImage.texture = _characterPreviewModel.RenderTexture;
             component.RawImage.enabled = true;
         }
     }

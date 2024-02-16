@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: TextureData
   m_EditorClassIdentifier: 
   Textures:
-  - {fileID: 2800000, guid: 885385b89462696438fcf5d27478e97d, type: 3}
-  - {fileID: 2800000, guid: 093fc5b9d2a4e5a4cb16891b0b296f96, type: 3}
-  - {fileID: 2800000, guid: bb581b97e3aaaa342b7302a1fdacc88d, type: 3}
-  - {fileID: 2800000, guid: 942132ab262c9ab4e88ac1dc818b754a, type: 3}
-  AssetReferenceRenderTexture:
-    m_AssetGUID: 
+  - m_AssetGUID: 885385b89462696438fcf5d27478e97d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 093fc5b9d2a4e5a4cb16891b0b296f96
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: bb581b97e3aaaa342b7302a1fdacc88d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 942132ab262c9ab4e88ac1dc818b754a
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
