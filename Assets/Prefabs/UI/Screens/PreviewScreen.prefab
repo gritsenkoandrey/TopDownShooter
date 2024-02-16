@@ -144,7 +144,7 @@ MonoBehaviour:
   _canvasGroup: {fileID: 1544038682976013172}
   _safeArea: {fileID: 5490875462719566425}
   _button: {fileID: 1544038682559636176}
-  _characterPreviewMediator: {fileID: 6320292816390752960}
+  _characterPreviewButtons: {fileID: 7748404727113760429}
 --- !u!1001 &719068594293809593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -360,14 +360,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8303763600594644445, guid: 36b9fb6800fc97c4cacc80fcc22b5a47, type: 3}
   m_PrefabInstance: {fileID: 4048238450969281831}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6320292816390752960 stripped
+--- !u!114 &7748404727113760429 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8041190022549245927, guid: 36b9fb6800fc97c4cacc80fcc22b5a47, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6028602909817093002, guid: 36b9fb6800fc97c4cacc80fcc22b5a47, type: 3}
   m_PrefabInstance: {fileID: 4048238450969281831}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9978fe5186c34ecab5ba362acfdcdea3, type: 3}
+  m_Script: {fileID: 11500000, guid: ba2ea9984f164834b9b2c763199baf07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

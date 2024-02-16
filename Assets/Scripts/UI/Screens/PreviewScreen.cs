@@ -11,7 +11,7 @@ namespace CodeBase.UI.Screens
     public sealed class PreviewScreen : BaseScreen
     {
         [SerializeField] private Button _button;
-        [SerializeField] private CCharacterPreviewMediator _characterPreviewMediator;
+        [SerializeField] private CCharacterPreviewButtons _characterPreviewButtons;
 
         private Tween _tween;
 
@@ -37,14 +37,14 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid NextState()
         {
-            _characterPreviewMediator.SelectCharacter.Execute();
+            _characterPreviewButtons.SelectCharacter.Execute();
             
             _tween?.Kill();
             
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
 
-            await UniTask.WaitUntil(() => _characterPreviewMediator.CharacterPreviewAnimator.IsExitAnimation, 
-                cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            // await UniTask.WaitUntil(() => _characterPreviewModel.CharacterPreview.CharacterPreviewAnimator.IsExitAnimation, 
+            //     cancellationToken: gameObject.GetCancellationTokenOnDestroy());
 
             ChangeState.Execute();
         }

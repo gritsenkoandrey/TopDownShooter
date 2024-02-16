@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
@@ -21,10 +20,11 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<EffectType, EffectData> _effects;
         private LevelData _level;
         private CharacterData _character;
-        private TextureArrayData _textureArrayData;
+        private TextureData _textureData;
         private UiData _uiData;
         private PoolData _poolData;
         private UnitData _unitData;
+        private PreviewData _previewData;
 
         public StaticDataService(IAssetService assetService)
         {
@@ -55,10 +55,11 @@ namespace CodeBase.Infrastructure.StaticData
 
             _level = _assetService.LoadFromResources<LevelData>(AssetAddress.LevelDataPath);
             _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
-            _textureArrayData = _assetService.LoadFromResources<TextureArrayData>(AssetAddress.TextureArrayDataPath);
+            _textureData = _assetService.LoadFromResources<TextureData>(AssetAddress.TextureDataPath);
             _uiData = _assetService.LoadFromResources<UiData>(AssetAddress.UiDataPath);
             _poolData = _assetService.LoadFromResources<PoolData>(AssetAddress.PoolDataPath);
             _unitData = _assetService.LoadFromResources<UnitData>(AssetAddress.UnitDataPath);
+            _previewData = _assetService.LoadFromResources<PreviewData>(AssetAddress.PreviewDataPath);
         }
         
         ScreenData IStaticDataService.ScreenData(ScreenType type) => 
@@ -78,9 +79,10 @@ namespace CodeBase.Infrastructure.StaticData
 
         LevelData IStaticDataService.LevelData() => _level;
         CharacterData IStaticDataService.CharacterData() => _character;
-        TextureArrayData IStaticDataService.TextureArrayData() => _textureArrayData;
+        TextureData IStaticDataService.TextureArrayData() => _textureData;
         UiData IStaticDataService.UiData() => _uiData;
         PoolData IStaticDataService.PoolData() => _poolData;
         UnitData IStaticDataService.UnitData() => _unitData;
+        PreviewData IStaticDataService.PreviewData() => _previewData;
     }
 }

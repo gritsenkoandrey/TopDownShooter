@@ -41,6 +41,8 @@ namespace CodeBase.LifeTime.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
+            base.Configure(builder);
+
             builder.RegisterComponentInNewPrefab(_loadingCurtain, Lifetime.Singleton).UnderTransform(transform).As<ILoadingCurtainService>();
             builder.RegisterComponentInNewPrefab(_cameraService, Lifetime.Singleton).UnderTransform(transform).As<ICameraService>();
             builder.RegisterComponentInNewPrefab(_guiService, Lifetime.Singleton).UnderTransform(transform).As<IGuiService>();
@@ -64,7 +66,7 @@ namespace CodeBase.LifeTime.Scopes
             
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
 
-            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Transient).AsSelf();
+            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Transient).AsSelf().Build();
         }
     }
 } 

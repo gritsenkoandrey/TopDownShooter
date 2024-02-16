@@ -1,4 +1,5 @@
 ﻿using CodeBase.ECSCore;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,5 +16,8 @@ namespace CodeBase.Game.ComponentsUi
         public Button DownButton => _downButton;
         public Button LeftButton => _leftButton;
         public Button RightButton => _rightButton;
+        
+        public ReactiveCommand SelectCharacter { get; } = new();
+        public CompositeDisposable ButtonDisposable { get; } = new();
     }
 }

@@ -20,8 +20,9 @@ namespace CodeBase.LifeTime.Systems
         {
             _systems = new SystemBase[]
             {
+                new SCharacterPreview(),
                 new SCharacterPreviewRotation(),
-                new SCharacterPreviewMediator(),
+                new SCharacterPreviewButtons(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

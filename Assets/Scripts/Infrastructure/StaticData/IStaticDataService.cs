@@ -14,9 +14,10 @@ namespace CodeBase.Infrastructure.StaticData
         public EffectData EffectData(EffectType type);
         public LevelData LevelData();
         public CharacterData CharacterData();
-        public TextureArrayData TextureArrayData();
+        public TextureData TextureArrayData();
         public UiData UiData();
         public PoolData PoolData();
         public UnitData UnitData();
+        public PreviewData PreviewData();
     }
 }

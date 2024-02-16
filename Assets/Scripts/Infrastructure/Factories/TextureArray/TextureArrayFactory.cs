@@ -1,5 +1,8 @@
-﻿using CodeBase.Infrastructure.StaticData;
+﻿using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.StaticData;
+using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,16 +12,25 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
     public sealed class TextureArrayFactory : ITextureArrayFactory
     {
         private readonly IStaticDataService _staticDataService;
+        private readonly IAssetService _assetService;
 
         private Texture2DArray _textureArray;
         private int _index;
 
-        public TextureArrayFactory(IStaticDataService staticDataService)
+        public TextureArrayFactory(IStaticDataService staticDataService, IAssetService assetService)
         {
             _staticDataService = staticDataService;
+            _assetService = assetService;
         }
 
         Texture2DArray ITextureArrayFactory.GetTextureArray() => _textureArray;
+        
+        async UniTask<RenderTexture> ITextureArrayFactory.GetRenderTexture()
+        {
+            PreviewData data = _staticDataService.PreviewData();
+            
+            return await _assetService.LoadFromAddressable<RenderTexture>(data.AssetReferenceRenderTexture);
+        }
 
         int ITextureArrayFactory.GetIndex() => _index;
 

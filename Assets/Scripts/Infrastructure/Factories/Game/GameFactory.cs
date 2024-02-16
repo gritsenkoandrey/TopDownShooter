@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Builders.Levels;
 using CodeBase.Game.Builders.Player;
 using CodeBase.Game.Components;
+using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Models;
@@ -82,6 +83,15 @@ namespace CodeBase.Infrastructure.Factories.Game
             _levelModel.AddEnemy(unit);
 
             return unit;
+        }
+
+        async UniTask<CCharacterPreview> IGameFactory.CreateCharacterPreview()
+        {
+            PreviewData data = _staticDataService.PreviewData();
+            
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+
+            return Object.Instantiate(prefab).GetComponent<CCharacterPreview>();
         }
 
         void IGameFactory.CleanUp() { }

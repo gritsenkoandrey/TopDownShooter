@@ -10,7 +10,7 @@ namespace CodeBase.LifeTime.Scopes
         {
             base.Configure(builder);
 
-            builder.RegisterEntryPoint<EntryPointGameSystem>(Lifetime.Scoped).AsSelf();
+            builder.RegisterEntryPoint<EntryPointGameSystem>(Lifetime.Scoped).AsSelf().Build();
         }
     }
 }

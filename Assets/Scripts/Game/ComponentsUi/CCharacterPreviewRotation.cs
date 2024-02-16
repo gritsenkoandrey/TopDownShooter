@@ -3,18 +3,20 @@ using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CodeBase.Game.ComponentsUi
 {
     public sealed class CCharacterPreviewRotation : EntityComponent<CCharacterPreviewRotation>, 
         IDragHandler, IBeginDragHandler, IEndDragHandler
     {
-        [SerializeField] private Transform _model;
+        [SerializeField] private RawImage _rawImage;
+
+        public RawImage RawImage => _rawImage;
         
-        public Transform Model => _model;
-        public readonly ReactiveCommand<PointerEventData> OnTouch = new();
-        public readonly ReactiveCommand OnStartTouch = new();
-        public readonly ReactiveCommand OnEndTouch = new();
+        public ReactiveCommand<PointerEventData> OnTouch { get; } = new();
+        public ReactiveCommand OnStartTouch { get; } = new();
+        public ReactiveCommand OnEndTouch { get; } = new();
         public Tween Tween { get; set; }
 
         void IDragHandler.OnDrag(PointerEventData eventData) => OnTouch.Execute(eventData);
