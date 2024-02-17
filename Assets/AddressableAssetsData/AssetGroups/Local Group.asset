@@ -262,6 +262,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Texture
+  - m_GUID: 9fc0d4010bbf28b4594072e72b8655ab
+    m_Address: Game
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scenes
+  - m_GUID: 6b9bb09ac7c27ff42a214dfa47207886
+    m_Address: Preview
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scenes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

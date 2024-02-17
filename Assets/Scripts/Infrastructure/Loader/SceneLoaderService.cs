@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.Loader
@@ -22,7 +23,7 @@ namespace CodeBase.Infrastructure.Loader
                 return;
             }
             
-            await SceneManager.LoadSceneAsync(name).ToUniTask();
+            await Addressables.LoadSceneAsync(name).ToUniTask();
             
             onLoaded?.Invoke();
         }
