@@ -21,8 +21,8 @@ MonoBehaviour:
     FireInterval: 1
     CriticalChance: 20
     CriticalMultiplier: 2
-    DetectionDistance: 20
-    AttackDistance: 15
+    DetectionDistance: 12
+    AttackDistance: 10
     IsDetectThroughObstacle: 1
   PrefabReference:
     m_AssetGUID: 56ed8e51357bb97498a3de9990fdf68f

@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponType: 11
   WeaponCharacteristic:
-    Damage: 5
-    ClipCount: 2
+    Damage: 20
+    ClipCount: 10
     ForceBullet: 0.4
     RechargeTime: 2.5
     FireInterval: 1
     CriticalChance: 10
     CriticalMultiplier: 2
-    DetectionDistance: 20
-    AttackDistance: 15
+    DetectionDistance: 10
+    AttackDistance: 7.5
     IsDetectThroughObstacle: 1
   PrefabReference:
     m_AssetGUID: 213da5ff74b87b94291bb7ea134a72e6

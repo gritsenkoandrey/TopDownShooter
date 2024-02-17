@@ -21,7 +21,7 @@ MonoBehaviour:
     FireInterval: 1
     CriticalChance: 25
     CriticalMultiplier: 2
-    DetectionDistance: 20
+    DetectionDistance: 15
     AttackDistance: 10
     IsDetectThroughObstacle: 1
   PrefabReference:
