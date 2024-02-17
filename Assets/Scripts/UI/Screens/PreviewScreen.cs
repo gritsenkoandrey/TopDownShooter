@@ -56,7 +56,7 @@ namespace CodeBase.UI.Screens
         {
             _button.interactable = false;
             
-            _tween = FadeCanvas(0f, 1f, 0.5f);
+            _tween = FadeCanvas(0f, 1f, 0.1f);
             
             await _tween.AsyncWaitForCompletion().AsUniTask();
 

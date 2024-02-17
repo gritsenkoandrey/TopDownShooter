@@ -15,7 +15,7 @@ namespace CodeBase.Infrastructure.Loader
         
         private async UniTaskVoid LoadScene(string name, Action onLoaded)
         {
-            if (SceneManager.GetActiveScene().name == name)
+            if (SceneManager.GetActiveScene().name.Equals(name))
             {
                 onLoaded?.Invoke();
                 

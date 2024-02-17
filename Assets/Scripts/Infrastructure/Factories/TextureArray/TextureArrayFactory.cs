@@ -61,7 +61,6 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
             }
             
             _textureArray.Apply();
-            await UniTask.Yield();
         }
 
         Texture2DArray ITextureArrayFactory.GetTextureArray() => _textureArray;

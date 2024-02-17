@@ -15,7 +15,7 @@ MonoBehaviour:
   WeaponType: 13
   WeaponCharacteristic:
     Damage: 10
-    ClipCount: 2
+    ClipCount: 10
     ForceBullet: 0.75
     RechargeTime: 2.5
     FireInterval: 1
