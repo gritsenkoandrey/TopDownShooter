@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.App;
+using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.UI.Screens;
@@ -14,6 +15,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;
         private ISceneLoaderService _sceneLoaderService;
+        private ILoadingCurtainService _loadingCurtainService;
         
         private IDisposable _transitionDisposable;
 
@@ -23,15 +25,17 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, ISceneLoaderService sceneLoaderService)
+        private void Construct(IUIFactory uiFactory, ISceneLoaderService sceneLoaderService, ILoadingCurtainService loadingCurtainService)
         {
             _uiFactory = uiFactory;
             _sceneLoaderService = sceneLoaderService;
+            _loadingCurtainService = loadingCurtainService;
         }
 
         void IEnterLoadState<string>.Enter(string sceneName)
         {
             _sceneLoaderService.Load(sceneName, Next);
+            _loadingCurtainService.Hide().Forget();
         }
 
         void IExitState.Exit()

@@ -18,7 +18,7 @@ namespace CodeBase.Infrastructure.States
         private IGameFactory _gameFactory;
         private IUIFactory _uiFactory;
         private IAssetService _assetService;
-        private ILoadingCurtainService _curtain;
+        private ILoadingCurtainService _loadingCurtain;
         private ICameraService _cameraService;
         private ITextureArrayFactory _textureArrayFactory;
         private LevelModel _levelModel;
@@ -34,7 +34,7 @@ namespace CodeBase.Infrastructure.States
             IGameFactory gameFactory, 
             IUIFactory uiFactory, 
             IAssetService assetService, 
-            ILoadingCurtainService curtain, 
+            ILoadingCurtainService loadingCurtain, 
             ICameraService cameraService,
             ITextureArrayFactory textureArrayFactory,
             LevelModel levelModel)
@@ -43,7 +43,7 @@ namespace CodeBase.Infrastructure.States
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
             _assetService = assetService;
-            _curtain = curtain;
+            _loadingCurtain = loadingCurtain;
             _cameraService = cameraService;
             _textureArrayFactory = textureArrayFactory;
             _levelModel = levelModel;
@@ -53,14 +53,14 @@ namespace CodeBase.Infrastructure.States
         {
             CleanUpWorld();
 
-            _curtain.Show();
+            _loadingCurtain.Show();
             
             _sceneLoaderService.Load(sceneName, Next);
         }
 
         void IExitState.Exit()
         {
-            _curtain.Hide().Forget();
+            _loadingCurtain.Hide().Forget();
         }
 
         private void Next()

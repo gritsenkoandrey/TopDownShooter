@@ -16,7 +16,7 @@ namespace CodeBase.UI.Screens
 
         private Tween _tween;
 
-        private const float DelayCharacterAnimation = 2f;
+        private const float DelayCharacterAnimation = 1f;
 
         private protected override void OnEnable()
         {
@@ -41,27 +41,19 @@ namespace CodeBase.UI.Screens
         private async UniTaskVoid NextState()
         {
             _characterPreviewButtons.SelectCharacter.Execute();
-            
             _tween?.Kill();
-            
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
-
             await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-
             ChangeState.Execute();
         }
         
         private async UniTaskVoid ShowButton()
         {
             _button.interactable = false;
-            
             _tween = FadeCanvas(0f, 1f, 0.1f);
-            
             await _tween.AsyncWaitForCompletion().AsUniTask();
-
             _button.interactable = true;
-            
             _tween = BounceButton(_button, 1.05f, 0.5f);
         }
     }

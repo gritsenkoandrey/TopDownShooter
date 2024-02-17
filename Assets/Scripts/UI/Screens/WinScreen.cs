@@ -36,9 +36,7 @@ namespace CodeBase.UI.Screens
         private async UniTaskVoid NextState()
         {
             _tween?.Kill();
-            
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
-
             ChangeState.Execute();
         }
         

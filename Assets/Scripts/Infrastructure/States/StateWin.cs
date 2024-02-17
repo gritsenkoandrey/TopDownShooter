@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.App;
+using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
@@ -14,6 +15,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;
         private IProgressService _progressService;
+        private ILoadingCurtainService _loadingCurtainService;
         
         private IDisposable _transitionDisposable;
 
@@ -23,10 +25,11 @@ namespace CodeBase.Infrastructure.States
         }
         
         [Inject]
-        private void Construct(IUIFactory uiFactory, IProgressService progressService)
+        private void Construct(IUIFactory uiFactory, IProgressService progressService, ILoadingCurtainService loadingCurtainService)
         {
             _uiFactory = uiFactory;
             _progressService = progressService;
+            _loadingCurtainService = loadingCurtainService;
         }
 
         void IEnterState.Enter()
@@ -39,6 +42,8 @@ namespace CodeBase.Infrastructure.States
         void IExitState.Exit()
         {
             _transitionDisposable?.Dispose();
+            
+            _loadingCurtainService.Show();
         }
         
         private async UniTaskVoid SubscribeOnTransition()
