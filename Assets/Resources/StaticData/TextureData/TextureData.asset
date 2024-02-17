@@ -29,3 +29,14 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  RenderTextureSettings:
+    Resolution: {x: 1024, y: 1024}
+    ColorFormat: 8
+    DepthStensilFormat: 90
+  TextureArraySettings:
+    Resolution: {x: 256, y: 256}
+    TextureFormat: 4
+    FilterMode: 1
+    TextureWrapMode: 0
+    IsMipChain: 1
+    IsLiner: 0

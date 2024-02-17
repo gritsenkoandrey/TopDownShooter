@@ -35,64 +35,45 @@ namespace CodeBase.Infrastructure.Factories.UI
         async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
         {
             DestroyCurrentScreen();
-
             ScreenData data = _staticDataService.ScreenData(type);
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
             _currentScreen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
-            
             _cameraService.ActivateCamera(type);
-
             return _currentScreen;
         }
 
         async UniTask<CUpgradeButton> IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
         {
             UpgradeButtonData data = _staticDataService.UpgradeButtonData(type);
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
             CUpgradeButton button = Object.Instantiate(prefab, parent).GetComponent<CUpgradeButton>();
-
             button.SetUpgradeButtonType(data.UpgradeButtonType);
             button.SetBaseCost(data.BaseCost);
-
             return button;
         }
 
         async UniTask<CEnemyHealth> IUIFactory.CreateEnemyHealth(IEnemy enemy, Transform parent)
         {
             UiData data = _staticDataService.UiData();
-
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.EnemyHealthPrefabReference);
-            
             CEnemyHealth enemyHealth = Object.Instantiate(prefab, parent).GetComponent<CEnemyHealth>();
-
             enemyHealth.Enemy.SetValueAndForceNotify(enemy);
-
             return enemyHealth;
         }
 
         async UniTask<CPointerArrow> IUIFactory.CreatePointerArrow(Transform parent)
         {
             UiData data = _staticDataService.UiData();
-
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PointerArrowPrefabReference);
-
             CPointerArrow pointerArrow = Object.Instantiate(prefab, parent).GetComponent<CPointerArrow>();
-
             return pointerArrow;
         }
 
         async UniTask<CDamageCombatLogView> IUIFactory.CreateDamageView(Transform parent)
         {
             UiData data = _staticDataService.UiData();
-
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.DamageViewPrefabReference);
-
             CDamageCombatLogView damageCombatLogView = Object.Instantiate(prefab, parent).GetComponent<CDamageCombatLogView>();
-
             return damageCombatLogView;
         }
 
@@ -106,7 +87,6 @@ namespace CodeBase.Infrastructure.Factories.UI
             if (_currentScreen != null)
             {
                 Object.Destroy(_currentScreen.gameObject);
-                
                 _currentScreen = null;
             }
         }

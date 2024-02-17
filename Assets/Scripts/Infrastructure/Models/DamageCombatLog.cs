@@ -43,7 +43,11 @@ namespace CodeBase.Infrastructure.Models
             }
         }
 
-        void IDisposable.Dispose() => _damageCombatLog.Clear();
+        void IDisposable.Dispose()
+        {
+            _damageCombatLog.Clear();
+            CombatLog?.Dispose();
+        }
     }
 
     public readonly struct CombatLog

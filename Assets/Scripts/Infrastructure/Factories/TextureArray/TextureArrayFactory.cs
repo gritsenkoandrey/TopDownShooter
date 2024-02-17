@@ -5,7 +5,6 @@ using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
 namespace CodeBase.Infrastructure.Factories.TextureArray
 {
@@ -24,16 +23,14 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
             _assetService = assetService;
         }
 
-        Texture2DArray ITextureArrayFactory.GetTextureArray() => _textureArray;
-        
         RenderTexture ITextureArrayFactory.CreateRenderTexture()
         {
-            RenderTexture renderTexture = new RenderTexture(512, 512, GraphicsFormat.R8G8B8A8_UNorm, GraphicsFormat.D16_UNorm);
+            RenderTextureSettings data = _staticDataService.TextureArrayData().RenderTextureSettings;
+            RenderTexture renderTexture = new RenderTexture(data.Resolution.x, data.Resolution.y, 
+                data.ColorFormat, data.DepthStensilFormat);
             renderTexture.Create();
             return renderTexture;
         }
-
-        int ITextureArrayFactory.GetIndex() => _index;
 
         async UniTask ITextureArrayFactory.CreateTextureArray()
         {
@@ -45,14 +42,17 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
                 textures[i] = await _assetService.LoadFromAddressable<Texture2D>(data.Textures[i]);
             }
             
-            int width = textures[0].width;
-            int height = textures[0].height;
+            int width = data.TextureArraySettings.Resolution.x;
+            int height = data.TextureArraySettings.Resolution.y;
             int length = textures.Length;
+            TextureFormat format = data.TextureArraySettings.TextureFormat;
+            bool mipChain = data.TextureArraySettings.IsMipChain;
+            bool liner = data.TextureArraySettings.IsLiner;
 
-            _textureArray = new Texture2DArray(width, height, length, TextureFormat.RGBA32, true, false)
+            _textureArray = new Texture2DArray(width, height, length, format, mipChain, liner)
             {
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Repeat
+                filterMode = data.TextureArraySettings.FilterMode,
+                wrapMode = data.TextureArraySettings.WrapMode,
             };
 
             for (int i = 0; i < length; i++)
@@ -64,7 +64,10 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
             await UniTask.Yield();
         }
 
-        void ITextureArrayFactory.GenerateRandomTextureIndex() => _index = _staticDataService.TextureArrayData().Textures.GetRandomIndex();
+        Texture2DArray ITextureArrayFactory.GetTextureArray() => _textureArray;
+        int ITextureArrayFactory.GetIndex() => _index;
+        void ITextureArrayFactory.GenerateRandomTextureIndex() => 
+            _index = _staticDataService.TextureArrayData().Textures.GetRandomIndex();
 
         void ITextureArrayFactory.CleanUp()
         {

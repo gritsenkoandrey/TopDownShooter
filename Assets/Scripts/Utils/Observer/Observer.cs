@@ -16,6 +16,7 @@ namespace CodeBase.Utils.Observer
         public T Value
         {
             get => _value;
+            
             set
             {
                 if (!_equalityComparer.Equals(_value, value))

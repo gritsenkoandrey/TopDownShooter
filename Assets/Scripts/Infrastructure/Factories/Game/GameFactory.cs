@@ -88,9 +88,7 @@ namespace CodeBase.Infrastructure.Factories.Game
         async UniTask<CCharacterPreview> IGameFactory.CreateCharacterPreview()
         {
             PreviewData data = _staticDataService.PreviewData();
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
             return Object.Instantiate(prefab).GetComponent<CCharacterPreview>();
         }
 

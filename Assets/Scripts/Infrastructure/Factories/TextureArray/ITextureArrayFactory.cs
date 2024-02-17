@@ -5,10 +5,10 @@ namespace CodeBase.Infrastructure.Factories.TextureArray
 {
     public interface ITextureArrayFactory
     {
-        public Texture2DArray GetTextureArray();
         public RenderTexture CreateRenderTexture();
-        public int GetIndex();
         public UniTask CreateTextureArray();
+        public Texture2DArray GetTextureArray();
+        public int GetIndex();
         public void GenerateRandomTextureIndex();
         public void CleanUp();
     }

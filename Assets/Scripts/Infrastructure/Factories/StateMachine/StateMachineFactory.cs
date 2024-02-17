@@ -22,27 +22,21 @@ namespace CodeBase.Infrastructure.Factories.StateMachine
         IGameStateMachine IStateMachineFactory.CreateGameStateMachine()
         {
             GameStateMachine gameStateMachine = new GameStateMachine();
-            
             gameStateMachine.States.Values.Foreach(_objectResolver.Inject);
-            
             return gameStateMachine;
         }
 
         IStateMachine IStateMachineFactory.CreateCharacterStateMachine(CCharacter character)
         {
             CharacterStateMachine characterStateMachine = new CharacterStateMachine(character);
-            
             characterStateMachine.States.Values.Foreach(_objectResolver.Inject);
-            
             return characterStateMachine;
         }
 
         IStateMachine IStateMachineFactory.CreateUnitStateMachine(CUnit unit)
         {
             UnitStateMachine unitStateMachine = new UnitStateMachine(unit);
-            
             unitStateMachine.States.Values.Foreach(_objectResolver.Inject);
-            
             return unitStateMachine;
         }
     }

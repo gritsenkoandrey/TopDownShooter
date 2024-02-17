@@ -29,13 +29,9 @@ namespace CodeBase.Infrastructure.Factories.Effects
         async UniTask<GameObject> IEffectFactory.CreateEffect(EffectType type, Vector3 position)
         {
             EffectData data = _staticDataService.EffectData(type);
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-            
             GameObject effect = _objectPoolService.SpawnObject(prefab, position, Quaternion.identity);
-            
             _objectPoolService.ReleaseObjectAfterTime(effect, data.LifeTime).Forget();
-            
             return effect;
         }
     }
