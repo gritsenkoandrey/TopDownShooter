@@ -13,12 +13,6 @@ namespace CodeBase.Game.Systems
             Entities.Foreach(UpdateStateMachine);
         }
 
-        private void UpdateStateMachine(CStateMachine stateMachine)
-        {
-            if (stateMachine.IsCreated)
-            {
-                stateMachine.StateMachine.Tick();
-            }
-        }
+        private void UpdateStateMachine(CStateMachine stateMachine) => stateMachine.Execute();
     }
 }

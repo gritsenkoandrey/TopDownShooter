@@ -5,13 +5,21 @@ namespace CodeBase.Game.Components
 {
     public sealed class CStateMachine : EntityComponent<CStateMachine>
     {
-        public bool IsCreated { get; private set; }
         public IStateMachine StateMachine { get; private set; }
+
+        private bool _isCreated;
         
         public void CreateStateMachine(IStateMachine stateMachine)
         {
             StateMachine = stateMachine;
-            IsCreated = true;
+            _isCreated = true;
+        }
+
+        public void Execute()
+        {
+            if (_isCreated == false) return;
+
+            StateMachine.Tick();
         }
     }
 }

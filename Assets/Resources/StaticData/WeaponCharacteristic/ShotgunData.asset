@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponType: 7
   WeaponCharacteristic:
-    Damage: 1
+    Damage: 3
     ClipCount: 2
     ForceBullet: 0.35
     RechargeTime: 2.5
