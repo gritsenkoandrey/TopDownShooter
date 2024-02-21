@@ -13,8 +13,9 @@ namespace CodeBase.Infrastructure.Models
         public readonly ReactiveCommand<CombatLog> CombatLog = new ();
 
         private readonly Queue<CombatLog> _damageCombatLog;
-        private const float UpdateLogTime = 0.1f;
         private float _time;
+
+        private const float UpdateLogTime = 0.1f;
 
         public DamageCombatLog()
         {

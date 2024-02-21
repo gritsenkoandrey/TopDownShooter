@@ -24,5 +24,15 @@ namespace CodeBase.Utils
         {
             return collection[UnityEngine.Random.Range(0, collection.Count)];
         }
+
+        public static T GetFirst<T>(this IList<T> collection)
+        {
+            return collection[0];
+        }
+
+        public static T GetLast<T>(this IList<T> collection)
+        {
+            return collection[^1];
+        }
     }
 }

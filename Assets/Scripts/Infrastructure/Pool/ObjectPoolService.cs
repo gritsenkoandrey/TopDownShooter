@@ -111,8 +111,6 @@ namespace CodeBase.Infrastructure.Pool
 
 	    private void Warm(GameObject prefab, int size)
 	    {
-		    prefab.gameObject.SetActive(false);
-
 		    if (_prefabLookup.ContainsKey(prefab))
 		    {
 			    CustomDebug.LogError($"Pool for prefab {prefab.name} has already been created");
@@ -172,6 +170,8 @@ namespace CodeBase.Infrastructure.Pool
 	    {
 		    GameObject go = UnityEngine.Object.Instantiate(prefab);
 		    
+		    go.SetActive(false);
+		    
 		    if (_root != null)
 		    {
 			    go.transform.parent = _root;
@@ -203,21 +203,11 @@ namespace CodeBase.Infrastructure.Pool
 		    Warm(prefab, size);
 	    }
 
-	    private void SetActivePoolPrefabs()
-	    {
-		    for (int i = 0; i < _poolItems.Count; i++)
-		    {
-			    _poolItems[i].Prefab.SetActive(true);
-		    }
-	    }
-
 	    void IDisposable.Dispose()
 	    {
 		    _prefabLookup.Clear();
 		    _instanceLookup.Clear();
 		    _token.ThrowIfCancellationRequested();
-
-		    SetActivePoolPrefabs();
 	    }
     }
 }
