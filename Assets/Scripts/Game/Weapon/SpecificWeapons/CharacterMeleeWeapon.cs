@@ -12,8 +12,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
     public sealed class CharacterMeleeWeapon : BaseMeleeWeapon
     {
         private IProgressService _progressService;
-        private InventoryModel _inventoryModel;
         private DamageCombatLog _damageCombatLog;
+        private InventoryModel _inventoryModel;
 
         public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
             : base(weapon, weaponCharacteristic)
@@ -29,8 +29,8 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
             EffectFactory = effectFactory;
             
             _progressService = progressService;
-            _inventoryModel = inventoryModel;
             _damageCombatLog = damageCombatLog;
+            _inventoryModel = inventoryModel;
         }
         
         public override void Initialize()

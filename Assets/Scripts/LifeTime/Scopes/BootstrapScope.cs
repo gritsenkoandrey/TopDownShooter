@@ -1,4 +1,5 @@
-﻿using CodeBase.App;
+﻿using System;
+using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
@@ -50,7 +51,8 @@ namespace CodeBase.LifeTime.Scopes
 
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
-            
+            builder.Register<DamageCombatLog>(Lifetime.Singleton).As<IDisposable>().AsSelf();
+
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);

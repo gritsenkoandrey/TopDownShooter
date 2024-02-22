@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeButtonData_02
   m_EditorClassIdentifier: 
   UpgradeButtonType: 1
-  BaseCost: 100
-  Prefab: {fileID: 0}
+  BaseCost: 2000
   PrefabReference:
     m_AssetGUID: c2d258784586ea24f834872285b3a92a
     m_SubObjectName: 

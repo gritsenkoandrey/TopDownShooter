@@ -8,7 +8,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     public sealed class UpgradeButtonData : ScriptableObject
     {
         public UpgradeButtonType UpgradeButtonType;
-        [Range(1, 500)]public int BaseCost;
+        [Range(1, 2500)]public int BaseCost;
         public AssetReference PrefabReference;
     }
 }
