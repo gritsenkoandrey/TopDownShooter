@@ -145,7 +145,6 @@ MonoBehaviour:
   _canvasGroup: {fileID: 1544038682976013172}
   _safeArea: {fileID: 5490875462719566425}
   _button: {fileID: 7950434649386057179}
-  _text: {fileID: 1544038682910912114}
 --- !u!1001 &1481075517406159488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -367,7 +366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_RootOrder
@@ -379,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -395,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -452,17 +451,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184738648706851357, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
   m_PrefabInstance: {fileID: 4663789710368358604}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1544038682910912114 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6184738649095876286, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
-  m_PrefabInstance: {fileID: 4663789710368358604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7950434649386057179 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3381220599949704471, guid: 260dede4cf4a2524c991ead034fe7f3b, type: 3}
