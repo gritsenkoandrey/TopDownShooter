@@ -3,7 +3,7 @@ using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
-using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
@@ -16,11 +16,11 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateMachine _gameStateMachine;
         private ISceneLoaderService _sceneLoaderService;
         private IGameFactory _gameFactory;
-        private IUIFactory _uiFactory;
         private IAssetService _assetService;
         private ILoadingCurtainService _loadingCurtain;
         private ICameraService _cameraService;
         private ITextureArrayFactory _textureArrayFactory;
+        private IGuiService _guiService;
         private LevelModel _levelModel;
 
         public StateLoadLevel(IGameStateMachine gameStateMachine)
@@ -32,20 +32,20 @@ namespace CodeBase.Infrastructure.States
         private void Construct(
             ISceneLoaderService sceneLoaderService, 
             IGameFactory gameFactory, 
-            IUIFactory uiFactory, 
             IAssetService assetService, 
             ILoadingCurtainService loadingCurtain, 
             ICameraService cameraService,
             ITextureArrayFactory textureArrayFactory,
+            IGuiService guiService,
             LevelModel levelModel)
         {
             _sceneLoaderService = sceneLoaderService;
             _gameFactory = gameFactory;
-            _uiFactory = uiFactory;
             _assetService = assetService;
             _loadingCurtain = loadingCurtain;
             _cameraService = cameraService;
             _textureArrayFactory = textureArrayFactory;
+            _guiService = guiService;
             _levelModel = levelModel;
         }
 
@@ -76,12 +76,11 @@ namespace CodeBase.Infrastructure.States
 
         private void CleanUpWorld()
         {
-            _uiFactory.CleanUp();
-            _gameFactory.CleanUp();
             _cameraService.CleanUp();
             _textureArrayFactory.CleanUp();
             _assetService.CleanUp();
             _levelModel.CleanUp();
+            _guiService.CleanUp();
         }
 
         private async UniTaskVoid CreateLevel()

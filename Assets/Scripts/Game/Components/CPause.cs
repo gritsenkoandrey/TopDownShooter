@@ -1,0 +1,28 @@
+﻿using System;
+using CodeBase.ECSCore;
+using CodeBase.Game.Interfaces;
+
+namespace CodeBase.Game.Components
+{
+    public sealed class CPause : EntityComponent<CPause>
+    {
+        private IPause[] _pauses = Array.Empty<IPause>();
+
+        protected override void OnEntityCreate()
+        {
+            base.OnEntityCreate();
+
+            _pauses = GetComponents<IPause>();
+        }
+
+        public void Pause(bool isPause)
+        {
+            if (_pauses == Array.Empty<IPause>()) return;
+
+            for (int i = 0; i < _pauses.Length; i++)
+            {
+                _pauses[i].Pause(isPause);
+            }
+        }
+    }
+}

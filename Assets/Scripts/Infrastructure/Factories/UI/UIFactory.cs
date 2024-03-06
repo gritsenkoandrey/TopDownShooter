@@ -20,8 +20,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly ICameraService _cameraService;
         private readonly IGuiService _guiService;
         private readonly IAssetService _assetService;
-        
-        private BaseScreen _currentScreen;
 
         public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGuiService guiService, 
             IAssetService assetService)
@@ -34,12 +32,23 @@ namespace CodeBase.Infrastructure.Factories.UI
 
         async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
         {
-            DestroyCurrentScreen();
+            _guiService.Pop();
             ScreenData data = _staticDataService.ScreenData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-            _currentScreen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
+            BaseScreen screen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
             _cameraService.ActivateCamera(type);
-            return _currentScreen;
+            _guiService.Push(screen);
+            return screen;
+        }
+
+        async UniTask<BaseScreen> IUIFactory.CreatePopUp(ScreenType type)
+        {
+            ScreenData data = _staticDataService.ScreenData(type);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+            BaseScreen screen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
+            _cameraService.ActivateCamera(type);
+            _guiService.Push(screen);
+            return screen;
         }
 
         async UniTask<CUpgradeButton> IUIFactory.CreateUpgradeButton(UpgradeButtonType type, Transform parent)
@@ -75,20 +84,6 @@ namespace CodeBase.Infrastructure.Factories.UI
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.DamageViewPrefabReference);
             CDamageCombatLogView damageCombatLogView = Object.Instantiate(prefab, parent).GetComponent<CDamageCombatLogView>();
             return damageCombatLogView;
-        }
-
-        void IUIFactory.CleanUp()
-        {
-            DestroyCurrentScreen();
-        }
-
-        private void DestroyCurrentScreen()
-        {
-            if (_currentScreen != null)
-            {
-                Object.Destroy(_currentScreen.gameObject);
-                _currentScreen = null;
-            }
         }
     }
 }

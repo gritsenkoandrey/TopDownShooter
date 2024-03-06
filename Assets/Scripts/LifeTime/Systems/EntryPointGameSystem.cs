@@ -54,6 +54,8 @@ namespace CodeBase.LifeTime.Systems
                 new SCameraShake(),
                 new SPrintResultText(),
                 new SWeaponReloadingView(),
+                new SSettingsButton(),
+                new SPause(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

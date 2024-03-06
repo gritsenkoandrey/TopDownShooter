@@ -62,7 +62,7 @@ namespace CodeBase.Game.Systems
                 .ObserveEveryValueChanged(stats => stats.Data[UpgradeButtonType.Speed])
                 .Subscribe(speed =>
                 {
-                    character.Move.SetSpeed(character.Move.BaseSpeed + speed);
+                    character.CharacterController.SetSpeed(character.CharacterController.BaseSpeed + speed);
                 })
                 .AddTo(character.LifetimeDisposable);
         }

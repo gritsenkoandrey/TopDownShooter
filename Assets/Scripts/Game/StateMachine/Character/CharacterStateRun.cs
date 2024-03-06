@@ -60,7 +60,7 @@ namespace CodeBase.Game.StateMachine.Character
 
             Vector3 move = Quaternion.Euler(0f, _angle, 0f) * Vector3.forward;
 
-            Vector3 next = Character.Position + move * Character.Move.Speed * Time.deltaTime;
+            Vector3 next = Character.Position + move * Character.CharacterController.Speed * Time.deltaTime;
                         
             Ray ray = new Ray { origin = next, direction = Vector3.down };
 
@@ -69,15 +69,15 @@ namespace CodeBase.Game.StateMachine.Character
                 return;
             }
                 
-            move.y = Character.Move.IsGrounded ? 0f : Physics.gravity.y;
+            move.y = Character.CharacterController.IsGrounded ? 0f : Physics.gravity.y;
 
-            Character.Move.CharacterController.Move(move * Character.Move.Speed * Time.deltaTime);
+            Character.CharacterController.CharacterController.Move(move * Character.CharacterController.Speed * Time.deltaTime);
         }
 
         private void Rotate()
         {
-            float lerpAngle = Mathf.LerpAngle(Character.Move.Angle, _angle, LerpRotate);
-            Character.Move.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
+            float lerpAngle = Mathf.LerpAngle(Character.CharacterController.Angle, _angle, LerpRotate);
+            Character.CharacterController.transform.rotation = Quaternion.Euler(0f, lerpAngle, 0f);
         }
     }
 }

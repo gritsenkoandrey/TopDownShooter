@@ -45,7 +45,7 @@ namespace CodeBase.UI.Screens
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroy());
-            ChangeState.Execute();
+            CloseScreen.Execute();
         }
         
         private async UniTaskVoid ShowButton()

@@ -26,7 +26,7 @@ namespace CodeBase.Game.StateMachine.Unit
         {
             _attackDistance = Unit.WeaponMediator.CurrentWeapon.Weapon.AttackDistance();
             
-            Unit.Agent.ResetPath();
+            Unit.Agent.Agent.ResetPath();
             Unit.Animator.OnRun.Execute(0f);
         }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CMove : EntityComponent<CMove>
+    public sealed class CCharacterController : EntityComponent<CCharacterController>
     {
         [SerializeField] private CharacterController _characterController;
         

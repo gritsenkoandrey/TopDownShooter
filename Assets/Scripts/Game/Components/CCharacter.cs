@@ -9,13 +9,13 @@ namespace CodeBase.Game.Components
     {
         [SerializeField] private CAnimator _animator;
         [SerializeField] private CWeaponMediator _weaponMediator;
-        [SerializeField] private CMove _move;
+        [SerializeField] private CCharacterController _characterController;
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CBodyMediator _bodyMediator;
 
         public CAnimator Animator => _animator;
         public CWeaponMediator WeaponMediator => _weaponMediator;
-        public CMove Move => _move;
+        public CCharacterController CharacterController => _characterController;
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
         public Health Health { get; } = new();

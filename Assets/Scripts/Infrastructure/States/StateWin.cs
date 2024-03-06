@@ -50,7 +50,7 @@ namespace CodeBase.Infrastructure.States
         {
             BaseScreen screen = await _uiFactory.CreateScreen(ScreenType.Win);
 
-            _transitionDisposable = screen.ChangeState.First().Subscribe(ChangeState);
+            _transitionDisposable = screen.CloseScreen.First().Subscribe(ChangeState);
         }
 
         private void ChangeState(Unit _) => _gameStateMachine.Enter<StatePreview, string>(SceneName.Preview);

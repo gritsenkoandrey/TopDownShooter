@@ -272,6 +272,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Scenes
+  - m_GUID: d742d340cd38d644fb8264517efec9b6
+    m_Address: SettingsScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Scenes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

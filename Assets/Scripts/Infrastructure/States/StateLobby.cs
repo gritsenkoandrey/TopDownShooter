@@ -39,7 +39,7 @@ namespace CodeBase.Infrastructure.States
         {
             BaseScreen screen = await _uiFactory.CreateScreen(ScreenType.Lobby);
 
-            _transitionDisposable = screen.ChangeState.First().Subscribe(ChangeState);
+            _transitionDisposable = screen.CloseScreen.First().Subscribe(ChangeState);
         }
 
         private void ChangeState(Unit _) => _gameStateMachine.Enter<StateGame>();

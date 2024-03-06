@@ -1,10 +1,11 @@
 ﻿using CodeBase.ECSCore;
+using CodeBase.Game.Interfaces;
 using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CAnimator : EntityComponent<CAnimator>
+    public sealed class CAnimator : EntityComponent<CAnimator>, IPause
     {
         [SerializeField] private Animator _animator;
         
@@ -14,5 +15,7 @@ namespace CodeBase.Game.Components
         public readonly ReactiveCommand OnAttack = new();
         public readonly ReactiveCommand OnDeath = new();
         public readonly ReactiveCommand OnVictory = new();
+        
+        void IPause.Pause(bool isPause) => _animator.speed = isPause ? 0f : 1f;
     }
 }

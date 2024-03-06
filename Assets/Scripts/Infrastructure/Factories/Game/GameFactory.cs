@@ -92,8 +92,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             return Object.Instantiate(prefab).GetComponent<CCharacterPreview>();
         }
 
-        void IGameFactory.CleanUp() { }
-
         private Level GetLevel(LevelData data)
         {
             int index;

@@ -57,11 +57,11 @@ namespace CodeBase.Game.StateMachine.Character
 
         private void UseGravity()
         {
-            if (Character.Move.IsGrounded) return;
+            if (Character.CharacterController.IsGrounded) return;
             
             Vector3 move = Vector3.zero;
             move.y = Physics.gravity.y;
-            Character.Move.CharacterController.Move(move * Character.Move.Speed * Time.deltaTime);
+            Character.CharacterController.CharacterController.Move(move * Character.CharacterController.Speed * Time.deltaTime);
         }
 
         private void Attack()
@@ -78,7 +78,7 @@ namespace CodeBase.Game.StateMachine.Character
         private void LockAtTarget()
         {
             Quaternion lookRotation = Quaternion.LookRotation(_target.Position - Character.Position);
-            Character.Move.transform.rotation = lookRotation;
+            Character.CharacterController.transform.rotation = lookRotation;
         }
 
         private bool TrySetTarget()

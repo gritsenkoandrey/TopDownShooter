@@ -42,7 +42,7 @@ namespace CodeBase.Game.Builders.Player
                 .GetComponent<CCharacter>();
 
             character.Health.SetBaseHealth(_data.Health);
-            character.Move.SetBaseSpeed(_data.Speed);
+            character.CharacterController.SetBaseSpeed(_data.Speed);
 
             return character;
         }

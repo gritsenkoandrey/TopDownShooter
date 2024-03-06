@@ -26,14 +26,14 @@ namespace CodeBase.Game.StateMachine.Unit
         {
             _pursuitRadius = Mathf.Pow(Unit.UnitStats.PursuitRadius, 2);
             _attackDistance = Unit.WeaponMediator.CurrentWeapon.Weapon.AttackDistance();
-            Unit.Agent.speed = Unit.UnitStats.PursuitSpeed;
+            Unit.Agent.Agent.speed = Unit.UnitStats.PursuitSpeed;
             Unit.Animator.OnRun.Execute(1f);
             Unit.Radar.Clear.Execute();
         }
 
         public void Exit()
         {
-            Unit.Agent.ResetPath();
+            Unit.Agent.Agent.ResetPath();
         }
 
         public void Tick()
@@ -59,7 +59,7 @@ namespace CodeBase.Game.StateMachine.Unit
                 }
                 else
                 {
-                    Unit.Agent.SetDestination(_levelModel.Character.Position);
+                    Unit.Agent.Agent.SetDestination(_levelModel.Character.Position);
                 }
             }
         }

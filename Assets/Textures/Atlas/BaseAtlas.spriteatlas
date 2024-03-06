@@ -73,6 +73,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b0a483b674493d74a8a1bd838cb7f78c, type: 3}
   - {fileID: 21300000, guid: 17f3599798e793a47898c58e7838fdd3, type: 3}
   - {fileID: 21300000, guid: 96edcdb727aa06b459e217e2a23e1ed3, type: 3}
+  - {fileID: 21300000, guid: 756dcdf7e4fe2a64d87c055779077ec3, type: 3}
   - {fileID: 21300000, guid: 18c1d1185d5662744b55d237738b94a3, type: 3}
   - {fileID: 21300000, guid: c8a005a85868d444aba2efa8fb2452df, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
@@ -82,6 +83,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 83fecabbbbbad3542999e3530f5b25a5, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
+  - {fileID: 21300000, guid: e059e1cd6b220bd4a9f04bb6eca438a0, type: 3}
   - {fileID: 21300000, guid: aa36eb0e80293c84d843d9c6662aace5, type: 3}
   - {fileID: 21300000, guid: 998d196ee78bdfd4dbc1b513d936938a, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
@@ -98,6 +100,7 @@ SpriteAtlas:
   - preview_screen_arrow_left_outline_quad
   - game_screen_damage
   - game_screen_circle_small
+  - preview_screen_abstract
   - result_screen_letter_n
   - result_screen_letter_i
   - lobby_screen_shop_speed
@@ -107,6 +110,7 @@ SpriteAtlas:
   - result_screen_letter_e
   - lobby_screen_shop_health
   - game_screen_target
+  - game_screen_settings
   - result_screen_letter_w
   - game_screen_watch
   - lobby_screen_shop_show

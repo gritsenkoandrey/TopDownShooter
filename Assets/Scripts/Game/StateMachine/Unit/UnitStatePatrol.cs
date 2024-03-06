@@ -32,14 +32,14 @@ namespace CodeBase.Game.StateMachine.Unit
             _patrolRadius = Unit.UnitStats.PatrolRadius;
             _aggroRadius = Mathf.Pow(Unit.WeaponMediator.CurrentWeapon.Weapon.DetectionDistance(), 2);
             _startHealth = Unit.Health.CurrentHealth.Value;
-            Unit.Agent.speed = Unit.UnitStats.WalkSpeed;
+            Unit.Agent.Agent.speed = Unit.UnitStats.WalkSpeed;
             Unit.Animator.OnRun.Execute(1f);
-            Unit.Agent.SetDestination(GeneratePointOnNavmesh());
+            Unit.Agent.Agent.SetDestination(GeneratePointOnNavmesh());
         }
 
         public void Exit()
         {
-            Unit.Agent.ResetPath();
+            Unit.Agent.Agent.ResetPath();
         }
 
         public void Tick()
@@ -57,7 +57,7 @@ namespace CodeBase.Game.StateMachine.Unit
             }
             else
             {
-                if (Unit.Agent.hasPath)
+                if (Unit.Agent.Agent.hasPath)
                 {
                     return;
                 }

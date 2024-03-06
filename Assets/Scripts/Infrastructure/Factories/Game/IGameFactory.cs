@@ -12,6 +12,5 @@ namespace CodeBase.Infrastructure.Factories.Game
         public UniTask<CCharacter> CreateCharacter(Vector3 position, Transform parent);
         public UniTask<CUnit> CreateUnit(Vector3 position, Transform parent);
         public UniTask<CCharacterPreview> CreateCharacterPreview();
-        public void CleanUp();
     }
 }

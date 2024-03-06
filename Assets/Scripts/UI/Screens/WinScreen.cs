@@ -37,13 +37,12 @@ namespace CodeBase.UI.Screens
         {
             _tween?.Kill();
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
-            ChangeState.Execute();
+            CloseScreen.Execute();
         }
         
         private async UniTaskVoid ShowButton()
         {
-            _button.gameObject.SetActive(false);
-            _button.interactable = false;
+            ActivateButton(_button, false);
             _tween = FadeCanvas(0f, 1f, 0.5f);
             await _tween.AsyncWaitForCompletion().AsUniTask();
             _button.gameObject.SetActive(true);
