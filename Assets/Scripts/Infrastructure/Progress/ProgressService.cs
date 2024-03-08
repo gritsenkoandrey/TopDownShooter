@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.Progress
         public IData<int> MoneyData { get; private set; }
         public IData<Stats> StatsData { get; private set; }
         public IData<Inventory> InventoryData { get; private set; }
+        public IData<Shop> ShopData { get; private set; }
 
         void IProgressService.Init()
         {
@@ -18,6 +19,7 @@ namespace CodeBase.Infrastructure.Progress
             MoneyData = new MoneyData();
             StatsData = new StatsData();
             InventoryData = new InventoryData();
+            ShopData = new ShopData();
         }
 
         void IDisposable.Dispose()
@@ -26,6 +28,7 @@ namespace CodeBase.Infrastructure.Progress
             MoneyData?.Dispose();
             StatsData?.Dispose();
             InventoryData?.Dispose();
+            ShopData?.Dispose();
         }
     }
 }

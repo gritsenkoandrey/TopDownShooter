@@ -13,6 +13,7 @@ namespace CodeBase.LifeTime.Scopes
             base.Configure(builder);
 
             builder.Register<CharacterPreviewModel>(Lifetime.Scoped).As<IInitializable, IDisposable>().AsSelf();
+            builder.Register<ShopModel>(Lifetime.Scoped).AsSelf();
             builder.RegisterEntryPoint<EntryPointPreviewSystem>(Lifetime.Scoped).AsSelf().Build();
         }
     }

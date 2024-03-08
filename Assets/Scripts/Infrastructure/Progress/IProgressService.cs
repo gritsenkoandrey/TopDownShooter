@@ -9,6 +9,7 @@ namespace CodeBase.Infrastructure.Progress
         public IData<int> MoneyData { get; }
         public IData<Stats> StatsData { get; }
         public IData<Inventory> InventoryData { get; }
+        public IData<Shop> ShopData { get; }
         public void Init();
     }
 }
