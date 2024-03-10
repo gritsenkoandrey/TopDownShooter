@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeBase.Game.ComponentsUi;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -12,7 +11,6 @@ namespace CodeBase.UI.Screens
     public sealed class PreviewScreen : BaseScreen
     {
         [SerializeField] private Button _button;
-        [SerializeField] private CCharacterPreviewButtons _characterPreviewButtons;
 
         private Tween _tween;
 
@@ -40,7 +38,6 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid NextState()
         {
-            _characterPreviewButtons.SelectCharacter.Execute();
             _tween?.Kill();
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 

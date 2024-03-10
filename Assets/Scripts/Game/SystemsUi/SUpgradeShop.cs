@@ -1,8 +1,8 @@
-﻿using System;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Utils;
+using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using VContainer;
@@ -12,13 +12,13 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SUpgradeShop : SystemComponent<CUpgradeShop>
     {
         private IUIFactory _uiFactory;
-
-        private const float DelayClick = 0.25f;
+        private CharacterPreviewModel _characterPreviewModel;
 
         [Inject]
-        private void Construct(IUIFactory uiFactory)
+        private void Construct(IUIFactory uiFactory, CharacterPreviewModel characterPreviewModel)
         {
             _uiFactory = uiFactory;
+            _characterPreviewModel = characterPreviewModel;
         }
 
         protected override void OnEnableComponent(CUpgradeShop component)
@@ -27,22 +27,20 @@ namespace CodeBase.Game.SystemsUi
 
             CreateUpgradeButtons(component).Forget();
 
-            component.IsShowUpgradeShop
-                .Subscribe(value =>
+            _characterPreviewModel.State
+                .Subscribe(state =>
                 {
-                    component.Show.SetActive(!value);
-                    component.Hide.SetActive(value);
-                    component.Root.SetActive(value);
-                })
-                .AddTo(component.LifetimeDisposable);
-
-            component.Button
-                .OnClickAsObservable()
-                .ThrottleFirst(Time())
-                .Subscribe(_ =>
-                {
-                    component.Button.transform.PunchTransform();
-                    component.IsShowUpgradeShop.Value = !component.IsShowUpgradeShop.Value;
+                    switch (state)
+                    {
+                        case PreviewState.Start:
+                        case PreviewState.BuyWeapon:
+                        case PreviewState.BuySkin:
+                            SetActiveCanvasGroup(component, false);
+                            break;
+                        case PreviewState.BuyUpgrades:
+                            SetActiveCanvasGroup(component, true);
+                            break;
+                    }
                 })
                 .AddTo(component.LifetimeDisposable);
         }
@@ -54,7 +52,12 @@ namespace CodeBase.Game.SystemsUi
                 await _uiFactory.CreateUpgradeButton(component.UpgradeButtonType[i], component.Root.transform);
             }
         }
-
-        private TimeSpan Time() => TimeSpan.FromSeconds(DelayClick);
+        
+        private void SetActiveCanvasGroup(CUpgradeShop component, bool isActive)
+        {
+            component.CanvasGroup.alpha = isActive ? 1f : 0f;
+            component.CanvasGroup.interactable = isActive;
+            component.CanvasGroup.blocksRaycasts = isActive;
+        }
     }
 }

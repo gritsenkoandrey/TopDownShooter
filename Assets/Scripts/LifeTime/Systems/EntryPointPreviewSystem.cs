@@ -23,6 +23,12 @@ namespace CodeBase.LifeTime.Systems
                 new SCharacterPreview(),
                 new SCharacterPreviewRotation(),
                 new SCharacterPreviewButtons(),
+                new SShopMediator(),
+                new SUpgradeShop(),
+                new SUpgradeButton(),
+                new SMoneyUpdate(),
+                new SShopPrice(),
+                new SShopBuyButton(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

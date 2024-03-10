@@ -25,8 +25,6 @@ namespace CodeBase.LifeTime.Systems
                 new SGroundBuildNavMesh(),
                 new SRadarDraw(),
                 new SSelectMesh(),
-                new SUpgradeShop(),
-                new SUpgradeButton(),
                 new SLevelGoal(),
                 new SMoneyUpdate(),
                 new SBulletLifeTime(),

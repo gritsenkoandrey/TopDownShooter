@@ -47,6 +47,7 @@ namespace CodeBase.Game.SystemsUi
         {
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(data => data.Data[component.UpgradeButtonType])
+                .DelaySubscription(Time())
                 .Subscribe(level => UpdateButton(component, level))
                 .AddTo(component.LifetimeDisposable);
         }

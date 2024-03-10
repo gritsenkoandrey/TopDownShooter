@@ -38,14 +38,13 @@ namespace CodeBase.Infrastructure.Progress.Data
                 WeaponType.Knife
             };
 
-            List<int> skins = new List<int>
+            List<SkinType> skins = new List<SkinType>
             {
-                0
+                SkinType.BasicMale,
+                SkinType.BasicFemale,
             };
-
-            Shop shop = new Shop(weapons, skins);
             
-            return shop;
+            return new Shop(weapons, skins);
         }
 
         void IDisposable.Dispose() => Data.Value.Save -= Save;
@@ -55,14 +54,14 @@ namespace CodeBase.Infrastructure.Progress.Data
     public sealed class Shop
     {
         [JsonProperty] private readonly List<WeaponType> _weapons;
-        [JsonProperty] private readonly List<int> _skins;
+        [JsonProperty] private readonly List<SkinType> _skins;
 
         [JsonIgnore] public IReadOnlyList<WeaponType> Weapons => _weapons;
-        [JsonIgnore] public IReadOnlyList<int> Skins => _skins;
+        [JsonIgnore] public IReadOnlyList<SkinType> Skins => _skins;
 
         public event Action<Shop> Save;
 
-        public Shop(List<WeaponType> weapons, List<int> skins)
+        public Shop(List<WeaponType> weapons, List<SkinType> skins)
         {
             _weapons = weapons;
             _skins = skins;
@@ -75,15 +74,15 @@ namespace CodeBase.Infrastructure.Progress.Data
             Save?.Invoke(this);
         }
 
-        public void Add(int skin)
+        public void Add(SkinType type)
         {
-            _skins.Add(skin);
+            _skins.Add(type);
             
             Save?.Invoke(this);
         }
 
         public bool Contains(WeaponType type) => _weapons.Contains(type);
         
-        public bool Contains(int skin) => _skins.Contains(skin);
+        public bool Contains(SkinType type) => _skins.Contains(type);
     }
 }

@@ -10,21 +10,22 @@ namespace CodeBase.Infrastructure.Models
     {
         private readonly IProgressService _progressService;
 
-        private WeaponType _selectedWeapon;
+        public IReactiveProperty<WeaponType> SelectedWeapon { get; } = new ReactiveProperty<WeaponType>();
+        public IReactiveProperty<SkinType> SelectedSkin { get; } = new ReactiveProperty<SkinType>();
+        public IReactiveProperty<int> IndexWeapon { get; } = new ReactiveProperty<int>();
+        public IReactiveProperty<int> IndexSkin { get; } = new ReactiveProperty<int>();
         
+        public IReactiveProperty<int> ClipCount { get; } = new ReactiveProperty<int>();
+        public IReactiveCommand<float> ReloadingWeapon { get; } = new ReactiveCommand<float>();
+
         public InventoryModel(IProgressService progressService)
         {
             _progressService = progressService;
         }
 
-        public IReactiveProperty<int> ClipCount { get; } = new ReactiveProperty<int>();
-        public IReactiveCommand<float> ReloadingWeapon { get; } = new ReactiveCommand<float>();
-
-        public int GetEquipmentIndex() => _progressService.InventoryData.Data.Value.EquipmentIndex;
+        public int GetSkinIndex() => _progressService.InventoryData.Data.Value.EquipmentIndex;
         public int GetWeaponIndex() => _progressService.InventoryData.Data.Value.WeaponIndex;
-        public void SetEquipmentIndex(int index) => _progressService.InventoryData.Data.Value.EquipmentIndex = index;
+        public void SetSkinIndex(int index) => _progressService.InventoryData.Data.Value.EquipmentIndex = index;
         public void SetWeaponIndex(int index) => _progressService.InventoryData.Data.Value.WeaponIndex = index;
-        public WeaponType GetSelectedWeapon() => _selectedWeapon;
-        public void SetSelectedWeapon(WeaponType weaponType) => _selectedWeapon = weaponType;
     }
 }

@@ -4939,8 +4939,6 @@ MonoBehaviour:
     Weapon: {fileID: 442376061038877204}
   - WeaponType: 5
     Weapon: {fileID: 8684198826228561402}
-  - WeaponType: 15
-    Weapon: {fileID: 8151398485301228407}
   - WeaponType: 6
     Weapon: {fileID: 390554580429696467}
   - WeaponType: 7
@@ -4959,6 +4957,109 @@ MonoBehaviour:
     Weapon: {fileID: 6160711221683681144}
   - WeaponType: 14
     Weapon: {fileID: 9177328671637191370}
+  - WeaponType: 15
+    Weapon: {fileID: 8151398485301228407}
+  _skins:
+  - Type: 0
+    Data:
+      Visual:
+      - {fileID: 1014603069230329253}
+      - {fileID: 1014603069607440414}
+  - Type: 1
+    Data:
+      Visual:
+      - {fileID: 1014603070073331152}
+      - {fileID: 1014603070286358481}
+  - Type: 2
+    Data:
+      Visual:
+      - {fileID: 1014603069143052613}
+      - {fileID: 1014603069177242305}
+  - Type: 3
+    Data:
+      Visual:
+      - {fileID: 1014603068562780373}
+      - {fileID: 1014603070035350509}
+  - Type: 4
+    Data:
+      Visual:
+      - {fileID: 1014603069900260554}
+      - {fileID: 1014603070098951061}
+  - Type: 5
+    Data:
+      Visual:
+      - {fileID: 1014603069233475367}
+      - {fileID: 1014603068826435956}
+  - Type: 6
+    Data:
+      Visual:
+      - {fileID: 1014603069994860025}
+      - {fileID: 1014603069334873876}
+  - Type: 7
+    Data:
+      Visual:
+      - {fileID: 1014603069520651508}
+      - {fileID: 1014603068618752334}
+  - Type: 8
+    Data:
+      Visual:
+      - {fileID: 1014603069635516798}
+      - {fileID: 1014603068686161502}
+  - Type: 9
+    Data:
+      Visual:
+      - {fileID: 1014603070124749729}
+      - {fileID: 1014603068645895226}
+  - Type: 10
+    Data:
+      Visual:
+      - {fileID: 1014603069955512916}
+      - {fileID: 1014603070009137155}
+  - Type: 11
+    Data:
+      Visual:
+      - {fileID: 1014603069847817312}
+      - {fileID: 1014603069875095403}
+  - Type: 12
+    Data:
+      Visual:
+      - {fileID: 1014603070471617102}
+      - {fileID: 1014603070516509614}
+  - Type: 13
+    Data:
+      Visual:
+      - {fileID: 1014603070162675509}
+      - {fileID: 1014603069541143311}
+  - Type: 14
+    Data:
+      Visual:
+      - {fileID: 1014603070443886615}
+      - {fileID: 1014603069727166461}
+  - Type: 15
+    Data:
+      Visual:
+      - {fileID: 1014603068899526087}
+      - {fileID: 1014603070340759777}
+  - Type: 16
+    Data:
+      Visual:
+      - {fileID: 1014603069003983484}
+      - {fileID: 1014603069359371366}
+  - Type: 17
+    Data:
+      Visual:
+      - {fileID: 1014603069530110908}
+      - {fileID: 1014603068747862365}
+  - Type: 18
+    Data:
+      Visual:
+      - {fileID: 1014603069031127393}
+      - {fileID: 1014603068635951253}
+  - Type: 19
+    Data:
+      Visual:
+      - {fileID: 1014603068663186226}
+      - {fileID: 1014603069441017490}
 --- !u!114 &1884205820079838895
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,12 @@
 ﻿using System;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.GUI;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using UniRx;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -19,7 +21,10 @@ namespace CodeBase.Infrastructure.Models
         
         public CCharacterPreview CharacterPreview { get; private set; }
         public RenderTexture RenderTexture { get; private set; }
-        
+
+        public readonly IReactiveProperty<PreviewState> State = 
+            new ReactiveProperty<PreviewState>(PreviewState.Start);
+
         public CharacterPreviewModel(IGameFactory gameFactory, IGuiService guiService, ITextureArrayFactory textureArrayFactory)
         {
             _gameFactory = gameFactory;

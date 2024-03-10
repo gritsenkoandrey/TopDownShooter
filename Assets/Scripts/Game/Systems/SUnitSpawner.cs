@@ -49,16 +49,12 @@ namespace CodeBase.Game.Systems
         
         private void SetEquipment(CUnit unit)
         {
-            int index = unit.BodyMediator.Bodies.GetRandomIndex();
+            int index = unit.BodyMediator.Skins.GetRandomIndex();
             
-            for (int i = 0; i < unit.BodyMediator.Bodies.Length; i++)
+            for (int i = 0; i < unit.BodyMediator.Skins.Length; i++)
+            for (int j = 0; j < unit.BodyMediator.Skins[i].Data.Visual.Length; j++)
             {
-                unit.BodyMediator.Bodies[i].SetActive(index == i);
-            }
-
-            for (int i = 0; i < unit.BodyMediator.Heads.Length; i++)
-            {
-                unit.BodyMediator.Heads[i].SetActive(index == i);
+                unit.BodyMediator.Skins[i].Data.Visual[j].SetActive(i == index);
             }
         }
     }

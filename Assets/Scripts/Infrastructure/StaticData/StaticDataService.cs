@@ -25,6 +25,7 @@ namespace CodeBase.Infrastructure.StaticData
         private PoolData _poolData;
         private UnitData _unitData;
         private PreviewData _previewData;
+        private ShopData _shopData;
 
         public StaticDataService(IAssetService assetService)
         {
@@ -60,6 +61,7 @@ namespace CodeBase.Infrastructure.StaticData
             _poolData = _assetService.LoadFromResources<PoolData>(AssetAddress.PoolDataPath);
             _unitData = _assetService.LoadFromResources<UnitData>(AssetAddress.UnitDataPath);
             _previewData = _assetService.LoadFromResources<PreviewData>(AssetAddress.PreviewDataPath);
+            _shopData = _assetService.LoadFromResources<ShopData>(AssetAddress.ShopDataPath);
         }
         
         ScreenData IStaticDataService.ScreenData(ScreenType type) => 
@@ -84,5 +86,6 @@ namespace CodeBase.Infrastructure.StaticData
         PoolData IStaticDataService.PoolData() => _poolData;
         UnitData IStaticDataService.UnitData() => _unitData;
         PreviewData IStaticDataService.PreviewData() => _previewData;
+        ShopData IStaticDataService.ShopData() => _shopData;
     }
 }

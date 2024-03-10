@@ -19,5 +19,6 @@ namespace CodeBase.Infrastructure.StaticData
         public PoolData PoolData();
         public UnitData UnitData();
         public PreviewData PreviewData();
+        public ShopData ShopData();
     }
 }

@@ -8,12 +8,10 @@ namespace CodeBase.Game.ComponentsUi
 {
     public sealed class CCharacterPreviewModel : EntityComponent<CCharacterPreviewModel>
     {
-        [SerializeField] private GameObject[] _heads;
-        [SerializeField] private GameObject[] _bodies;
         [SerializeField] private WeaponData[] _weapons;
+        [SerializeField] private SkinData[] _skins;
 
-        public GameObject[] Heads => _heads;
-        public GameObject[] Bodies => _bodies;
+        public SkinData[] Skins => _skins;
         public WeaponData[] Weapons => _weapons;
     }
 

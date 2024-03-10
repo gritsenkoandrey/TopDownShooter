@@ -1,9 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using UniRx;
-using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.SystemsUi
@@ -28,68 +28,72 @@ namespace CodeBase.Game.SystemsUi
             SubscribeOnClickButtons(component);
         }
 
-        protected override void OnDisableComponent(CCharacterPreviewButtons component)
-        {
-            base.OnDisableComponent(component);
-            
-            component.ButtonDisposable.Clear();
-        }
-
         private void SubscribeOnSelectCharacter(CCharacterPreviewButtons component)
         {
-            component.SelectCharacter
-                .Subscribe(_ =>
+            _characterPreviewModel.State
+                .Subscribe(state =>
                 {
-                    _characterPreviewModel.CharacterPreview.CharacterPreviewAnimator.Animator.SetFloat(Animations.PreviewBlend, Random.Range(0, 4));
-                    _characterPreviewModel.CharacterPreview.CharacterPreviewAnimator.Animator.SetTrigger(Animations.Preview);
-                    
-                    component.ButtonDisposable.Clear();
+                    switch (state)
+                    {
+                        case PreviewState.Start:
+                        case PreviewState.BuyUpgrades:
+                            component.LeftButton.gameObject.SetActive(false);
+                            component.RightButton.gameObject.SetActive(false);
+                            break;
+                        case PreviewState.BuyWeapon:
+                        case PreviewState.BuySkin:
+                            component.LeftButton.gameObject.SetActive(true);
+                            component.RightButton.gameObject.SetActive(true);
+                            break;
+                    }
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
         private void SubscribeOnClickButtons(CCharacterPreviewButtons component)
         {
-            component.UpButton
-                .OnClickAsObservable()
-                .Subscribe(_ =>
-                {
-                    component.UpButton.transform.PunchTransform();
-                    TurnUp(_characterPreviewModel.CharacterPreview.CharacterPreviewModel);
-                })
-                .AddTo(component.ButtonDisposable);
-            
-            component.DownButton
-                .OnClickAsObservable()
-                .Subscribe(_ =>
-                {
-                    component.DownButton.transform.PunchTransform();
-                    TurnDown(_characterPreviewModel.CharacterPreview.CharacterPreviewModel);
-                })
-                .AddTo(component.ButtonDisposable);
-            
             component.LeftButton
                 .OnClickAsObservable()
                 .Subscribe(_ =>
                 {
                     component.LeftButton.transform.PunchTransform();
-                    TurnLeft(_characterPreviewModel.CharacterPreview.CharacterPreviewModel);
+
+                    switch (_characterPreviewModel.State.Value)
+                    {
+                        case PreviewState.BuyWeapon:
+                            TurnLeftWeapon();
+                            break;
+                        case PreviewState.BuySkin:
+                            TurnLeftSkin();
+                            break;
+                    }
                 })
-                .AddTo(component.ButtonDisposable);
+                .AddTo(component.LifetimeDisposable);
             
             component.RightButton
                 .OnClickAsObservable()
                 .Subscribe(_ =>
                 {
                     component.RightButton.transform.PunchTransform();
-                    TurnRight(_characterPreviewModel.CharacterPreview.CharacterPreviewModel);
+
+                    switch (_characterPreviewModel.State.Value)
+                    {
+                        case PreviewState.BuyWeapon:
+                            TurnRightWeapon();
+                            break;
+                        case PreviewState.BuySkin:
+                            TurnRightSkin();
+                            break;
+                    }
                 })
-                .AddTo(component.ButtonDisposable);
+                .AddTo(component.LifetimeDisposable);
         }
 
-        private void TurnUp(CCharacterPreviewModel component)
+        private void TurnLeftWeapon()
         {
-            int index = _inventoryModel.GetWeaponIndex();
+            CCharacterPreviewModel component = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+            
+            int index = _inventoryModel.IndexWeapon.Value;
 
             index--;
 
@@ -98,11 +102,14 @@ namespace CodeBase.Game.SystemsUi
                 index = component.Weapons.Length - 1;
             }
             
-            _inventoryModel.SetWeaponIndex(index);
+            _inventoryModel.IndexWeapon.Value = index;
         }
-        private void TurnDown(CCharacterPreviewModel component)
+        
+        private void TurnRightWeapon()
         {
-            int index = _inventoryModel.GetWeaponIndex();
+            CCharacterPreviewModel component = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+
+            int index = _inventoryModel.IndexWeapon.Value;
 
             index++;
 
@@ -110,34 +117,40 @@ namespace CodeBase.Game.SystemsUi
             {
                 index = 0;
             }
-            
-            _inventoryModel.SetWeaponIndex(index);
-        }
-        private void TurnRight(CCharacterPreviewModel component)
-        {
-            int index = _inventoryModel.GetEquipmentIndex();
 
-            index++;
-
-            if (index > component.Heads.Length - 1)
-            {
-                index = 0;
-            }
-            
-            _inventoryModel.SetEquipmentIndex(index);
+            _inventoryModel.IndexWeapon.Value = index;
         }
-        private void TurnLeft(CCharacterPreviewModel component)
+
+        private void TurnLeftSkin()
         {
-            int index = _inventoryModel.GetEquipmentIndex();
+            CCharacterPreviewModel component = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+
+            int index = _inventoryModel.IndexSkin.Value;
 
             index--;
 
             if (index < 0)
             {
-                index = component.Heads.Length - 1;
+                index = component.Skins.Length - 1;
             }
 
-            _inventoryModel.SetEquipmentIndex(index);
+            _inventoryModel.IndexSkin.Value = index;
+        }
+
+        private void TurnRightSkin()
+        {
+            CCharacterPreviewModel component = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+
+            int index = _inventoryModel.IndexSkin.Value;
+
+            index++;
+
+            if (index > component.Skins.Length - 1)
+            {
+                index = 0;
+            }
+            
+            _inventoryModel.IndexSkin.Value = index;
         }
     }
 }

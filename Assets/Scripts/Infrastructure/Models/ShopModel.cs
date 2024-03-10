@@ -1,7 +1,8 @@
 ﻿using CodeBase.Game.Enums;
-using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Progress;
 using CodeBase.Infrastructure.Progress.Data;
+using CodeBase.Infrastructure.StaticData;
+using CodeBase.Infrastructure.StaticData.Data;
 using JetBrains.Annotations;
 
 namespace CodeBase.Infrastructure.Models
@@ -10,54 +11,102 @@ namespace CodeBase.Infrastructure.Models
     public sealed class ShopModel
     {
         private readonly IProgressService _progressService;
-        private readonly IAssetService _assetService;
+        private readonly IStaticDataService _staticDataService;
 
         private Shop Shop => _progressService.ShopData.Data.Value;
 
-        public ShopModel(IProgressService  progressService, IAssetService assetService)
+        public ShopModel(IProgressService  progressService, IStaticDataService staticDataService)
         {
             _progressService = progressService;
-            _assetService = assetService;
+            _staticDataService = staticDataService;
         }
 
-        public void BuyWeapon(WeaponType type)
+        public void Buy(WeaponType type)
         {
-            if (CanBuyWeapon(type))
+            if (CanBuy(type))
             {
+                _progressService.MoneyData.Data.Value -= GetCost(type);
+
+                Shop.Add(type);
+            }
+        }
+        public void Buy(SkinType type)
+        {
+            if (CanBuy(type))
+            {
+                _progressService.MoneyData.Data.Value -= GetCost(type);
+                
                 Shop.Add(type);
             }
         }
 
-        public void BuySkin(int skin)
+        public bool IsBuy(WeaponType type) => Shop.Contains(type);
+        public bool IsBuy(SkinType type) => Shop.Contains(type);
+
+        public bool CanBuy(WeaponType type)
         {
-            if (CanBuySkin(skin))
-            {
-                Shop.Add(skin);
-            }
-        }
-
-        public bool IsBuyWeapon(WeaponType type) => Shop.Contains(type);
-
-        public bool IsBuySkin(int skin) => Shop.Contains(skin);
-
-        private bool CanBuyWeapon(WeaponType type)
-        {
-            if (IsBuyWeapon(type))
+            if (IsBuy(type))
             {
                 return false;
             }
 
-            return true;
-        }
-        
-        private bool CanBuySkin(int skin)
-        {
-            if (IsBuySkin(skin))
+            int cost = GetCost(type);
+            
+            if (_progressService.MoneyData.Data.Value >= cost)
             {
-                return false;
+                return true;
             }
             
-            return true;
+            return false;
+        }
+        public bool CanBuy(SkinType type)
+        {
+            if (IsBuy(type))
+            {
+                return false;
+            }
+
+            int cost = GetCost(type);
+            
+            if (_progressService.MoneyData.Data.Value >= cost)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        public int GetCost(WeaponType type)
+        {
+            int cost = 0;
+            
+            foreach (WeaponShopData data in _staticDataService.ShopData().WeaponsShopData)
+            {
+                if (data.WeaponType == type)
+                {
+                    cost = data.Cost;
+                    
+                    break;
+                }
+            }
+
+            return cost;
+        }
+        public int GetCost(SkinType type)
+        {
+            int cost = 0;
+
+            foreach (SkinShopData data in _staticDataService.ShopData().SkinsShopData)
+            {
+                if (data.SkinType == type)
+                {
+                    cost = data.Cost;
+                    
+                    break;
+                }
+            }
+
+            return cost;
         }
     }
 }

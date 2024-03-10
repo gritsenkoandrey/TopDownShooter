@@ -1,14 +1,26 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using CodeBase.ECSCore;
+using CodeBase.Game.Enums;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
     public sealed class CBodyMediator : EntityComponent<CBodyMediator>
     {
-        [SerializeField] private GameObject[] _heads;
-        [SerializeField] private GameObject[] _bodies;
+        [SerializeField] private SkinData[] _skins;
+        public SkinData[] Skins => _skins;
+    }
 
-        public GameObject[] Heads => _heads;
-        public GameObject[] Bodies => _bodies;
+    [Serializable]
+    public struct SkinData
+    {
+        public SkinType Type;
+        public VisualData Data;
+    }
+
+    [Serializable]
+    public struct VisualData
+    {
+        public GameObject[] Visual;
     }
 }

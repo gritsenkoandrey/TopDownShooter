@@ -14,5 +14,6 @@
         public const string EffectDataPath = "StaticData/EffectData";
         public const string UnitDataPath = "StaticData/UnitData/UnitData";
         public const string PreviewDataPath = "StaticData/PreviewData/PreviewData";
+        public const string ShopDataPath = "StaticData/ShopData/ShopData";
     }
 }
