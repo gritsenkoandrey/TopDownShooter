@@ -1,4 +1,4 @@
-﻿using CodeBase.Game.Components;
+﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
@@ -23,11 +23,11 @@ namespace CodeBase.Game.Builders.Levels
             return this;
         }
 
-        public CLevel Build()
+        public ILevel Build()
         {
-            CLevel level = Object.Instantiate(_prefab).GetComponent<CLevel>();
+            ILevel level = Object.Instantiate(_prefab).GetComponent<ILevel>();
             
-            level.SetLevelTime(_data.LevelTime);
+            level.Time.Value = _data.LevelTime;
 
             return level;
         }

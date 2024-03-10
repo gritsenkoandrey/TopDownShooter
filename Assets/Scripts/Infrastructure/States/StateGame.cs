@@ -73,9 +73,8 @@ namespace CodeBase.Infrastructure.States
                 .Subscribe(_ => Lose())
                 .AddTo(_transitionDisposable);
             
-            Observable.Timer(TimeLeft())
-                .First()
-                .Delay(TimeSpan.FromSeconds(1f))
+            Observable.Timer(TimeSpan.FromSeconds(1f))
+                .Repeat()
                 .Subscribe(_ => Lose())
                 .AddTo(_transitionDisposable);
         }
@@ -88,6 +87,13 @@ namespace CodeBase.Infrastructure.States
 
         private void Lose()
         {
+            if (_levelModel.Level.Time.Value > 0)
+            {
+                _levelModel.Level.SpendTime();
+                
+                return;
+            }
+            
             _gameStateMachine.Enter<StateFail>();
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateDeath>();
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
@@ -97,7 +103,5 @@ namespace CodeBase.Infrastructure.States
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
         private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
         private void SetEnemyStateIdle(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
-
-        private TimeSpan TimeLeft() => TimeSpan.FromSeconds(_levelModel.Level.Time);
     }
 }

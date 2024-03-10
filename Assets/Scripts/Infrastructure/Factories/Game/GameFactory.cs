@@ -40,7 +40,7 @@ namespace CodeBase.Infrastructure.Factories.Game
 
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
 
-            CLevel level = new LevelBuilder()
+            ILevel level = new LevelBuilder()
                 .SetPrefab(prefab)
                 .SetData(data)
                 .Build();

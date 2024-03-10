@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
@@ -27,26 +26,9 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnUpdateTimeLeft(CLevelTimeLeft component)
         {
-            int time = _levelModel.Level.Time;
-
-            Observable.Timer(Time())
-                .Repeat()
-                .Where(_ => time > 0)
-                .DoOnSubscribe(() => SetTimeLeftText(component, time))
-                .Subscribe(_ => UpdateTime(component, ref time))
+            _levelModel.Level.Time
+                .Subscribe(time => component.TimeLeftText.text = FormatTime.SecondsToTime(time))
                 .AddTo(component.LifetimeDisposable);
         }
-
-        private TimeSpan Time() => TimeSpan.FromSeconds(1f);
-
-        private void UpdateTime(CLevelTimeLeft component, ref int time)
-        {
-            time -= 1;
-            
-            SetTimeLeftText(component, time);
-        }
-        
-        private void SetTimeLeftText(CLevelTimeLeft component, int time) => 
-            component.TimeLeftText.text = FormatTime.SecondsToTime(time);
     }
 }
