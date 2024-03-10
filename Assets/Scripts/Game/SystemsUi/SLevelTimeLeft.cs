@@ -26,7 +26,8 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnUpdateTimeLeft(CLevelTimeLeft component)
         {
-            _levelModel.Level.Time
+            _levelModel.Level
+                .ObserveEveryValueChanged(level => level.Time)
                 .Subscribe(time => component.TimeLeftText.text = FormatTime.SecondsToTime(time))
                 .AddTo(component.LifetimeDisposable);
         }

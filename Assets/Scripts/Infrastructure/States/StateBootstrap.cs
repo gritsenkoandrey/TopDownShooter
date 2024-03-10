@@ -46,7 +46,14 @@ namespace CodeBase.Infrastructure.States
             _progressService = progressService;
         }
 
-        async void IEnterState.Enter()
+        void IEnterState.Enter()
+        {
+            Init().Forget();
+        }
+
+        void IExitState.Exit() { }
+
+        private async UniTaskVoid Init()
         {
             LoadResources();
             await InitAsset();
@@ -57,8 +64,6 @@ namespace CodeBase.Infrastructure.States
 
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
-
-        void IExitState.Exit() { }
 
         private void Next() => _gameStateMachine.Enter<StateLoadProgress>();
         private void LoadResources() => _staticDataService.Load();
