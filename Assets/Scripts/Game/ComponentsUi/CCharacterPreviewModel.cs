@@ -21,4 +21,17 @@ namespace CodeBase.Game.ComponentsUi
         public WeaponType WeaponType;
         public CWeapon Weapon;
     }
+    
+    [Serializable]
+    public struct SkinData
+    {
+        public SkinType Type;
+        public VisualData Data;
+    }
+
+    [Serializable]
+    public struct VisualData
+    {
+        public GameObject[] Visual;
+    }
 }

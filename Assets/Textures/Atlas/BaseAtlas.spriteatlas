@@ -68,6 +68,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: fe11974361ecb474abda0f5b8adb3729, type: 3}
   - {fileID: 21300000, guid: 98e8132453a73b74b9a187e9313f0ed4, type: 3}
+  - {fileID: 21300000, guid: 27695bc5f7ecfa043b580878dbd7cbd4, type: 3}
   - {fileID: 21300000, guid: 43eef46616b80d847a192d598961d47b, type: 3}
   - {fileID: 21300000, guid: b0a483b674493d74a8a1bd838cb7f78c, type: 3}
   - {fileID: 21300000, guid: d97188d682d7acc428fff9fd7e438abf, type: 3}
@@ -82,22 +83,22 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2fde85194518c954fb810ebe2e2e5b91, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
   - {fileID: 21300000, guid: 621b5c49911be1e4e9e1221410239f82, type: 3}
-  - {fileID: 21300000, guid: 0e54d4ab857026e46af697e6823f9fb7, type: 3}
   - {fileID: 21300000, guid: 83fecabbbbbad3542999e3530f5b25a5, type: 3}
+  - {fileID: 21300000, guid: fb661dbb5fbda3d4e87abc58e7cfcbe9, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
-  - {fileID: 21300000, guid: 1d75538c1cabe3b459ea795fd049d721, type: 3}
   - {fileID: 21300000, guid: e059e1cd6b220bd4a9f04bb6eca438a0, type: 3}
   - {fileID: 21300000, guid: aa36eb0e80293c84d843d9c6662aace5, type: 3}
   - {fileID: 21300000, guid: 998d196ee78bdfd4dbc1b513d936938a, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
   - {fileID: 21300000, guid: b3ee4aafec0ec2d4084afb64faad54d1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - preview_screen_shop_money
+  - all_screen_money
   - game_screen_arrow_up
   - result_screen_letter_s
   - preview_screen_shop_damage
   - game_screen_circle_big
   - result_screen_letter_o
+  - game_screen_bullets
   - result_screen_letter_l
   - preview_screen_arrow
   - preview_screen_shop_skin
@@ -110,17 +111,16 @@ SpriteAtlas:
   - preview_screen_shop_speed
   - previewe_screen_back
   - preview_screen_padlock_close
-  - square
+  - all_sreen_square
   - result_screen_letter_r
-  - game_screen_ammunition
   - result_screen_letter_e
-  - preview_screen_shop_health
   - game_screen_target
+  - preview_screen_shop_health
   - game_screen_settings
   - result_screen_letter_w
   - game_screen_watch
   - preview_screen_shop_show
-  - circle
+  - all_screen_circle
   m_RenderDataMap: {}
   m_Tag: BaseAtlas
   m_IsVariant: 0

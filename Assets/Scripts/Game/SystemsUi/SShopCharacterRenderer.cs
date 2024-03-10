@@ -8,7 +8,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SCharacterPreviewRotation : SystemComponent<CCharacterPreviewRotation>
+    public sealed class SShopCharacterRenderer : SystemComponent<CShopCharacterRenderer>
     {
         private CharacterPreviewModel _characterPreviewModel;
         
@@ -18,7 +18,7 @@ namespace CodeBase.Game.SystemsUi
             _characterPreviewModel = characterPreviewModel;
         }
         
-        protected override void OnEnableComponent(CCharacterPreviewRotation component)
+        protected override void OnEnableComponent(CShopCharacterRenderer component)
         {
             base.OnEnableComponent(component);
             
@@ -49,14 +49,14 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        protected override void OnDisableComponent(CCharacterPreviewRotation component)
+        protected override void OnDisableComponent(CShopCharacterRenderer component)
         {
             base.OnDisableComponent(component);
             
             component.Tween?.Kill();
         }
 
-        private void SetRenderTexture(CCharacterPreviewRotation component)
+        private void SetRenderTexture(CShopCharacterRenderer component)
         {
             component.RawImage.texture = _characterPreviewModel.RenderTexture;
             component.RawImage.enabled = true;

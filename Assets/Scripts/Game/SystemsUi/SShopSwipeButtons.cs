@@ -8,7 +8,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SCharacterPreviewButtons : SystemComponent<CCharacterPreviewButtons>
+    public sealed class SShopSwipeButtons : SystemComponent<CShopSwipeButtons>
     {
         private InventoryModel _inventoryModel;
         private CharacterPreviewModel _characterPreviewModel;
@@ -20,37 +20,14 @@ namespace CodeBase.Game.SystemsUi
             _characterPreviewModel = characterPreviewModel;
         }
         
-        protected override void OnEnableComponent(CCharacterPreviewButtons component)
+        protected override void OnEnableComponent(CShopSwipeButtons component)
         {
             base.OnEnableComponent(component);
 
-            SubscribeOnSelectCharacter(component);
             SubscribeOnClickButtons(component);
         }
-
-        private void SubscribeOnSelectCharacter(CCharacterPreviewButtons component)
-        {
-            _characterPreviewModel.State
-                .Subscribe(state =>
-                {
-                    switch (state)
-                    {
-                        case PreviewState.Start:
-                        case PreviewState.BuyUpgrades:
-                            component.LeftButton.gameObject.SetActive(false);
-                            component.RightButton.gameObject.SetActive(false);
-                            break;
-                        case PreviewState.BuyWeapon:
-                        case PreviewState.BuySkin:
-                            component.LeftButton.gameObject.SetActive(true);
-                            component.RightButton.gameObject.SetActive(true);
-                            break;
-                    }
-                })
-                .AddTo(component.LifetimeDisposable);
-        }
-
-        private void SubscribeOnClickButtons(CCharacterPreviewButtons component)
+        
+        private void SubscribeOnClickButtons(CShopSwipeButtons component)
         {
             component.LeftButton
                 .OnClickAsObservable()

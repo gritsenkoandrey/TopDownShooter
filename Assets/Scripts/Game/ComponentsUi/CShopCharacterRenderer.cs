@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.Game.ComponentsUi
 {
-    public sealed class CCharacterPreviewRotation : EntityComponent<CCharacterPreviewRotation>, 
+    public sealed class CShopCharacterRenderer : EntityComponent<CShopCharacterRenderer>, 
         IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         [SerializeField] private RawImage _rawImage;

@@ -10,7 +10,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SShopBuyButton : SystemComponent<CShop>
+    public sealed class SShopBuyButton : SystemComponent<CShopBuyButton>
     {
         private CharacterPreviewModel _characterPreviewModel;
         private ShopModel _shopModel;
@@ -29,11 +29,11 @@ namespace CodeBase.Game.SystemsUi
             _progressService = progressService;
         }
 
-        protected override void OnEnableComponent(CShop component)
+        protected override void OnEnableComponent(CShopBuyButton component)
         {
             base.OnEnableComponent(component);
 
-            component.BuyButton
+            component.Button
                 .OnClickAsObservable()
                 .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
                 .Subscribe(_ =>
@@ -52,7 +52,7 @@ namespace CodeBase.Game.SystemsUi
 
                     SelectedState(component);
                     
-                    component.BuyButton.transform.PunchTransform();
+                    component.Button.transform.PunchTransform();
                 })
                 .AddTo(component.LifetimeDisposable);
 
@@ -91,16 +91,16 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void SelectedState(CShop component)
+        private void SelectedState(CShopBuyButton component)
         {
-            component.BuyButtonText.text = "SELECT";
-            component.BuyButton.interactable = true;
+            component.Text.text = "SELECT";
+            component.Button.interactable = true;
         }
 
-        private void BuyState(CShop component, bool canBuy)
+        private void BuyState(CShopBuyButton component, bool canBuy)
         {
-            component.BuyButtonText.text = "BUY";
-            component.BuyButton.interactable = canBuy;
+            component.Text.text = "BUY";
+            component.Button.interactable = canBuy;
         }
     }
 }

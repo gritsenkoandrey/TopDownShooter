@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.Game.ComponentsUi
 {
-    public sealed class CCharacterPreviewButtons : EntityComponent<CCharacterPreviewButtons>
+    public sealed class CShopSwipeButtons : EntityComponent<CShopSwipeButtons>
     {
         [SerializeField] private Button _leftButton;
         [SerializeField] private Button _rightButton;

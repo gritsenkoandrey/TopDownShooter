@@ -61,7 +61,7 @@ namespace CodeBase.Infrastructure.States
         {
             _levelModel.Enemies
                 .ObserveRemove()
-                .First(_ => AllEnemyIsDeath())
+                .First(_ => AllEnemyIsDeath() && CharacterIsDeath() == false)
                 .Subscribe(_ => Win())
                 .AddTo(_transitionDisposable);
         }
@@ -69,7 +69,7 @@ namespace CodeBase.Infrastructure.States
         private void SubscribeOnLose()
         {
             _levelModel.Character.Health.CurrentHealth
-                .First(_ =>CharacterIsDeath())
+                .First(_ => CharacterIsDeath())
                 .Subscribe(_ => Lose())
                 .AddTo(_transitionDisposable);
             

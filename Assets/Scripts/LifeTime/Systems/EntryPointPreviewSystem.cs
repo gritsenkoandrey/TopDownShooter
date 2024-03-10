@@ -21,14 +21,15 @@ namespace CodeBase.LifeTime.Systems
             _systems = new SystemBase[]
             {
                 new SCharacterPreview(),
-                new SCharacterPreviewRotation(),
-                new SCharacterPreviewButtons(),
+                new SShopCharacterRenderer(),
+                new SShopSwipeButtons(),
                 new SShopMediator(),
-                new SUpgradeShop(),
+                new SShopUpgradeWindow(),
                 new SUpgradeButton(),
                 new SMoneyUpdate(),
                 new SShopPrice(),
                 new SShopBuyButton(),
+                new SShopElementsChangeState(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

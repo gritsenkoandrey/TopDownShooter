@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.ComponentsUi
 {
-    public sealed class CUpgradeShop : EntityComponent<CUpgradeShop>
+    public sealed class CShopUpgradeWindow : EntityComponent<CShopUpgradeWindow>
     {
         [SerializeField] private GameObject _root;
         [SerializeField] private CanvasGroup _canvasGroup;

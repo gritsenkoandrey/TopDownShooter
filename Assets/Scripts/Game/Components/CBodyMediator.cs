@@ -1,6 +1,5 @@
-﻿using System;
-using CodeBase.ECSCore;
-using CodeBase.Game.Enums;
+﻿using CodeBase.ECSCore;
+using CodeBase.Game.ComponentsUi;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -9,18 +8,5 @@ namespace CodeBase.Game.Components
     {
         [SerializeField] private SkinData[] _skins;
         public SkinData[] Skins => _skins;
-    }
-
-    [Serializable]
-    public struct SkinData
-    {
-        public SkinType Type;
-        public VisualData Data;
-    }
-
-    [Serializable]
-    public struct VisualData
-    {
-        public GameObject[] Visual;
     }
 }
