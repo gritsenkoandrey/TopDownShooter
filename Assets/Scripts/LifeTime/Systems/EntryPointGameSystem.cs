@@ -54,6 +54,7 @@ namespace CodeBase.LifeTime.Systems
                 new SWeaponReloadingView(),
                 new SSettingsButton(),
                 new SPause(),
+                new SWinReward(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

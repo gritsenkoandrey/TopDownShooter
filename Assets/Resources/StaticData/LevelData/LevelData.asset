@@ -13,31 +13,36 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   Levels:
-  - LevelTime: 90
+  - Time: 90
+    Loot: 100
     PrefabReference:
       m_AssetGUID: 49325226d79f3ef4c93a9dab7ee7075e
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - LevelTime: 90
+  - Time: 90
+    Loot: 125
     PrefabReference:
       m_AssetGUID: 2463ffd2c59fe6a459e18bb8da78d43b
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - LevelTime: 90
+  - Time: 90
+    Loot: 150
     PrefabReference:
       m_AssetGUID: 5f76a553a46ef9444866759f7504594f
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - LevelTime: 90
+  - Time: 90
+    Loot: 175
     PrefabReference:
       m_AssetGUID: 22c9ac0e5b0c1b3409623bf357334d3e
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - LevelTime: 90
+  - Time: 120
+    Loot: 200
     PrefabReference:
       m_AssetGUID: f2fdb6d646174fd4c91e92d6fd0a3b88
       m_SubObjectName: 

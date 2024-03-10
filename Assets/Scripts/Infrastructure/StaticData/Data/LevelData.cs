@@ -12,7 +12,8 @@ namespace CodeBase.Infrastructure.StaticData.Data
     [System.Serializable]
     public struct Level
     {
-        public int LevelTime;
+        public int Time;
+        public int Loot;
         public AssetReference PrefabReference;
     }
 }

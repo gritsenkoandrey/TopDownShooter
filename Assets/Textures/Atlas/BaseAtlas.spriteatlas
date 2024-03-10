@@ -63,61 +63,57 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 05d999604db3eec47a9cb7c6b369467e, type: 3}
+  - {fileID: 21300000, guid: c2e87d809f54b254cae1bb9be92e8e8f, type: 3}
+  - {fileID: 21300000, guid: 01400f61c3a5ea54b98c8a7f0762d0a9, type: 3}
   - {fileID: 21300000, guid: bb33f5920fac3bd4181a3840cbbaf4f9, type: 3}
-  - {fileID: 21300000, guid: 9ca2bc92a8951664b94a28c6fa333999, type: 3}
   - {fileID: 21300000, guid: e1aab1037edd0044b8da1db342dc525a, type: 3}
   - {fileID: 21300000, guid: fe11974361ecb474abda0f5b8adb3729, type: 3}
-  - {fileID: 21300000, guid: 98e8132453a73b74b9a187e9313f0ed4, type: 3}
   - {fileID: 21300000, guid: 27695bc5f7ecfa043b580878dbd7cbd4, type: 3}
-  - {fileID: 21300000, guid: 43eef46616b80d847a192d598961d47b, type: 3}
   - {fileID: 21300000, guid: b0a483b674493d74a8a1bd838cb7f78c, type: 3}
+  - {fileID: 21300000, guid: 3052fab6cf4867c419d2a3d2e4a5c67e, type: 3}
   - {fileID: 21300000, guid: d97188d682d7acc428fff9fd7e438abf, type: 3}
   - {fileID: 21300000, guid: 88fad107649187d439b848edc71e7095, type: 3}
   - {fileID: 21300000, guid: 17f3599798e793a47898c58e7838fdd3, type: 3}
   - {fileID: 21300000, guid: 96edcdb727aa06b459e217e2a23e1ed3, type: 3}
   - {fileID: 21300000, guid: 756dcdf7e4fe2a64d87c055779077ec3, type: 3}
-  - {fileID: 21300000, guid: 18c1d1185d5662744b55d237738b94a3, type: 3}
-  - {fileID: 21300000, guid: c8a005a85868d444aba2efa8fb2452df, type: 3}
+  - {fileID: 21300000, guid: 50281a0805de5eb46aa4b8b5f8e4166d, type: 3}
   - {fileID: 21300000, guid: e391d4b842ce7284ba6eb3244a9bcb5b, type: 3}
   - {fileID: 21300000, guid: c3cbd5c8ce6d5a846b5a4fc2d4cb417b, type: 3}
   - {fileID: 21300000, guid: 2fde85194518c954fb810ebe2e2e5b91, type: 3}
   - {fileID: 21300000, guid: 9f2b61297c3c5e04ca36a2ab29962e16, type: 3}
-  - {fileID: 21300000, guid: 621b5c49911be1e4e9e1221410239f82, type: 3}
   - {fileID: 21300000, guid: 83fecabbbbbad3542999e3530f5b25a5, type: 3}
   - {fileID: 21300000, guid: fb661dbb5fbda3d4e87abc58e7cfcbe9, type: 3}
   - {fileID: 21300000, guid: 50f4603cf38c9ab47997239b123803a2, type: 3}
   - {fileID: 21300000, guid: e059e1cd6b220bd4a9f04bb6eca438a0, type: 3}
-  - {fileID: 21300000, guid: aa36eb0e80293c84d843d9c6662aace5, type: 3}
+  - {fileID: 21300000, guid: 4080fa0eaafba0b45a4f4064d73d54f1, type: 3}
   - {fileID: 21300000, guid: 998d196ee78bdfd4dbc1b513d936938a, type: 3}
   - {fileID: 21300000, guid: 28e9a99ff608bfd4cb5a00f8e23378c4, type: 3}
   - {fileID: 21300000, guid: b3ee4aafec0ec2d4084afb64faad54d1, type: 3}
   m_PackedSpriteNamesToIndex:
   - all_screen_money
+  - result_screen_star
+  - result_screen_letter_a
   - game_screen_arrow_up
-  - result_screen_letter_s
   - preview_screen_shop_damage
   - game_screen_circle_big
-  - result_screen_letter_o
   - game_screen_bullets
-  - result_screen_letter_l
   - preview_screen_arrow
+  - result_screen_letter_d
   - preview_screen_shop_skin
   - preview_screen_shop_weapon
   - game_screen_damage
   - game_screen_circle_small
   - preview_screen_abstract
-  - result_screen_letter_n
-  - result_screen_letter_i
+  - result_screen_letter_t
   - preview_screen_shop_speed
   - previewe_screen_back
   - preview_screen_padlock_close
   - all_sreen_square
-  - result_screen_letter_r
   - result_screen_letter_e
   - game_screen_target
   - preview_screen_shop_health
   - game_screen_settings
-  - result_screen_letter_w
+  - result_screen_letter_h
   - game_screen_watch
   - preview_screen_shop_show
   - all_screen_circle

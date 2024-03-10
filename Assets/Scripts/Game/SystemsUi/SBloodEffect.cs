@@ -28,16 +28,10 @@ namespace CodeBase.Game.SystemsUi
                 {
                     component.BloodTween?.Kill();
                     component.BloodTween = DOVirtual.Float(1f, 0f, 0.75f, 
-                        alpha => component.CanvasGroup.alpha = alpha);
+                        alpha => component.CanvasGroup.alpha = alpha)
+                        .SetLink(component.gameObject);
                 })
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        protected override void OnDisableComponent(CBloodEffect component)
-        {
-            base.OnDisableComponent(component);
-            
-            component.BloodTween?.Kill();
         }
     }
 }

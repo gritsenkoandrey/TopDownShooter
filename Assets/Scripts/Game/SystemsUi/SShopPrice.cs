@@ -59,10 +59,7 @@ namespace CodeBase.Game.SystemsUi
             _progressService.MoneyData.Data
                 .Pairwise()
                 .Where(money => money.Previous > money.Current)
-                .Subscribe(_ =>
-                {
-                    component.CanvasGroup.alpha = 0f;
-                })
+                .Subscribe(_ => component.CanvasGroup.alpha = 0f)
                 .AddTo(component.LifetimeDisposable);
         }
     }

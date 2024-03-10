@@ -25,7 +25,8 @@ namespace CodeBase.Game.Builders.Levels
         public ILevel Build()
         {
             CLevel level = Object.Instantiate(_prefab).GetComponent<CLevel>();
-            level.SetTime(_data.LevelTime);
+            level.SetTime(_data.Time);
+            level.SetLoot(_data.Loot);
             return level;
         }
     }
