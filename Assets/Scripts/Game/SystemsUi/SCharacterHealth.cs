@@ -2,6 +2,7 @@
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
+using DG.Tweening;
 using UniRx;
 using VContainer;
 
@@ -24,10 +25,22 @@ namespace CodeBase.Game.SystemsUi
             _levelModel.Character.Health.CurrentHealth
                 .Subscribe(health =>
                 {
+                    component.Tween?.Kill();
                     component.Text.text = _levelModel.Character.Health.ToString();
-                    component.Fill.fillAmount = Mathematics.Remap(0, _levelModel.Character.Health.MaxHealth, 0, 1, health);
+
+                    float fillAmount = Mathematics.Remap(0, _levelModel.Character.Health.MaxHealth, 0, 1, health);
+                    
+                    component.Fill.fillAmount = fillAmount;
+                    component.Tween = component.FillLerp.DOFillAmount(fillAmount, 0.25f).SetEase(Ease.Linear);
                 })
                 .AddTo(component.LifetimeDisposable);
+        }
+
+        protected override void OnDisableComponent(CCharacterHealth component)
+        {
+            base.OnDisableComponent(component);
+            
+            component.Tween?.Kill();
         }
     }
 }

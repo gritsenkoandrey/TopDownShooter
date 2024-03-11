@@ -4,6 +4,7 @@ using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.GUI;
+using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UniRx;
@@ -44,6 +45,16 @@ namespace CodeBase.Infrastructure.Models
             CharacterPreview.Camera.targetTexture = RenderTexture;
             CharacterPreview.Camera.orthographicSize *= _guiService.ScaleFactor;
             CharacterPreview.Camera.enabled = true;
+        }
+
+        public void PlayAnimation(int animation) => 
+            CharacterPreview.CharacterPreviewAnimator.Animator.CrossFade(animation, default);
+
+        public void PlayPreviewAnimation()
+        {
+            CharacterPreview.CharacterPreviewAnimator.Animator
+                .SetFloat(Animations.PreviewBlend, UnityEngine.Random.Range(0, 4));
+            PlayAnimation(Animations.Preview);
         }
 
         void IDisposable.Dispose()

@@ -103,7 +103,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0.78431374}
+    m_DisabledColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0.78431374}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -215,8 +215,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -309,3 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6043611561815015140}
   _text: {fileID: 6043611561998512710}
+  _buyColor: {r: 0.09019608, g: 0.58431375, b: 0, a: 1}
+  _selectColor: {r: 1, g: 0.808957, b: 0, a: 1}
+  _selectedColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}

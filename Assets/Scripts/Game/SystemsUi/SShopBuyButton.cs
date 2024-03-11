@@ -3,7 +3,6 @@ using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using UniRx;
 using VContainer;
@@ -15,29 +14,35 @@ namespace CodeBase.Game.SystemsUi
         private CharacterPreviewModel _characterPreviewModel;
         private ShopModel _shopModel;
         private InventoryModel _inventoryModel;
-        private IProgressService _progressService;
         
         private const float DelayClick = 0.25f;
 
         [Inject]
         private void Construct(CharacterPreviewModel characterPreviewModel, ShopModel shopModel, 
-            InventoryModel inventoryModel, IProgressService progressService)
+            InventoryModel inventoryModel)
         {
             _characterPreviewModel = characterPreviewModel;
             _shopModel = shopModel;
             _inventoryModel = inventoryModel;
-            _progressService = progressService;
         }
 
         protected override void OnEnableComponent(CShopBuyButton component)
         {
             base.OnEnableComponent(component);
 
+            SubscribeOnBuyInventory(component);
+            SubscribeOnSelectInventory(component);
+        }
+
+        private void SubscribeOnBuyInventory(CShopBuyButton component)
+        {
             component.Button
                 .OnClickAsObservable()
                 .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
                 .Subscribe(_ =>
                 {
+                    component.Button.transform.PunchTransform();
+
                     switch (_characterPreviewModel.State.Value)
                     {
                         case PreviewState.BuyWeapon:
@@ -51,17 +56,25 @@ namespace CodeBase.Game.SystemsUi
                     }
 
                     SelectedState(component);
-                    
-                    component.Button.transform.PunchTransform();
                 })
                 .AddTo(component.LifetimeDisposable);
+        }
 
+        private void SubscribeOnSelectInventory(CShopBuyButton component)
+        {
             _inventoryModel.SelectedWeapon
                 .Subscribe(weaponType =>
                 {
                     if (_shopModel.IsBuy(weaponType))
                     {
-                        SelectedState(component);
+                        if (_inventoryModel.IndexWeapon.Value == _inventoryModel.GetWeaponIndex())
+                        {
+                            SelectedState(component);
+                        }
+                        else
+                        {
+                            SelectState(component);
+                        }
                     }
                     else
                     {
@@ -75,7 +88,14 @@ namespace CodeBase.Game.SystemsUi
                 {
                     if (_shopModel.IsBuy(skinType))
                     {
-                        SelectedState(component);
+                        if (_inventoryModel.IndexSkin.Value == _inventoryModel.GetSkinIndex())
+                        {
+                            SelectedState(component);
+                        }
+                        else
+                        {
+                            SelectState(component);
+                        }
                     }
                     else
                     {
@@ -83,24 +103,27 @@ namespace CodeBase.Game.SystemsUi
                     }
                 })
                 .AddTo(component.LifetimeDisposable);
-
-            _progressService.MoneyData.Data
-                .Pairwise()
-                .Where(money => money.Previous > money.Current)
-                .Subscribe(_ => SelectedState(component))
-                .AddTo(component.LifetimeDisposable);
         }
 
-        private void SelectedState(CShopBuyButton component)
+        private void SelectState(CShopBuyButton component)
         {
             component.Text.text = "SELECT";
             component.Button.interactable = true;
+            component.Button.image.color = component.SelectColor;
         }
 
         private void BuyState(CShopBuyButton component, bool canBuy)
         {
             component.Text.text = "BUY";
             component.Button.interactable = canBuy;
+            component.Button.image.color = component.BuyColor;
+        }
+
+        private void SelectedState(CShopBuyButton component)
+        {
+            component.Text.text = "SELECTED";
+            component.Button.interactable = false;
+            component.Button.image.color = component.SelectedColor;
         }
     }
 }
