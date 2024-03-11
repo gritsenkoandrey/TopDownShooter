@@ -30,7 +30,8 @@ namespace CodeBase.UI.Screens
             return _canvasGroup
                 .DOFade(to, duration)
                 .From(from)
-                .SetEase(Ease.Linear);
+                .SetEase(Ease.Linear)
+                .SetLink(gameObject);
         }
 
         private protected Tween BounceButton(Button button, float to, float duration)
@@ -38,7 +39,8 @@ namespace CodeBase.UI.Screens
             return button.transform
                 .DOScale(Vector3.one * to, duration)
                 .SetEase(Ease.InOutQuad)
-                .SetLoops(-1, LoopType.Yoyo);
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetLink(gameObject);
         }
 
         private protected void ActivateButton(Button button, bool isActive)

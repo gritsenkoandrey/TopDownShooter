@@ -11,6 +11,7 @@ namespace CodeBase.Utils
                 .DOPunchScale(Vector3.one * 0.25f, 0.25f, 1, 0.5f)
                 .SetEase(Ease.InSine)
                 .SetRelative()
+                .SetLink(transform.gameObject)
                 .OnComplete(() => transform.localScale = Vector3.one);
         }
     }
