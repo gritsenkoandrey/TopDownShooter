@@ -57,8 +57,8 @@ namespace CodeBase.Game.SystemsUi
         private void UpdateButton(CUpgradeButton component, int level)
         {
             component.SetCost(level * component.BaseCost);
-            component.TextLevel.text = $"Level {level}";
-            component.TextCost.text = $"{component.Cost.Trim()}$";
+            component.TextLevel.text = string.Format(FormatText.Level, level.ToString());
+            component.TextCost.text = string.Format(FormatText.Cost, component.Cost.Trim());
             
             Entities.Foreach(SetButtonInteractable);
         }

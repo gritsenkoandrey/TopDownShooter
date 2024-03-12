@@ -584,6 +584,8 @@ MonoBehaviour:
   _buyButton: {fileID: 9181405028455916968}
   _textLevel: {fileID: 2848575070025337980}
   _textCost: {fileID: 3954456185048838607}
+  _levelFormat: Level {0}
+  _costFormat: '{0}$'
 --- !u!1 &6409653327786876598
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,7 +652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Damage
+  m_text: DAMAGE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da9d4edfd2ea246979dc6b484e9ceb90, type: 2}
   m_sharedMaterial: {fileID: 7863232531578317524, guid: da9d4edfd2ea246979dc6b484e9ceb90, type: 2}
@@ -685,7 +687,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

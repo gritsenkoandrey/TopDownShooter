@@ -95,6 +95,8 @@ MonoBehaviour:
   _buyButton: {fileID: 4346941397549710984}
   _textLevel: {fileID: 7255788277613893468}
   _textCost: {fileID: 8491708497570097903}
+  _levelFormat: Level {0}
+  _costFormat: '{0}$'
 --- !u!1 &1662306529317151245
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Speed
+  m_text: SPEED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da9d4edfd2ea246979dc6b484e9ceb90, type: 2}
   m_sharedMaterial: {fileID: 7863232531578317524, guid: da9d4edfd2ea246979dc6b484e9ceb90, type: 2}
@@ -272,7 +274,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

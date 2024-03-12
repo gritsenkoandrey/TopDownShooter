@@ -16,6 +16,10 @@ namespace CodeBase.Game.SystemsUi
         private InventoryModel _inventoryModel;
         
         private const float DelayClick = 0.25f;
+        
+        private const string SelectText = "SELECT";
+        private const string SelectedText = "SELECTED";
+        private const string BuyText = "BUY";
 
         [Inject]
         private void Construct(CharacterPreviewModel characterPreviewModel, ShopModel shopModel, 
@@ -107,21 +111,21 @@ namespace CodeBase.Game.SystemsUi
 
         private void SelectState(CShopBuyButton component)
         {
-            component.Text.text = "SELECT";
+            component.Text.text = SelectText;
             component.Button.interactable = true;
             component.Button.image.color = component.SelectColor;
         }
 
         private void BuyState(CShopBuyButton component, bool canBuy)
         {
-            component.Text.text = "BUY";
+            component.Text.text = BuyText;
             component.Button.interactable = canBuy;
             component.Button.image.color = component.BuyColor;
         }
 
         private void SelectedState(CShopBuyButton component)
         {
-            component.Text.text = "SELECTED";
+            component.Text.text = SelectedText;
             component.Button.interactable = false;
             component.Button.image.color = component.SelectedColor;
         }

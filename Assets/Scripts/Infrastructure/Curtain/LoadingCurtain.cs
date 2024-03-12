@@ -10,6 +10,8 @@ namespace CodeBase.Infrastructure.Curtain
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private TextMeshProUGUI _loadingText;
 
+        private int _index;
+
         void ILoadingCurtainService.Show()
         {
             gameObject.SetActive(true);
@@ -28,24 +30,23 @@ namespace CodeBase.Infrastructure.Curtain
 
         private Tween ShowLoadingText()
         {
-            int index = 1;
-
+            _index = 1;
             _loadingText.text = string.Empty;
 
-            return DOVirtual.DelayedCall(0.3f, () => UpdateText(ref index)).SetLoops(3);
+            return DOVirtual.DelayedCall(0.3f, UpdateText).SetLoops(3).SetLink(gameObject);
         }
 
         private Tween FadeCanvas()
         {
-            return _canvasGroup.DOFade(0f, 0.25f).From(1f).SetDelay(0.5f).SetEase(Ease.Linear);
+            return _canvasGroup.DOFade(0f, 0.25f).From(1f).SetDelay(0.5f).SetEase(Ease.Linear).SetLink(gameObject);
         }
 
-        private void UpdateText(ref int index)
+        private void UpdateText()
         {
             _loadingText.text = string.Empty;
-            _loadingText.text += (index % 3) switch { 1 => ".", 2 => "..", _ => "..." };
+            _loadingText.text += (_index % 3) switch { 1 => ".", 2 => "..", _ => "..." };
                     
-            index++;
+            _index++;
         }
     }
 }

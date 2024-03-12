@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Progress;
+using CodeBase.Utils;
 using VContainer;
 
 namespace CodeBase.Game.SystemsUi
@@ -19,7 +20,7 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            component.TextLevel.text = $"Level {_progressService.LevelData.Data.Value}";
+            component.TextLevel.text = string.Format(FormatText.Level, _progressService.LevelData.Data.Value.ToString());
         }
     }
 }
