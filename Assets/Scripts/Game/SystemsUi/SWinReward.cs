@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 
 namespace CodeBase.Game.SystemsUi
@@ -25,54 +26,73 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            int index = 1;
+            ActivateStar(component);
+            CalculateLoot(component);
+            ShowAnimation(component);
+        }
 
-            if (CharacterDidNotTakeDamage())
+        private void ActivateStar(CWinReward component)
+        {
+            int index = 0;
+
+            if (CharacterHaseFullHealth())
             {
                 index++;
             }
 
-            if (IsLevelCompletedInTime())
+            if (CharacterHasHalfHealth())
+            {
+                index++;
+            }
+
+            if (LevelCompletedHalfTime())
             {
                 index++;
             }
 
             for (int i = 0; i < component.Stars.Length; i++)
             {
-                component.Stars[i].SetActive(index > i);
+                component.Stars[i].gameObject.SetActive(index > i);
             }
-            
-            CalculateLoot(component, index);
-            StarAnimation(component);
         }
 
-        private bool CharacterDidNotTakeDamage() => 
+        private bool CharacterHaseFullHealth() => 
             _levelModel.Character.Health.CurrentHealth.Value == _levelModel.Character.Health.MaxHealth;
+        
+        private bool CharacterHasHalfHealth() => 
+            _levelModel.Character.Health.CurrentHealth.Value >= _levelModel.Character.Health.MaxHealth / 2;
 
-        private bool IsLevelCompletedInTime() => 
+        private bool LevelCompletedHalfTime() => 
             _levelModel.Level.Time >= _levelModel.Level.MaxTime / 2;
 
-        private void CalculateLoot(CWinReward component, int index)
+        private void CalculateLoot(CWinReward component)
         {
-            int loot = _levelModel.Level.Loot * index;
+            int loot = _levelModel.Level.Loot;
             component.Text.text = loot.Trim();
             _progressService.MoneyData.Data.Value += loot;
         }
 
-        private void StarAnimation(CWinReward component)
+        private void ShowAnimation(CWinReward component)
         {
-            int index = 1;
+            int i = 1;
 
-            foreach (GameObject element in component.Elements)
+            foreach (Image star in component.Stars)
             {
-                element.transform
-                    .DOScale(Vector3.one, 0.25f)
-                    .From(Vector3.zero)
-                    .SetEase(Ease.OutBack)
-                    .SetDelay(index * 0.15f)
-                    .SetLink(element);
+                DOTween.Sequence()
+                    .AppendInterval(i * 0.2f)
+                    .Append(star.transform
+                        .DOScale(Vector3.one, 0.5f)
+                        .From(Vector3.one * 1.65f)
+                        .SetEase(Ease.InCubic))
+                    .Join(star
+                        .DOFade(1f, 0.4f)
+                        .From(0f)
+                        .SetEase(Ease.Linear))
+                    .Append(star.transform
+                        .DOPunchScale(Vector3.one * 0.1f, 0.2f, 2, 0.5f))
+                    .SetLink(star.gameObject);
 
-                index++;
+                i++;
             }
         }
     }
