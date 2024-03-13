@@ -1,37 +1,63 @@
-﻿using UnityEngine;
+﻿using System;
+using CodeBase.Utils;
+using UnityEngine;
 
 namespace CodeBase.Game.Behaviours.AnimationStateBehaviour
 {
     public sealed class AnimationStateReader : StateMachineBehaviour
     {
-        private IAnimationStateReader _stateReader;
+        [SerializeField] private float _eventTime;
+
+        private bool _isFindReader;
+        private bool _isSendEvent;
+
+        private IAnimationStateReader[] _stateReaders = Array.Empty<IAnimationStateReader>();
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
-            
-            FindReader(animator);
+
+            if (_isFindReader == false)
+            {
+                FindReaders(animator);
+            }
      
-            _stateReader.EnteredState(stateInfo.shortNameHash);
+            _stateReaders.Foreach(stateReader => stateReader.EnteredState(stateInfo.shortNameHash));
+            
+            _isSendEvent = false;
+        }
+
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            base.OnStateUpdate(animator, stateInfo, layerIndex);
+
+            float time = stateInfo.normalizedTime;
+
+            if (_isFindReader && _isSendEvent == false && time > _eventTime)
+            {
+                _stateReaders.Foreach(stateReader => stateReader.UpdateState(stateInfo.shortNameHash));
+                
+                _isSendEvent = true;
+            }
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
             
-            FindReader(animator);
-     
-            _stateReader.ExitedState(stateInfo.shortNameHash);
+            if (_isFindReader == false)
+            {
+                FindReaders(animator);
+            }
+            
+            _stateReaders.Foreach(stateReader => stateReader.ExitedState(stateInfo.shortNameHash));
         }
 
-        private void FindReader(Animator animator)
+        private void FindReaders(Animator animator)
         {
-            if (_stateReader != null)
-            {
-                return;
-            }
+            _stateReaders = animator.gameObject.GetComponentsInChildren<IAnimationStateReader>();
 
-            _stateReader = animator.gameObject.GetComponent<IAnimationStateReader>();
+            _isFindReader = _stateReaders.Length > 0;
         }
     }
 }

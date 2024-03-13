@@ -4,7 +4,6 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 
 namespace CodeBase.Game.Weapon
 {
@@ -12,51 +11,51 @@ namespace CodeBase.Game.Weapon
     {
         private protected IEffectFactory EffectFactory;
 
-        private Tween _checkDistanceTween;
+        private ITarget _target;
 
         protected BaseMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
             : base(weapon, weaponCharacteristic)
         {
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Weapon.OnHit += Hit;
+        }
+
         public override void Attack(ITarget target = null)
         {
             base.Attack(target);
-            
-            Hit(target);
+
+            _target = target;
         }
 
         public override void Dispose()
         {
             base.Dispose();
             
-            _checkDistanceTween?.Kill();
-        }
-        
-        private void Hit(ITarget target)
-        {
-            CheckDamage(target);
+            Weapon.OnHit -= Hit;
         }
 
-        private void CheckDamage(ITarget target)
+        private void Hit()
         {
-            _checkDistanceTween?.Kill();
-            _checkDistanceTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval / 4f, 
-                () => CheckDistance(target));
+            CheckDistance();
         }
 
-        private void CheckDistance(ITarget target)
+        private void CheckDistance()
         {
             for (int i = 0; i < Weapon.SpawnPoints.Length; i++)
             {
-                float distance = (Weapon.SpawnPoints[i].position - target.Position).sqrMagnitude;
+                float distance = (Weapon.SpawnPoints[i].position - _target.Position).sqrMagnitude;
 
-                if (distance < AttackDistance() && target.Health.IsAlive)
+                if (distance < AttackDistance() && _target.Health.IsAlive)
                 {
                     int damage = CalculateCriticalDamage(GetDamage());
-                    SendCombatLog(target, damage);
-                    target.Health.CurrentHealth.Value -= damage;
-                    EffectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
+                    SendCombatLog(_target, damage);
+                    _target.Health.CurrentHealth.Value -= damage;
+                    EffectFactory.CreateEffect(EffectType.Hit, _target.Position).Forget();
                 }
             }
         }
