@@ -3,7 +3,7 @@
     public sealed class HapticEngine : IHapticEngine
     {
         private readonly IHapticAdapter _adapter;
-        private bool _isMuted;
+        private bool _isEnable;
 
         public HapticEngine()
         {
@@ -16,13 +16,11 @@
 
         void IHapticEngine.Play(HapticType type)
         {
-            if (_isMuted && _adapter.IsSupported() == false) return;
+            if (_isEnable == false && _adapter.IsSupported() == false) return;
             
             _adapter.Play(type);
         }
 
-        void IHapticEngine.Mute() => _isMuted = true;
-
-        void IHapticEngine.Unmute() => _isMuted = false;
+        public void IsEnable(bool isEnable) => _isEnable = isEnable;
     }
 }

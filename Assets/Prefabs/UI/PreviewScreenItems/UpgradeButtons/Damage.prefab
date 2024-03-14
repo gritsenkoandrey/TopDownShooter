@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 526680134035908823}
   - component: {fileID: 2207929229714733098}
   - component: {fileID: 9181405028455916968}
+  - component: {fileID: 7501441814889277156}
   m_Layer: 5
   m_Name: Buy
   m_TagString: Untagged
@@ -354,6 +355,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7501441814889277156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379875702237937948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452fcc6783b84f16b6151f6e73c669ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 9181405028455916968}
+  _hapticType: 5
 --- !u!1 &2389325764945114258
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,8 +599,6 @@ MonoBehaviour:
   _buyButton: {fileID: 9181405028455916968}
   _textLevel: {fileID: 2848575070025337980}
   _textCost: {fileID: 3954456185048838607}
-  _levelFormat: Level {0}
-  _costFormat: '{0}$'
 --- !u!1 &6409653327786876598
 GameObject:
   m_ObjectHideFlags: 0

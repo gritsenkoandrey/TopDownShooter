@@ -10,6 +10,7 @@ namespace CodeBase.Infrastructure.Progress
         public IData<Stats> StatsData { get; }
         public IData<Inventory> InventoryData { get; }
         public IData<Shop> ShopData { get; }
+        public IData<bool> HapticData { get; }
         public void Init();
     }
 }

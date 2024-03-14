@@ -1,6 +1,7 @@
 ﻿using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.Haptic;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Pool;
@@ -21,6 +22,7 @@ namespace CodeBase.Infrastructure.States
         private IAssetService _assetService;
         private ICameraService _cameraService;
         private IProgressService _progressService;
+        private IHapticService _hapticService;
 
         public StateBootstrap(IGameStateMachine gameStateMachine)
         {
@@ -35,7 +37,8 @@ namespace CodeBase.Infrastructure.States
             IObjectPoolService objectPoolService, 
             IAssetService assetService,
             ICameraService cameraService,
-            IProgressService progressService)
+            IProgressService progressService,
+            IHapticService hapticService)
         {
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
@@ -44,6 +47,7 @@ namespace CodeBase.Infrastructure.States
             _assetService = assetService;
             _cameraService = cameraService;
             _progressService = progressService;
+            _hapticService = hapticService;
         }
 
         void IEnterState.Enter()
@@ -61,6 +65,7 @@ namespace CodeBase.Infrastructure.States
             InitJoystick();
             InitCameraService();
             InitProgress();
+            InitHaptic();
 
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
@@ -72,5 +77,6 @@ namespace CodeBase.Infrastructure.States
         private void InitJoystick() => _joystickService.Init();
         private void InitCameraService() => _cameraService.Init();
         private void InitProgress() => _progressService.Init();
+        private void InitHaptic() => _hapticService.Init();
     }
 }

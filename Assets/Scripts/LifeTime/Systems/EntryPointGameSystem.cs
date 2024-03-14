@@ -55,6 +55,8 @@ namespace CodeBase.LifeTime.Systems
                 new SSettingsButton(),
                 new SPause(),
                 new SWinReward(),
+                new SHapticController(),
+                new SHapticButton(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

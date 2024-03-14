@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.ECSCore;
+using CodeBase.Game.SystemsBase;
 using CodeBase.Game.SystemsUi;
 using CodeBase.Utils;
 using JetBrains.Annotations;
@@ -30,6 +31,8 @@ namespace CodeBase.LifeTime.Systems
                 new SShopPrice(),
                 new SShopBuyButton(),
                 new SShopElementsChangeState(),
+                new SHapticController(),
+                new SHapticButton(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

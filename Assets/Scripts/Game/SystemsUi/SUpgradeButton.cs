@@ -12,8 +12,6 @@ namespace CodeBase.Game.SystemsUi
     {
         private IProgressService _progressService;
 
-        private const float DelayClick = 0.25f;
-
         [Inject]
         private void Construct(IProgressService progressService)
         {
@@ -32,7 +30,7 @@ namespace CodeBase.Game.SystemsUi
         {
             component.BuyButton
                 .OnClickAsObservable()
-                .ThrottleFirst(Time())
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ =>
                 {
                     component.BuyButton.transform.PunchTransform();
@@ -47,12 +45,12 @@ namespace CodeBase.Game.SystemsUi
         {
             _progressService.StatsData.Data.Value
                 .ObserveEveryValueChanged(data => data.Data[component.UpgradeButtonType])
-                .DelaySubscription(Time())
+                .DelaySubscription(DelayClick())
                 .Subscribe(level => UpdateButton(component, level))
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private TimeSpan Time() => TimeSpan.FromSeconds(DelayClick);
+        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
 
         private void UpdateButton(CUpgradeButton component, int level)
         {

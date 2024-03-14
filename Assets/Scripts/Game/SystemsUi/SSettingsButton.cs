@@ -1,10 +1,10 @@
-﻿using System;
-using CodeBase.ECSCore;
+﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
+using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
@@ -18,9 +18,6 @@ namespace CodeBase.Game.SystemsUi
         private IUIFactory _uiFactory;
         private IGuiService _guiService;
         private PauseModel _pauseModel;
-
-        private const float Duration = 0.5f;
-        private const float Rotate = 180f;
 
         [Inject]
         private void Construct(IUIFactory uiFactory, IGuiService guiService, PauseModel pauseModel)
@@ -36,13 +33,14 @@ namespace CodeBase.Game.SystemsUi
 
             component.Button
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(Duration * 2))
                 .Subscribe(_ =>
                 {
+                    Entities.Foreach(button => button.Button.interactable = false);
+
                     component.Tween = component.Image
-                        .DOLocalRotate(Vector3.back * Rotate, Duration)
+                        .DOLocalRotate(Vector3.back * 180f, 0.5f)
                         .SetRelative()
-                        .OnComplete(CreateScreen);
+                        .OnComplete(CreatePopUp);
                 })
                 .AddTo(component.LifetimeDisposable);
         }
@@ -54,7 +52,7 @@ namespace CodeBase.Game.SystemsUi
             component.Tween?.Kill();
         }
 
-        private async UniTaskVoid CreateSettingsScreen()
+        private async UniTaskVoid CreateSettingsPopUp()
         {
             BaseScreen screen = await _uiFactory.CreatePopUp(ScreenType.Settings);
 
@@ -66,12 +64,12 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(LifetimeDisposable);
         }
 
-        private void CreateScreen() => CreateSettingsScreen().Forget();
+        private void CreatePopUp() => CreateSettingsPopUp().Forget();
 
         private void CloseScreen(Unit _)
         {
             _pauseModel.OnPause.Execute(false);
-            
+            Entities.Foreach(button => button.Button.interactable = true);
             _guiService.Pop();
         }
     }

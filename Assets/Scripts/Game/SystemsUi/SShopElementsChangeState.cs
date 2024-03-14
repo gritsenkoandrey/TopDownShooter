@@ -15,8 +15,6 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SShopElementsChangeState : SystemComponent<CShopElements>
     {
         private CharacterPreviewModel _characterPreviewModel;
-
-        private const float DelayClick = 0.25f;
         
         [Inject]
         private void Construct(CharacterPreviewModel characterPreviewModel)
@@ -30,25 +28,25 @@ namespace CodeBase.Game.SystemsUi
             
             component.WeaponShopButton
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ => ChangeState(component.WeaponShopButton, PreviewState.BuyWeapon).Forget())
                 .AddTo(component.LifetimeDisposable);
             
             component.SkinShopButton
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ => ChangeState(component.SkinShopButton, PreviewState.BuySkin).Forget())
                 .AddTo(component.LifetimeDisposable);
             
             component.UpgradeShopButton
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ => ChangeState(component.UpgradeShopButton, PreviewState.BuyUpgrades).Forget())
                 .AddTo(component.LifetimeDisposable);
             
             component.BackButton
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ => ChangeState(component.BackButton, PreviewState.Start).Forget())
                 .AddTo(component.LifetimeDisposable);
         }
@@ -59,5 +57,7 @@ namespace CodeBase.Game.SystemsUi
             
             _characterPreviewModel.State.Value = state;
         }
+
+        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
     }
 }

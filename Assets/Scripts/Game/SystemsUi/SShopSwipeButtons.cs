@@ -1,4 +1,5 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Models;
@@ -31,6 +32,7 @@ namespace CodeBase.Game.SystemsUi
         {
             component.LeftButton
                 .OnClickAsObservable()
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ =>
                 {
                     component.LeftButton.transform.PunchTransform();
@@ -49,6 +51,7 @@ namespace CodeBase.Game.SystemsUi
             
             component.RightButton
                 .OnClickAsObservable()
+                .ThrottleFirst(DelayClick())
                 .Subscribe(_ =>
                 {
                     component.RightButton.transform.PunchTransform();
@@ -129,5 +132,7 @@ namespace CodeBase.Game.SystemsUi
             
             _inventoryModel.IndexSkin.Value = index;
         }
+        
+        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
     }
 }

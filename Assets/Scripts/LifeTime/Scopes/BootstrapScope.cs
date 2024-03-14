@@ -10,6 +10,7 @@ using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.GUI;
+using CodeBase.Infrastructure.Haptic;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
@@ -53,6 +54,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
             builder.Register<DamageCombatLog>(Lifetime.Singleton).As<IDisposable>().AsSelf();
 
+            builder.Register<IHapticService, HapticService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);

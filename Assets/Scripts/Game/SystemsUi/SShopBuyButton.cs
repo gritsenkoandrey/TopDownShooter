@@ -14,16 +14,9 @@ namespace CodeBase.Game.SystemsUi
         private CharacterPreviewModel _characterPreviewModel;
         private ShopModel _shopModel;
         private InventoryModel _inventoryModel;
-        
-        private const float DelayClick = 0.25f;
-        
-        private const string SelectText = "SELECT";
-        private const string SelectedText = "SELECTED";
-        private const string BuyText = "BUY";
 
         [Inject]
-        private void Construct(CharacterPreviewModel characterPreviewModel, ShopModel shopModel, 
-            InventoryModel inventoryModel)
+        private void Construct(CharacterPreviewModel characterPreviewModel, ShopModel shopModel, InventoryModel inventoryModel)
         {
             _characterPreviewModel = characterPreviewModel;
             _shopModel = shopModel;
@@ -42,7 +35,7 @@ namespace CodeBase.Game.SystemsUi
         {
             component.Button
                 .OnClickAsObservable()
-                .ThrottleFirst(TimeSpan.FromSeconds(DelayClick))
+                .ThrottleFirst(TimeSpan.FromSeconds(ButtonSettings.DelayClick))
                 .Subscribe(_ =>
                 {
                     component.Button.transform.PunchTransform();
@@ -111,21 +104,21 @@ namespace CodeBase.Game.SystemsUi
 
         private void SelectState(CShopBuyButton component)
         {
-            component.Text.text = SelectText;
+            component.Text.text = ButtonSettings.SelectText;
             component.Button.interactable = true;
             component.Button.image.color = component.SelectColor;
         }
 
         private void BuyState(CShopBuyButton component, bool canBuy)
         {
-            component.Text.text = BuyText;
+            component.Text.text = ButtonSettings.BuyText;
             component.Button.interactable = canBuy;
             component.Button.image.color = component.BuyColor;
         }
 
         private void SelectedState(CShopBuyButton component)
         {
-            component.Text.text = SelectedText;
+            component.Text.text = ButtonSettings.SelectedText;
             component.Button.interactable = false;
             component.Button.image.color = component.SelectedColor;
         }

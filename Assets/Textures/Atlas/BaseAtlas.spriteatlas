@@ -64,11 +64,13 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 05d999604db3eec47a9cb7c6b369467e, type: 3}
   - {fileID: 21300000, guid: c2e87d809f54b254cae1bb9be92e8e8f, type: 3}
+  - {fileID: 21300000, guid: 882a4d616ef0a431fb49ad86abd531c8, type: 3}
   - {fileID: 21300000, guid: 01400f61c3a5ea54b98c8a7f0762d0a9, type: 3}
   - {fileID: 21300000, guid: bb33f5920fac3bd4181a3840cbbaf4f9, type: 3}
   - {fileID: 21300000, guid: fe11974361ecb474abda0f5b8adb3729, type: 3}
   - {fileID: 21300000, guid: 9d5508a5b4f63174eae71a8b5a90ae10, type: 3}
   - {fileID: 21300000, guid: 27695bc5f7ecfa043b580878dbd7cbd4, type: 3}
+  - {fileID: 21300000, guid: 637ea916926794fe3b2aca2ba1152c38, type: 3}
   - {fileID: 21300000, guid: b0a483b674493d74a8a1bd838cb7f78c, type: 3}
   - {fileID: 21300000, guid: 3052fab6cf4867c419d2a3d2e4a5c67e, type: 3}
   - {fileID: 21300000, guid: d97188d682d7acc428fff9fd7e438abf, type: 3}
@@ -92,11 +94,13 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - all_screen_money
   - result_screen_star
+  - Button_On
   - result_screen_letter_a
   - game_screen_arrow_up
   - game_screen_circle_big
   - preview_screen_power
   - game_screen_bullets
+  - Button_Close
   - preview_screen_arrow
   - result_screen_letter_d
   - preview_screen_shop_skin

@@ -3,7 +3,6 @@
     public interface IHapticEngine
     {
         void Play(HapticType type);
-        void Mute();
-        void Unmute();
+        void IsEnable(bool isEnable);
     }
 }

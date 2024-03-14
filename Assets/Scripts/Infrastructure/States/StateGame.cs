@@ -3,6 +3,8 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
 using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Haptic;
+using CodeBase.Infrastructure.Haptic.Engine;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
@@ -17,6 +19,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateMachine _gameStateMachine;
         private IJoystickService _joystickService;
         private IUIFactory _uiFactory;
+        private IHapticService _hapticService;
         private LevelModel _levelModel;
 
         private readonly CompositeDisposable _transitionDisposable = new();
@@ -27,10 +30,11 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        private void Construct(IJoystickService joystickService, IUIFactory uiFactory, LevelModel levelModel)
+        private void Construct(IJoystickService joystickService, IUIFactory uiFactory, IHapticService hapticService, LevelModel levelModel)
         {
             _joystickService = joystickService;
             _uiFactory = uiFactory;
+            _hapticService = hapticService;
             _levelModel = levelModel;
         }
         
@@ -81,12 +85,14 @@ namespace CodeBase.Infrastructure.States
 
         private void Win()
         {
+            _hapticService.Play(HapticType.Success);
             _gameStateMachine.Enter<StateWin>();
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
         }
 
         private void Lose()
         {
+            _hapticService.Play(HapticType.Failure);
             _gameStateMachine.Enter<StateFail>();
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateDeath>();
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
