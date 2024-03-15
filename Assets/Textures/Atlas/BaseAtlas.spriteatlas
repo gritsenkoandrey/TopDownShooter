@@ -94,13 +94,13 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - all_screen_money
   - result_screen_star
-  - Button_On
+  - settings_screen_toggle_on
   - result_screen_letter_a
   - game_screen_arrow_up
   - game_screen_circle_big
   - preview_screen_power
   - game_screen_bullets
-  - Button_Close
+  - settings_screen_toggle_off
   - preview_screen_arrow
   - result_screen_letter_d
   - preview_screen_shop_skin

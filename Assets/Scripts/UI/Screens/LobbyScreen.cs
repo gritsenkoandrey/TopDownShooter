@@ -24,6 +24,7 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid NextState()
         {
+            SetCanvasEnable(false);
             _button.transform.PunchTransform();
             await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion().AsUniTask();
             CloseScreen.Execute();

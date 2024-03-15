@@ -10,6 +10,8 @@ using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace CodeBase.Infrastructure.Factories.UI
 {
@@ -20,14 +22,16 @@ namespace CodeBase.Infrastructure.Factories.UI
         private readonly ICameraService _cameraService;
         private readonly IGuiService _guiService;
         private readonly IAssetService _assetService;
+        private readonly IObjectResolver _objectResolver;
 
         public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGuiService guiService, 
-            IAssetService assetService)
+            IAssetService assetService, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _cameraService = cameraService;
             _guiService = guiService;
             _assetService = assetService;
+            _objectResolver = objectResolver;
         }
 
         async UniTask<BaseScreen> IUIFactory.CreateScreen(ScreenType type)
@@ -35,7 +39,7 @@ namespace CodeBase.Infrastructure.Factories.UI
             _guiService.Pop();
             ScreenData data = _staticDataService.ScreenData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-            BaseScreen screen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
+            BaseScreen screen = _objectResolver.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
             _cameraService.ActivateCamera(type);
             _guiService.Push(screen);
             return screen;
@@ -45,7 +49,7 @@ namespace CodeBase.Infrastructure.Factories.UI
         {
             ScreenData data = _staticDataService.ScreenData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-            BaseScreen screen = Object.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
+            BaseScreen screen = _objectResolver.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
             _cameraService.ActivateCamera(type);
             _guiService.Push(screen);
             return screen;

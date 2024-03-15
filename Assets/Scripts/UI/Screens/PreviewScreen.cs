@@ -38,6 +38,7 @@ namespace CodeBase.UI.Screens
 
         private async UniTaskVoid NextState()
         {
+            SetCanvasEnable(false);
             _tween?.Kill();
             await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 

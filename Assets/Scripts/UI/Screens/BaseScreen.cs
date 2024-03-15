@@ -48,5 +48,11 @@ namespace CodeBase.UI.Screens
             button.interactable = isActive;
             button.gameObject.SetActive(isActive);
         }
+
+        private protected void SetCanvasEnable(bool isEnable)
+        {
+            _canvasGroup.interactable = isEnable;
+            _canvasGroup.blocksRaycasts = isEnable;
+        }
     }
 }

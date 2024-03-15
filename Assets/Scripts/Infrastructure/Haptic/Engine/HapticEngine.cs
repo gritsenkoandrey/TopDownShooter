@@ -16,7 +16,10 @@
 
         void IHapticEngine.Play(HapticType type)
         {
-            if (_isEnable == false && _adapter.IsSupported() == false) return;
+            if (_isEnable == false || _adapter.IsSupported() == false)
+            {
+                return;
+            }
             
             _adapter.Play(type);
         }
