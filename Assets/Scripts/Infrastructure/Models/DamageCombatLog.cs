@@ -40,7 +40,10 @@ namespace CodeBase.Infrastructure.Models
             {
                 _time = 0f;
 
-                CombatLog.Execute(_damageCombatLog.Dequeue());
+                if (_damageCombatLog.TryDequeue(out CombatLog log))
+                {
+                    CombatLog.Execute(log);
+                }
             }
         }
 

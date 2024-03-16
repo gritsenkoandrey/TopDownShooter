@@ -41,8 +41,8 @@ namespace CodeBase.Game.Systems
 
                 if (targetIsAlive && isCollision)
                 {
-                    Collision(bullet, _levelModel.Enemies[i]);
                     AddLog(bullet, _levelModel.Enemies[i]);
+                    Collision(bullet, _levelModel.Enemies[i]);
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace CodeBase.Game.SystemsUi
                 {
                     Entities.Foreach(button => button.Button.interactable = false);
 
-                    component.Tween = component.Image
+                    component.Tween = component.Button.transform
                         .DOLocalRotate(Vector3.back * 180f, 0.5f)
                         .SetRelative()
                         .OnComplete(CreatePopUp);

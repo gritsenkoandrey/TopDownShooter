@@ -5,7 +5,7 @@ namespace CodeBase.Infrastructure.Haptic.Engine
         void IHapticAdapter.Play(HapticType type)
         {
 #if UNITY_EDITOR
-            Utils.CustomDebug.CustomDebug.Log($"Play haptic type is {type}", Utils.CustomDebug.DebugColorType.Yellow);
+            Utils.CustomDebug.CustomDebug.Log($"Impact haptic {type}");
 #endif
         }
 

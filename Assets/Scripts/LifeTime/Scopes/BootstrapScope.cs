@@ -1,14 +1,11 @@
-﻿using System;
-using CodeBase.App;
+﻿using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
-using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Haptic;
 using CodeBase.Infrastructure.Input;
@@ -52,8 +49,6 @@ namespace CodeBase.LifeTime.Scopes
 
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
-            builder.Register<DamageCombatLog>(Lifetime.Singleton).As<IDisposable>().AsSelf();
-            builder.Register<LootModel>(Lifetime.Singleton).AsSelf();
 
             builder.Register<IHapticService, HapticService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
@@ -65,9 +60,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
-            builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
-            builder.Register<IEffectFactory, EffectFactory>(Lifetime.Singleton);
-            
+
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
 
             builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Scoped).AsSelf().Build();
