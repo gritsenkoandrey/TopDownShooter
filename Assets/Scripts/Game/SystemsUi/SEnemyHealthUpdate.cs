@@ -64,7 +64,8 @@ namespace CodeBase.Game.SystemsUi
             Vector3 screenPoint = _cameraService.Camera.WorldToScreenPoint(position);
             Vector3 viewportPoint = _cameraService.Camera.WorldToViewportPoint(position);
             component.transform.position = screenPoint.ZeroZ();
-            component.CanvasGroup.alpha = _cameraService.IsOnScreen(viewportPoint) ? 1f : 0f;
+            component.CanvasGroup.alpha += _cameraService.IsOnScreen(viewportPoint) 
+                ? Time.deltaTime * 1f : Time.deltaTime * -1f;
         }
     }
 }
