@@ -40,6 +40,7 @@ namespace CodeBase.Infrastructure.CameraMain
                     _cameraZoomIn.Priority = 0;
                     _cameraZoomOut.Priority = 100;
                     break;
+                case ScreenType.Settings:
                 case ScreenType.Game:
                     _cameraZoomIn.Priority = 100;
                     _cameraZoomOut.Priority = 0;

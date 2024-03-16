@@ -1,4 +1,5 @@
 ﻿using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace CodeBase.UI.Screens
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private RectTransform _safeArea;
+        [SerializeField] private protected Button _button;
         
         public readonly ReactiveCommand CloseScreen = new ();
         
@@ -17,6 +19,19 @@ namespace CodeBase.UI.Screens
 
         private protected virtual void OnEnable() => _safeArea.ApplySafeArea();
         private protected virtual void OnDisable() => LifeTimeDisposable.Clear();
+
+        private protected virtual async UniTask Show()
+        {
+            SetCanvasEnable(false);
+            await FadeCanvas(0f, 1f).AsyncWaitForCompletion().AsUniTask();
+            SetCanvasEnable(true);
+        }
+        
+        private protected virtual async UniTask Hide()
+        {
+            SetCanvasEnable(false);
+            await _button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
+        }
         
         public void SetActive(bool isActive)
         {
@@ -25,31 +40,25 @@ namespace CodeBase.UI.Screens
             _canvasGroup.blocksRaycasts = isActive;
         }
 
-        private protected Tween FadeCanvas(float from, float to, float duration)
+        private protected Tween FadeCanvas(float from, float to)
         {
             return _canvasGroup
-                .DOFade(to, duration)
+                .DOFade(to, 0.1f)
                 .From(from)
                 .SetEase(Ease.Linear)
                 .SetLink(gameObject);
         }
 
-        private protected Tween BounceButton(Button button, float to, float duration)
+        private protected Tween BounceButton()
         {
-            return button.transform
-                .DOScale(Vector3.one * to, duration)
+            return _button.transform
+                .DOScale(Vector3.one * 1.05f, 0.5f)
                 .SetEase(Ease.InOutQuad)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
 
-        private protected void ActivateButton(Button button, bool isActive)
-        {
-            button.interactable = isActive;
-            button.gameObject.SetActive(isActive);
-        }
-
-        private protected void SetCanvasEnable(bool isEnable)
+        private void SetCanvasEnable(bool isEnable)
         {
             _canvasGroup.interactable = isEnable;
             _canvasGroup.blocksRaycasts = isEnable;

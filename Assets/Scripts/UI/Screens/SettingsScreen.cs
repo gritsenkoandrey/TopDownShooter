@@ -1,16 +1,11 @@
-﻿using CodeBase.Utils;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace CodeBase.UI.Screens
 {
     public sealed class SettingsScreen : BaseScreen
     {
-        [SerializeField] private Button _button;
-        
         private Tween _tween;
 
         private protected override void OnEnable()
@@ -20,34 +15,28 @@ namespace CodeBase.UI.Screens
             _button
                 .OnClickAsObservable()
                 .First()
-                .Subscribe(_ => Close().Forget())
+                .Subscribe(_ => Hide().Forget())
                 .AddTo(LifeTimeDisposable);
             
-            ShowButton().Forget();
-        }
-        
-        private protected override void OnDisable()
-        {
-            base.OnDisable();
-            
-            _tween?.Kill();
+            Show().Forget();
         }
 
-        private async UniTaskVoid Close()
+        private protected override async UniTask Show()
         {
-            SetCanvasEnable(false);
-            _button.transform.PunchTransform();
-            await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion().AsUniTask();
-            CloseScreen.Execute();
+            await base.Show();
+            
+            _tween = BounceButton();
         }
-        
-        private async UniTaskVoid ShowButton()
+
+        private protected override async UniTask Hide()
         {
-            ActivateButton(_button, false);
-            _tween = FadeCanvas(0f, 1f, 0.5f);
-            await _tween.AsyncWaitForCompletion().AsUniTask();
-            ActivateButton(_button, true);
-            _tween = BounceButton(_button, 1.05f, 0.5f);
+            _tween?.Kill();
+            
+            await base.Hide();
+            
+            await FadeCanvas(1f, 0f).AsyncWaitForCompletion().AsUniTask();
+            
+            CloseScreen.Execute();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CodeBase.UI.Screens
+﻿using Cysharp.Threading.Tasks;
+
+namespace CodeBase.UI.Screens
 {
     public sealed class GameScreen : BaseScreen
     {
@@ -6,7 +8,7 @@
         {
             base.OnEnable();
             
-            FadeCanvas(0f, 1f, 1f);
+            Show().Forget();
         }
     }
 }

@@ -1,16 +1,11 @@
-﻿using CodeBase.Utils;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace CodeBase.UI.Screens
 {
     public sealed class LobbyScreen : BaseScreen
     {
-        [SerializeField] private Button _button;
-
         private protected override void OnEnable()
         {
             base.OnEnable();
@@ -18,15 +13,16 @@ namespace CodeBase.UI.Screens
             _button
                 .OnClickAsObservable()
                 .First()
-                .Subscribe(_ => NextState().Forget())
+                .Subscribe(_ => Hide().Forget())
                 .AddTo(LifeTimeDisposable);
         }
 
-        private async UniTaskVoid NextState()
+        private protected override async UniTask Hide()
         {
-            SetCanvasEnable(false);
-            _button.transform.PunchTransform();
-            await FadeCanvas(1f, 0f, 0.25f).AsyncWaitForCompletion().AsUniTask();
+            await base.Hide();
+            
+            await FadeCanvas(1f, 0f).AsyncWaitForCompletion().AsUniTask();
+            
             CloseScreen.Execute();
         }
     }
