@@ -53,6 +53,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<InventoryModel>(Lifetime.Singleton).AsSelf();
             builder.Register<LevelModel>(Lifetime.Singleton).AsSelf();
             builder.Register<DamageCombatLog>(Lifetime.Singleton).As<IDisposable>().AsSelf();
+            builder.Register<LootModel>(Lifetime.Singleton).AsSelf();
 
             builder.Register<IHapticService, HapticService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);

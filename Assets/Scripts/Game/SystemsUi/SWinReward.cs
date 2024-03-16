@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using DG.Tweening;
 using UnityEngine;
@@ -12,14 +11,14 @@ namespace CodeBase.Game.SystemsUi
 {
     public sealed class SWinReward : SystemComponent<CWinReward>
     {
-        private IProgressService _progressService;
         private LevelModel _levelModel;
+        private LootModel _lootModel;
 
         [Inject]
-        private void Construct(IProgressService progressService, LevelModel levelModel)
+        private void Construct(LevelModel levelModel, LootModel lootModel)
         {
-            _progressService = progressService;
             _levelModel = levelModel;
+            _lootModel = lootModel;
         }
 
         protected override void OnEnableComponent(CWinReward component)
@@ -67,9 +66,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void CalculateLoot(CWinReward component)
         {
-            int loot = _levelModel.Level.Loot;
-            component.Text.text = loot.Trim();
-            _progressService.MoneyData.Data.Value += loot;
+            component.Text.text = _lootModel.GenerateLevelLoot(_levelModel.Level).Trim();
         }
 
         private void ShowAnimation(CWinReward component)

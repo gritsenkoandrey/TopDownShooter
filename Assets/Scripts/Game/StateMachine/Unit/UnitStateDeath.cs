@@ -3,7 +3,6 @@ using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
-using CodeBase.Infrastructure.Progress;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using VContainer;
@@ -12,20 +11,20 @@ namespace CodeBase.Game.StateMachine.Unit
 {
     public sealed class UnitStateDeath : UnitState, IState
     {
-        private IProgressService _progressService;
         private IEffectFactory _effectFactory;
         private LevelModel _levelModel;
+        private LootModel _lootModel;
 
         public UnitStateDeath(IStateMachine stateMachine, CUnit unit) : base(stateMachine, unit)
         {
         }
 
         [Inject]
-        private void Construct(IProgressService progressService, IEffectFactory effectFactory, LevelModel levelModel)
+        private void Construct(IEffectFactory effectFactory, LevelModel levelModel, LootModel lootModel)
         {
-            _progressService = progressService;
             _effectFactory = effectFactory;
             _levelModel = levelModel;
+            _lootModel = lootModel;
         }
 
         public void Enter()
@@ -35,7 +34,7 @@ namespace CodeBase.Game.StateMachine.Unit
             Unit.Animator.OnDeath.Execute();
             Unit.CleanSubscribe();
             
-            _progressService.MoneyData.Data.Value += Unit.Money;
+            _lootModel.GenerateEnemyLoot(Unit);
             _levelModel.RemoveEnemy(Unit);
             _effectFactory.CreateEffect(EffectType.Death, Unit.Position.AddY(Unit.Height)).Forget();
         }
