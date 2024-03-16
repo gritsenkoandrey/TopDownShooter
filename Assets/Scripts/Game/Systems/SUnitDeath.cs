@@ -24,20 +24,22 @@ namespace CodeBase.Game.Systems
             _levelModel = levelModel;
         }
         
-        protected override void OnEnableComponent(CUnit unit)
+        protected override void OnEnableComponent(CUnit component)
         {
-            base.OnEnableComponent(unit);
+            base.OnEnableComponent(component);
 
-            unit.Health.CurrentHealth
+            component.Health.CurrentHealth
                 .SkipLatestValueOnSubscribe()
                 .First(health => health <= 0)
                 .Subscribe(_ =>
                 {
-                    _lootModel.GenerateEnemyLoot(unit);
-                    _levelModel.RemoveEnemy(unit);
-                    _effectFactory.CreateEffect(EffectType.Death, unit.Position.AddY(unit.Height)).Forget();
+                    _lootModel.GenerateEnemyLoot(component);
+                    _levelModel.RemoveEnemy(component);
+                    _effectFactory.CreateEffect(EffectType.Death, component.Position.AddY(component.Height)).Forget();
+                    
+                    component.DeathEffect.PlayEffect.Execute(Unit.Default);
                 })
-                .AddTo(unit.LifetimeDisposable);
+                .AddTo(component.LifetimeDisposable);
         }
     }
 }

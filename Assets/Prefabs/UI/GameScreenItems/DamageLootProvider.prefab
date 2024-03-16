@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7886717987283125792}
   - component: {fileID: 2923723195780421847}
   m_Layer: 5
-  m_Name: DamageViewProvider
+  m_Name: DamageLootProvider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

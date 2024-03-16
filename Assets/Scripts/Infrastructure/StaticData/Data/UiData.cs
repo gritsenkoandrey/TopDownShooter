@@ -9,5 +9,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         public AssetReference EnemyHealthPrefabReference;
         public AssetReference PointerArrowPrefabReference;
         public AssetReference DamageViewPrefabReference;
+        public AssetReference MoneyLootPrefabReference;
     }
 }

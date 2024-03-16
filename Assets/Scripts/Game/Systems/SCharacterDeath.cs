@@ -29,6 +29,8 @@ namespace CodeBase.Game.Systems
                 .Subscribe(_ =>
                 {
                     _effectFactory.CreateEffect(EffectType.Death, component.Position.AddY(component.Height)).Forget();
+                    
+                    component.DeathEffect.PlayEffect.Execute(Unit.Default);
                 })
                 .AddTo(component.LifetimeDisposable);
         }

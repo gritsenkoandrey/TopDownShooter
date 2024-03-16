@@ -27,3 +27,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  MoneyLootPrefabReference:
+    m_AssetGUID: 9712ae99d143d6b4da1ec39abef354d8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

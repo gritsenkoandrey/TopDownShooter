@@ -12,12 +12,14 @@ namespace CodeBase.Game.Components
         [SerializeField] private CCharacterController _characterController;
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CBodyMediator _bodyMediator;
+        [SerializeField] private CDeathEffect _deathEffect;
 
         public CAnimator Animator => _animator;
         public CWeaponMediator WeaponMediator => _weaponMediator;
         public CCharacterController CharacterController => _characterController;
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
+        public CDeathEffect DeathEffect => _deathEffect;
         public Health Health { get; } = new();
         public Vector3 Position => transform.position;
         public float Height => 3f;

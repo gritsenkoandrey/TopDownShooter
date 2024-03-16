@@ -15,5 +15,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         public UniTask<CEnemyHealth> CreateEnemyHealth(IEnemy enemy, Transform parent);
         public UniTask<CPointerArrow> CreatePointerArrow(Transform parent);
         public UniTask<CDamageCombatLogView> CreateDamageView(Transform parent);
+        public UniTask<CMoneyLoot> CreateMoneyLoot(Transform parent);
     }
 }

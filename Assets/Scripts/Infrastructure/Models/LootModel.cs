@@ -1,6 +1,7 @@
 ﻿using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Progress;
 using JetBrains.Annotations;
+using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Models
@@ -11,6 +12,7 @@ namespace CodeBase.Infrastructure.Models
         private readonly IProgressService _progressService;
 
         private const float Multiplier = 0.1f;
+        public IReactiveCommand<(ITarget, int)> EnemyLoot { get; } = new ReactiveCommand<(ITarget, int)>();
 
         public LootModel(IProgressService progressService)
         {
@@ -31,6 +33,8 @@ namespace CodeBase.Infrastructure.Models
             int loot = enemy.Loot + Mathf.RoundToInt(GetLevelIndex() * Multiplier * enemy.Loot);
             
             AddLoot(loot);
+
+            EnemyLoot.Execute((enemy, loot));
 
             return loot;
         }

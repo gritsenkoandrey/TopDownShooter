@@ -89,5 +89,13 @@ namespace CodeBase.Infrastructure.Factories.UI
             CDamageCombatLogView damageCombatLogView = Object.Instantiate(prefab, parent).GetComponent<CDamageCombatLogView>();
             return damageCombatLogView;
         }
+        
+        async UniTask<CMoneyLoot> IUIFactory.CreateMoneyLoot(Transform parent)
+        {
+            UiData data = _staticDataService.UiData();
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.MoneyLootPrefabReference);
+            CMoneyLoot damageCombatLogView = Object.Instantiate(prefab, parent).GetComponent<CMoneyLoot>();
+            return damageCombatLogView;
+        }
     }
 }

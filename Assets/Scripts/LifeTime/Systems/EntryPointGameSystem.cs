@@ -61,6 +61,9 @@ namespace CodeBase.LifeTime.Systems
                 new SHapticButton(),
                 new SToggleController(),
                 new SSettingsMediator(),
+                new SMoneyLootProvider(),
+                new SMoneyLootUpdate(),
+                new SDeathEffect(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

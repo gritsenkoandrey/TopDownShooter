@@ -14,6 +14,7 @@ namespace CodeBase.Game.Components
         [SerializeField] private CRadar _radar;
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CBodyMediator _bodyMediator;
+        [SerializeField] private CDeathEffect _deathEffect;
 
         public CAgent Agent => _agent;
         public CAnimator Animator => _animator;
@@ -21,6 +22,7 @@ namespace CodeBase.Game.Components
         public CRadar Radar => _radar;
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
+        public CDeathEffect DeathEffect => _deathEffect;
         public Health Health { get; } = new ();
         public UnitStats UnitStats { get; set; }
         public Vector3 Position => transform.position;
