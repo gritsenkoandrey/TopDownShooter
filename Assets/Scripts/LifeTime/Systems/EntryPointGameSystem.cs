@@ -6,6 +6,7 @@ using CodeBase.Game.SystemsUi;
 using CodeBase.Utils;
 using JetBrains.Annotations;
 using VContainer;
+using VContainer.Unity;
 
 namespace CodeBase.LifeTime.Systems
 {
@@ -18,7 +19,7 @@ namespace CodeBase.LifeTime.Systems
 
         public EntryPointGameSystem(IObjectResolver objectResolver) => _objectResolver = objectResolver;
 
-        public void Initialize()
+        void IInitializable.Initialize()
         {
             _systems = new SystemBase[]
             {
@@ -70,21 +71,21 @@ namespace CodeBase.LifeTime.Systems
             _systems.Foreach(Enable);
         }
         
-        public void Tick()
+        void ITickable.Tick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
                 _systems[i].Update();
             }
         }
-        public void FixedTick()
+        void IFixedTickable.FixedTick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
                 _systems[i].FixedUpdate();
             }
         }
-        public void LateTick()
+        void ILateTickable.LateTick()
         {
             for (int i = 0; i < _systems.Length; i++)
             {
@@ -92,7 +93,7 @@ namespace CodeBase.LifeTime.Systems
             }
         }
         
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _systems.Foreach(Disable);
             _systems = Array.Empty<SystemBase>();
