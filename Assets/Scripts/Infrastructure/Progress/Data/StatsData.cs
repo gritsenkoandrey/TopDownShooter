@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.SaveLoad;
 using CodeBase.Utils;
+using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
 
@@ -61,6 +62,7 @@ namespace CodeBase.Infrastructure.Progress.Data
         }
     }
 
+    [JsonObject]
     public sealed class Stats
     {
         public IDictionary<UpgradeButtonType, int> Data;

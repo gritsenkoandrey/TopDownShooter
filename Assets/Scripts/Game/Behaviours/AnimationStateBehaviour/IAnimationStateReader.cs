@@ -2,8 +2,8 @@
 {
     public interface IAnimationStateReader
     {
-        public void EnteredState(int stateHash);
-        public void ExitedState(int stateHash);
-        public void UpdateState(int stateHash);
+        void EnteredState(int stateHash);
+        void ExitedState(int stateHash);
+        void UpdateState(int stateHash);
     }
 }

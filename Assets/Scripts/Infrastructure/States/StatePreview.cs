@@ -10,7 +10,7 @@ using VContainer;
 
 namespace CodeBase.Infrastructure.States
 {
-    public class StatePreview : IEnterLoadState<string>
+    public sealed class StatePreview : IEnterLoadState<string>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;

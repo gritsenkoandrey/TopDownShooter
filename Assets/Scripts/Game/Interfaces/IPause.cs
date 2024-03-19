@@ -2,6 +2,6 @@
 {
     public interface IPause
     {
-        public void Pause(bool isPause);
+        void Pause(bool isPause);
     }
 }

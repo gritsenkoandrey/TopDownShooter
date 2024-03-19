@@ -6,19 +6,19 @@ namespace CodeBase.Infrastructure.StaticData
 {
     public interface IStaticDataService
     {
-        public void Load();
-        public ScreenData ScreenData(ScreenType type);
-        public UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
-        public WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
-        public ProjectileData ProjectileData(ProjectileType type);
-        public EffectData EffectData(EffectType type);
-        public LevelData LevelData();
-        public CharacterData CharacterData();
-        public TextureData TextureArrayData();
-        public UiData UiData();
-        public PoolData PoolData();
-        public UnitData UnitData();
-        public PreviewData PreviewData();
-        public ShopData ShopData();
+        void Load();
+        ScreenData ScreenData(ScreenType type);
+        UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
+        WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
+        ProjectileData ProjectileData(ProjectileType type);
+        EffectData EffectData(EffectType type);
+        LevelData LevelData();
+        CharacterData CharacterData();
+        TextureData TextureArrayData();
+        UiData UiData();
+        PoolData PoolData();
+        UnitData UnitData();
+        PreviewData PreviewData();
+        ShopData ShopData();
     }
 }

@@ -34,8 +34,8 @@ RectTransform:
   - {fileID: 8887372871663771722}
   - {fileID: 5358610637099713108}
   - {fileID: 3240331153548299030}
-  - {fileID: 7455485879220568221}
   - {fileID: 3617112655617340326}
+  - {fileID: 7455485879220568221}
   m_Father: {fileID: 7060742050469915397}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,7 +78,7 @@ RectTransform:
   - {fileID: 4491275108115042583}
   - {fileID: 1270426300331894213}
   m_Father: {fileID: 8707815821367170152}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Top: 50
     m_Bottom: 0
   m_ChildAlignment: 2
-  m_Spacing: -45
+  m_Spacing: -40
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -616,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1972952252474444817, guid: 90d8fc74fa6b5f04d8c61291039909ec, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1972952252474444817, guid: 90d8fc74fa6b5f04d8c61291039909ec, type: 3}
       propertyPath: m_AnchorMax.x

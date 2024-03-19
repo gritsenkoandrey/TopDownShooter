@@ -8,9 +8,9 @@ namespace CodeBase.Infrastructure.Factories.Game
 {
     public interface IGameFactory
     {
-        public UniTask<ILevel> CreateLevel();
-        public UniTask<CCharacter> CreateCharacter(Vector3 position, Transform parent);
-        public UniTask<CUnit> CreateUnit(Vector3 position, Transform parent);
-        public UniTask<CCharacterPreview> CreateCharacterPreview();
+        UniTask<ILevel> CreateLevel();
+        UniTask<CCharacter> CreateCharacter(Vector3 position, Transform parent);
+        UniTask<CUnit> CreateUnit(Vector3 position, Transform parent);
+        UniTask<CCharacterPreview> CreateCharacterPreview();
     }
 }

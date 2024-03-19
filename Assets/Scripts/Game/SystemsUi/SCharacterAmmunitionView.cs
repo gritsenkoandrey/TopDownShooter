@@ -10,8 +10,6 @@ namespace CodeBase.Game.SystemsUi
     {
         private InventoryModel _inventoryModel;
 
-        private const string ReloadingText = "R";
-
         [Inject]
         private void Construct(InventoryModel inventoryModel)
         {
@@ -25,7 +23,7 @@ namespace CodeBase.Game.SystemsUi
             _inventoryModel.ClipCount
                 .Subscribe(count =>
                 {
-                    component.AmmunitionCount.text = count > 0 ? count.ToString() : ReloadingText;
+                    component.AmmunitionCount.text = count.ToString();
                 })
                 .AddTo(component.LifetimeDisposable);
         }

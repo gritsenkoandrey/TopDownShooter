@@ -2,6 +2,6 @@
 {
     public interface ILoot
     {
-        public int Loot { get; }
+        int Loot { get; }
     }
 }

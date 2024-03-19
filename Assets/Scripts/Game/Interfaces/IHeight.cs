@@ -2,6 +2,6 @@
 {
     public interface IHeight
     {
-        public float Height { get; }
+        float Height { get; }
     }
 }

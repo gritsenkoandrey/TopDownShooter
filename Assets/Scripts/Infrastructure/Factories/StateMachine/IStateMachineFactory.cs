@@ -6,8 +6,8 @@ namespace CodeBase.Infrastructure.Factories.StateMachine
 {
     public interface IStateMachineFactory
     {
-        public IGameStateMachine CreateGameStateMachine();
-        public IStateMachine CreateCharacterStateMachine(CCharacter character);
-        public IStateMachine CreateUnitStateMachine(CUnit unit);
+        IGameStateMachine CreateGameStateMachine();
+        IStateMachine CreateCharacterStateMachine(CCharacter character);
+        IStateMachine CreateUnitStateMachine(CUnit unit);
     }
 }

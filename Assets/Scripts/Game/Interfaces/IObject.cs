@@ -4,6 +4,6 @@ namespace CodeBase.Game.Interfaces
 {
     public interface IObject
     {
-        public GameObject Object { get; }
+        GameObject Object { get; }
     }
 }

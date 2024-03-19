@@ -2,6 +2,6 @@
 {
     public interface IEnterState : IExitState
     {
-        public void Enter();
+        void Enter();
     }
 }

@@ -17,9 +17,9 @@ namespace CodeBase.Game.SystemsUi
             _cameraService = cameraService;
         }
 
-        protected override void OnUpdate()
+        protected override void OnLateUpdate()
         {
-            base.OnUpdate();
+            base.OnLateUpdate();
             
             Entities.Foreach(UpdateDamageViewPosition);
         }

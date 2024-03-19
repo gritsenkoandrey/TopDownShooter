@@ -5,11 +5,11 @@ namespace CodeBase.Infrastructure.Pool
 {
     public interface IObjectPoolService
     {
-        public UniTask Init();
-        public void Log();
-        public GameObject SpawnObject(GameObject prefab);
-        public GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation);
-        public void ReleaseObject(GameObject clone);
-        public UniTaskVoid ReleaseObjectAfterTime(GameObject clone, float time);
+        UniTask Init();
+        void Log();
+        GameObject SpawnObject(GameObject prefab);
+        GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation);
+        void ReleaseObject(GameObject clone);
+        UniTaskVoid ReleaseObjectAfterTime(GameObject clone, float time);
     }
 }

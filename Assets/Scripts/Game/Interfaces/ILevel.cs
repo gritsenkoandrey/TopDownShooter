@@ -2,8 +2,8 @@
 {
     public interface ILevel : ILoot
     {
-        public int Time { get; }
-        public int MaxTime { get; }
-        public void RemoveTime();
+        int Time { get; }
+        int MaxTime { get; }
+        void RemoveTime();
     }
 }

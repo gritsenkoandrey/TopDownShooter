@@ -68,7 +68,7 @@ namespace CodeBase.Game.SystemsUi
             moneyLoot.SetTarget(enemy);
             moneyLoot.SetActive(true);
             moneyLoot.CanvasGroup.alpha = 1f;
-            moneyLoot.Text.text = string.Format(FormatText.Cost, loot.Trim());
+            moneyLoot.Text.text = string.Format(FormatText.AddMoneyGame, loot.Trim());
         }
     }
 }

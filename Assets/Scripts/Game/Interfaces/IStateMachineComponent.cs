@@ -4,6 +4,6 @@ namespace CodeBase.Game.Interfaces
 {
     public interface IStateMachineComponent
     {
-        public CStateMachine StateMachine { get; }
+        CStateMachine StateMachine { get; }
     }
 }

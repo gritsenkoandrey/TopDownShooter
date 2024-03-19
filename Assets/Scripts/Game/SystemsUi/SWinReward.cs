@@ -66,7 +66,8 @@ namespace CodeBase.Game.SystemsUi
 
         private void CalculateLoot(CWinReward component)
         {
-            component.Text.text = _lootModel.GenerateLevelLoot(_levelModel.Level).Trim();
+            component.Text.text = string.Format(FormatText.AddMoneyWin, 
+                _lootModel.GenerateLevelLoot(_levelModel.Level).Trim());
         }
 
         private void ShowAnimation(CWinReward component)

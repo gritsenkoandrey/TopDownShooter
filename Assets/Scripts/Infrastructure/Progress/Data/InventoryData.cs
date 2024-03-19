@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Infrastructure.SaveLoad;
+using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
 
@@ -60,6 +61,7 @@ namespace CodeBase.Infrastructure.Progress.Data
         void IDisposable.Dispose() => _disposable.Clear();
     }
 
+    [JsonObject]
     public sealed class Inventory
     {
         public int WeaponIndex;

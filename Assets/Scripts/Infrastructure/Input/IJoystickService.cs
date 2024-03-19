@@ -4,9 +4,9 @@ namespace CodeBase.Infrastructure.Input
 {
     public interface IJoystickService
     {
-        public Vector2 GetAxis();
-        public void Init();
-        public void Enable(bool isEnable);
-        public void Execute();
+        Vector2 GetAxis();
+        void Init();
+        void Enable(bool isEnable);
+        void Execute();
     }
 }

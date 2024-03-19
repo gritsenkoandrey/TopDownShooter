@@ -5,12 +5,12 @@ namespace CodeBase.Infrastructure.CameraMain
 {
     public interface ICameraService
     {
-        public Camera Camera { get; }
-        public void Init();
-        public void SetTarget(Transform target);
-        public void ActivateCamera(ScreenType type);
-        public void Shake();
-        public bool IsOnScreen(Vector3 viewportPoint);
-        public void CleanUp();
+        Camera Camera { get; }
+        void Init();
+        void SetTarget(Transform target);
+        void ActivateCamera(ScreenType type);
+        void Shake();
+        bool IsOnScreen(Vector3 viewportPoint);
+        void CleanUp();
     }
 }
