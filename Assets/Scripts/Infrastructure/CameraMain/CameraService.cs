@@ -31,21 +31,8 @@ namespace CodeBase.Infrastructure.CameraMain
 
         void ICameraService.ActivateCamera(ScreenType type)
         {
-            switch (type)
-            {
-                case ScreenType.None:
-                case ScreenType.Lobby:
-                case ScreenType.Win:
-                case ScreenType.Lose:
-                    _cameraZoomIn.Priority = 0;
-                    _cameraZoomOut.Priority = 100;
-                    break;
-                case ScreenType.Settings:
-                case ScreenType.Game:
-                    _cameraZoomIn.Priority = 100;
-                    _cameraZoomOut.Priority = 0;
-                    break;
-            }
+            _cameraZoomIn.Priority = type == ScreenType.Game ? 100 : 0;
+            _cameraZoomOut.Priority = type == ScreenType.Game ? 0 : 100;
         }
 
         void ICameraService.Shake()

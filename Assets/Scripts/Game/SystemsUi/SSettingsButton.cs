@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.UI.Screens;
 using CodeBase.Utils;
@@ -16,14 +15,12 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SSettingsButton : SystemComponent<CSettingsButton>
     {
         private IUIFactory _uiFactory;
-        private IGuiService _guiService;
         private PauseModel _pauseModel;
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, IGuiService guiService, PauseModel pauseModel)
+        private void Construct(IUIFactory uiFactory, PauseModel pauseModel)
         {
             _uiFactory = uiFactory;
-            _guiService = guiService;
             _pauseModel = pauseModel;
         }
         
@@ -69,8 +66,8 @@ namespace CodeBase.Game.SystemsUi
         private void CloseScreen(Unit _)
         {
             _pauseModel.OnPause.Execute(false);
+            
             Entities.Foreach(button => button.Button.interactable = true);
-            _guiService.Pop();
         }
     }
 }

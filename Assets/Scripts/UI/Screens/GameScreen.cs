@@ -10,5 +10,7 @@ namespace CodeBase.UI.Screens
             
             Show().Forget();
         }
+
+        public override ScreenType GetScreenType() => ScreenType.Game;
     }
 }

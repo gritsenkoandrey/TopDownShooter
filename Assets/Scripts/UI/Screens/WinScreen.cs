@@ -20,6 +20,8 @@ namespace CodeBase.UI.Screens
             
             Show().Forget();
         }
+        
+        public override ScreenType GetScreenType() => ScreenType.Win;
 
         private protected override async UniTask Show()
         {

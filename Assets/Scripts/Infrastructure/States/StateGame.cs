@@ -92,6 +92,13 @@ namespace CodeBase.Infrastructure.States
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
         }
 
+        private void TimeLeft()
+        {
+            _gameStateMachine.Enter<StateFail>();
+            _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
+            _levelModel.Enemies.Foreach(SetEnemyStateNone);
+        }
+
         private void RemoveTime()
         {
             if (_levelModel.Level.Time > 0)
@@ -101,7 +108,7 @@ namespace CodeBase.Infrastructure.States
                 return;
             }
 
-            Lose();
+            TimeLeft();
         }
         
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;

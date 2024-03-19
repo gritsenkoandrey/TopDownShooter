@@ -21,6 +21,8 @@ namespace CodeBase.UI.Screens
             Show().Forget();
         }
         
+        public override ScreenType GetScreenType() => ScreenType.Lose;
+
         private protected override async UniTask Show()
         {
             await base.Show();

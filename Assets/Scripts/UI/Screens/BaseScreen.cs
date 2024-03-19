@@ -20,6 +20,8 @@ namespace CodeBase.UI.Screens
         private protected virtual void OnEnable() => _safeArea.ApplySafeArea();
         private protected virtual void OnDisable() => LifeTimeDisposable.Clear();
 
+        public abstract ScreenType GetScreenType();
+
         private protected virtual async UniTask Show()
         {
             SetCanvasEnable(false);

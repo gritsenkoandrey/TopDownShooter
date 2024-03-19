@@ -23,6 +23,8 @@ namespace CodeBase.UI.Screens
             
             Show().Forget();
         }
+        
+        public override ScreenType GetScreenType() => ScreenType.Preview;
 
         private protected override async UniTask Show()
         {
@@ -37,8 +39,7 @@ namespace CodeBase.UI.Screens
             
             await base.Hide();
             
-            await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation), 
-                cancellationToken: gameObject.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(DelayCharacterAnimation));
             
             CloseScreen.Execute();
         }

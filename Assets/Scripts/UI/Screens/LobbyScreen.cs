@@ -17,6 +17,8 @@ namespace CodeBase.UI.Screens
                 .AddTo(LifeTimeDisposable);
         }
 
+        public override ScreenType GetScreenType() => ScreenType.Lobby;
+
         private protected override async UniTask Hide()
         {
             await base.Hide();

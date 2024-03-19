@@ -2,7 +2,6 @@
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
-using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
@@ -19,16 +18,14 @@ namespace CodeBase.Infrastructure.Factories.UI
     public sealed class UIFactory : IUIFactory
     {
         private readonly IStaticDataService _staticDataService;
-        private readonly ICameraService _cameraService;
         private readonly IGuiService _guiService;
         private readonly IAssetService _assetService;
         private readonly IObjectResolver _objectResolver;
 
-        public UIFactory(IStaticDataService staticDataService, ICameraService cameraService, IGuiService guiService, 
+        public UIFactory(IStaticDataService staticDataService, IGuiService guiService, 
             IAssetService assetService, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
-            _cameraService = cameraService;
             _guiService = guiService;
             _assetService = assetService;
             _objectResolver = objectResolver;
@@ -40,7 +37,6 @@ namespace CodeBase.Infrastructure.Factories.UI
             ScreenData data = _staticDataService.ScreenData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             BaseScreen screen = _objectResolver.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
-            _cameraService.ActivateCamera(type);
             _guiService.Push(screen);
             return screen;
         }
@@ -50,7 +46,6 @@ namespace CodeBase.Infrastructure.Factories.UI
             ScreenData data = _staticDataService.ScreenData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             BaseScreen screen = _objectResolver.Instantiate(prefab, _guiService.StaticCanvas.transform).GetComponent<BaseScreen>();
-            _cameraService.ActivateCamera(type);
             _guiService.Push(screen);
             return screen;
         }
