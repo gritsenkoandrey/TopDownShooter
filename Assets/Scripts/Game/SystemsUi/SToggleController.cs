@@ -17,7 +17,7 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
 
             component.Handle.OnEndDrag
-                .Subscribe(_ => component.IsEnable.Value = component.Handle.X > 0)
+                .Subscribe(_ => component.IsEnable.Value = component.Handle.X > 0f)
                 .AddTo(component.LifetimeDisposable);
 
             component.OnClick
@@ -31,7 +31,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void SetActive(CToggle component, bool isActive)
         {
-            float posX = component.Offset * (isActive ? 1 : -1);
+            float posX = component.Offset * (isActive ? 1f : -1f);
             
             component.Tween?.Kill();
             
@@ -49,7 +49,7 @@ namespace CodeBase.Game.SystemsUi
             float xPos = Mathf.Clamp(initPos.x + delta.x, -component.Offset, component.Offset);
             component.Handle.transform.localPosition = new Vector3(xPos, initPos.y, initPos.z);
             
-            UpdateVisual(component, component.Handle.X > 0);
+            UpdateVisual(component, component.Handle.X > 0f);
         }
 
         private void UpdateVisual(CToggle component, bool isActive)
