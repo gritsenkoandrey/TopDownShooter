@@ -28,7 +28,7 @@ namespace CodeBase.Game.SystemsUi
         {
             _levelModel.Level
                 .ObserveEveryValueChanged(level => level.Time)
-                .Subscribe(time => component.TimeLeftText.text = FormatTime.SecondsToTime(time))
+                .Subscribe(time => component.TimeLeftText.text = time.SecondsToTime())
                 .AddTo(component.LifetimeDisposable);
         }
     }

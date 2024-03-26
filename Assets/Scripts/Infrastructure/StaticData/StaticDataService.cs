@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.AssetData;
+using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
 using JetBrains.Annotations;
@@ -18,6 +19,7 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<WeaponType, WeaponCharacteristicData> _weaponCharacteristics;
         private IDictionary<ProjectileType, ProjectileData> _projectiles;
         private IDictionary<EffectType, EffectData> _effects;
+        private IDictionary<DailyTaskType, TaskData> _tasks;
         private LevelData _level;
         private CharacterData _character;
         private TextureData _textureData;
@@ -54,6 +56,10 @@ namespace CodeBase.Infrastructure.StaticData
                 .LoadAllFromResources<EffectData>(AssetAddress.EffectDataPath)
                 .ToDictionary(data => data.EffectType, data => data);
 
+            _tasks = _assetService
+                .LoadAllFromResources<TaskData>(AssetAddress.TaskDataPath)
+                .ToDictionary(data => data.Type, data => data);
+
             _level = _assetService.LoadFromResources<LevelData>(AssetAddress.LevelDataPath);
             _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
             _textureData = _assetService.LoadFromResources<TextureData>(AssetAddress.TextureDataPath);
@@ -73,11 +79,14 @@ namespace CodeBase.Infrastructure.StaticData
         WeaponCharacteristicData IStaticDataService.WeaponCharacteristicData(WeaponType type) => 
             _weaponCharacteristics.TryGetValue(type, out WeaponCharacteristicData staticData) ? staticData : null;
 
-        public ProjectileData ProjectileData(ProjectileType type) => 
-            _projectiles.TryGetValue(type, out var projectileData) ? projectileData : null;
+        ProjectileData IStaticDataService.ProjectileData(ProjectileType type) => 
+            _projectiles.TryGetValue(type, out ProjectileData projectileData) ? projectileData : null;
 
         EffectData IStaticDataService.EffectData(EffectType type) => 
             _effects.TryGetValue(type, out EffectData staticData) ? staticData : null;
+
+        TaskData IStaticDataService.TaskData(DailyTaskType type) => 
+            _tasks.TryGetValue(type, out TaskData taskData) ? taskData : null;
 
         LevelData IStaticDataService.LevelData() => _level;
         CharacterData IStaticDataService.CharacterData() => _character;

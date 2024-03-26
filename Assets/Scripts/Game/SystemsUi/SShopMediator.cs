@@ -39,6 +39,7 @@ namespace CodeBase.Game.SystemsUi
                         case PreviewState.Start:
                             SetActiveShopElementsCanvasGroup(component, true);
                             SetActiveUpgradeWindowCanvasGroup(component, false);
+                            SetActiveTaskProviderCanvasGroup(component, false);
                             SetActiveBuyButton(component, false);
                             SetActiveBackButton(component, false);
                             SetActiveSwipeButtons(component, false);
@@ -47,6 +48,7 @@ namespace CodeBase.Game.SystemsUi
                         case PreviewState.BuyWeapon:
                             SetActiveShopElementsCanvasGroup(component, false);
                             SetActiveUpgradeWindowCanvasGroup(component, false);
+                            SetActiveTaskProviderCanvasGroup(component, false);
                             SetActiveBuyButton(component, true);
                             SetActiveBackButton(component, true);
                             SetActiveSwipeButtons(component, true);
@@ -55,6 +57,7 @@ namespace CodeBase.Game.SystemsUi
                         case PreviewState.BuySkin:
                             SetActiveShopElementsCanvasGroup(component, false);
                             SetActiveUpgradeWindowCanvasGroup(component, false);
+                            SetActiveTaskProviderCanvasGroup(component, false);
                             SetActiveBuyButton(component, true);
                             SetActiveBackButton(component, true);
                             SetActiveSwipeButtons(component, true);
@@ -63,6 +66,16 @@ namespace CodeBase.Game.SystemsUi
                         case PreviewState.BuyUpgrades:
                             SetActiveShopElementsCanvasGroup(component, false);
                             SetActiveUpgradeWindowCanvasGroup(component, true);
+                            SetActiveTaskProviderCanvasGroup(component, false);
+                            SetActiveBuyButton(component, false);
+                            SetActiveBackButton(component, true);
+                            SetActiveSwipeButtons(component, false);
+                            SetActiveStartButton(component, false);
+                            break;
+                        case PreviewState.DailyTask:
+                            SetActiveShopElementsCanvasGroup(component, false);
+                            SetActiveUpgradeWindowCanvasGroup(component, false);
+                            SetActiveTaskProviderCanvasGroup(component, true);
                             SetActiveBuyButton(component, false);
                             SetActiveBackButton(component, true);
                             SetActiveSwipeButtons(component, false);
@@ -91,6 +104,13 @@ namespace CodeBase.Game.SystemsUi
             component.UpgradeWindow.CanvasGroup.alpha = isActive ? 1f : 0f;
             component.UpgradeWindow.CanvasGroup.interactable = isActive;
             component.UpgradeWindow.CanvasGroup.blocksRaycasts = isActive;
+        }
+
+        private void SetActiveTaskProviderCanvasGroup(CShop component, bool isActive)
+        {
+            component.TaskProvider.CanvasGroup.alpha = isActive ? 1f : 0f;
+            component.TaskProvider.CanvasGroup.interactable = isActive;
+            component.TaskProvider.CanvasGroup.blocksRaycasts = isActive;
         }
 
         private void SetActiveBuyButton(CShop component, bool isActive)

@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
+using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Factories.TextureArray;
@@ -55,6 +56,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<IProgressService, ProgressService>(Lifetime.Singleton);
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
+            builder.Register<IDailyTaskService, DailyTaskService>(Lifetime.Singleton);
             
             builder.Register<IStateMachineFactory, StateMachineFactory>(Lifetime.Singleton);
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);

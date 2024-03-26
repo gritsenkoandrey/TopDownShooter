@@ -13,6 +13,7 @@ namespace CodeBase.Infrastructure.Progress
         public IData<Inventory> InventoryData { get; private set; }
         public IData<Shop> ShopData { get; private set; }
         public IData<bool> HapticData { get; private set; }
+        public IData<DailyTask> DailyTaskData { get; private set; }
 
         void IProgressService.Init()
         {
@@ -22,6 +23,7 @@ namespace CodeBase.Infrastructure.Progress
             InventoryData = new InventoryData();
             ShopData = new ShopData();
             HapticData = new HapticData();
+            DailyTaskData = new DailyTaskData();
         }
 
         void IDisposable.Dispose()
@@ -32,6 +34,7 @@ namespace CodeBase.Infrastructure.Progress
             InventoryData?.Dispose();
             ShopData?.Dispose();
             HapticData?.Dispose();
+            DailyTaskData?.Dispose();
         }
     }
 }

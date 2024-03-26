@@ -16,5 +16,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         UniTask<CPointerArrow> CreatePointerArrow(Transform parent);
         UniTask<CDamageCombatLogView> CreateDamageView(Transform parent);
         UniTask<CMoneyLoot> CreateMoneyLoot(Transform parent);
+        UniTask<CTask> CreateDailyTask(Transform parent);
     }
 }

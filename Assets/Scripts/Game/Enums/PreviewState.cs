@@ -9,5 +9,6 @@ namespace CodeBase.Game.Enums
         BuyWeapon   = 1,
         BuySkin     = 2,
         BuyUpgrades = 3,
+        DailyTask   = 4,
     }
 }

@@ -9,7 +9,7 @@ namespace CodeBase.Utils
         private const string hms = @"hh\:mm\:ss";
         private const string dhms = @"dd\:hh\:mm\:ss";
 
-        public static string SecondsToTime(int seconds)
+        public static string SecondsToTime(this int seconds)
         {
             int hours = seconds / 3600;
 

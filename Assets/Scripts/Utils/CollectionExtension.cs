@@ -24,6 +24,17 @@ namespace CodeBase.Utils
         {
             return collection[UnityEngine.Random.Range(0, collection.Count)];
         }
+        
+        public static T GetRandomElementAndRemove<T>(this IList<T> collection)
+        {
+            int index = UnityEngine.Random.Range(0, collection.Count);
+            
+            T element = collection[index];
+
+            collection.RemoveAt(index);
+            
+            return element;
+        }
 
         public static T GetFirst<T>(this IList<T> collection)
         {

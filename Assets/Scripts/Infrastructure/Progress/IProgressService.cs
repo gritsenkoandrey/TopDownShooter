@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.Progress
         IData<Inventory> InventoryData { get; }
         IData<Shop> ShopData { get; }
         IData<bool> HapticData { get; }
+        IData<DailyTask> DailyTaskData { get; }
         void Init();
     }
 }

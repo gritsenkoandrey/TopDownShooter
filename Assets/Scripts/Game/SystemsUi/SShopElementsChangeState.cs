@@ -43,6 +43,12 @@ namespace CodeBase.Game.SystemsUi
                 .ThrottleFirst(DelayClick())
                 .Subscribe(_ => ChangeState(component.UpgradeShopButton, PreviewState.BuyUpgrades).Forget())
                 .AddTo(component.LifetimeDisposable);
+
+            component.DailyTaskButton
+                .OnClickAsObservable()
+                .ThrottleFirst(DelayClick())
+                .Subscribe(_ => ChangeState(component.DailyTaskButton, PreviewState.DailyTask).Forget())
+                .AddTo(component.LifetimeDisposable);
             
             component.BackButton
                 .OnClickAsObservable()

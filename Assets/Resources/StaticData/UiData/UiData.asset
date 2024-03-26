@@ -32,3 +32,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  TaskPrefabReference:
+    m_AssetGUID: 864d12b9c889af1438b10e2b37f0b4c3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -10,5 +10,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         public AssetReference PointerArrowPrefabReference;
         public AssetReference DamageViewPrefabReference;
         public AssetReference MoneyLootPrefabReference;
+        public AssetReference TaskPrefabReference;
     }
 }

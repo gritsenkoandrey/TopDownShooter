@@ -34,12 +34,16 @@ namespace CodeBase.LifeTime.Systems
                 new SShopElementsChangeState(),
                 new SHapticController(),
                 new SHapticButton(),
+                new STaskUpdate(),
+                new SShopTaskProvider(),
+                new SDailyTaskUpdate(),
             };
             
             _systems.Foreach(_objectResolver.Inject);
-            _systems.Foreach(Enable);
         }
         
+        void IStartable.Start() => _systems.Foreach(Enable);
+
         void ITickable.Tick()
         {
             for (int i = 0; i < _systems.Length; i++)

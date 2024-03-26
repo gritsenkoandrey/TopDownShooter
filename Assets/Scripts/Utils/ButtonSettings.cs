@@ -7,5 +7,6 @@
         public const string SelectText = "SELECT";
         public const string SelectedText = "SELECTED";
         public const string BuyText = "BUY";
+        public const string DoneText = "DONE";
     }
 }

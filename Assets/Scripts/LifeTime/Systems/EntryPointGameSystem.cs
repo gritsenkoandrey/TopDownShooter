@@ -65,12 +65,14 @@ namespace CodeBase.LifeTime.Systems
                 new SMoneyLootProvider(),
                 new SMoneyLootUpdate(),
                 new SDeathEffect(),
+                new SDailyTaskUpdate(),
             };
             
             _systems.Foreach(_objectResolver.Inject);
-            _systems.Foreach(Enable);
         }
         
+        void IStartable.Start() => _systems.Foreach(Enable);
+
         void ITickable.Tick()
         {
             for (int i = 0; i < _systems.Length; i++)

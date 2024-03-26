@@ -1,4 +1,5 @@
 ﻿using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.UI.Screens;
 
@@ -12,6 +13,7 @@ namespace CodeBase.Infrastructure.StaticData
         WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
         ProjectileData ProjectileData(ProjectileType type);
         EffectData EffectData(EffectType type);
+        TaskData TaskData(DailyTaskType type);
         LevelData LevelData();
         CharacterData CharacterData();
         TextureData TextureArrayData();

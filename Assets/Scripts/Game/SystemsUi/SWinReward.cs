@@ -32,37 +32,13 @@ namespace CodeBase.Game.SystemsUi
 
         private void ActivateStar(CWinReward component)
         {
-            int index = 0;
-
-            if (CharacterHaseFullHealth())
-            {
-                index++;
-            }
-
-            if (CharacterHasHalfHealth())
-            {
-                index++;
-            }
-
-            if (LevelCompletedHalfTime())
-            {
-                index++;
-            }
+            int count = _levelModel.CalculateLevelStar();
 
             for (int i = 0; i < component.Stars.Length; i++)
             {
-                component.Stars[i].gameObject.SetActive(index > i);
+                component.Stars[i].gameObject.SetActive(count > i);
             }
         }
-
-        private bool CharacterHaseFullHealth() => 
-            _levelModel.Character.Health.CurrentHealth.Value == _levelModel.Character.Health.MaxHealth;
-        
-        private bool CharacterHasHalfHealth() => 
-            _levelModel.Character.Health.CurrentHealth.Value >= _levelModel.Character.Health.MaxHealth / 2;
-
-        private bool LevelCompletedHalfTime() => 
-            _levelModel.Level.Time >= _levelModel.Level.MaxTime / 2;
 
         private void CalculateLoot(CWinReward component)
         {
