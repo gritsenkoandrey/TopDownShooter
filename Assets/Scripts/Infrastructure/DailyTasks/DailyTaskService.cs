@@ -82,20 +82,8 @@ namespace CodeBase.Infrastructure.DailyTasks
 
         private Task CreateTask(DailyTaskType type, TaskData data, int level)
         {
-            int maxScore;
-            int reward = data.Reward + Mathf.RoundToInt(level * data.Multiplier);
-
-            if (type is DailyTaskType.EnterGame or 
-                DailyTaskType.PlayMinutes or 
-                DailyTaskType.CompleteLevel or 
-                DailyTaskType.CompleteLevelThreeStar)
-            {
-                maxScore = data.MaxScore;
-            }
-            else
-            {
-                maxScore = data.MaxScore + Mathf.RoundToInt(level * data.Multiplier);
-            }
+            int maxScore = data.MaxScore + Mathf.RoundToInt(level * data.Multiplier * data.MaxScore);
+            int reward = data.Reward + Mathf.RoundToInt(level * data.Multiplier * data.MaxScore);
 
             return new Task(type, reward, maxScore);
         }

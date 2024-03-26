@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 350
   MaxScore: 300
   Text: Play the game
-  Multiplier: 0.2
+  Multiplier: 0

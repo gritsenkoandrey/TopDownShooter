@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 150
   MaxScore: 1
   Text: Enter the game
-  Multiplier: 0.2
+  Multiplier: 0

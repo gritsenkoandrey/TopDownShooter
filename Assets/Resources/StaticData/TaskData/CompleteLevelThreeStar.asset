@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 1000
   MaxScore: 3
   Text: Finish the level with three stars
-  Multiplier: 0.2
+  Multiplier: 0

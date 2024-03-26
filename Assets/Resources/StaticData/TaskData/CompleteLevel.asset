@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 1000
   MaxScore: 5
   Text: Complete the level
-  Multiplier: 0.2
+  Multiplier: 0

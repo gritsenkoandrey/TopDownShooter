@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 400
   MaxScore: 10
   Text: Kill the enemy with melee weapons
-  Multiplier: 0.2
+  Multiplier: 0.1
