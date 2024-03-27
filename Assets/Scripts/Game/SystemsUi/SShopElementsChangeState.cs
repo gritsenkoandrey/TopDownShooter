@@ -59,11 +59,19 @@ namespace CodeBase.Game.SystemsUi
 
         private async UniTaskVoid ChangeState(Button button, PreviewState state)
         {
+            Entities.Foreach(SetInteractableCanvasGroup);
+            
             await button.transform.PunchTransform().AsyncWaitForCompletion().AsUniTask();
             
             _characterPreviewModel.State.Value = state;
         }
 
         private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
+        
+        private void SetInteractableCanvasGroup(CShopElements component)
+        {
+            component.ShopButtonsCanvasGroup.interactable = false;
+            component.ShopButtonsCanvasGroup.blocksRaycasts = false;
+        }
     }
 }
