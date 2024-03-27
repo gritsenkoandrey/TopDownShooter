@@ -24,7 +24,6 @@ namespace CodeBase.Infrastructure.DailyTasks
         public IReactiveCommand<(DailyTaskType, int)> Update { get; } = new ReactiveCommand<(DailyTaskType, int)>();
 
         private DailyTask DailyTask => _progressService.DailyTaskData.Data.Value;
-        
         private const int Count = 5;
 
         public DailyTaskService(IProgressService progressService, IUIFactory uiFactory, IStaticDataService staticDataService)
@@ -34,8 +33,10 @@ namespace CodeBase.Infrastructure.DailyTasks
             _staticDataService = staticDataService;
         }
 
-        public async UniTaskVoid Create(Transform parent)
+        async UniTaskVoid IDailyTaskService.Create(CShopTaskProvider provider)
         {
+            ClearTaskProvider(provider);
+
             if (DailyTask.IsNewDay())
             {
                 DailyTask.Clear();
@@ -49,10 +50,8 @@ namespace CodeBase.Infrastructure.DailyTasks
                     int level = _progressService.LevelData.Data.Value;
                     Task task = CreateTask(type, data, level);
                     DailyTask.Add(task);
-                    CTask prefab = await _uiFactory.CreateDailyTask(parent);
-                    prefab.QuestText.text = data.Text;
-                    prefab.ButtonText.text = string.Format(FormatText.TaskGetButton, task.Reward.Trim());
-                    prefab.Task.Value = task;
+                    
+                    await CreateTaskComponent(provider, data, task);
                 }
             }
             else
@@ -60,24 +59,22 @@ namespace CodeBase.Infrastructure.DailyTasks
                 foreach (Task task in DailyTask.Tasks.Values)
                 {
                     TaskData data = _staticDataService.TaskData(task.Type);
-                    CTask prefab = await _uiFactory.CreateDailyTask(parent);
-                    prefab.QuestText.text = data.Text;
-                    prefab.ButtonText.text = string.Format(FormatText.TaskGetButton, task.Reward.Trim());
-                    prefab.Task.Value = task;
+                    
+                    await CreateTaskComponent(provider, data, task);
                 }
             }
         }
 
-        public void Complete(DailyTaskType type)
+        void IDailyTaskService.Complete(DailyTaskType type)
         {
             int reward = DailyTask.Complete(type);
 
             _progressService.MoneyData.Data.Value += reward;
         }
 
-        public int GetRemainingUpdateTime()
+        int IDailyTaskService.GetRemainingUpdateTime()
         {
-            return (int)(DateTime.Now.Date + TimeSpan.FromDays(1) - DateTime.Now).TotalSeconds;
+            return (int)(DateTime.UtcNow.Date + TimeSpan.FromDays(1) - DateTime.UtcNow).TotalSeconds;
         }
 
         private Task CreateTask(DailyTaskType type, TaskData data, int level)
@@ -91,6 +88,32 @@ namespace CodeBase.Infrastructure.DailyTasks
         private List<DailyTaskType> CreateListTask()
         {
             return EnumExtension.GenerateEnumList<DailyTaskType>(type => type != DailyTaskType.None);
+        }
+
+        private void ClearTaskProvider(CShopTaskProvider provider)
+        {
+            if (provider.Tasks.Count == 0)
+            {
+                provider.Tasks = new List<CTask>(Count);
+            }
+            else
+            {
+                foreach (CTask task in provider.Tasks)
+                {
+                    UnityEngine.Object.Destroy(task.gameObject);
+                }
+                
+                provider.Tasks.Clear();
+            }
+        }
+        
+        private async UniTask CreateTaskComponent(CShopTaskProvider provider, TaskData data, Task task)
+        {
+            CTask prefab = await _uiFactory.CreateDailyTask(provider.Content);
+            provider.Tasks.Add(prefab);
+            prefab.QuestText.text = data.Text;
+            prefab.ButtonText.text = string.Format(FormatText.TaskGetButton, task.Reward.Trim());
+            prefab.Task.Value = task;
         }
     }
 }

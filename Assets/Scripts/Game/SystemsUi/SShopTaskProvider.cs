@@ -28,7 +28,7 @@ namespace CodeBase.Game.SystemsUi
 
         private void CreateTasks(CShopTaskProvider component)
         {
-            _dailyTaskService.Create(component.Content).Forget();
+            _dailyTaskService.Create(component).Forget();
         }
 
         private void UpdateTimeRemaining(CShopTaskProvider component)
@@ -46,6 +46,8 @@ namespace CodeBase.Game.SystemsUi
 
                     if (time == 0)
                     {
+                        time = _dailyTaskService.GetRemainingUpdateTime();
+
                         CreateTasks(component);
                     }
                 })

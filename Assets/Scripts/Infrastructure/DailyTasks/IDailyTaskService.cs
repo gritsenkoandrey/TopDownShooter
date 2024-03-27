@@ -1,13 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using CodeBase.Game.ComponentsUi;
+using Cysharp.Threading.Tasks;
 using UniRx;
-using UnityEngine;
 
 namespace CodeBase.Infrastructure.DailyTasks
 {
     public interface IDailyTaskService
     {
         IReactiveCommand<(DailyTaskType, int)> Update { get; }
-        UniTaskVoid Create(Transform parent);
+        UniTaskVoid Create(CShopTaskProvider provider);
         void Complete(DailyTaskType type);
         int GetRemainingUpdateTime();
     }

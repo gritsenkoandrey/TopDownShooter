@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using CodeBase.UI.Screens;
 using DG.Tweening;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace CodeBase.Infrastructure.CameraMain
         [SerializeField] private Camera _camera;
         [SerializeField] private CinemachineVirtualCamera _cameraZoomIn;
         [SerializeField] private CinemachineVirtualCamera _cameraZoomOut;
+        [SerializeField] private ShakeSettings _shakeSettings;
         
         private CinemachineBasicMultiChannelPerlin _basicMultiChannelPerlin;
         private Tween _shakeTween;
@@ -38,7 +40,7 @@ namespace CodeBase.Infrastructure.CameraMain
         void ICameraService.Shake()
         {
             _shakeTween?.Kill();
-            _shakeTween = DOVirtual.Float(2f, 0f, 0.65f, SetAmplitude);
+            _shakeTween = DOVirtual.Float(_shakeSettings.Amplitude, 0f, _shakeSettings.Duration, SetAmplitude);
         }
 
         bool ICameraService.IsOnScreen(Vector3 viewportPoint) => viewportPoint is { x: > 0f and < 1f, y: > 0f and < 1f };
@@ -53,5 +55,12 @@ namespace CodeBase.Infrastructure.CameraMain
         }
 
         private void SetAmplitude(float value) => _basicMultiChannelPerlin.m_AmplitudeGain = value;
+    }
+
+    [Serializable]
+    public struct ShakeSettings
+    {
+        public float Amplitude;
+        public float Duration;
     }
 }

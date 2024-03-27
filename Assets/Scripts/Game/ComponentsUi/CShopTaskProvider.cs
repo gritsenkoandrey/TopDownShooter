@@ -1,4 +1,6 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using System.Collections.Generic;
+using CodeBase.ECSCore;
 using TMPro;
 using UnityEngine;
 
@@ -13,5 +15,7 @@ namespace CodeBase.Game.ComponentsUi
         public CanvasGroup CanvasGroup => _canvasGroup;
         public Transform Content => _content;
         public TextMeshProUGUI Text => _text;
+
+        public IList<CTask> Tasks = Array.Empty<CTask>();
     }
 }

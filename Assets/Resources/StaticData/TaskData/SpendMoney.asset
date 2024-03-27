@@ -16,4 +16,4 @@ MonoBehaviour:
   Reward: 500
   MaxScore: 1000
   Text: Spend money
-  Multiplier: 0.1
+  Multiplier: 0.05

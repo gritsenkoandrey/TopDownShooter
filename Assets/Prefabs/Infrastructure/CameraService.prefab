@@ -544,3 +544,6 @@ MonoBehaviour:
   _camera: {fileID: 4534098390172101246}
   _cameraZoomIn: {fileID: 4306145344242619705}
   _cameraZoomOut: {fileID: 4306145345053403222}
+  _shakeSettings:
+    Amplitude: 2
+    Duration: 0.65

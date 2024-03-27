@@ -96,9 +96,9 @@ namespace CodeBase.Infrastructure.Factories.Game
         {
             int index;
 
-            if (_progressService.LevelData.Data.Value >= data.Levels.Length)
+            if (_progressService.LevelData.Data.Value > data.Levels.Length)
             {
-                index = _progressService.LevelData.Data.Value % data.Levels.Length;
+                index = (_progressService.LevelData.Data.Value - 1) % data.Levels.Length;
             }
             else
             {

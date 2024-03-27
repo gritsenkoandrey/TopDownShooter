@@ -31,8 +31,7 @@ namespace CodeBase.Infrastructure.Progress.Data
                 : SetDefaultValue();
         }
 
-        private DailyTask SetDefaultValue() => 
-            new(DateTime.MinValue.Date, new Dictionary<DailyTaskType, Task>());
+        private DailyTask SetDefaultValue() => new(DateTime.MinValue.Date, new Dictionary<DailyTaskType, Task>());
 
         public void Dispose() => Data.Value.Save -= Save;
     }
