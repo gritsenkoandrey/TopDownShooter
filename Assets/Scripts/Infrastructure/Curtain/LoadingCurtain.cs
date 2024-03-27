@@ -20,7 +20,7 @@ namespace CodeBase.Infrastructure.Curtain
             _canvasGroup.alpha = 1f;
         }
 
-        async UniTask ILoadingCurtainService.Hide()
+        async UniTaskVoid ILoadingCurtainService.Hide()
         {
             await ShowLoadingText().AsyncWaitForCompletion().AsUniTask();
             await FadeCanvas().AsyncWaitForCompletion().AsUniTask();

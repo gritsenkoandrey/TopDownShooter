@@ -6,8 +6,6 @@ namespace CodeBase.Game.StateMachine.Unit
     {
         private protected readonly IStateMachine StateMachine;
         private protected readonly CUnit Unit;
-        
-        private protected const float LerpRotate = 0.25f;
 
         private protected UnitState(IStateMachine stateMachine, CUnit unit)
         {

@@ -5,6 +5,6 @@ namespace CodeBase.Infrastructure.Curtain
     public interface ILoadingCurtainService
     {
         void Show();
-        UniTask Hide();
+        UniTaskVoid Hide();
     }
 }

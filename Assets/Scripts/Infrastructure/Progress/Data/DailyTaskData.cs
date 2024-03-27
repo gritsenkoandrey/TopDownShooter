@@ -33,7 +33,7 @@ namespace CodeBase.Infrastructure.Progress.Data
 
         private DailyTask SetDefaultValue() => new(DateTime.MinValue.Date, new Dictionary<DailyTaskType, Task>());
 
-        public void Dispose() => Data.Value.Save -= Save;
+        void IDisposable.Dispose() => Data.Value.Save -= Save;
     }
 
     [JsonObject]

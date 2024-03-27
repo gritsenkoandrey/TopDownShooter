@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
-using CodeBase.Game.Weapon;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 

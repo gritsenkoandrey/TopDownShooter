@@ -1,9 +1,9 @@
-﻿using CodeBase.ECSCore;
+﻿using System;
+using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
-using DG.Tweening;
 using UniRx;
 using VContainer;
 
@@ -15,8 +15,6 @@ namespace CodeBase.Game.SystemsBase
         private IDailyTaskService _dailyTaskService;
         private LevelModel _levelModel;
         private InventoryModel _inventoryModel;
-
-        private Tween _playMinutesTween;
 
         [Inject]
         private void Construct(IProgressService progressService, IDailyTaskService dailyTaskService, 
@@ -40,13 +38,6 @@ namespace CodeBase.Game.SystemsBase
             SubscribeOnPlayMinutes();
             SubscribeOnCompleteLevel();
             SubscribeOnDealDamage();
-        }
-
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-            
-            _playMinutesTween?.Kill();
         }
 
         private void SubscribeOnUpdateTask()
@@ -89,10 +80,13 @@ namespace CodeBase.Game.SystemsBase
 
         private void SubscribeOnPlayMinutes()
         {
-            _playMinutesTween = DOVirtual
-                .DelayedCall(1f, () => _dailyTaskService.Update.Execute((DailyTaskType.PlayMinutes, 1)))
-                .SetEase(Ease.Linear)
-                .SetLoops(-1);
+            Observable.Timer(TimeSpan.FromSeconds(1f))
+                .Repeat()
+                .Subscribe(_ =>
+                {
+                    _dailyTaskService.Update.Execute((DailyTaskType.PlayMinutes, 1));
+                })
+                .AddTo(LifetimeDisposable);
         }
 
         private void SubscribeOnCompleteLevel()
@@ -112,7 +106,13 @@ namespace CodeBase.Game.SystemsBase
 
         private void SubscribeOnEnterGame()
         {
-            _dailyTaskService.Update.Execute((DailyTaskType.EnterGame, 1));
+            Observable.Timer(TimeSpan.FromSeconds(1f))
+                .First()
+                .Subscribe(_ =>
+                {
+                    _dailyTaskService.Update.Execute((DailyTaskType.EnterGame, 1));
+                })
+                .AddTo(LifetimeDisposable);
         }
 
         private void SubscribeOnDealDamage()

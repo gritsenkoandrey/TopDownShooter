@@ -14,6 +14,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
         [Range(0f,100f)] public float CriticalMultiplier;
         [Range(0f,20f)] public float DetectionDistance;
         [Range(0f,20f)] public float AttackDistance;
+        [Range(0f, 1f)] public float Aiming;
         public bool IsDetectThroughObstacle;
     }
 }

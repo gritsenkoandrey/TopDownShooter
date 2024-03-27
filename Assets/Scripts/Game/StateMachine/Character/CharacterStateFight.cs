@@ -3,6 +3,7 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
+using CodeBase.Utils.CustomDebug;
 using UnityEngine;
 using VContainer;
 
@@ -44,7 +45,7 @@ namespace CodeBase.Game.StateMachine.Character
             {
                 LockAtTarget();
 
-                if (Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack())
+                if (HasFacingTarget() && Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack())
                 {
                     Attack();
                 }
@@ -78,7 +79,9 @@ namespace CodeBase.Game.StateMachine.Character
         private void LockAtTarget()
         {
             Quaternion lookRotation = Quaternion.LookRotation(_target.Position - Character.Position);
-            Character.CharacterController.transform.rotation = lookRotation;
+
+            Character.CharacterController.transform.rotation = Quaternion
+                .Slerp(Character.CharacterController.transform.rotation, lookRotation, Character.WeaponMediator.CurrentWeapon.Weapon.AimingSpeed());
         }
 
         private bool TrySetTarget()
@@ -133,6 +136,13 @@ namespace CodeBase.Game.StateMachine.Character
             }
 
             return Physics.Linecast(Character.Position, target, Layers.Wall);
+        }
+
+        private bool HasFacingTarget()
+        {
+            float angle = Vector3.Angle(Character.WeaponMediator.transform.forward.normalized, (_target.Position - Character.Position).normalized);
+
+            return angle < 5f;
         }
     }
 }

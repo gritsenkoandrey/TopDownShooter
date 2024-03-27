@@ -23,6 +23,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 15
     AttackDistance: 12.5
+    Aiming: 0.2
     IsDetectThroughObstacle: 1
   PrefabReference:
     m_AssetGUID: 1caf74cd7b934454497f8e67769a1190

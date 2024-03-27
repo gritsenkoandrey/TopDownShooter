@@ -64,6 +64,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &1217535731094729564
 GameObject:
@@ -129,6 +130,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &1217535731190819507
 GameObject:
@@ -194,6 +196,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &2952027866381491214
 GameObject:
@@ -259,6 +262,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &3341741569394944011
 GameObject:
@@ -324,6 +328,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &3495192745013290555
 GameObject:
@@ -487,6 +492,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &3495192746181472548
 GameObject:
@@ -739,6 +745,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 5
     AttackDistance: 2.5
+    Aiming: 0.25
     IsDetectThroughObstacle: 1
 --- !u!1 &8325492201262410069
 GameObject:

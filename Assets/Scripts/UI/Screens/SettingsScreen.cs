@@ -1,5 +1,4 @@
 ﻿using CodeBase.Infrastructure.GUI;
-using CodeBase.Infrastructure.Models;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;

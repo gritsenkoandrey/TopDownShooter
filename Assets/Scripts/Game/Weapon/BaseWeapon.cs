@@ -44,7 +44,8 @@ namespace CodeBase.Game.Weapon
         public bool IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
         public float AttackDistance() => _attackDistance;
         public float DetectionDistance() => WeaponCharacteristic.DetectionDistance;
-        
+        public float AimingSpeed() => WeaponCharacteristic.Aiming;
+
         private protected virtual void ReloadClip() => _clipCount = WeaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
         private protected virtual int GetDamage() => WeaponCharacteristic.Damage;

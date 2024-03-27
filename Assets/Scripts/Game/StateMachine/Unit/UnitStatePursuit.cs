@@ -70,7 +70,7 @@ namespace CodeBase.Game.StateMachine.Unit
         {
             Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
 
-            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, LerpRotate);
+            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, Unit.WeaponMediator.CurrentWeapon.Weapon.AimingSpeed());
         }
     }
 }

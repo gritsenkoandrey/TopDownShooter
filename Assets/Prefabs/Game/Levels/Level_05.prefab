@@ -64,6 +64,7 @@ MonoBehaviour:
     CriticalMultiplier: 2
     DetectionDistance: 10
     AttackDistance: 7.5
+    Aiming: 0.05
     IsDetectThroughObstacle: 1
 --- !u!1 &3495192746181472548
 GameObject:

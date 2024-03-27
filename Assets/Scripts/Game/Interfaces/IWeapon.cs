@@ -9,5 +9,6 @@ namespace CodeBase.Game.Interfaces
         bool IsDetectThroughObstacle();
         float AttackDistance();
         float DetectionDistance();
+        float AimingSpeed();
     }
 }
