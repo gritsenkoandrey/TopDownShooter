@@ -14,6 +14,7 @@ using CodeBase.Infrastructure.Loader;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.Progress;
+using CodeBase.Infrastructure.States;
 using CodeBase.Infrastructure.StaticData;
 using UnityEngine;
 using VContainer;
@@ -64,8 +65,13 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
 
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
-
-            builder.RegisterEntryPoint<BootstrapEntryPoint>(Lifetime.Scoped).AsSelf().Build();
+            
+            builder.RegisterBuildCallback(container =>
+            {
+                IStateMachineFactory stateMachineFactory = container.Resolve<IStateMachineFactory>();
+                
+                stateMachineFactory.CreateGameStateMachine().Enter<StateBootstrap>();
+            });
         }
     }
 } 

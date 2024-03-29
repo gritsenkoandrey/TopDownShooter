@@ -145,7 +145,6 @@ MonoBehaviour:
   _canvasGroup: {fileID: 1544038682976013172}
   _safeArea: {fileID: 5490875462719566425}
   _button: {fileID: 1544038682559636176}
-  Image: {fileID: 8645578152597054406}
 --- !u!1 &4769812634840856606
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,17 +702,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7064376979080639373, guid: 935976f236a38de4a8319fdc82f9af20, type: 3}
   m_PrefabInstance: {fileID: 2691110889748208363}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8645578152597054406 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5954880890496383277, guid: 935976f236a38de4a8319fdc82f9af20, type: 3}
-  m_PrefabInstance: {fileID: 2691110889748208363}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2702736443474193284
 PrefabInstance:
   m_ObjectHideFlags: 0
