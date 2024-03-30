@@ -36,8 +36,9 @@ namespace CodeBase.Game.Systems
                     _lootModel.GenerateEnemyLoot(component);
                     _levelModel.RemoveEnemy(component);
                     _effectFactory.CreateEffect(EffectType.Death, component.Position.AddY(component.Height)).Forget();
+                    _effectFactory.CreateEffect(EffectType.Blood, component.Position).Forget();
                     
-                    component.DeathEffect.PlayEffect.Execute(Unit.Default);
+                    component.Shadow.SetActive(false);
                 })
                 .AddTo(component.LifetimeDisposable);
         }

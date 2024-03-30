@@ -33,6 +33,12 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
     Count: 0
   - PrefabReference:
+      m_AssetGUID: 12c7cc78dfc718045b278f8c4b685f7a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Count: 0
+  - PrefabReference:
       m_AssetGUID: 154af25b7b5b4c24eac3a323bb19644c
       m_SubObjectName: 
       m_SubObjectType: 

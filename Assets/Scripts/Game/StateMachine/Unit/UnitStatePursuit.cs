@@ -28,7 +28,6 @@ namespace CodeBase.Game.StateMachine.Unit
             _attackDistance = Unit.WeaponMediator.CurrentWeapon.Weapon.AttackDistance();
             Unit.Agent.Agent.speed = Unit.UnitStats.PursuitSpeed;
             Unit.Animator.OnRun.Execute(1f);
-            Unit.Radar.Clear.Execute();
         }
 
         public void Exit()

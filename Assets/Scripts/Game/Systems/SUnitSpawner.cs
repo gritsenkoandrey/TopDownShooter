@@ -41,7 +41,6 @@ namespace CodeBase.Game.Systems
             unit.Health.SetMaxHealth(unit.UnitStats.Health);
             unit.Health.CurrentHealth.SetValueAndForceNotify(unit.UnitStats.Health);
             unit.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
-            unit.Radar.SetRadius(weapon.Weapon.DetectionDistance());
             unit.StateMachine.CreateStateMachine(_stateMachineFactory.CreateUnitStateMachine(unit));
             
             SetEquipment(unit);

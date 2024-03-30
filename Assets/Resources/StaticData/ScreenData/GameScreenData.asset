@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 576f5d209ec14c0087c2fca465cd1c35, type: 3}
-  m_Name: ScreenData_04
+  m_Name: GameScreenData
   m_EditorClassIdentifier: 
-  ScreenType: 3
+  ScreenType: 1
+  Prefab: {fileID: 0}
   PrefabReference:
-    m_AssetGUID: 9aa1606cb99a2204fa8f633927ce446a
+    m_AssetGUID: 3bfda78987cc15146b3ad22c99fff1f6
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

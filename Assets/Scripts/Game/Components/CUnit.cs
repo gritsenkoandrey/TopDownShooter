@@ -11,18 +11,16 @@ namespace CodeBase.Game.Components
         [SerializeField] private CAgent _agent;
         [SerializeField] private CAnimator _animator;
         [SerializeField] private CWeaponMediator _weaponMediator;
-        [SerializeField] private CRadar _radar;
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CBodyMediator _bodyMediator;
-        [SerializeField] private CDeathEffect _deathEffect;
+        [SerializeField] private CShadow _shadow;
 
         public CAgent Agent => _agent;
         public CAnimator Animator => _animator;
         public CWeaponMediator WeaponMediator => _weaponMediator;
-        public CRadar Radar => _radar;
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
-        public CDeathEffect DeathEffect => _deathEffect;
+        public CShadow Shadow => _shadow;
         public Health Health { get; } = new ();
         public UnitStats UnitStats { get; set; }
         public Vector3 Position => transform.position;

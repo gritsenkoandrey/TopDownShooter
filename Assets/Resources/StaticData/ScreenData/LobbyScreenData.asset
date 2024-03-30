@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 576f5d209ec14c0087c2fca465cd1c35, type: 3}
-  m_Name: ScreenData_06
+  m_Name: LobbyScreenData
   m_EditorClassIdentifier: 
-  ScreenType: 5
+  ScreenType: 0
+  Prefab: {fileID: 0}
   PrefabReference:
-    m_AssetGUID: d742d340cd38d644fb8264517efec9b6
+    m_AssetGUID: 6df19e06a43020e4a9ae94c4bf206ed9
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

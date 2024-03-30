@@ -8,6 +8,7 @@ using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Infrastructure.Progress;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -57,6 +58,7 @@ namespace CodeBase.Game.Systems
 
             SetEquipment(character);
             SetCameraTarget(character);
+            SetRadarRadius(character);
         }
 
         private void SetEquipment(CCharacter character)
@@ -72,6 +74,12 @@ namespace CodeBase.Game.Systems
         private void SetCameraTarget(CCharacter character)
         {
             _cameraService.SetTarget(character.transform);
+        }
+
+        private void SetRadarRadius(CCharacter character)
+        {
+            float distance = Mathf.Sqrt(character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance());
+            character.Radar.SetRadius(distance);
         }
     }
 }

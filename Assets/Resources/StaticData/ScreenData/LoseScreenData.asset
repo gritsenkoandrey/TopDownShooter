@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c99dae48c8fc4b33a8917cc7c7b7478a, type: 3}
-  m_Name: UpgradeButtonData_01
+  m_Script: {fileID: 11500000, guid: 576f5d209ec14c0087c2fca465cd1c35, type: 3}
+  m_Name: LoseScreenData
   m_EditorClassIdentifier: 
-  UpgradeButtonType: 0
-  BaseCost: 1500
+  ScreenType: 3
   PrefabReference:
-    m_AssetGUID: b743356fc62389848846dab711e68711
+    m_AssetGUID: 9aa1606cb99a2204fa8f633927ce446a
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

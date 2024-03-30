@@ -8,7 +8,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     public sealed class EffectData : ScriptableObject
     {
         public EffectType EffectType;
-        [Range(0.1f, 5f)]public float LifeTime;
+        [Range(0.1f, 10f)]public float LifeTime;
         public AssetReference PrefabReference;
     }
 }

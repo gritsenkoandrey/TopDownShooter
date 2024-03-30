@@ -13,7 +13,6 @@ namespace CodeBase.Game.StateMachine.Unit
         public void Enter()
         {
             Unit.Agent.Agent.ResetPath();
-            Unit.Radar.Clear.Execute();
             Unit.Animator.OnDeath.Execute();
             Unit.CleanSubscribe();
         }

@@ -1594,22 +1594,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _letters:
-  - _canvasGroup: {fileID: 9095441095641991926}
-    _transform: {fileID: 3360608714310593060}
-  - _canvasGroup: {fileID: 7923054421338605688}
-    _transform: {fileID: 3475792341148916435}
-  - _canvasGroup: {fileID: 6569945644902276804}
-    _transform: {fileID: 7671157357868790417}
-  - _canvasGroup: {fileID: 8709608587677639322}
-    _transform: {fileID: 368445521518408155}
-  - _canvasGroup: {fileID: 3647099800917848119}
-    _transform: {fileID: 6728531418738494853}
-  - _canvasGroup: {fileID: 8316364032286050757}
-    _transform: {fileID: 3151503595569280897}
-  - _canvasGroup: {fileID: 7194571924671924709}
-    _transform: {fileID: 2774267948588320148}
-  - _canvasGroup: {fileID: 4225587518704862851}
-    _transform: {fileID: 8987080162892794496}
+  - {fileID: 3360608714310593060}
+  - {fileID: 3475792341148916435}
+  - {fileID: 7671157357868790417}
+  - {fileID: 368445521518408155}
+  - {fileID: 6728531418738494853}
+  - {fileID: 3151503595569280897}
+  - {fileID: 2774267948588320148}
+  - {fileID: 8987080162892794496}
 --- !u!1 &7741237612611206829
 GameObject:
   m_ObjectHideFlags: 0

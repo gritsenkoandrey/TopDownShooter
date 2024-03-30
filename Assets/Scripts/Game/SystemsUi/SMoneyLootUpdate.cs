@@ -17,9 +17,9 @@ namespace CodeBase.Game.SystemsUi
             _cameraService = cameraService;
         }
 
-        protected override void OnLateUpdate()
+        protected override void OnUpdate()
         {
-            base.OnLateUpdate();
+            base.OnUpdate();
             
             Entities.Foreach(UpdateMoneyLootPosition);
         }

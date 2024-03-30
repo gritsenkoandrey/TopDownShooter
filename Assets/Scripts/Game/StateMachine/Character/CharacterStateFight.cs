@@ -3,7 +3,6 @@ using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
-using CodeBase.Utils.CustomDebug;
 using UnityEngine;
 using VContainer;
 
@@ -26,7 +25,10 @@ namespace CodeBase.Game.StateMachine.Character
             _levelModel = levelModel;
         }
 
-        void IState.Enter() { }
+        void IState.Enter()
+        {
+            Character.Radar.Clear.Execute();
+        }
 
         void IState.Exit() { }
 
@@ -140,7 +142,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasFacingTarget()
         {
-            float angle = Vector3.Angle(Character.WeaponMediator.transform.forward.normalized, (_target.Position - Character.Position).normalized);
+            float angle = Vector3.Angle(Character.Forward.normalized, (_target.Position - Character.Position).normalized);
 
             return angle < 5f;
         }

@@ -29,7 +29,6 @@ namespace CodeBase.Game.StateMachine.Unit
             _delay = Unit.UnitStats.StayDelay;
             _startHealth = Unit.Health.CurrentHealth.Value;
             Unit.Animator.OnRun.Execute(0f);
-            Unit.Radar.Draw.Execute();
         }
 
         public void Exit() { }

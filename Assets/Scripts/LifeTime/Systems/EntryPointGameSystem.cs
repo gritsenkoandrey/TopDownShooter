@@ -64,7 +64,6 @@ namespace CodeBase.LifeTime.Systems
                 new SSettingsMediator(),
                 new SMoneyLootProvider(),
                 new SMoneyLootUpdate(),
-                new SDeathEffect(),
                 new SDailyTaskUpdate(),
             };
             

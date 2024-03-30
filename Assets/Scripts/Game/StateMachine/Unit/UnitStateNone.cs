@@ -12,7 +12,6 @@ namespace CodeBase.Game.StateMachine.Unit
         public void Enter()
         {
             Unit.Agent.Agent.ResetPath();
-            Unit.Radar.Clear.Execute();
             Unit.Animator.OnRun.Execute(0f);
             Unit.CleanSubscribe();
         }

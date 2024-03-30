@@ -13,6 +13,7 @@ namespace CodeBase.Game.StateMachine.Character
         {
             Character.Animator.OnDeath.Execute();
             Character.CleanSubscribe();
+            Character.Radar.Clear.Execute();
         }
 
         void IState.Exit() { }

@@ -82,15 +82,15 @@ namespace CodeBase.Game.SystemsUi
             Vector3 to = new Vector3(dirX, 1f, 0f) * offset;
             Vector3 center = Vector3.Lerp(from, to, 0.25f).AddY(offset * 2f);
             
+            component.CanvasGroup.alpha = 0f;
+            component.Text.text = damage.ToString();
+
             component.Settings.From = from;
             component.Settings.Center = center;
             component.Settings.To = to;
             component.Settings.Index = 0;
             component.Settings.Target = target;
             component.Settings.IsActive = true;
-
-            component.CanvasGroup.alpha = 0f;
-            component.Text.text = damage.ToString();
         }
     }
 }

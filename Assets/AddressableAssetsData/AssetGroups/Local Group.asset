@@ -287,6 +287,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
+  - m_GUID: 12c7cc78dfc718045b278f8c4b685f7a
+    m_Address: BloodFx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FX
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:
