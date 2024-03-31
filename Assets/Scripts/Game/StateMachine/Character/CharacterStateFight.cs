@@ -12,7 +12,7 @@ namespace CodeBase.Game.StateMachine.Character
     {
         private IJoystickService _joystickService;
         private LevelModel _levelModel;
-        private IEnemy _target;
+        private ITarget _target;
 
         public CharacterStateFight(IStateMachine stateMachine, CCharacter character) : base(stateMachine, character)
         {
@@ -28,9 +28,13 @@ namespace CodeBase.Game.StateMachine.Character
         void IState.Enter()
         {
             Character.Radar.Clear.Execute();
+            SetTarget(null);
         }
 
-        void IState.Exit() { }
+        void IState.Exit()
+        {
+            SetTarget(null);
+        }
 
         void IState.Tick()
         {
@@ -97,8 +101,8 @@ namespace CodeBase.Game.StateMachine.Character
 
             if (index >= 0)
             {
-                _target = _levelModel.Enemies[index];
-                
+                SetTarget(_levelModel.Enemies[index]);
+
                 return true;
             }
 
@@ -145,6 +149,12 @@ namespace CodeBase.Game.StateMachine.Character
             float angle = Vector3.Angle(Character.Forward.normalized, (_target.Position - Character.Position).normalized);
 
             return angle < 5f;
+        }
+
+        private void SetTarget(ITarget target)
+        {
+            _target = target;
+            _levelModel.Target.Value = target;
         }
     }
 }

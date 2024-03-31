@@ -13,6 +13,7 @@ namespace CodeBase.Infrastructure.Models
         public ILevel Level { get; private set; }
         public IReadOnlyReactiveCollection<IEnemy> Enemies => _enemies;
         public IReactiveCommand<int> CompleteLevel { get; } = new ReactiveCommand<int>();
+        public IReactiveProperty<ITarget> Target { get; } = new ReactiveProperty<ITarget>();
 
         public void AddEnemy(IEnemy enemy) => _enemies.Add(enemy);
         public void RemoveEnemy(IEnemy enemy) => _enemies.Remove(enemy);
