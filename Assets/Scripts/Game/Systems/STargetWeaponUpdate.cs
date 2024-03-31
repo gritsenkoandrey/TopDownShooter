@@ -30,19 +30,7 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             _levelModel.Target
-                .Subscribe(target =>
-                {
-                    if (target != null)
-                    {
-                        component.Target = target;
-                        component.HasTarget = true;
-                        component.IsValid = true;
-                    }
-                    else
-                    {
-                        component.IsValid = false;
-                    }
-                })
+                .Subscribe(component.SetTarget)
                 .AddTo(component.LifetimeDisposable);
         }
 
