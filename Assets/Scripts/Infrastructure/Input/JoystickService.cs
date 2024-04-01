@@ -42,7 +42,7 @@ namespace CodeBase.Infrastructure.Input
         {
             _isEnable = isEnable;
 
-            if (!isEnable)
+            if (isEnable == false)
             {
                 _joystickHeld = false;
             
@@ -68,7 +68,7 @@ namespace CodeBase.Infrastructure.Input
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
-            if (!_isEnable) return;
+            if (_isEnable == false) return;
             
             _joystickHeld = true;
 
@@ -87,7 +87,7 @@ namespace CodeBase.Infrastructure.Input
         
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
-            if (!_isEnable) return;
+            if (_isEnable == false) return;
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle
                 (_handle, eventData.position, eventData.pressEventCamera, out Vector2 direction);
@@ -111,7 +111,7 @@ namespace CodeBase.Infrastructure.Input
         
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
-            if (!_isEnable) return;
+            if (_isEnable == false) return;
             
             _joystickHeld = false;
             
