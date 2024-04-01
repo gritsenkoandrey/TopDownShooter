@@ -10,7 +10,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SWeaponReloadingView : SystemComponent<CWeaponReloadingView>
+    public sealed class SScreenVisualReloadingWeapon : SystemComponent<CWeaponReloadingView>
     {
         private ICameraService _cameraService;
         private InventoryModel _inventoryModel;

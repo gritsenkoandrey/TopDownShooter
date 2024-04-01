@@ -9,7 +9,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SWinReward : SystemComponent<CWinReward>
+    public sealed class SScreenWinAnimation : SystemComponent<CWinReward>
     {
         private LevelModel _levelModel;
         private LootModel _lootModel;
@@ -64,7 +64,7 @@ namespace CodeBase.Game.SystemsUi
                         .SetEase(Ease.Linear))
                     .Append(star.transform
                         .DOPunchScale(Vector3.one * 0.1f, 0.2f, 2, 0.5f))
-                    .SetLink(star.gameObject);
+                    .SetLink(component.gameObject);
 
                 i++;
             }

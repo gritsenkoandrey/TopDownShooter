@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public class SPrintResultText : SystemComponent<CPrintResultText>
+    public class SScreenLoseAnimation : SystemComponent<CPrintResultText>
     {
         private const float Offset = 0.1f;
 

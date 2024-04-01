@@ -6,7 +6,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SLevelGoal : SystemComponent<CLevelGoal>
+    public sealed class SScreenVisualLevelGoal : SystemComponent<CLevelGoal>
     {
         private LevelModel _levelModel;
 

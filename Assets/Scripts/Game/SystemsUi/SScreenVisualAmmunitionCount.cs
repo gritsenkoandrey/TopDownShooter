@@ -6,7 +6,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SCharacterAmmunitionView : SystemComponent<CCharacterAmmunitionView>
+    public sealed class SScreenVisualAmmunitionCount : SystemComponent<CCharacterAmmunitionView>
     {
         private InventoryModel _inventoryModel;
 

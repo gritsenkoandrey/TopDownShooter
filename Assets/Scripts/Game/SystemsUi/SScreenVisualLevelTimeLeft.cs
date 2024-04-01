@@ -7,7 +7,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SLevelTimeLeft : SystemComponent<CLevelTimeLeft>
+    public sealed class SScreenVisualLevelTimeLeft : SystemComponent<CLevelTimeLeft>
     {
         private LevelModel _levelModel;
 

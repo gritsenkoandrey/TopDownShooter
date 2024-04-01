@@ -25,10 +25,7 @@ namespace CodeBase.Game.SystemsUi
             component.Task
                 .SkipLatestValueOnSubscribe()
                 .First()
-                .Subscribe(task =>
-                {
-                    SubscribeOnUpdateTask(component, task);
-                })
+                .Subscribe(task => SubscribeOnUpdateTask(component, task))
                 .AddTo(component.LifetimeDisposable);
         }
 
@@ -49,12 +46,13 @@ namespace CodeBase.Game.SystemsUi
 
                     if (task.IsDone)
                     {
-                        component.ButtonText.text = ButtonSettings.DoneText;
-                        component.ButtonText.color = component.ColorDone;
+                        TaskDone(component);
                     }
-
-                    component.ProgressText.text = Format(task);
-                    component.FillProgress.fillAmount = Mathematics.Remap(0f, task.MaxScore, 0f, 1f, task.Score);
+                    else
+                    {
+                        component.ProgressText.text = Format(task);
+                        component.FillProgress.fillAmount = Mathematics.Remap(0f, task.MaxScore, 0f, 1f, task.Score);
+                    }
                 })
                 .AddTo(component.LifetimeDisposable);
 
@@ -65,8 +63,8 @@ namespace CodeBase.Game.SystemsUi
                 {
                     component.GetButton.transform.PunchTransform();
                     component.GetButton.interactable = false;
-                    component.ButtonText.text = ButtonSettings.DoneText;
-                    component.ButtonText.color = component.ColorDone;
+                    
+                    TaskDone(component);
 
                     _dailyTaskService.Complete(task.Type);
                 })
@@ -78,6 +76,14 @@ namespace CodeBase.Game.SystemsUi
             return task.Type == DailyTaskType.PlayMinutes ? 
                 string.Format(FormatText.TaskProgress, Math.Clamp(task.Score, 0, task.MaxScore).SecondsToTime(), task.MaxScore.SecondsToTime()) : 
                 string.Format(FormatText.TaskProgress, Math.Clamp(task.Score, 0, task.MaxScore).Trim(), task.MaxScore.Trim());
+        }
+
+        private void TaskDone(CTask component)
+        {
+            component.ButtonText.text = ButtonSettings.DoneText;
+            component.ButtonText.color = component.ColorDone;
+            component.ProgressText.text = string.Empty;
+            component.FillProgress.fillAmount = 1f;
         }
     }
 }

@@ -8,7 +8,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SCharacterHealth : SystemComponent<CCharacterHealth>
+    public sealed class SScreenVisualCharacterHealth : SystemComponent<CCharacterHealth>
     {
         private LevelModel _levelModel;
 

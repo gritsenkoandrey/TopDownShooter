@@ -7,7 +7,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SBloodEffect : SystemComponent<CBloodEffect>
+    public sealed class SScreenBloodEffect : SystemComponent<CBloodEffect>
     {
         private LevelModel _levelModel;
 
