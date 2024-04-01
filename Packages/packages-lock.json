@@ -265,11 +265,11 @@
       }
     },
     "jp.hadashikick.vcontainer": {
-      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.14.0",
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.15.3",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d37fb21ba4d17f3a80effdc8119d985d8d150ebe"
+      "hash": "f2afd2ac175a1e04ac59a8f69794df827b53b732"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
