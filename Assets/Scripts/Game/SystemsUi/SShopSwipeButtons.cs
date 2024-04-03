@@ -4,6 +4,8 @@ using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UniRx;
 using VContainer;
 
@@ -33,40 +35,58 @@ namespace CodeBase.Game.SystemsUi
             component.LeftButton
                 .OnClickAsObservable()
                 .ThrottleFirst(DelayClick())
-                .Subscribe(_ =>
-                {
-                    component.LeftButton.transform.PunchTransform();
-
-                    switch (_characterPreviewModel.State.Value)
-                    {
-                        case PreviewState.BuyWeapon:
-                            TurnLeftWeapon();
-                            break;
-                        case PreviewState.BuySkin:
-                            TurnLeftSkin();
-                            break;
-                    }
-                })
+                .Subscribe(_ => ClickLeftButton(component).Forget())
                 .AddTo(component.LifetimeDisposable);
             
             component.RightButton
                 .OnClickAsObservable()
                 .ThrottleFirst(DelayClick())
-                .Subscribe(_ =>
-                {
-                    component.RightButton.transform.PunchTransform();
-
-                    switch (_characterPreviewModel.State.Value)
-                    {
-                        case PreviewState.BuyWeapon:
-                            TurnRightWeapon();
-                            break;
-                        case PreviewState.BuySkin:
-                            TurnRightSkin();
-                            break;
-                    }
-                })
+                .Subscribe(_ => ClickRightButton(component).Forget())
                 .AddTo(component.LifetimeDisposable);
+        }
+
+        private async UniTaskVoid ClickRightButton(CShopSwipeButtons component)
+        {
+            component.RightButton.transform.PunchTransform();
+            component.RightButton.interactable = false;
+
+            switch (_characterPreviewModel.State.Value)
+            {
+                case PreviewState.BuyWeapon:
+                    await ShowWeaponFade(1f, 2f).AsyncWaitForCompletion().AsUniTask();
+                    TurnRightWeapon();
+                    await ShowWeaponFade(2f, 1f).AsyncWaitForCompletion().AsUniTask();
+                    break;
+                case PreviewState.BuySkin:
+                    await ShowEquipmentFade(1f, 2f).AsyncWaitForCompletion().AsUniTask();
+                    TurnRightSkin();
+                    await ShowEquipmentFade(2f, 1f).AsyncWaitForCompletion().AsUniTask();
+                    break;
+            }
+
+            component.RightButton.interactable = true;
+        }
+
+        private async UniTaskVoid ClickLeftButton(CShopSwipeButtons component)
+        {
+            component.LeftButton.transform.PunchTransform();
+            component.LeftButton.interactable = false;
+
+            switch (_characterPreviewModel.State.Value)
+            {
+                case PreviewState.BuyWeapon:
+                    await ShowWeaponFade(1f, 2f).AsyncWaitForCompletion().AsUniTask();
+                    TurnLeftWeapon();
+                    await ShowWeaponFade(2f, 1f).AsyncWaitForCompletion().AsUniTask();
+                    break;
+                case PreviewState.BuySkin:
+                    await ShowEquipmentFade(1f, 2f).AsyncWaitForCompletion().AsUniTask();
+                    TurnLeftSkin();
+                    await ShowEquipmentFade(2f, 1f).AsyncWaitForCompletion().AsUniTask();
+                    break;
+            }
+
+            component.LeftButton.interactable = true;
         }
 
         private void TurnLeftWeapon()
@@ -131,6 +151,36 @@ namespace CodeBase.Game.SystemsUi
             }
             
             _inventoryModel.IndexSkin.Value = index;
+        }
+
+        private Tween ShowEquipmentFade(float from, float to)
+        {
+            CCharacterPreviewModel model = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+            
+            return DOVirtual.Float(from, to, 0.25f, value =>
+                {
+                    for (int i = 0; i < model.EquipmentMaterials.Length; i++)
+                    {
+                        model.EquipmentMaterials[i].SetFloat(Shaders.Fade, value);
+                    }
+                })
+                .SetEase(Ease.Linear)
+                .SetLink(model.gameObject);
+        }
+        
+        private Tween ShowWeaponFade(float from, float to)
+        {
+            CCharacterPreviewModel model = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
+
+            return DOVirtual.Float(from, to, 0.25f, value =>
+                {
+                    for (int i = 0; i < model.WeaponMaterials.Length; i++)
+                    {
+                        model.WeaponMaterials[i].SetFloat(Shaders.Fade, value);
+                    }
+                })
+                .SetEase(Ease.Linear)
+                .SetLink(model.gameObject);
         }
         
         private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);

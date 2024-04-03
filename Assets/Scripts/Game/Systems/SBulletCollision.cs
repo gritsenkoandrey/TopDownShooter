@@ -30,6 +30,7 @@ namespace CodeBase.Game.Systems
             
             Entities.Foreach(CheckEnemyCollision);
             Entities.Foreach(CheckCharacterCollision);
+            Entities.Foreach(CheckObstacleCollision);
         }
 
         private void CheckEnemyCollision(IBullet bullet)
@@ -65,6 +66,19 @@ namespace CodeBase.Game.Systems
             bullet.OnDestroy.Execute();
             
             _effectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
+        }
+
+        private void CheckObstacleCollision(IBullet bullet)
+        {
+            for (int i = 0; i < _levelModel.Obstacles.Count; i++)
+            {
+                bool isCollision = _levelModel.Obstacles[i].Bounds.Contains(bullet.Position);
+
+                if (isCollision)
+                {
+                    bullet.OnDestroy.Execute();
+                }
+            }
         }
 
         private void AddLog(IBullet bullet, ITarget target) => _damageCombatLog.AddLog(target, bullet.Damage);

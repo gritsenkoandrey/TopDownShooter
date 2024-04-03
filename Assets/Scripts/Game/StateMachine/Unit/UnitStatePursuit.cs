@@ -1,5 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Models;
+using CodeBase.Utils;
 using UnityEngine;
 using VContainer;
 
@@ -52,7 +53,7 @@ namespace CodeBase.Game.StateMachine.Unit
             {
                 LookAt();
                 
-                if (DistanceToTarget() < _attackDistance)
+                if (DistanceToTarget() < _attackDistance && HasObstacleOnAttackPath() == false)
                 {
                     StateMachine.Enter<UnitStateFight>();
                 }
@@ -70,6 +71,16 @@ namespace CodeBase.Game.StateMachine.Unit
             Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
 
             Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, Unit.WeaponMediator.CurrentWeapon.Weapon.AimingSpeed());
+        }
+        
+        private bool HasObstacleOnAttackPath()
+        {
+            if (Unit.WeaponMediator.CurrentWeapon.Weapon.IsDetectThroughObstacle() == false)
+            {
+                return false;
+            }
+            
+            return Physics.Linecast(Unit.Position, _levelModel.Character.Position, Layers.Wall);
         }
     }
 }

@@ -48,3 +48,38 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - Time: 120
+    Loot: 225
+    PrefabReference:
+      m_AssetGUID: c6904490ae78940428c1e26088ba88d7
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Time: 120
+    Loot: 250
+    PrefabReference:
+      m_AssetGUID: d6214dab173041546a52278801fed586
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Time: 120
+    Loot: 275
+    PrefabReference:
+      m_AssetGUID: d023b4bf1005e934b906c546f350d545
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Time: 120
+    Loot: 300
+    PrefabReference:
+      m_AssetGUID: db084dd023e05c741a609611a676d577
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Time: 120
+    Loot: 325
+    PrefabReference:
+      m_AssetGUID: 5e70d87ef42f3a641ba0999812beb9ef
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

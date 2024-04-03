@@ -51,7 +51,7 @@ namespace CodeBase.Game.StateMachine.Character
             {
                 LockAtTarget();
 
-                if (HasFacingTarget() && Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack())
+                if (HasFacingTarget() && Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath(_target.Position) == false)
                 {
                     Attack();
                 }
@@ -121,7 +121,7 @@ namespace CodeBase.Game.StateMachine.Character
 
                 if (distance < Character.WeaponMediator.CurrentWeapon.Weapon.AttackDistance())
                 {
-                    if (distance < minDistance && HasObstacleOnAttackPath(_levelModel.Enemies[i].Position) == false)
+                    if (distance < minDistance)
                     {
                         index = i;
                         minDistance = distance;

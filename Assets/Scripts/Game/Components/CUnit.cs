@@ -24,6 +24,7 @@ namespace CodeBase.Game.Components
         public Health Health { get; } = new ();
         public UnitStats UnitStats { get; set; }
         public Vector3 Position => transform.position;
+        public Vector3 Forward => transform.forward;
         public float Height => UnitStats.Height;
         public int Loot => UnitStats.Money;
     }

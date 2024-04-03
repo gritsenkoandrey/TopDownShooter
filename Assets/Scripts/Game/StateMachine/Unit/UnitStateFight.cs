@@ -41,7 +41,7 @@ namespace CodeBase.Game.StateMachine.Unit
                 return;
             }
             
-            if (DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive)
+            if (DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive || HasObstacleOnAttackPath())
             {
                 StateMachine.Enter<UnitStatePursuit>();
                 
@@ -50,7 +50,7 @@ namespace CodeBase.Game.StateMachine.Unit
             
             LookAt();
             
-            if (Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath() == false)
+            if (Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath() == false && HasFacingTarget())
             {
                 Unit.WeaponMediator.CurrentWeapon.Weapon.Attack(_levelModel.Character);
                 Unit.Animator.OnAttack.Execute();
@@ -65,7 +65,6 @@ namespace CodeBase.Game.StateMachine.Unit
             {
                 return false;
             }
-
             return Physics.Linecast(Unit.Position, _levelModel.Character.Position, Layers.Wall);
         }
         
@@ -74,6 +73,13 @@ namespace CodeBase.Game.StateMachine.Unit
             Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
 
             Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, Unit.WeaponMediator.CurrentWeapon.Weapon.AimingSpeed());
+        }
+        
+        private bool HasFacingTarget()
+        {
+            float angle = Vector3.Angle(Unit.Forward.normalized, (_levelModel.Character.Position - Unit.Position).normalized);
+
+            return angle < 5f;
         }
     }
 }

@@ -66,6 +66,7 @@ namespace CodeBase.LifeTime.Systems
                 new SMoneyLootUpdate(),
                 new SDailyTaskUpdate(),
                 new STargetWeaponUpdate(),
+                new SWallInitialize(),
             };
             
             _systems.Foreach(_objectResolver.Inject);

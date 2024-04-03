@@ -10,9 +10,13 @@ namespace CodeBase.Game.ComponentsUi
     {
         [SerializeField] private WeaponData[] _weapons;
         [SerializeField] private SkinData[] _skins;
+        [SerializeField] private Material[] _equpmentMaterials;
+        [SerializeField] private Material[] _weaponMaterials;
 
         public SkinData[] Skins => _skins;
         public WeaponData[] Weapons => _weapons;
+        public Material[] EquipmentMaterials => _equpmentMaterials;
+        public Material[] WeaponMaterials => _weaponMaterials;
     }
 
     [Serializable]

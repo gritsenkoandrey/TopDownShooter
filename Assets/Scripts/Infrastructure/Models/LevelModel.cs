@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Interfaces;
+﻿using System.Collections.Generic;
+using CodeBase.Game.Interfaces;
 using JetBrains.Annotations;
 using UniRx;
 
@@ -8,17 +9,20 @@ namespace CodeBase.Infrastructure.Models
     public sealed class LevelModel
     {
         private readonly ReactiveCollection<IEnemy> _enemies = new ();
-        
+        private readonly List<IObstacle> _obstacles = new ();
+
         public ICharacter Character { get; private set; }
         public ILevel Level { get; private set; }
         public IReadOnlyReactiveCollection<IEnemy> Enemies => _enemies;
         public IReactiveCommand<int> CompleteLevel { get; } = new ReactiveCommand<int>();
         public IReactiveProperty<ITarget> Target { get; } = new ReactiveProperty<ITarget>();
+        public IReadOnlyList<IObstacle> Obstacles => _obstacles;
 
         public void AddEnemy(IEnemy enemy) => _enemies.Add(enemy);
         public void RemoveEnemy(IEnemy enemy) => _enemies.Remove(enemy);
         public void SetCharacter(ICharacter character) => Character = character;
         public void SetLevel(ILevel level) => Level = level;
+        public void AddObstacle(IObstacle obstacle) => _obstacles.Add(obstacle);
         
         public int CalculateLevelStar()
         {
@@ -46,14 +50,11 @@ namespace CodeBase.Infrastructure.Models
 
         public void CleanUp()
         {
-            CleanCharacter();
-            CleanLevel();
-            CleanEnemies();
+            Character = null;
+            Level = null;
+            _enemies.Clear();
+            _obstacles.Clear();
         }
-
-        private void CleanCharacter() => Character = null;
-        private void CleanLevel() => Level = null;
-        private void CleanEnemies() => _enemies.Clear();
         
         private bool CharacterHaseFullHealth() => Character.Health.CurrentHealth.Value == Character.Health.MaxHealth;
         private bool CharacterHasHalfHealth() => Character.Health.CurrentHealth.Value >= Character.Health.MaxHealth / 2;

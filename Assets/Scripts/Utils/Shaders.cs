@@ -6,5 +6,6 @@ namespace CodeBase.Utils
     {
         public static int TextureArray => Shader.PropertyToID("_TextureArray");
         public static int Index => Shader.PropertyToID("_Index");
+        public static int Fade => Shader.PropertyToID("_Fade");
     }
 }
