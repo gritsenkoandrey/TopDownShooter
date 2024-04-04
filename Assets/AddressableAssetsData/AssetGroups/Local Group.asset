@@ -317,6 +317,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Environment
+  - m_GUID: c83fb3ef04bb383408bb2064b89690b2
+    m_Address: ExplosionFx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FX
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

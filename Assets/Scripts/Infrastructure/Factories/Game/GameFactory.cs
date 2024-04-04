@@ -95,14 +95,15 @@ namespace CodeBase.Infrastructure.Factories.Game
         private Level GetLevel(LevelData data)
         {
             int index;
+            int level = _progressService.LevelData.Data.Value;
 
-            if (_progressService.LevelData.Data.Value > data.Levels.Length)
+            if (level > data.Levels.Length)
             {
-                index = (_progressService.LevelData.Data.Value - 1) % data.Levels.Length;
+                index = (level - 1) % data.Levels.Length;
             }
             else
             {
-                index = _progressService.LevelData.Data.Value - 1;
+                index = level - 1;
             }
             
             return data.Levels[index];

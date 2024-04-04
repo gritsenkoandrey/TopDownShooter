@@ -33,7 +33,7 @@ namespace CodeBase.Game.Systems
             Entities.Foreach(CheckObstacleCollision);
         }
 
-        private void CheckEnemyCollision(IBullet bullet)
+        private void CheckEnemyCollision(CBullet bullet)
         {
             for (int i = 0; i < _levelModel.Enemies.Count; i++)
             {
@@ -48,7 +48,7 @@ namespace CodeBase.Game.Systems
             }
         }
 
-        private void CheckCharacterCollision(IBullet bullet)
+        private void CheckCharacterCollision(CBullet bullet)
         {
             bool targetIsAlive = _levelModel.Character.Health.IsAlive;
             bool isCollision = (bullet.Position - _levelModel.Character.Position).sqrMagnitude < bullet.CollisionDistance;
@@ -59,7 +59,7 @@ namespace CodeBase.Game.Systems
             }
         }
 
-        private void Collision(IBullet bullet, ITarget target)
+        private void Collision(CBullet bullet, ITarget target)
         {
             target.Health.CurrentHealth.Value -= bullet.Damage;
 
@@ -68,7 +68,7 @@ namespace CodeBase.Game.Systems
             _effectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
         }
 
-        private void CheckObstacleCollision(IBullet bullet)
+        private void CheckObstacleCollision(CBullet bullet)
         {
             for (int i = 0; i < _levelModel.Obstacles.Count; i++)
             {
@@ -77,10 +77,12 @@ namespace CodeBase.Game.Systems
                 if (isCollision)
                 {
                     bullet.OnDestroy.Execute();
+                    
+                    _effectFactory.CreateEffect(EffectType.Explosion, bullet.Position).Forget();
                 }
             }
         }
 
-        private void AddLog(IBullet bullet, ITarget target) => _damageCombatLog.AddLog(target, bullet.Damage);
+        private void AddLog(CBullet bullet, ITarget target) => _damageCombatLog.AddLog(target, bullet.Damage);
     }
 }
