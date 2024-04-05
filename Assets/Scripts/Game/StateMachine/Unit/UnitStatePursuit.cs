@@ -51,8 +51,6 @@ namespace CodeBase.Game.StateMachine.Unit
             }
             else
             {
-                LookAt();
-                
                 if (DistanceToTarget() < _attackDistance && HasObstacleOnAttackPath() == false)
                 {
                     StateMachine.Enter<UnitStateFight>();
@@ -65,13 +63,6 @@ namespace CodeBase.Game.StateMachine.Unit
         }
         
         private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
-
-        private void LookAt()
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(_levelModel.Character.Position - Unit.Position);
-
-            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, lookRotation, Unit.WeaponMediator.CurrentWeapon.Weapon.AimingSpeed());
-        }
         
         private bool HasObstacleOnAttackPath()
         {

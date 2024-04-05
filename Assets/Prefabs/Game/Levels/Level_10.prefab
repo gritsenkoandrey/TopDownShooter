@@ -154,14 +154,14 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.2
+    ForceBullet: 0.4
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5
     CriticalMultiplier: 2
     DetectionDistance: 7.5
     AttackDistance: 6
-    Aiming: 0.1
+    Aiming: 0.4
     IsDetectThroughObstacle: 1
 --- !u!1 &3495192746181472548
 GameObject:
@@ -502,14 +502,14 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.2
+    ForceBullet: 0.4
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5
     CriticalMultiplier: 2
     DetectionDistance: 7.5
     AttackDistance: 6
-    Aiming: 0.1
+    Aiming: 0.4
     IsDetectThroughObstacle: 1
 --- !u!1 &8711102872376158351
 GameObject:
@@ -568,14 +568,14 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.2
+    ForceBullet: 0.4
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5
     CriticalMultiplier: 2
     DetectionDistance: 7.5
     AttackDistance: 6
-    Aiming: 0.1
+    Aiming: 0.4
     IsDetectThroughObstacle: 1
 --- !u!1001 &8381703734242879883
 PrefabInstance:
