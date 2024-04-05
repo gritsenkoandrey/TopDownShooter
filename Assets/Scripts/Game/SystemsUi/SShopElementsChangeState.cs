@@ -66,12 +66,12 @@ namespace CodeBase.Game.SystemsUi
             _characterPreviewModel.State.Value = state;
         }
 
-        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
-        
         private void SetInteractableCanvasGroup(CShopElements component)
         {
             component.ShopButtonsCanvasGroup.interactable = false;
             component.ShopButtonsCanvasGroup.blocksRaycasts = false;
         }
+
+        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
     }
 }

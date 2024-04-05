@@ -4,7 +4,7 @@ namespace CodeBase.Infrastructure.Haptic.Engine
 {
     public sealed class HapticAdapterAndroid : IHapticAdapter
     {
-        private const int MIN_SDK_VERSION = 26;
+        private const int MinSDKVersion = 26;
 
         private readonly AndroidJavaObject _androidVibrator;
         private AndroidJavaClass _vibrationEffectClass;
@@ -68,7 +68,7 @@ namespace CodeBase.Infrastructure.Haptic.Engine
 
         private void AndroidVibrate(long[] pattern, int[] amplitudes, int repeat)
         {
-            if (AndroidSDKVersion() < MIN_SDK_VERSION)
+            if (AndroidSDKVersion() < MinSDKVersion)
             {
                 _androidVibrator?.Call("vibrate", pattern, repeat);
             }
@@ -85,7 +85,7 @@ namespace CodeBase.Infrastructure.Haptic.Engine
 
         private void AndroidVibrate(long milliseconds, int amplitude)
         {
-            if (AndroidSDKVersion() < MIN_SDK_VERSION)
+            if (AndroidSDKVersion() < MinSDKVersion)
             {
                 AndroidVibrate(milliseconds);
             }

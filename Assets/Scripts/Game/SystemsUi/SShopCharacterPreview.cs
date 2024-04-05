@@ -7,7 +7,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SCharacterPreview : SystemComponent<CCharacterPreview>
+    public sealed class SShopCharacterPreview : SystemComponent<CCharacterPreview>
     {
         private InventoryModel _inventoryModel;
         private CharacterPreviewModel _characterPreviewModel;

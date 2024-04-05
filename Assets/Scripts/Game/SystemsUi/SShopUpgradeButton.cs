@@ -8,7 +8,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SUpgradeButton : SystemComponent<CUpgradeButton>
+    public sealed class SShopUpgradeButton : SystemComponent<CUpgradeButton>
     {
         private IProgressService _progressService;
 

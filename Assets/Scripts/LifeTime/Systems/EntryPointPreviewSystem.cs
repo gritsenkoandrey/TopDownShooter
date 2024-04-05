@@ -22,19 +22,19 @@ namespace CodeBase.LifeTime.Systems
         {
             _systems = new SystemBase[]
             {
-                new SCharacterPreview(),
+                new SShopCharacterPreview(),
                 new SShopCharacterRenderer(),
                 new SShopSwipeButtons(),
                 new SShopMediator(),
-                new SShopUpgradeWindow(),
-                new SUpgradeButton(),
+                new SShopUpgradeButtonProvider(),
+                new SShopUpgradeButton(),
                 new SMoneyUpdate(),
                 new SShopPrice(),
                 new SShopBuyButton(),
                 new SShopElementsChangeState(),
                 new SHapticController(),
                 new SHapticButton(),
-                new STaskUpdate(),
+                new SShopTaskUpdate(),
                 new SShopTaskProvider(),
                 new SDailyTaskUpdate(),
             };

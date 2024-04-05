@@ -6,7 +6,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class SShopUpgradeWindow : SystemComponent<CShopUpgradeWindow>
+    public sealed class SShopUpgradeButtonProvider : SystemComponent<CShopUpgradeWindow>
     {
         private IUIFactory _uiFactory;
 

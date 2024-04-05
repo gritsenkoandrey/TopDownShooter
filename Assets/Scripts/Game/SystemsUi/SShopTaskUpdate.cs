@@ -8,7 +8,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsUi
 {
-    public sealed class STaskUpdate : SystemComponent<CTask>
+    public sealed class SShopTaskUpdate : SystemComponent<CTask>
     {
         private IDailyTaskService _dailyTaskService;
 
