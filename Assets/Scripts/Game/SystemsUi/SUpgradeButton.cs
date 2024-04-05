@@ -24,6 +24,7 @@ namespace CodeBase.Game.SystemsUi
 
             SubscribeOnBuyButtonClick(component);
             SubscribeOnUpdateButton(component);
+            SubscribeOnChangeMoney(component);
         }
 
         private void SubscribeOnBuyButtonClick(CUpgradeButton component)
@@ -50,20 +51,20 @@ namespace CodeBase.Game.SystemsUi
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
+        private void SubscribeOnChangeMoney(CUpgradeButton component)
+        {
+            _progressService.MoneyData.Data
+                .Subscribe(money => component.BuyButton.interactable = money >= component.Cost)
+                .AddTo(component.LifetimeDisposable);
+        }
 
         private void UpdateButton(CUpgradeButton component, int level)
         {
             component.SetCost(level * component.BaseCost);
             component.TextLevel.text = string.Format(FormatText.Level, level.ToString());
             component.TextCost.text = string.Format(FormatText.Cost, component.Cost.Trim());
-            
-            Entities.Foreach(SetButtonInteractable);
         }
 
-        private void SetButtonInteractable(CUpgradeButton button)
-        {
-            button.BuyButton.interactable = _progressService.MoneyData.Data.Value >= button.Cost;
-        }
+        private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);
     }
 }
