@@ -55,8 +55,7 @@ namespace CodeBase.Infrastructure.Factories.UI
             UpgradeButtonData data = _staticDataService.UpgradeButtonData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             CUpgradeButton button = Object.Instantiate(prefab, parent).GetComponent<CUpgradeButton>();
-            button.SetUpgradeButtonType(data.UpgradeButtonType);
-            button.SetBaseCost(data.BaseCost);
+            button.Init(data);
             return button;
         }
 

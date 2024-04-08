@@ -1,6 +1,9 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Enums;
+using CodeBase.Infrastructure.StaticData.Data;
+using CodeBase.Utils;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,14 +16,28 @@ namespace CodeBase.Game.ComponentsUi
         [SerializeField] private TextMeshProUGUI _textCost;
 
         public Button BuyButton => _buyButton;
-        public TextMeshProUGUI TextLevel => _textLevel;
-        public TextMeshProUGUI TextCost => _textCost;
         public UpgradeButtonType UpgradeButtonType { get; private set; }
         public int Cost { get; private set; }
-        public int BaseCost { get; private set; }
 
-        public void SetUpgradeButtonType(UpgradeButtonType type) => UpgradeButtonType = type;
-        public void SetCost(int cost) => Cost = cost;
-        public void SetBaseCost(int baseCost) => BaseCost = baseCost;
+        private int _baseCost;
+
+        public IReactiveProperty<bool> IsInit { get; } = new ReactiveProperty<bool>(false);
+
+        public void Init(UpgradeButtonData data)
+        {
+            UpgradeButtonType = data.UpgradeButtonType;
+            _baseCost = data.BaseCost;
+            IsInit.Value = true;
+        }
+
+        public void UpdateButton(int level)
+        {
+            Cost = level * _baseCost;
+            
+            _textLevel.text = string.Format(FormatText.Level, level.ToString());
+            _textCost.text = string.Format(FormatText.Cost, Cost.Trim());
+       }
+
+        public void SetButtonInteractable(int money) => _buyButton.interactable = money >= Cost;
     }
 }
