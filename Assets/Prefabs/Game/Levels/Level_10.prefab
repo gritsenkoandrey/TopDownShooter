@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 3
+  _weaponType: 11
   _unitStats:
     Money: 200
     Health: 200
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070d85219e9e4d86be5e431e10999454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponType: 3
+  _weaponType: 9
   _unitStats:
     Money: 200
     Health: 200

@@ -53,7 +53,6 @@ Shader "Unlit/Reflect"
             #pragma target 2.0
 
             #include "UnityCG.cginc"
-            #include "UnityUI.cginc"
 
             #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
             #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
