@@ -38,6 +38,8 @@ namespace CodeBase.Infrastructure.Input
 
         Vector2 IJoystickService.GetAxis() => _axis;
 
+        float IJoystickService.GetDeadZone() => _deadZoneRadius;
+
         void IJoystickService.Enable(bool isEnable)
         {
             _isEnable = isEnable;

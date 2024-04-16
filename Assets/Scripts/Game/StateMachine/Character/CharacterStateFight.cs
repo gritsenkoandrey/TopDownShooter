@@ -42,7 +42,7 @@ namespace CodeBase.Game.StateMachine.Character
             
             if (HasInput())
             {
-                StateMachine.Enter<CharacterStateRun>();
+                EnterState<CharacterStateRun>();
                 
                 return;
             }
@@ -51,14 +51,14 @@ namespace CodeBase.Game.StateMachine.Character
             {
                 LockAtTarget();
 
-                if (HasFacingTarget() && Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath(_target.Position) == false)
+                if (CanAttack())
                 {
                     Attack();
                 }
             }
             else
             {
-                StateMachine.Enter<CharacterStateIdle>();
+                EnterState<CharacterStateIdle>();
             }
         }
 
@@ -79,7 +79,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return _joystickService.GetAxis().sqrMagnitude > MinInputMagnitude;
+            return _joystickService.GetAxis().sqrMagnitude > _joystickService.GetDeadZone();
         }
 
         private void LockAtTarget()
@@ -149,6 +149,13 @@ namespace CodeBase.Game.StateMachine.Character
             float angle = Vector3.Angle(Character.Forward.normalized, (_target.Position - Character.Position).normalized);
 
             return angle < 5f;
+        }
+
+        private bool CanAttack()
+        {
+            return HasFacingTarget() && 
+                   Character.WeaponMediator.CurrentWeapon.Weapon.CanAttack() &&
+                   HasObstacleOnAttackPath(_target.Position) == false;
         }
 
         private void SetTarget(ITarget target)

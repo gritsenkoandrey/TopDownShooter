@@ -34,23 +34,23 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
-            if (Unit.Health.IsAlive == false)
+            if (IsDeath())
             {
-                StateMachine.Enter<UnitStateDeath>();
+                EnterState<UnitStateDeath>();
                 
                 return;
             }
             
-            if (DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive || HasObstacleOnAttackPath())
+            if (CannotAttack())
             {
-                StateMachine.Enter<UnitStatePursuit>();
-                
+                EnterState<UnitStatePursuit>();
+
                 return;
             }
             
             LookAt();
             
-            if (Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && HasObstacleOnAttackPath() == false && HasFacingTarget())
+            if (CanAttack())
             {
                 Unit.WeaponMediator.CurrentWeapon.Weapon.Attack(_levelModel.Character);
                 Unit.Animator.OnAttack.Execute();
@@ -80,6 +80,21 @@ namespace CodeBase.Game.StateMachine.Unit
             float angle = Vector3.Angle(Unit.Forward.normalized, (_levelModel.Character.Position - Unit.Position).normalized);
 
             return angle < 5f;
+        }
+
+        private bool IsDeath() => Unit.Health.IsAlive == false;
+
+        private bool CanAttack()
+        {
+            return Unit.WeaponMediator.CurrentWeapon.Weapon.CanAttack() && 
+                   HasObstacleOnAttackPath() == false &&
+                   HasFacingTarget();
+        }
+
+        private bool CannotAttack()
+        {
+            return DistanceToTarget() > _attackDistance && _levelModel.Character.Health.IsAlive ||
+                   HasObstacleOnAttackPath();
         }
     }
 }

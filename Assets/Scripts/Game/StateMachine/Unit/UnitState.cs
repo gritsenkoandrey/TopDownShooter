@@ -4,13 +4,16 @@ namespace CodeBase.Game.StateMachine.Unit
 {
     public abstract class UnitState
     {
-        private protected readonly IStateMachine StateMachine;
-        private protected readonly CUnit Unit;
+        private readonly IStateMachine _stateMachine;
+        
+        private protected CUnit Unit { get; }
 
         private protected UnitState(IStateMachine stateMachine, CUnit unit)
         {
-            StateMachine = stateMachine;
+            _stateMachine = stateMachine;
             Unit = unit;
         }
+        
+        protected void EnterState<T>() where T : UnitState, IState => _stateMachine.Enter<T>();
     }
 }

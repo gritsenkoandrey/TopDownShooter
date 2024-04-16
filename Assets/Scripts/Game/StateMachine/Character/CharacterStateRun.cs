@@ -40,7 +40,7 @@ namespace CodeBase.Game.StateMachine.Character
         {
             if (HasNoInput())
             {
-                StateMachine.Enter<CharacterStateIdle>();
+                EnterState<CharacterStateIdle>();
                 
                 return;
             }
@@ -49,10 +49,7 @@ namespace CodeBase.Game.StateMachine.Character
             Rotate();
         }
 
-        private bool HasNoInput()
-        {
-            return _joystickService.GetAxis().sqrMagnitude < MinInputMagnitude;
-        }
+        private bool HasNoInput() => _joystickService.GetAxis().sqrMagnitude < _joystickService.GetDeadZone();
 
         private void Move()
         {

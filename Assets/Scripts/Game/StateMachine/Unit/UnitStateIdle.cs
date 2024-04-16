@@ -35,16 +35,16 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
-            if (Unit.Health.IsAlive == false)
+            if (IsDeath())
             {
-                StateMachine.Enter<UnitStateDeath>();
+                EnterState<UnitStateDeath>();
                 
                 return;
             }
 
-            if (DistanceToTarget() < _detectionDistance || IsAggro())
+            if (CanPursuit())
             {
-                StateMachine.Enter<UnitStatePursuit>();
+                EnterState<UnitStatePursuit>();
             }
             else
             {
@@ -54,13 +54,15 @@ namespace CodeBase.Game.StateMachine.Unit
                 }
                 else
                 {
-                    StateMachine.Enter<UnitStatePatrol>();
+                    EnterState<UnitStatePatrol>();
                 }
             }
         }
-        
-        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
 
+
+        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
         private bool IsAggro() => _startHealth > Unit.Health.CurrentHealth.Value;
+        private bool CanPursuit() => DistanceToTarget() < _detectionDistance || IsAggro();
+        private bool IsDeath() => Unit.Health.IsAlive == false;
     }
 }

@@ -38,22 +38,22 @@ namespace CodeBase.Game.StateMachine.Unit
 
         public void Tick()
         {
-            if (Unit.Health.IsAlive == false)
+            if (IsDeath())
             {
-                StateMachine.Enter<UnitStateDeath>();
+                EnterState<UnitStateDeath>();
                 
                 return;
             }
 
-            if (DistanceToTarget() > _pursuitRadius)
+            if (CanIdle())
             {
-                StateMachine.Enter<UnitStateIdle>();
+                EnterState<UnitStateIdle>();
             }
             else
             {
-                if (DistanceToTarget() < _attackDistance && HasObstacleOnAttackPath() == false)
+                if (CanFight())
                 {
-                    StateMachine.Enter<UnitStateFight>();
+                    EnterState<UnitStateFight>();
                 }
                 else
                 {
@@ -61,9 +61,7 @@ namespace CodeBase.Game.StateMachine.Unit
                 }
             }
         }
-        
-        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
-        
+
         private bool HasObstacleOnAttackPath()
         {
             if (Unit.WeaponMediator.CurrentWeapon.Weapon.IsDetectThroughObstacle() == false)
@@ -73,5 +71,10 @@ namespace CodeBase.Game.StateMachine.Unit
             
             return Physics.Linecast(Unit.Position, _levelModel.Character.Position, Layers.Wall);
         }
+
+        private bool CanIdle() => DistanceToTarget() > _pursuitRadius;
+        private bool CanFight() => DistanceToTarget() < _attackDistance && HasObstacleOnAttackPath() == false;
+        private float DistanceToTarget() => (_levelModel.Character.Position - Unit.Position).sqrMagnitude;
+        private bool IsDeath() => Unit.Health.IsAlive == false;
     }
 }

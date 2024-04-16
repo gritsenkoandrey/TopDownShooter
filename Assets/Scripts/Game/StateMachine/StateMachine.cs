@@ -29,9 +29,6 @@ namespace CodeBase.Game.StateMachine
             return state;
         }
 
-        private T GetState<T>() where T : class, IState
-        {
-            return States[typeof(T)] as T;
-        }
+        private T GetState<T>() where T : class, IState => States[typeof(T)] as T;
     }
 }

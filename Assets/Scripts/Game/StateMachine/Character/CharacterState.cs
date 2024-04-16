@@ -4,15 +4,16 @@ namespace CodeBase.Game.StateMachine.Character
 {
     public abstract class CharacterState
     {
-        private protected readonly IStateMachine StateMachine;
-        private protected readonly CCharacter Character;
+        private readonly IStateMachine _stateMachine;
         
-        private protected const float MinInputMagnitude = 0.1f;
+        private protected CCharacter Character { get; }
 
         private protected CharacterState(IStateMachine stateMachine, CCharacter character)
         {
-            StateMachine = stateMachine;
+            _stateMachine = stateMachine;
             Character = character;
         }
+
+        protected void EnterState<T>() where T : CharacterState, IState => _stateMachine.Enter<T>();
     }
 }

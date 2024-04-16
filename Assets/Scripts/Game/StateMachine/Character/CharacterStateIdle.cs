@@ -36,16 +36,14 @@ namespace CodeBase.Game.StateMachine.Character
             
             if (HasInput())
             {
-                StateMachine.Enter<CharacterStateRun>();
+                EnterState<CharacterStateRun>();
                 
                 return;
             }
 
             if (HasDetectedTarget())
             {
-                StateMachine.Enter<CharacterStateFight>();
-                
-                return;
+                EnterState<CharacterStateFight>();
             }
         }
 
@@ -60,7 +58,7 @@ namespace CodeBase.Game.StateMachine.Character
 
         private bool HasInput()
         {
-            return _joystickService.GetAxis().sqrMagnitude > MinInputMagnitude;
+            return _joystickService.GetAxis().sqrMagnitude > _joystickService.GetDeadZone();
         }
 
         private bool HasDetectedTarget()
