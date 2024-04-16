@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.Factories.Game;
 using CodeBase.Infrastructure.Factories.StateMachine;
+using CodeBase.Infrastructure.Factories.Systems;
 using CodeBase.Infrastructure.Factories.TextureArray;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.GUI;
@@ -63,6 +64,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<ISystemFactory, SystemFactory>(Lifetime.Singleton);
 
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
             

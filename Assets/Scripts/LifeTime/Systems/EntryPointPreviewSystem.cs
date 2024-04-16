@@ -1,80 +1,28 @@
-﻿using System;
-using CodeBase.ECSCore;
-using CodeBase.Game.SystemsBase;
-using CodeBase.Game.SystemsUi;
+﻿using CodeBase.Infrastructure.Factories.Systems;
 using CodeBase.Utils;
 using JetBrains.Annotations;
 using VContainer;
-using VContainer.Unity;
 
 namespace CodeBase.LifeTime.Systems
 {
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public sealed class EntryPointPreviewSystem : IEntryPointSystem
+    public sealed class EntryPointPreviewSystem : EntryPointBase
     {
-        private SystemBase[] _systems = Array.Empty<SystemBase>();
-
         private readonly IObjectResolver _objectResolver;
+        private readonly ISystemFactory _systemFactory;
 
-        public EntryPointPreviewSystem(IObjectResolver objectResolver) => _objectResolver = objectResolver;
-
-        void IInitializable.Initialize()
+        public EntryPointPreviewSystem(IObjectResolver objectResolver, ISystemFactory systemFactory)
         {
-            _systems = new SystemBase[]
-            {
-                new SShopCharacterPreview(),
-                new SShopCharacterRenderer(),
-                new SShopSwipeButtons(),
-                new SShopMediator(),
-                new SShopUpgradeButtonProvider(),
-                new SShopUpgradeButton(),
-                new SMoneyUpdate(),
-                new SShopPrice(),
-                new SShopBuyButton(),
-                new SShopElementsChangeState(),
-                new SHapticController(),
-                new SHapticButton(),
-                new SShopTaskUpdate(),
-                new SShopTaskProvider(),
-                new SDailyTaskUpdate(),
-            };
+            _objectResolver = objectResolver;
+            _systemFactory = systemFactory;
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
             
-            _systems.Foreach(_objectResolver.Inject);
+            Systems = _systemFactory.CreatePreviewSystems();
+            Systems.Foreach(_objectResolver.Inject);
         }
-        
-        void IStartable.Start() => _systems.Foreach(Enable);
-
-        void ITickable.Tick()
-        {
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _systems[i].Update();
-            }
-        }
-
-        void IFixedTickable.FixedTick()
-        {
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _systems[i].FixedUpdate();
-            }
-        }
-
-        void ILateTickable.LateTick()
-        {
-            for (int i = 0; i < _systems.Length; i++)
-            {
-                _systems[i].LateUpdate();
-            }
-        }
-
-        void IDisposable.Dispose()
-        {
-            _systems.Foreach(Disable);
-            _systems = Array.Empty<SystemBase>();
-        }
-        
-        private void Enable(SystemBase system) => system.EnableSystem();
-        private void Disable(SystemBase system) => system.DisableSystem();
     }
 }
