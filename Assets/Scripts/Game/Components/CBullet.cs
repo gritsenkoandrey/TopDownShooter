@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CodeBase.Game.Components
 {
-    public sealed class CBullet : EntityComponent<CBullet> , IBullet
+    public sealed class CBullet : EntityComponent<CBullet> , IProjectile
     {
         public Vector3 Position => transform.position;
         public GameObject Object => gameObject;

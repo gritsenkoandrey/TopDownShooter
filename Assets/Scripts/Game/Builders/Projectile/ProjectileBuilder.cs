@@ -1,5 +1,4 @@
 ﻿using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
@@ -53,7 +52,7 @@ namespace CodeBase.Game.Builders.Projectile
             return this;
         }
 
-        public IBullet Build()
+        public CBullet Build()
         {
             Vector3 position = _spawnPoint.position;
             Quaternion rotation = _spawnPoint.rotation;

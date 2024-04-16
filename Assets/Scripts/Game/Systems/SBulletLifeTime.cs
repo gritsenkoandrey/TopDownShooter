@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
-using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace CodeBase.Game.Systems
             }
         }
 
-        private async UniTaskVoid ReturnToPool(IObject component)
+        private async UniTaskVoid ReturnToPool(CBullet component)
         {
             await UniTask.Yield();
             

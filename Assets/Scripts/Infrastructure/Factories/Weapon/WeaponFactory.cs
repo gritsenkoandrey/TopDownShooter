@@ -53,7 +53,7 @@ namespace CodeBase.Infrastructure.Factories.Weapon
             return weapon;
         }
 
-        async UniTask<IBullet> IWeaponFactory.CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction)
+        async UniTask<IProjectile> IWeaponFactory.CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction)
         {
             ProjectileData data = _staticDataService.ProjectileData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
