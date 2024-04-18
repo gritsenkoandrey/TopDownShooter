@@ -28,8 +28,7 @@ namespace CodeBase.Game.SystemsUi
                 .First(isInit => isInit)
                 .Subscribe(_ =>
                 {
-                    SubscribeOnUpdateButton(component);
-                    SubscribeOnChangeMoney(component);
+                    SubscribeOnDataChange(component);
                 })
                 .AddTo(component.LifetimeDisposable);
         }
@@ -42,25 +41,21 @@ namespace CodeBase.Game.SystemsUi
                 .Subscribe(_ =>
                 {
                     component.BuyButton.transform.PunchTransform();
-                    
+
                     _progressService.MoneyData.Data.Value -= component.Cost;
                     _progressService.StatsData.Data.Value.Data[component.UpgradeButtonType]++;
                 })
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void SubscribeOnUpdateButton(CUpgradeButton component)
+        private void SubscribeOnDataChange(CUpgradeButton component)
         {
-            _progressService.StatsData.Data.Value
-                .ObserveEveryValueChanged(data => data.Data[component.UpgradeButtonType])
-                .Subscribe(component.UpdateButton)
-                .AddTo(component.LifetimeDisposable);
-        }
+            IObservable<int> observable = _progressService.StatsData.Data.Value
+                .ObserveEveryValueChanged(data => data.Data[component.UpgradeButtonType]);
 
-        private void SubscribeOnChangeMoney(CUpgradeButton component)
-        {
             _progressService.MoneyData.Data
-                .Subscribe(component.SetButtonInteractable)
+                .CombineLatest(observable, (money, level) => (money, level))
+                .Subscribe(tuple => component.UpdateData(tuple.money, tuple.level))
                 .AddTo(component.LifetimeDisposable);
         }
 

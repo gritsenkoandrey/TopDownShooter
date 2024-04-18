@@ -30,14 +30,12 @@ namespace CodeBase.Game.ComponentsUi
             IsInit.Value = true;
         }
 
-        public void UpdateButton(int level)
+        public void UpdateData(int money, int level)
         {
             Cost = level * _baseCost;
-            
             _textLevel.text = string.Format(FormatText.Level, level.ToString());
             _textCost.text = string.Format(FormatText.Cost, Cost.Trim());
-       }
-
-        public void SetButtonInteractable(int money) => _buyButton.interactable = money >= Cost;
+            _buyButton.interactable = money >= Cost;
+        }
     }
 }
