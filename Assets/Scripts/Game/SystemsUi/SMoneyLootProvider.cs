@@ -44,7 +44,7 @@ namespace CodeBase.Game.SystemsUi
 
         private async UniTaskVoid CreateMoneyLoot(CMoneyLootProvider component, ITarget target, int loot)
         {
-            if (component.MoneyLoots == Array.Empty<CMoneyLoot>())
+            if (component.MoneyLoots.IsReadOnly)
             {
                 component.MoneyLoots = new List<CMoneyLoot>();
             }

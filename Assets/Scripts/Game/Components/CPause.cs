@@ -11,13 +11,13 @@ namespace CodeBase.Game.Components
         protected override void OnEntityCreate()
         {
             base.OnEntityCreate();
-
-            _pauses = GetComponents<IPause>();
+        
+            _pauses = GetComponentsInChildren<IPause>();
         }
 
         public void Pause(bool isPause)
         {
-            if (_pauses == Array.Empty<IPause>()) return;
+            if (_pauses.IsReadOnly) return;
 
             for (int i = 0; i < _pauses.Length; i++)
             {

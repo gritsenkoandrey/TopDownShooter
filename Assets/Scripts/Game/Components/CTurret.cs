@@ -20,6 +20,7 @@ namespace CodeBase.Game.Components
         public TurretStats Stats { get; set; }
         public Vector3 Position => transform.position;
         public float Height => Stats.Height;
+        public float Scale => Stats.Scale;
         public int Loot => Stats.Money;
     }
 }

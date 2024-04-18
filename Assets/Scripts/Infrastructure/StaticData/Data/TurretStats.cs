@@ -6,5 +6,6 @@
         public int Health;
         public int Money;
         public float Height;
+        public float Scale;
     }
 }

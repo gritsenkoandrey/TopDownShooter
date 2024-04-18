@@ -3,5 +3,6 @@
     public interface IHeight
     {
         float Height { get; }
+        float Scale { get; }
     }
 }

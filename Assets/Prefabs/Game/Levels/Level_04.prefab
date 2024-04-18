@@ -54,6 +54,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1
@@ -262,6 +263,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 20
@@ -469,6 +471,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1
@@ -535,6 +538,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1
@@ -601,6 +605,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1
@@ -667,6 +672,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1

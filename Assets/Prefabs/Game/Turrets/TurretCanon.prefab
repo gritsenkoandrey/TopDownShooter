@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 7658201175292125169}
   - component: {fileID: 8529333457237254515}
   - component: {fileID: 3335115119533079197}
+  - component: {fileID: 838034909470235724}
   - component: {fileID: 7899014452697899528}
   m_Layer: 8
   m_Name: TurretCanon
@@ -127,6 +128,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b74de8a03a4600aae2ab5fc5fd149b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &838034909470235724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706966341913556927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61058ea0a1214cbe9e8ad8c26dd0acba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7899014452697899528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3117682209925419597}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 8}
+  m_LocalPosition: {x: 0, y: 4.5, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -381,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1101433243989072235, guid: cb20578294304e34da5f6c07e5ad57df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1101433243989072235, guid: cb20578294304e34da5f6c07e5ad57df, type: 3}
       propertyPath: m_LocalPosition.z

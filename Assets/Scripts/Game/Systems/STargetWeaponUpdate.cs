@@ -36,10 +36,16 @@ namespace CodeBase.Game.Systems
 
         private void UpdateTarget(CTargetWeapon component)
         {
+            if (component.IsPause)
+            {
+                return;
+            }
+            
             if (component.HasTarget)
             {
                 component.Transform.position = component.Target.Position;
                 component.Transform.localEulerAngles += Vector3.up * Time.deltaTime * 250f;
+                component.TargetScale.localScale = Vector3.one * component.Target.Scale;
             }
 
             float scale = component.Scale;

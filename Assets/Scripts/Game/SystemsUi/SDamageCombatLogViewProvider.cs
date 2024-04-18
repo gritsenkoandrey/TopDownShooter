@@ -42,7 +42,7 @@ namespace CodeBase.Game.SystemsUi
         
         private void ActivateDamageView(CDamageCombatLogViewProvider component, CombatLog combatLog)
         {
-            if (component.DamageCombatLogViews.Count == 0)
+            if (component.DamageCombatLogViews.IsReadOnly)
             {
                 component.DamageCombatLogViews = new List<CDamageCombatLogView>();
             }

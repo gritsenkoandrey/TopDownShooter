@@ -2,6 +2,5 @@
 {
     public interface ITarget : IPosition, IHealth, IHeight
     {
-        
     }
 }

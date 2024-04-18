@@ -161,3 +161,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 4443242011901829230}
+  _targetScale: {fileID: 6848811427028356745}

@@ -26,5 +26,6 @@ namespace CodeBase.Game.Components
         public Vector3 Forward => transform.forward;
         public Vector3 Position => transform.position;
         public float Height => 3f;
+        public float Scale => 1.5f;
     } 
 }

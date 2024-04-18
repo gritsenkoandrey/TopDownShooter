@@ -54,6 +54,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1
@@ -91,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1989661527911772410}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0.1, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,6 +116,7 @@ MonoBehaviour:
     Health: 50
     Money: 150
     Height: 3.5
+    Scale: 2.75
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 10
@@ -462,6 +464,7 @@ MonoBehaviour:
     PursuitRadius: 20
     PatrolRadius: 5
     Height: 2.75
+    Scale: 1.5
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 1

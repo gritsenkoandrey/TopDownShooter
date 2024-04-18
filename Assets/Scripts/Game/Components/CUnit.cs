@@ -26,6 +26,7 @@ namespace CodeBase.Game.Components
         public Vector3 Position => transform.position;
         public Vector3 Forward => transform.forward;
         public float Height => UnitStats.Height;
+        public float Scale => UnitStats.Scale;
         public int Loot => UnitStats.Money;
     }
 }
