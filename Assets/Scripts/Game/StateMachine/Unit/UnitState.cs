@@ -6,9 +6,9 @@ namespace CodeBase.Game.StateMachine.Unit
     {
         private readonly IStateMachine _stateMachine;
         
-        private protected CUnit Unit { get; }
+        protected CUnit Unit { get; }
 
-        private protected UnitState(IStateMachine stateMachine, CUnit unit)
+        protected UnitState(IStateMachine stateMachine, CUnit unit)
         {
             _stateMachine = stateMachine;
             Unit = unit;

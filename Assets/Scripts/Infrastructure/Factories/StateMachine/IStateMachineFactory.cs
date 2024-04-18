@@ -9,5 +9,6 @@ namespace CodeBase.Infrastructure.Factories.StateMachine
         IGameStateMachine CreateGameStateMachine();
         IStateMachine CreateCharacterStateMachine(CCharacter character);
         IStateMachine CreateUnitStateMachine(CUnit unit);
+        IStateMachine CreateTurretStateMachine(CTurret turret);
     }
 }

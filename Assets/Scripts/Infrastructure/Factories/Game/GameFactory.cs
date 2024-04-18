@@ -2,6 +2,7 @@
 using CodeBase.Game.Builders.Player;
 using CodeBase.Game.Components;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.Models;
@@ -10,6 +11,7 @@ using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
@@ -83,6 +85,15 @@ namespace CodeBase.Infrastructure.Factories.Game
             _levelModel.AddEnemy(unit);
 
             return unit;
+        }
+
+        async UniTask<CTurret> IGameFactory.CreateTurret(TurretType turretType, Vector3 position, Transform parent)
+        {
+            TurretData data = _staticDataService.TurretData(turretType);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+            CTurret turret = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CTurret>();
+            _levelModel.AddEnemy(turret);
+            return turret;
         }
 
         async UniTask<CCharacterPreview> IGameFactory.CreateCharacterPreview()

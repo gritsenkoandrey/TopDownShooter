@@ -6,9 +6,9 @@ namespace CodeBase.Game.StateMachine.Character
     {
         private readonly IStateMachine _stateMachine;
         
-        private protected CCharacter Character { get; }
+        protected CCharacter Character { get; }
 
-        private protected CharacterState(IStateMachine stateMachine, CCharacter character)
+        protected CharacterState(IStateMachine stateMachine, CCharacter character)
         {
             _stateMachine = stateMachine;
             Character = character;

@@ -53,6 +53,14 @@ namespace CodeBase.Infrastructure.Factories.Weapon
             return weapon;
         }
 
+        IWeapon IWeaponFactory.CreateTurretWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
+        {
+            BaseWeapon currentWeapon = new UnitRangeWeapon(weapon, weaponCharacteristic);
+            _objectResolver.Inject(currentWeapon);
+            currentWeapon.Initialize();
+            return currentWeapon;
+        }
+
         async UniTask<IProjectile> IWeaponFactory.CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction)
         {
             ProjectileData data = _staticDataService.ProjectileData(type);

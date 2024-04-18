@@ -16,5 +16,6 @@
         public const string PreviewDataPath = "StaticData/PreviewData/PreviewData";
         public const string ShopDataPath = "StaticData/ShopData/ShopData";
         public const string TaskDataPath = "StaticData/TaskData";
+        public const string TurretDataPath = "StaticData/TurretData";
     }
 }

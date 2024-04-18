@@ -14,6 +14,7 @@ namespace CodeBase.Infrastructure.StaticData
         ProjectileData ProjectileData(ProjectileType type);
         EffectData EffectData(EffectType type);
         TaskData TaskData(DailyTaskType type);
+        TurretData TurretData(TurretType turretType);
         LevelData LevelData();
         CharacterData CharacterData();
         TextureData TextureArrayData();

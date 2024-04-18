@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: RocketData
   m_EditorClassIdentifier: 
   ProjectileType: 1
-  CollisionRadius: 2
-  LifeTime: 2
+  CollisionRadius: 1.5
   PrefabReference:
     m_AssetGUID: 154af25b7b5b4c24eac3a323bb19644c
     m_SubObjectName: 

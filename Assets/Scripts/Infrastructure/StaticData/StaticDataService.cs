@@ -20,6 +20,7 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<ProjectileType, ProjectileData> _projectiles;
         private IDictionary<EffectType, EffectData> _effects;
         private IDictionary<DailyTaskType, TaskData> _tasks;
+        private IDictionary<TurretType, TurretData> _turrets;
         private LevelData _level;
         private CharacterData _character;
         private TextureData _textureData;
@@ -60,6 +61,10 @@ namespace CodeBase.Infrastructure.StaticData
                 .LoadAllFromResources<TaskData>(AssetAddress.TaskDataPath)
                 .ToDictionary(data => data.Type, data => data);
 
+            _turrets = _assetService
+                .LoadAllFromResources<TurretData>(AssetAddress.TurretDataPath)
+                .ToDictionary(data => data.Type, data => data);
+
             _level = _assetService.LoadFromResources<LevelData>(AssetAddress.LevelDataPath);
             _character = _assetService.LoadFromResources<CharacterData>(AssetAddress.CharacterDataPath);
             _textureData = _assetService.LoadFromResources<TextureData>(AssetAddress.TextureDataPath);
@@ -87,6 +92,9 @@ namespace CodeBase.Infrastructure.StaticData
 
         TaskData IStaticDataService.TaskData(DailyTaskType type) => 
             _tasks.TryGetValue(type, out TaskData taskData) ? taskData : null;
+        
+        TurretData IStaticDataService.TurretData(TurretType type) => 
+            _turrets.TryGetValue(type, out TurretData turretData) ? turretData : null;
 
         LevelData IStaticDataService.LevelData() => _level;
         CharacterData IStaticDataService.CharacterData() => _character;

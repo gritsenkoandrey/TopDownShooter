@@ -57,6 +57,8 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SDailyTaskUpdate(),
                 new STargetWeaponUpdate(),
                 new SWallInitialize(),
+                new STurretSpawner(),
+                new STurretDeath(),
             };
 
             return systems;

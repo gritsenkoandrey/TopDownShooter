@@ -1,6 +1,8 @@
 ﻿using System;
+using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.StateMachine.Character;
+using CodeBase.Game.StateMachine.Turret;
 using CodeBase.Game.StateMachine.Unit;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Input;
@@ -113,7 +115,30 @@ namespace CodeBase.Infrastructure.States
         
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
-        private void SetEnemyStateNone(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
-        private void SetEnemyStateIdle(IEnemy enemy) => enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
+        private void SetEnemyStateNone(IEnemy enemy)
+        {
+            switch (enemy)
+            {
+                case CUnit:
+                    enemy.StateMachine.StateMachine.Enter<UnitStateNone>();
+                    break;
+                case CTurret:
+                    enemy.StateMachine.StateMachine.Enter<TurretStateNone>();
+                    break;
+            }
+        }
+
+        private void SetEnemyStateIdle(IEnemy enemy)
+        {
+            switch (enemy)
+            {
+                case CUnit:
+                    enemy.StateMachine.StateMachine.Enter<UnitStateIdle>();
+                    break;
+                case CTurret:
+                    enemy.StateMachine.StateMachine.Enter<TurretStateIdle>();
+                    break;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.Factories.Weapon
     {
         UniTask<CWeapon> CreateCharacterWeapon(WeaponType type, Transform parent);
         UniTask<CWeapon> CreateUnitWeapon(WeaponType type, WeaponCharacteristic weaponCharacteristic, Transform parent);
+        IWeapon CreateTurretWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic);
         UniTask<IProjectile> CreateProjectile(ProjectileType type, Transform spawnPoint, int damage, Vector3 direction);
     }
 }

@@ -198,6 +198,7 @@ Transform:
   - {fileID: 3495192745563475485}
   - {fileID: 5389382786545083526}
   - {fileID: 891902502262507092}
+  - {fileID: 8891025458738886528}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,6 +226,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61058ea0a1214cbe9e8ad8c26dd0acba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5859223801710143784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8891025458738886528}
+  - component: {fileID: 2143057074819803832}
+  m_Layer: 0
+  m_Name: Spawner_04
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8891025458738886528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859223801710143784}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3495192746181472549}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2143057074819803832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859223801710143784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158d840a148c4b4cb83b03e539d1f3ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turretType: 2
+  _turretStats:
+    Health: 200
+    Money: 250
+    Height: 3.5
+  _weaponCharacteristic:
+    Damage: 1
+    ClipCount: 10
+    ForceBullet: 0.2
+    RechargeTime: 4
+    FireInterval: 1.5
+    CriticalChance: 20
+    CriticalMultiplier: 2
+    DetectionDistance: 10
+    AttackDistance: 7.5
+    Aiming: 0.05
+    IsDetectThroughObstacle: 1
 --- !u!1 &6599901189724140240
 GameObject:
   m_ObjectHideFlags: 0

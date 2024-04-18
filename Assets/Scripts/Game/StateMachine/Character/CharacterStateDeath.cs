@@ -12,8 +12,8 @@ namespace CodeBase.Game.StateMachine.Character
         void IState.Enter()
         {
             Character.Animator.OnDeath.Execute();
-            Character.CleanSubscribe();
             Character.Radar.Clear.Execute();
+            Character.CleanSubscribe();
         }
 
         void IState.Exit() { }

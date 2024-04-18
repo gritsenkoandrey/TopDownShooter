@@ -64,8 +64,17 @@ namespace CodeBase.Game.Systems
             target.Health.CurrentHealth.Value -= bullet.Damage;
 
             bullet.OnDestroy.Execute();
-            
-            _effectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
+
+            switch (target)
+            {
+                case CCharacter:
+                case CUnit:
+                    _effectFactory.CreateEffect(EffectType.Hit, target.Position).Forget();
+                    break;
+                case CTurret:
+                    _effectFactory.CreateEffect(EffectType.Explosion, bullet.Position).Forget();
+                    break;
+            }
         }
 
         private void CheckObstacleCollision(CBullet bullet)

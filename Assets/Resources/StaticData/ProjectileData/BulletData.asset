@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: BulletData
   m_EditorClassIdentifier: 
   ProjectileType: 0
-  CollisionRadius: 1.5
-  LifeTime: 2
+  CollisionRadius: 1
   PrefabReference:
     m_AssetGUID: ed28e53c93fc7d2449d7c68bb8409223
     m_SubObjectName: 

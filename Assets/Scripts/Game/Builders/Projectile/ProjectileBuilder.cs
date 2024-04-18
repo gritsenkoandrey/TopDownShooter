@@ -63,7 +63,7 @@ namespace CodeBase.Game.Builders.Projectile
 
             bullet.SetDamage(_damage);
             bullet.SetDirection(_direction);
-            bullet.SetCollisionDistance(_data.CollisionRadius);
+            bullet.SetCollisionDistance(Mathf.Pow(_data.CollisionRadius, 2));
 
             return bullet;
         }
