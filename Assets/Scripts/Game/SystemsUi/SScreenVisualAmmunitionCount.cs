@@ -21,10 +21,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             _inventoryModel.ClipCount
-                .Subscribe(count =>
-                {
-                    component.AmmunitionCount.text = count.ToString();
-                })
+                .Subscribe(count => component.AmmunitionCount.text = count.ToString())
                 .AddTo(component.LifetimeDisposable);
         }
     }

@@ -53,8 +53,8 @@ namespace CodeBase.Game.Weapon
                 if (distance < AttackDistance() && _target.Health.IsAlive)
                 {
                     int damage = CalculateCriticalDamage(GetDamage());
-                    SendCombatLog(_target, damage);
                     _target.Health.CurrentHealth.Value -= damage;
+                    SendCombatLog(_target, damage);
                     EffectFactory.CreateEffect(EffectType.Hit, _target.Position).Forget();
                 }
             }

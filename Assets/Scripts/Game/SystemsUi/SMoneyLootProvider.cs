@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.UI;
-using CodeBase.Infrastructure.Models;
+using CodeBase.Infrastructure.Loot;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 using VContainer;
 
@@ -18,28 +16,36 @@ namespace CodeBase.Game.SystemsUi
     {
         private IUIFactory _uiFactory;
         private ICameraService _cameraService;
-        private LootModel _lootModel;
+        private ILootService _lootService;
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, ICameraService cameraService, LootModel lootModel)
+        private void Construct(IUIFactory uiFactory, ICameraService cameraService, ILootService lootService)
         {
             _uiFactory = uiFactory;
             _cameraService = cameraService;
-            _lootModel = lootModel;
+            _lootService = lootService;
         }
-        
-        protected override void OnEnableComponent(CMoneyLootProvider component)
-        {
-            base.OnEnableComponent(component);
 
-            _lootModel.EnemyLoot
-                .Subscribe(data =>
-                {
-                    (ITarget target, int loot) = data;
-                    
-                    CreateMoneyLoot(component, target, loot).Forget();
-                })
-                .AddTo(component.LifetimeDisposable);
+        protected override void OnEnableSystem()
+        {
+            base.OnEnableSystem();
+                        
+            _lootService.OnAddLoot += OnEnemyLoot;
+        }
+
+        protected override void OnDisableSystem()
+        {
+            base.OnDisableSystem();
+            
+            _lootService.OnAddLoot -= OnEnemyLoot;
+        }
+
+        private void OnEnemyLoot((ITarget target, int loot) tuple)
+        {
+            foreach (CMoneyLootProvider component in Entities)
+            {
+                CreateMoneyLoot(component, tuple.target, tuple.loot).Forget();
+            }
         }
 
         private async UniTaskVoid CreateMoneyLoot(CMoneyLootProvider component, ITarget target, int loot)

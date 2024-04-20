@@ -4,6 +4,7 @@ using CodeBase.Game.Behaviours.AnimationStateBehaviour;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Utils;
+using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Game.Components
@@ -17,6 +18,7 @@ namespace CodeBase.Game.Components
         public ProjectileType ProjectileType => _projectileType;
         public Transform[] SpawnPoints => _spawnPoints;
         public RuntimeAnimatorController RuntimeAnimatorController => _runtimeAnimatorController;
+        public ReactiveCommand<(ITarget, int)> OnSendCombatLog { get; } = new ();
         public event Action OnHit;
         public IWeapon Weapon { get; private set; }
         

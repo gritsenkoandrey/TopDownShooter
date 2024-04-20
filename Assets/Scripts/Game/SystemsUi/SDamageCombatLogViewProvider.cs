@@ -8,7 +8,6 @@ using CodeBase.Infrastructure.GUI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 using VContainer;
 
@@ -31,13 +30,26 @@ namespace CodeBase.Game.SystemsUi
             _damageCombatLog = damageCombatLog;
         }
 
-        protected override void OnEnableComponent(CDamageCombatLogViewProvider component)
+        protected override void OnEnableSystem()
         {
-            base.OnEnableComponent(component);
+            base.OnEnableSystem();
+            
+            _damageCombatLog.OnCombatLog += OnCombatLog;
+        }
 
-            _damageCombatLog.CombatLog
-                .Subscribe(combatLog => ActivateDamageView(component, combatLog))
-                .AddTo(component.LifetimeDisposable);
+        protected override void OnDisableSystem()
+        {
+            base.OnDisableSystem();
+            
+            _damageCombatLog.OnCombatLog -= OnCombatLog;
+        }
+
+        private void OnCombatLog(CombatLog log)
+        {
+            foreach (CDamageCombatLogViewProvider component in Entities)
+            {
+                ActivateDamageView(component, log);
+            }
         }
         
         private void ActivateDamageView(CDamageCombatLogViewProvider component, CombatLog combatLog)

@@ -12,7 +12,6 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
     public sealed class CharacterMeleeWeapon : BaseMeleeWeapon
     {
         private IProgressService _progressService;
-        private DamageCombatLog _damageCombatLog;
         private InventoryModel _inventoryModel;
 
         public CharacterMeleeWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) 
@@ -23,13 +22,11 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         }
 
         [Inject]
-        private void Construct(IEffectFactory effectFactory, IProgressService progressService, 
-            DamageCombatLog damageCombatLog, InventoryModel inventoryModel)
+        private void Construct(IEffectFactory effectFactory, IProgressService progressService, InventoryModel inventoryModel)
         {
             EffectFactory = effectFactory;
             
             _progressService = progressService;
-            _damageCombatLog = damageCombatLog;
             _inventoryModel = inventoryModel;
         }
         
@@ -49,7 +46,7 @@ namespace CodeBase.Game.Weapon.SpecificWeapons
         {
             base.SendCombatLog(target, damage);
             
-            _damageCombatLog.AddLog(target, damage);
+            Weapon.OnSendCombatLog.Execute((target, damage));
         }
 
         private protected override void ReloadClip()

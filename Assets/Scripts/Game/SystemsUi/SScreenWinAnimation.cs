@@ -1,5 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
+using CodeBase.Infrastructure.Loot;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using DG.Tweening;
@@ -12,13 +13,13 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SScreenWinAnimation : SystemComponent<CWinReward>
     {
         private LevelModel _levelModel;
-        private LootModel _lootModel;
+        private ILootService _lootService;
 
         [Inject]
-        private void Construct(LevelModel levelModel, LootModel lootModel)
+        private void Construct(LevelModel levelModel, ILootService lootService)
         {
             _levelModel = levelModel;
-            _lootModel = lootModel;
+            _lootService = lootService;
         }
 
         protected override void OnEnableComponent(CWinReward component)
@@ -43,7 +44,7 @@ namespace CodeBase.Game.SystemsUi
         private void CalculateLoot(CWinReward component)
         {
             component.Text.text = string.Format(FormatText.AddMoneyWin, 
-                _lootModel.GenerateLevelLoot(_levelModel.Level).Trim());
+                _lootService.GenerateLevelLoot(_levelModel.Level).Trim());
         }
 
         private void ShowAnimation(CWinReward component)

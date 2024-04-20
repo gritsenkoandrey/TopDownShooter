@@ -32,7 +32,6 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SAnimator(),
                 new SScreenVisualAmmunitionCount(),
                 new SCharacterSpawner(),
-                new SCharacterDeath(),
                 new SPointerArrowProvider(),
                 new SPointerArrowUpdate(),
                 new SDamageCombatLogViewProvider(),
@@ -40,7 +39,6 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SJoystickUpdate(),
                 new SObjectPoolLog(),
                 new SUnitSpawner(),
-                new SUnitDeath(),
                 new SScreenBloodEffect(),
                 new SCameraShake(),
                 new SScreenLoseAnimation(),
@@ -58,7 +56,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new STargetWeaponUpdate(),
                 new SWallInitialize(),
                 new STurretSpawner(),
-                new STurretDeath(),
+                new SMeleeWeaponSendCombatLog(),
             };
 
             return systems;

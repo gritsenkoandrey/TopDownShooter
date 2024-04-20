@@ -23,14 +23,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             SubscribeOnBuyButtonClick(component);
-
-            component.IsInit
-                .First(isInit => isInit)
-                .Subscribe(_ =>
-                {
-                    SubscribeOnDataChange(component);
-                })
-                .AddTo(component.LifetimeDisposable);
+            SubscribeOnInit(component);
         }
 
         private void SubscribeOnBuyButtonClick(CUpgradeButton component)
@@ -45,6 +38,14 @@ namespace CodeBase.Game.SystemsUi
                     _progressService.MoneyData.Data.Value -= component.Cost;
                     _progressService.StatsData.Data.Value.Data[component.UpgradeButtonType]++;
                 })
+                .AddTo(component.LifetimeDisposable);
+        }
+
+        private void SubscribeOnInit(CUpgradeButton component)
+        {
+            component.IsInit
+                .First(isInit => isInit)
+                .Subscribe(_ => SubscribeOnDataChange(component))
                 .AddTo(component.LifetimeDisposable);
         }
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using CodeBase.Game.Interfaces;
 using JetBrains.Annotations;
-using UniRx;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Models
@@ -10,12 +9,12 @@ namespace CodeBase.Infrastructure.Models
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class DamageCombatLog : IDisposable
     {
-        public readonly ReactiveCommand<CombatLog> CombatLog = new ();
-
         private readonly Queue<CombatLog> _damageCombatLog;
         private float _time;
 
         private const float UpdateLogTime = 0.1f;
+
+        public event Action<CombatLog> OnCombatLog; 
 
         public DamageCombatLog()
         {
@@ -42,7 +41,7 @@ namespace CodeBase.Infrastructure.Models
 
                 if (_damageCombatLog.TryDequeue(out CombatLog log))
                 {
-                    CombatLog.Execute(log);
+                    OnCombatLog?.Invoke(log);
                 }
             }
         }
@@ -50,7 +49,6 @@ namespace CodeBase.Infrastructure.Models
         void IDisposable.Dispose()
         {
             _damageCombatLog.Clear();
-            CombatLog?.Dispose();
         }
     }
 

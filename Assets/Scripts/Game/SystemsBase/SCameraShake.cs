@@ -1,7 +1,6 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Models;
-using UniRx;
 using VContainer;
 
 namespace CodeBase.Game.SystemsBase
@@ -21,10 +20,17 @@ namespace CodeBase.Game.SystemsBase
         protected override void OnEnableSystem()
         {
             base.OnEnableSystem();
-
-            _damageCombatLog.CombatLog
-                .Subscribe(_ => _cameraService.Shake())
-                .AddTo(LifetimeDisposable);
+            
+            _damageCombatLog.OnCombatLog += DamageCombatLogOnOnCombatLog;
         }
+
+        protected override void OnDisableSystem()
+        {
+            base.OnDisableSystem();
+            
+            _damageCombatLog.OnCombatLog -= DamageCombatLogOnOnCombatLog;
+        }
+
+        private void DamageCombatLogOnOnCombatLog(CombatLog log) => _cameraService.Shake();
     }
 }
