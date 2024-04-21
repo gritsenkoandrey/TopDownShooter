@@ -16,10 +16,7 @@ namespace CodeBase.Infrastructure.Factories.Effects
         private readonly IObjectPoolService _objectPoolService;
         private readonly IAssetService _assetService;
 
-        public EffectFactory(
-            IStaticDataService staticDataService, 
-            IObjectPoolService objectPoolService, 
-            IAssetService assetService)
+        public EffectFactory(IStaticDataService staticDataService, IObjectPoolService objectPoolService, IAssetService assetService)
         {
             _staticDataService = staticDataService;
             _objectPoolService = objectPoolService;

@@ -72,10 +72,8 @@ namespace CodeBase.Infrastructure.DailyTasks
             _progressService.MoneyData.Data.Value += reward;
         }
 
-        int IDailyTaskService.GetRemainingUpdateTime()
-        {
-            return (int)(DateTime.UtcNow.Date + TimeSpan.FromDays(1) - DateTime.UtcNow).TotalSeconds;
-        }
+        int IDailyTaskService.GetRemainingUpdateTime() => 
+            (int)(DateTime.UtcNow.Date + TimeSpan.FromDays(1) - DateTime.UtcNow).TotalSeconds;
 
         private Task CreateTask(DailyTaskType type, TaskData data, int level)
         {
@@ -85,14 +83,12 @@ namespace CodeBase.Infrastructure.DailyTasks
             return new Task(type, reward, maxScore);
         }
 
-        private List<DailyTaskType> CreateListTask()
-        {
-            return EnumExtension.GenerateEnumList<DailyTaskType>(type => type != DailyTaskType.None);
-        }
+        private List<DailyTaskType> CreateListTask() => 
+            EnumExtension.GenerateEnumList<DailyTaskType>(type => type != DailyTaskType.None);
 
         private void ClearTaskProvider(CShopTaskProvider provider)
         {
-            if (provider.Tasks.Count == 0)
+            if (provider.Tasks.IsReadOnly)
             {
                 provider.Tasks = new List<CTask>(Count);
             }
