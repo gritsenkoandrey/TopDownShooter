@@ -33,7 +33,8 @@ namespace CodeBase.Infrastructure.Factories.Game
         async UniTask<ILevel> IGameFactory.CreateLevel()
         {
             LevelData levelData = _staticDataService.LevelData();
-            int index = _progressService.LevelData.Data.Value % levelData.Levels.Length - 1;
+            int curLevel = _progressService.LevelData.Data.Value;
+            int index = curLevel > levelData.Levels.Length ? (curLevel - 1) % levelData.Levels.Length : curLevel - 1;
             Level data = levelData.Levels[index];
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             CLevel level = Object.Instantiate(prefab).GetComponent<CLevel>();
