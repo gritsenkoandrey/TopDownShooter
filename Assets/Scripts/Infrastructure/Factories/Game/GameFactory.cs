@@ -1,6 +1,4 @@
-﻿using CodeBase.Game.Builders.Levels;
-using CodeBase.Game.Builders.Player;
-using CodeBase.Game.Components;
+﻿using CodeBase.Game.Components;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
@@ -11,7 +9,6 @@ using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories.Game
@@ -24,11 +21,8 @@ namespace CodeBase.Infrastructure.Factories.Game
         private readonly IAssetService _assetService;
         private readonly LevelModel _levelModel;
 
-        public GameFactory(
-            IStaticDataService staticDataService, 
-            IProgressService progressService, 
-            IAssetService assetService,
-            LevelModel levelModel)
+        public GameFactory(IStaticDataService staticDataService, IProgressService progressService, 
+            IAssetService assetService, LevelModel levelModel)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
@@ -38,52 +32,34 @@ namespace CodeBase.Infrastructure.Factories.Game
 
         async UniTask<ILevel> IGameFactory.CreateLevel()
         {
-            Level data = GetLevel(_staticDataService.LevelData());
-
+            LevelData levelData = _staticDataService.LevelData();
+            int index = _progressService.LevelData.Data.Value % levelData.Levels.Length - 1;
+            Level data = levelData.Levels[index];
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            ILevel level = new LevelBuilder()
-                .SetPrefab(prefab)
-                .SetData(data)
-                .Build();
-            
+            CLevel level = Object.Instantiate(prefab).GetComponent<CLevel>();
+            level.SetTime(data.Time);
+            level.SetLoot(data.Loot);
             _levelModel.SetLevel(level);
-            
             return level;
         }
 
         async UniTask<CCharacter> IGameFactory.CreateCharacter(Vector3 position, Transform parent)
         {
             CharacterData data = _staticDataService.CharacterData();
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            CCharacter character = new CharacterBuilder()
-                .SetPrefab(prefab)
-                .SetData(data)
-                .SetParent(parent)
-                .SetPosition(position)
-                .Build();
-            
+            CCharacter character = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CCharacter>();
+            character.Health.SetBaseHealth(data.Health);
+            character.CharacterController.SetBaseSpeed(data.Speed);
             _levelModel.SetCharacter(character);
-
             return character;
         }
         
         async UniTask<CUnit> IGameFactory.CreateUnit(Vector3 position, Transform parent)
         {
             UnitData data = _staticDataService.UnitData();
-            
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.Prefabreference);
-
-            CUnit unit = new UnitBuilder()
-                .SetPrefab(prefab)
-                .SetParent(parent)
-                .SetPosition(position)
-                .Build();
-            
+            CUnit unit = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CUnit>();
             _levelModel.AddEnemy(unit);
-
             return unit;
         }
 
@@ -101,23 +77,6 @@ namespace CodeBase.Infrastructure.Factories.Game
             PreviewData data = _staticDataService.PreviewData();
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             return Object.Instantiate(prefab).GetComponent<CCharacterPreview>();
-        }
-
-        private Level GetLevel(LevelData data)
-        {
-            int index;
-            int level = _progressService.LevelData.Data.Value;
-
-            if (level > data.Levels.Length)
-            {
-                index = (level - 1) % data.Levels.Length;
-            }
-            else
-            {
-                index = level - 1;
-            }
-            
-            return data.Levels[index];
         }
     }
 }

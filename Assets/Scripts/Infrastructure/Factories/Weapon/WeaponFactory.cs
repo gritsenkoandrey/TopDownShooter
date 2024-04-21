@@ -1,5 +1,4 @@
-﻿using CodeBase.Game.Builders.Projectile;
-using CodeBase.Game.Components;
+﻿using CodeBase.Game.Components;
 using CodeBase.Game.Enums;
 using CodeBase.Game.Interfaces;
 using CodeBase.Game.Weapon;
@@ -23,11 +22,8 @@ namespace CodeBase.Infrastructure.Factories.Weapon
         private readonly IObjectPoolService _objectPoolService;
         private readonly IObjectResolver _objectResolver;
 
-        public WeaponFactory(
-            IStaticDataService staticDataService, 
-            IAssetService assetService, 
-            IObjectPoolService objectPoolService,
-            IObjectResolver objectResolver)
+        public WeaponFactory(IStaticDataService staticDataService, IAssetService assetService, 
+            IObjectPoolService objectPoolService, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _assetService = assetService;
@@ -65,14 +61,11 @@ namespace CodeBase.Infrastructure.Factories.Weapon
         {
             ProjectileData data = _staticDataService.ProjectileData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
-
-            return new ProjectileBuilder(_objectPoolService)
-                .SetPrefab(prefab)
-                .SetData(data)
-                .SetSpawnPoint(spawnPoint)
-                .SetDamage(damage)
-                .SetDirection(direction)
-                .Build();
+            CBullet bullet = _objectPoolService.SpawnObject(prefab, spawnPoint.position, spawnPoint.rotation).GetComponent<CBullet>();
+            bullet.SetDamage(damage);
+            bullet.SetDirection(direction);
+            bullet.SetCollisionDistance(Mathf.Pow(data.CollisionRadius, 2));
+            return bullet;
         }
 
         private IWeapon CreateSpecificCharacterWeapon(WeaponType type, CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
