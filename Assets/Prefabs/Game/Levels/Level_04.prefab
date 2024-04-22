@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5487394467952772270}
   - component: {fileID: 6437794173885711829}
+  - component: {fileID: 103589432129560327}
   m_Layer: 0
   m_Name: Spawner_01
   m_TagString: Untagged
@@ -67,6 +68,20 @@ MonoBehaviour:
     AttackDistance: 2.5
     Aiming: 0.25
     IsDetectThroughObstacle: 1
+--- !u!114 &103589432129560327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830007310085133635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &3495192746181472548
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5616891810284503701}
   - component: {fileID: 8981627104786998272}
+  - component: {fileID: 126679713010974742}
   m_Layer: 0
   m_Name: Spawner_06
   m_TagString: Untagged
@@ -276,6 +292,20 @@ MonoBehaviour:
     AttackDistance: 7.5
     Aiming: 0.05
     IsDetectThroughObstacle: 1
+--- !u!114 &126679713010974742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614533739114903767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &4516569833924804095
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7652898421749924443}
   - component: {fileID: 1990913303128816282}
+  - component: {fileID: 7333602377151770827}
   m_Layer: 0
   m_Name: Spawner_Character
   m_TagString: Untagged
@@ -320,6 +351,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e0098e5fe04242b21d27fa8314a164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7333602377151770827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516569833924804095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 0, g: 1, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &4645866836125532598
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7638886152435697396}
   - component: {fileID: 2074876901074727397}
+  - component: {fileID: 8937218279570392783}
   m_Layer: 0
   m_Name: Spawner_02
   m_TagString: Untagged
@@ -484,6 +530,20 @@ MonoBehaviour:
     AttackDistance: 2.5
     Aiming: 0.25
     IsDetectThroughObstacle: 1
+--- !u!114 &8937218279570392783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997821089645196653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &6996559836816223854
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7830584837382022133}
   - component: {fileID: 8662680548008990264}
+  - component: {fileID: 7468824412161370046}
   m_Layer: 0
   m_Name: Spawner_04
   m_TagString: Untagged
@@ -551,6 +612,20 @@ MonoBehaviour:
     AttackDistance: 2.5
     Aiming: 0.25
     IsDetectThroughObstacle: 1
+--- !u!114 &7468824412161370046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6996559836816223854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &7206791348100774224
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5159766797125557459}
   - component: {fileID: 227588762228067017}
+  - component: {fileID: 48062600141053595}
   m_Layer: 0
   m_Name: Spawner_03
   m_TagString: Untagged
@@ -618,6 +694,20 @@ MonoBehaviour:
     AttackDistance: 2.5
     Aiming: 0.25
     IsDetectThroughObstacle: 1
+--- !u!114 &48062600141053595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206791348100774224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &8088945967473072374
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +718,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3332642105344875903}
   - component: {fileID: 650501695182563878}
+  - component: {fileID: 7988822466115285938}
   m_Layer: 0
   m_Name: Spawner_05
   m_TagString: Untagged
@@ -685,6 +776,20 @@ MonoBehaviour:
     AttackDistance: 2.5
     Aiming: 0.25
     IsDetectThroughObstacle: 1
+--- !u!114 &7988822466115285938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088945967473072374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &8120217247799141227
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,5 @@ namespace CodeBase.Game.Components
         public UnitStats UnitStats => _unitStats;
         public WeaponCharacteristic WeaponCharacteristic => _weaponCharacteristic;
         public Vector3 Position => transform.position;
-        
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position, 0.5f);
-        }
     }
 }

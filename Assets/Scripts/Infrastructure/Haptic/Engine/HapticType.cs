@@ -12,6 +12,6 @@
         Vibrate   = 6,
         Selection = 7,
         
-        None = byte.MaxValue
+        None      = byte.MaxValue
     }
 }

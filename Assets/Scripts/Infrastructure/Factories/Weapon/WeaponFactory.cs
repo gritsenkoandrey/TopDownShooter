@@ -70,38 +70,20 @@ namespace CodeBase.Infrastructure.Factories.Weapon
 
         private IWeapon CreateSpecificCharacterWeapon(WeaponType type, CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
         {
-            BaseWeapon currentWeapon;
-
-            if (type == WeaponType.Knife)
-            {
-                currentWeapon = new CharacterMeleeWeapon(weapon, weaponCharacteristic);
-            }
-            else
-            {
-                currentWeapon = new CharacterRangeWeapon(weapon, weaponCharacteristic);
-            }
-            
+            BaseWeapon currentWeapon = type == WeaponType.Knife
+                ? new CharacterMeleeWeapon(weapon, weaponCharacteristic)
+                : new CharacterRangeWeapon(weapon, weaponCharacteristic);
             _objectResolver.Inject(currentWeapon);
-            
             currentWeapon.Initialize();
             return currentWeapon;
         }
 
         private IWeapon CreateSpecificUnitWeapon(WeaponType type, CWeapon weapon, WeaponCharacteristic weaponCharacteristic)
         {
-            BaseWeapon currentWeapon;
-
-            if (type == WeaponType.Knife)
-            {
-                currentWeapon = new UnitMeleeWeapon(weapon, weaponCharacteristic);
-            }
-            else
-            {
-                currentWeapon = new UnitRangeWeapon(weapon, weaponCharacteristic);
-            }
-            
+            BaseWeapon currentWeapon = type == WeaponType.Knife
+                ? new UnitMeleeWeapon(weapon, weaponCharacteristic)
+                : new UnitRangeWeapon(weapon, weaponCharacteristic);
             _objectResolver.Inject(currentWeapon);
-            
             currentWeapon.Initialize();
             return currentWeapon;
         }

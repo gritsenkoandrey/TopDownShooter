@@ -31,8 +31,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             component.Enemy
-                .SkipLatestValueOnSubscribe()
-                .First()
+                .First(enemy => enemy != null)
                 .Subscribe(enemy => SubscribeOnChangeHealth(component, enemy))
                 .AddTo(component.LifetimeDisposable);
         }

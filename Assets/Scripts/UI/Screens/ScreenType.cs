@@ -10,6 +10,6 @@
         Preview  = 4,
         Settings = 5,
         
-        None = byte.MaxValue
+        None     = byte.MaxValue
     }
 }

@@ -14,7 +14,6 @@ namespace CodeBase.Infrastructure.Models
         public IReactiveProperty<SkinType> SelectedSkin { get; } = new ReactiveProperty<SkinType>();
         public IReactiveProperty<int> IndexWeapon { get; } = new ReactiveProperty<int>();
         public IReactiveProperty<int> IndexSkin { get; } = new ReactiveProperty<int>();
-        
         public IReactiveProperty<int> ClipCount { get; } = new ReactiveProperty<int>();
         public IReactiveCommand<float> ReloadingWeapon { get; } = new ReactiveCommand<float>();
 

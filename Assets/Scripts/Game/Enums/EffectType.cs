@@ -8,6 +8,6 @@
         Blood     = 2,
         Explosion = 3,
         
-        None = byte.MaxValue
+        None      = byte.MaxValue
     }
 }

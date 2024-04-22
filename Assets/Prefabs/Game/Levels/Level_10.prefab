@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3495192745563475485}
   - component: {fileID: 417643439489781574}
+  - component: {fileID: 1082387630232332431}
   m_Layer: 0
   m_Name: Spawner_01
   m_TagString: Untagged
@@ -164,6 +165,20 @@ MonoBehaviour:
     AttackDistance: 6
     Aiming: 0.4
     IsDetectThroughObstacle: 1
+--- !u!114 &1082387630232332431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495192745563475484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &3495192746181472548
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8891025458738886528}
   - component: {fileID: 2143057074819803832}
+  - component: {fileID: 7461384339225295707}
   m_Layer: 0
   m_Name: Spawner_04
   m_TagString: Untagged
@@ -289,6 +305,20 @@ MonoBehaviour:
     AttackDistance: 7.5
     Aiming: 0.05
     IsDetectThroughObstacle: 1
+--- !u!114 &7461384339225295707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859223801710143784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &6599901189724140240
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7664265105589932199}
   - component: {fileID: 3749831750193000703}
+  - component: {fileID: 4653375275719590629}
   m_Layer: 0
   m_Name: Spawner_Character
   m_TagString: Untagged
@@ -333,6 +364,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e0098e5fe04242b21d27fa8314a164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4653375275719590629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599901189724140240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 0, g: 1, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &6687145086640677478
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 891902502262507092}
   - component: {fileID: 8058862223523223554}
+  - component: {fileID: 3367031525285174813}
   m_Layer: 0
   m_Name: Spawner_03
   m_TagString: Untagged
@@ -576,6 +622,20 @@ MonoBehaviour:
     AttackDistance: 6
     Aiming: 0.4
     IsDetectThroughObstacle: 1
+--- !u!114 &3367031525285174813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7400681300281908234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1 &8711102872376158351
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5389382786545083526}
   - component: {fileID: 5641920648730992742}
+  - component: {fileID: 4707200402588019254}
   m_Layer: 0
   m_Name: Spawner_02
   m_TagString: Untagged
@@ -643,6 +704,20 @@ MonoBehaviour:
     AttackDistance: 6
     Aiming: 0.4
     IsDetectThroughObstacle: 1
+--- !u!114 &4707200402588019254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711102872376158351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d0011b040e4b10904813ab15a6bed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 0.5
 --- !u!1001 &8381703734242879883
 PrefabInstance:
   m_ObjectHideFlags: 0

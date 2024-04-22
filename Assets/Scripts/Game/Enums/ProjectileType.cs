@@ -12,6 +12,6 @@
         Fireball   = 6,
         Chemical   = 7,
          
-        None = byte.MaxValue
+        None       = byte.MaxValue
     }
 }

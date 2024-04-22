@@ -20,12 +20,16 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            Init(component);
+            
             component.VibrationToggle.IsEnable
-                .DoOnSubscribe(() => component.VibrationToggle.IsEnable.Value = _progressService.HapticData.Data.Value)
                 .Subscribe(SetHapticData)
                 .AddTo(component.LifetimeDisposable);
         }
 
+        private void Init(CSettingsMediator component) =>
+            component.VibrationToggle.IsEnable.Value = _progressService.HapticData.Data.Value;
+        
         private void SetHapticData(bool isEnable) => _progressService.HapticData.Data.Value = isEnable;
     }
 }

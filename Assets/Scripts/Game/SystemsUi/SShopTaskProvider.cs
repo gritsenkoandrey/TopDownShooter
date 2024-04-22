@@ -36,13 +36,14 @@ namespace CodeBase.Game.SystemsUi
             int time = _dailyTaskService.GetRemainingUpdateTime();
 
             Observable.Timer(TimeSpan.FromSeconds(1f))
-                .DoOnSubscribe(() => component.Text.text = string.Format(FormatText.TaskTime, time.SecondsToTime()))
+                .DoOnSubscribe(() => SetTimeText(component, time))
                 .Repeat()
                 .Where(_ => time > 0)
                 .Subscribe(_ =>
                 {
                     time--;
-                    component.Text.text = string.Format(FormatText.TaskTime, time.SecondsToTime());
+                    
+                    SetTimeText(component, time);
 
                     if (time == 0)
                     {
@@ -53,5 +54,8 @@ namespace CodeBase.Game.SystemsUi
                 })
                 .AddTo(component.LifetimeDisposable);
         }
+
+        private void SetTimeText(CShopTaskProvider component, int time) => 
+            component.Text.text = string.Format(FormatText.TaskTime, time.SecondsToTime());
     }
 }

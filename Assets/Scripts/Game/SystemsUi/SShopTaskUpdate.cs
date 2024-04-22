@@ -23,8 +23,7 @@ namespace CodeBase.Game.SystemsUi
             base.OnEnableComponent(component);
 
             component.Task
-                .SkipLatestValueOnSubscribe()
-                .First()
+                .First(task => task != null)
                 .Subscribe(task => SubscribeOnUpdateTask(component, task))
                 .AddTo(component.LifetimeDisposable);
         }

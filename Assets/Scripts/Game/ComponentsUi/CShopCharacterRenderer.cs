@@ -13,7 +13,6 @@ namespace CodeBase.Game.ComponentsUi
         [SerializeField] private RawImage _rawImage;
 
         public RawImage RawImage => _rawImage;
-        
         public ReactiveCommand<PointerEventData> OnTouch { get; } = new();
         public ReactiveCommand OnStartTouch { get; } = new();
         public ReactiveCommand OnEndTouch { get; } = new();

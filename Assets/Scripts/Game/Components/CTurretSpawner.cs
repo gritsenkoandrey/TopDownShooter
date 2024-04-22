@@ -15,11 +15,5 @@ namespace CodeBase.Game.Components
         public TurretStats TurretStats => _turretStats;
         public WeaponCharacteristic WeaponCharacteristic => _weaponCharacteristic;
         public Vector3 Position => transform.position;
-        
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, 0.5f);
-        }
     }
 }
