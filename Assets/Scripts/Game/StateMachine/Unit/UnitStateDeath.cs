@@ -43,7 +43,6 @@ namespace CodeBase.Game.StateMachine.Unit
 
             _lootService.GenerateEnemyLoot(Unit);
             _levelModel.RemoveEnemy(Unit);
-            _effectFactory.CreateEffect(EffectType.Death, Unit.Position.AddY(Unit.Height)).Forget();
             _effectFactory.CreateEffect(EffectType.Blood, Unit.Position).Forget();
         }
 
