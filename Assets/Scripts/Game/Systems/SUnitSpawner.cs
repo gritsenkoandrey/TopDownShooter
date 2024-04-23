@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Factories.StateMachine;
 using CodeBase.Infrastructure.Factories.Weapon;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -54,6 +55,11 @@ namespace CodeBase.Game.Systems
             for (int j = 0; j < unit.BodyMediator.Skins[i].Data.Visual.Length; j++)
             {
                 unit.BodyMediator.Skins[i].Data.Visual[j].SetActive(i == index);
+
+                if (i == index)
+                {
+                    unit.BodyMediator.Add(unit.BodyMediator.Skins[i].Data.Visual[j].GetComponent<SkinnedMeshRenderer>());
+                }
             }
         }
     }

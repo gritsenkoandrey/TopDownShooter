@@ -6,6 +6,8 @@ using CodeBase.Infrastructure.Loot;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.StateMachine.Unit
@@ -35,6 +37,10 @@ namespace CodeBase.Game.StateMachine.Unit
             Unit.Shadow.SetActive(false);
             Unit.CleanSubscribe();
             
+            Unit.BodyMediator.SkinnedMeshes.Foreach(mesh => CreateDestroyMeshEffect(mesh).Forget());
+
+            DeactivateUnit();
+
             _lootService.GenerateEnemyLoot(Unit);
             _levelModel.RemoveEnemy(Unit);
             _effectFactory.CreateEffect(EffectType.Death, Unit.Position.AddY(Unit.Height)).Forget();
@@ -44,5 +50,16 @@ namespace CodeBase.Game.StateMachine.Unit
         public void Exit() { }
 
         public void Tick() { }
+
+        private async UniTaskVoid CreateDestroyMeshEffect(SkinnedMeshRenderer mesh)
+        {
+            GameObject effect = await _effectFactory.CreateEffect(EffectType.DestroyMesh, Unit.Position);
+            effect.GetComponent<CDestroyMeshEffect>().OnInit.Value = mesh;
+        }
+
+        private void DeactivateUnit()
+        {
+            DOVirtual.DelayedCall(5f, () => Unit.SetActive(false)).SetLink(Unit.gameObject);
+        }
     }
 }

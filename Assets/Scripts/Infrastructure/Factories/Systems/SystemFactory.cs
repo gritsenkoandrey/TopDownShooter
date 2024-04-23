@@ -57,6 +57,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SWallInitialize(),
                 new STurretSpawner(),
                 new SMeleeWeaponSendCombatLog(),
+                new SDestroyMeshEffect(),
             };
 
             return systems;
