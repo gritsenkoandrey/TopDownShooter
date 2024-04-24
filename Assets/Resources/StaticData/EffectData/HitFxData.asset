@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HitFxData
   m_EditorClassIdentifier: 
   EffectType: 0
-  LifeTime: 2
+  LifeTime: 1
   PrefabReference:
     m_AssetGUID: fdac75e990da47649b31f10049c400b0
     m_SubObjectName: 

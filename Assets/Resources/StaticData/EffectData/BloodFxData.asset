@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BloodFxData
   m_EditorClassIdentifier: 
   EffectType: 2
-  LifeTime: 5
+  LifeTime: 3.5
   PrefabReference:
     m_AssetGUID: 12c7cc78dfc718045b278f8c4b685f7a
     m_SubObjectName: 

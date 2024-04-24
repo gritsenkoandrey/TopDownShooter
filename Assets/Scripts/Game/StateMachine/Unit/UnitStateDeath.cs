@@ -58,7 +58,7 @@ namespace CodeBase.Game.StateMachine.Unit
 
         private void DeactivateUnit()
         {
-            DOVirtual.DelayedCall(5f, () => Unit.SetActive(false)).SetLink(Unit.gameObject);
+            DOVirtual.DelayedCall(3f, () => Unit.SetActive(false)).SetLink(Unit.gameObject);
         }
     }
 }

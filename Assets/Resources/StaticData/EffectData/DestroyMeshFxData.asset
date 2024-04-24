@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DestroyMeshFxData
   m_EditorClassIdentifier: 
   EffectType: 4
-  LifeTime: 5
+  LifeTime: 4
   PrefabReference:
     m_AssetGUID: 84f68d05c916d0f4ab707f01e66654af
     m_SubObjectName: 

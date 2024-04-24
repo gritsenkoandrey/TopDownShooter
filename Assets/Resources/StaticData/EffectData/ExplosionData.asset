@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplosionData
   m_EditorClassIdentifier: 
   EffectType: 3
-  LifeTime: 2
+  LifeTime: 1
   PrefabReference:
     m_AssetGUID: c83fb3ef04bb383408bb2064b89690b2
     m_SubObjectName: 
