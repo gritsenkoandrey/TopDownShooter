@@ -25,7 +25,8 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, ISceneLoaderService sceneLoaderService, ILoadingCurtainService loadingCurtainService)
+        private void Construct(IUIFactory uiFactory, ISceneLoaderService sceneLoaderService, 
+            ILoadingCurtainService loadingCurtainService)
         {
             _uiFactory = uiFactory;
             _sceneLoaderService = sceneLoaderService;

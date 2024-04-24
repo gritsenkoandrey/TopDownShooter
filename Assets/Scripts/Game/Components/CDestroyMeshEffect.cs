@@ -16,7 +16,7 @@ namespace CodeBase.Game.Components
             
             shapeModule.skinnedMeshRenderer = mesh;
             
-            DOVirtual.Float(1f, 2f, 1f, value => mesh.material.SetFloat(Shaders.Fade, value))
+            DOVirtual.Float(1f, 2f, 1.5f, value => mesh.material.SetFloat(Shaders.Fade, value))
                 .SetEase(Ease.Linear)
                 .SetLink(mesh.gameObject);
             

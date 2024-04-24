@@ -25,7 +25,8 @@ namespace CodeBase.Infrastructure.States
         }
         
         [Inject]
-        private void Construct(IUIFactory uiFactory, IProgressService progressService, ILoadingCurtainService loadingCurtainService)
+        private void Construct(IUIFactory uiFactory, IProgressService progressService, 
+            ILoadingCurtainService loadingCurtainService)
         {
             _uiFactory = uiFactory;
             _progressService = progressService;

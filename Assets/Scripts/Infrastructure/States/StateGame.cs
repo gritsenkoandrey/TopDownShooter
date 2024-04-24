@@ -114,7 +114,9 @@ namespace CodeBase.Infrastructure.States
         }
         
         private bool AllEnemyIsDeath() => _levelModel.Enemies.Count == 0;
+        
         private bool CharacterIsDeath() => _levelModel.Character.Health.IsAlive == false;
+        
         private void SetEnemyStateNone(IEnemy enemy)
         {
             switch (enemy)
