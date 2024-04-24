@@ -71,7 +71,7 @@ namespace CodeBase.Infrastructure.Pool
             }
 
             container.Consume();
-		    
+
             _lookup.Add(container.Item, container);
 		    
             return container.Item;
@@ -89,6 +89,16 @@ namespace CodeBase.Infrastructure.Pool
             {
                 CustomDebug.LogWarning($"This object pool does not contain the item provided: {item}");
             }
+        }
+
+        public void ReleaseAll()
+        {
+            foreach (ObjectPoolContainer<T> container in _lookup.Values)
+            {
+                container.Release();
+            }
+            
+            _lookup.Clear();
         }
     }
 }

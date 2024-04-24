@@ -4,7 +4,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
 {
     public interface ISystemFactory
     {
-        SystemBase[] CreateGameSystems();
-        SystemBase[] CreatePreviewSystems();
+        ISystem[] CreateGameSystems();
+        ISystem[] CreatePreviewSystems();
     }
 }

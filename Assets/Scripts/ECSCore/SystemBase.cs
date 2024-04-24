@@ -2,17 +2,19 @@
 
 namespace CodeBase.ECSCore
 {
-    public abstract class SystemBase
+    public abstract class SystemBase : ISystem
     {
         protected readonly CompositeDisposable LifetimeDisposable;
         
         protected SystemBase() => LifetimeDisposable = new CompositeDisposable();
 
-        public void EnableSystem() => OnEnableSystem();
-        public void DisableSystem() => OnDisableSystem();
-        public void Update() => OnUpdate();
-        public void FixedUpdate() => OnFixedUpdate();
-        public void LateUpdate() => OnLateUpdate();
+        void ISystem.EnableSystem() => OnEnableSystem();
+        void ISystem.DisableSystem() => OnDisableSystem();
+        void ISystem.Update() => OnUpdate();
+        void ISystem.FixedUpdate() => OnFixedUpdate();
+        void ISystem.LateUpdate() => OnLateUpdate();
+        
+        public virtual void Dispose() => LifetimeDisposable?.Dispose();
 
         protected virtual void OnEnableSystem() { }
         protected virtual void OnDisableSystem() => LifetimeDisposable.Clear();

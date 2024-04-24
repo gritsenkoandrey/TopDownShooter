@@ -4,7 +4,7 @@ using VContainer;
 
 namespace CodeBase.Game.SystemsBase
 {
-    public sealed class SObjectPoolLog : SystemBase
+    public sealed class SObjectPoolUpdate : SystemBase
     {
         private IObjectPoolService _objectPoolService;
         
@@ -13,7 +13,14 @@ namespace CodeBase.Game.SystemsBase
         {
             _objectPoolService = objectPoolService;
         }
-        
+
+        protected override void OnDisableSystem()
+        {
+            base.OnDisableSystem();
+            
+            _objectPoolService.ReleaseAll();
+        }
+
         protected override void OnUpdate()
         {
             base.OnUpdate();

@@ -10,6 +10,7 @@ namespace CodeBase.Infrastructure.Pool
         GameObject SpawnObject(GameObject prefab);
         GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation);
         void ReleaseObject(GameObject clone);
-        UniTaskVoid ReleaseObjectAfterTime(GameObject clone, float time);
+        void ReleaseObjectAfterTime(GameObject clone, float time);
+        void ReleaseAll();
     }
 }

@@ -1,4 +1,5 @@
-﻿using CodeBase.App;
+﻿using System;
+using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Curtain;
@@ -72,7 +73,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<IEffectFactory, EffectFactory>(Lifetime.Singleton);
             builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
 
-            builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform);
+            builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform).As<IDisposable>();
             
             builder.RegisterBuildCallback(container =>
             {

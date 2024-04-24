@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.Utils.CustomDebug;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -21,7 +21,6 @@ namespace CodeBase.Infrastructure.Pool
 	    private List<ObjectPoolItem> _poolItems;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _prefabLookup;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _instanceLookup;
-	    private CancellationToken _token;
 	    private readonly IAssetService _assetService;
 	    private readonly IStaticDataService _staticDataService;
 	    
@@ -40,11 +39,20 @@ namespace CodeBase.Infrastructure.Pool
 		    
 		    _prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
 		    _instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
-		    _token = new CancellationToken();
 
 		    await LoadPoolItems();
 		    
 		    FirstWarmPool();
+	    }
+	    
+	    void IObjectPoolService.Log()
+	    {
+		    if (_logStatus && _dirty)
+		    {
+			    PrintStatus();
+			    
+			    _dirty = false;
+		    }
 	    }
 
 	    GameObject IObjectPoolService.SpawnObject(GameObject prefab)
@@ -62,31 +70,20 @@ namespace CodeBase.Infrastructure.Pool
 		    Release(clone);
 	    }
 
-	    async UniTaskVoid IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
+	    void IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
 	    {
-		    try
-		    {
-			    await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _token);
-			    
-			    Release(clone);
-		    }
-		    catch (OperationCanceledException exception)
-		    {
-			    if (exception.CancellationToken == _token)
-			    {
-				    CustomDebug.LogWarning($"{exception.CancellationToken}");
-			    }
-		    }
+		    DOVirtual.DelayedCall(time, () => Release(clone)).SetLink(clone, LinkBehaviour.KillOnDisable);
 	    }
 
-	    void IObjectPoolService.Log()
+	    void IObjectPoolService.ReleaseAll()
 	    {
-		    if (_logStatus && _dirty)
+		    foreach (KeyValuePair<GameObject, ObjectPool<GameObject>> keyValuePair in _instanceLookup)
 		    {
-			    PrintStatus();
-			    
-			    _dirty = false;
+			    keyValuePair.Key.SetActive(false);
+			    keyValuePair.Value.ReleaseAll();
 		    }
+		    
+		    _instanceLookup.Clear();
 	    }
 
 	    private async UniTask LoadPoolItems()
@@ -207,7 +204,6 @@ namespace CodeBase.Infrastructure.Pool
 	    {
 		    _prefabLookup.Clear();
 		    _instanceLookup.Clear();
-		    _token.ThrowIfCancellationRequested();
 	    }
     }
 }

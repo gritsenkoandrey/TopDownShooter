@@ -19,13 +19,6 @@ namespace CodeBase.Game.Systems
             _objectPoolService = objectPoolService;
         }
 
-        protected override void OnDisableSystem()
-        {
-            base.OnDisableSystem();
-            
-            Entities.Foreach(ImmediateReturnToPool);
-        }
-
         protected override void OnUpdate()
         {
             base.OnUpdate();
@@ -57,11 +50,6 @@ namespace CodeBase.Game.Systems
         {
             await UniTask.Yield();
             
-            _objectPoolService.ReleaseObject(component.Object);
-        }
-
-        private void ImmediateReturnToPool(CBullet component)
-        {
             _objectPoolService.ReleaseObject(component.Object);
         }
     }

@@ -18,7 +18,7 @@ namespace CodeBase.Game.Components
             
             DOVirtual.Float(1f, 2f, 1f, value => mesh.material.SetFloat(Shaders.Fade, value))
                 .SetEase(Ease.Linear)
-                .SetLink(gameObject);
+                .SetLink(mesh.gameObject);
             
             _particleSystem.Play();
         }

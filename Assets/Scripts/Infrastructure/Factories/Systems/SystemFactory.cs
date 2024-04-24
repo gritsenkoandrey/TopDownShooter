@@ -9,9 +9,9 @@ namespace CodeBase.Infrastructure.Factories.Systems
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public sealed class SystemFactory : ISystemFactory
     {
-        SystemBase[] ISystemFactory.CreateGameSystems()
+        ISystem[] ISystemFactory.CreateGameSystems()
         {
-            SystemBase[] systems = 
+            ISystem[] systems = 
             {
                 new SGroundBuildNavMesh(),
                 new SRadarDraw(),
@@ -37,7 +37,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SDamageCombatLogViewProvider(),
                 new SDamageCombatLogUpdate(),
                 new SJoystickUpdate(),
-                new SObjectPoolLog(),
+                new SObjectPoolUpdate(),
                 new SUnitSpawner(),
                 new SScreenBloodEffect(),
                 new SCameraShake(),
@@ -63,9 +63,9 @@ namespace CodeBase.Infrastructure.Factories.Systems
             return systems;
         }
 
-        SystemBase[] ISystemFactory.CreatePreviewSystems()
+        ISystem[] ISystemFactory.CreatePreviewSystems()
         {
-            SystemBase[] systems = 
+            ISystem[] systems = 
             {
                 new SShopCharacterPreview(),
                 new SShopCharacterRenderer(),

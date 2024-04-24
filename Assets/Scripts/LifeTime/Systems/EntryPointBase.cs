@@ -7,7 +7,7 @@ namespace CodeBase.LifeTime.Systems
 {
     public abstract class EntryPointBase : IEntryPointSystem
     {
-        protected SystemBase[] Systems = Array.Empty<SystemBase>();
+        protected ISystem[] Systems = Array.Empty<ISystem>();
 
         public virtual void Initialize()
         {
@@ -40,10 +40,15 @@ namespace CodeBase.LifeTime.Systems
         void IDisposable.Dispose()
         {
             Systems.Foreach(Disable);
-            Systems = Array.Empty<SystemBase>();
+            Systems = Array.Empty<ISystem>();
         }
 
-        private void Enable(SystemBase system) => system.EnableSystem();
-        private void Disable(SystemBase system) => system.DisableSystem();
+        private void Enable(ISystem system) => system.EnableSystem();
+        
+        private void Disable(ISystem system)
+        {
+            system.DisableSystem();
+            system.Dispose();
+        }
     }
 }

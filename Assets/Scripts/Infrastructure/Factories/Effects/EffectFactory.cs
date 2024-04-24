@@ -28,7 +28,7 @@ namespace CodeBase.Infrastructure.Factories.Effects
             EffectData data = _staticDataService.EffectData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             GameObject effect = _objectPoolService.SpawnObject(prefab, position, prefab.transform.rotation);
-            _objectPoolService.ReleaseObjectAfterTime(effect, data.LifeTime).Forget();
+            _objectPoolService.ReleaseObjectAfterTime(effect, data.LifeTime);
             return effect;
         }
     }
