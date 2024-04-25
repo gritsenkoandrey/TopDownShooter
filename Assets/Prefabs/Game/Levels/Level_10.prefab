@@ -156,7 +156,7 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.4
+    ForceBullet: 10
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5
@@ -296,7 +296,7 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 1
     ClipCount: 10
-    ForceBullet: 0.2
+    ForceBullet: 15
     RechargeTime: 4
     FireInterval: 1.5
     CriticalChance: 20
@@ -613,7 +613,7 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.4
+    ForceBullet: 12.5
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5
@@ -695,7 +695,7 @@ MonoBehaviour:
   _weaponCharacteristic:
     Damage: 2
     ClipCount: 2
-    ForceBullet: 0.4
+    ForceBullet: 20
     RechargeTime: 2
     FireInterval: 1
     CriticalChance: 5

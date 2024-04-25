@@ -12,6 +12,9 @@ namespace CodeBase.Game.Systems
     {
         private LevelModel _levelModel;
 
+        private const float ScaleOffset = 5f;
+        private const float RotateOffset = 250f;
+
         [Inject]
         private void Construct(LevelModel levelModel)
         {
@@ -44,7 +47,7 @@ namespace CodeBase.Game.Systems
             if (component.HasTarget)
             {
                 component.Transform.position = component.Target.Position;
-                component.Transform.localEulerAngles += Vector3.up * Time.deltaTime * 250f;
+                component.Transform.localEulerAngles += Vector3.up * Time.deltaTime * RotateOffset;
                 component.TargetScale.localScale = Vector3.one * component.Target.Scale;
             }
 
@@ -52,11 +55,11 @@ namespace CodeBase.Game.Systems
 
             if (component.IsValid)
             {
-                scale += Time.deltaTime * 5f;
+                scale += Time.deltaTime * ScaleOffset;
             }
             else
             {
-                scale -= Time.deltaTime * 5f;
+                scale -= Time.deltaTime * ScaleOffset;
             }
 
             scale = Mathf.Clamp(scale, 0f, 1f);

@@ -16,7 +16,7 @@ MonoBehaviour:
   WeaponCharacteristic:
     Damage: 25
     ClipCount: 1
-    ForceBullet: 0.15
+    ForceBullet: 10
     RechargeTime: 4
     FireInterval: 1
     CriticalChance: 20

@@ -1,6 +1,7 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Components;
 using CodeBase.Utils;
+using UnityEngine;
 
 namespace CodeBase.Game.Systems
 {
@@ -13,6 +14,6 @@ namespace CodeBase.Game.Systems
             Entities.Foreach(Move);
         }
 
-        private void Move(CBullet bullet) => bullet.transform.position += bullet.Direction;
+        private void Move(CBullet bullet) => bullet.transform.position += bullet.Direction * Time.deltaTime;
     }
 }

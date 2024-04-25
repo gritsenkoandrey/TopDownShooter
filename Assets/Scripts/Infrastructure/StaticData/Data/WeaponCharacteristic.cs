@@ -7,7 +7,7 @@ namespace CodeBase.Infrastructure.StaticData.Data
     {
         [Range(1,100)] public int Damage;
         [Range(1,100)] public int ClipCount;
-        [Range(0f,10f)] public float ForceBullet;
+        [Range(0f,50f)] public float ForceBullet;
         [Range(0f,10f)] public float RechargeTime;
         [Range(0f,10f)] public float FireInterval;
         [Range(0f,100f)] public int CriticalChance;
