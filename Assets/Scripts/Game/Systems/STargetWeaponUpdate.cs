@@ -12,7 +12,7 @@ namespace CodeBase.Game.Systems
     {
         private LevelModel _levelModel;
 
-        private const float ScaleOffset = 5f;
+        private const float ScaleOffset = 2.5f;
         private const float RotateOffset = 250f;
 
         [Inject]
@@ -39,6 +39,8 @@ namespace CodeBase.Game.Systems
 
         private void UpdateTarget(CTargetWeapon component)
         {
+            component.transform.rotation = Quaternion.identity;
+            
             if (component.IsPause)
             {
                 return;
@@ -47,7 +49,6 @@ namespace CodeBase.Game.Systems
             if (component.HasTarget)
             {
                 component.Transform.position = component.Target.Position;
-                component.Transform.localEulerAngles += Vector3.up * Time.deltaTime * RotateOffset;
                 component.TargetScale.localScale = Vector3.one * component.Target.Scale;
             }
 
@@ -55,6 +56,8 @@ namespace CodeBase.Game.Systems
 
             if (component.IsValid)
             {
+                component.Transform.localEulerAngles += Vector3.up * Time.deltaTime * RotateOffset;
+
                 scale += Time.deltaTime * ScaleOffset;
             }
             else
@@ -62,8 +65,7 @@ namespace CodeBase.Game.Systems
                 scale -= Time.deltaTime * ScaleOffset;
             }
 
-            scale = Mathf.Clamp(scale, 0f, 1f);
-            component.Transform.localScale = Vector3.one * scale;
+            component.Transform.localScale = Vector3.one * Mathf.Clamp(scale, 0f, 1f);
         }
     }
 }
