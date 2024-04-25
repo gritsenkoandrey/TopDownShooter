@@ -62,6 +62,7 @@ namespace CodeBase.Infrastructure.Factories.Weapon
             ProjectileData data = _staticDataService.ProjectileData(type);
             GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
             CBullet bullet = _objectPoolService.SpawnObject(prefab, spawnPoint.position, spawnPoint.rotation).GetComponent<CBullet>();
+            bullet.LifeTime = data.LifeTime;
             bullet.SetDamage(damage);
             bullet.SetDirection(direction);
             bullet.SetCollisionDistance(Mathf.Pow(data.CollisionRadius, 2));

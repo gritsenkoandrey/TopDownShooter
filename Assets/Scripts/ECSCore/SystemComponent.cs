@@ -29,14 +29,27 @@ namespace CodeBase.ECSCore
             EntityContainer<T>.OnUnregistered -= OnDisableComponent;
         }
 
-        public override void Dispose()
+        protected virtual void OnEnableComponent(T component)
         {
-            base.Dispose();
+            _entities.Add(component);
+        }
+
+        protected virtual void OnDisableComponent(T component)
+        {
+        }
+
+        protected override void OnRemoveDisableEntity()
+        {
+            base.OnRemoveDisableEntity();
+
+            _entities.RemoveWhere(entity => entity.IsEnabled == false);
+        }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
             
             _entities.Clear();
         }
-
-        protected virtual void OnEnableComponent(T component) => _entities.Add(component);
-        protected virtual void OnDisableComponent(T component) => _entities.Remove(component);
     }
 }

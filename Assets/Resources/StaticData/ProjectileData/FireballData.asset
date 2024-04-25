@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectileType: 6
   CollisionRadius: 1.5
+  LifeTime: 2.5
   PrefabReference:
     m_AssetGUID: deec2987c8cae8c4a97dea31b6ddb2c5
     m_SubObjectName: 

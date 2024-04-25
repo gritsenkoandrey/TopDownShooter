@@ -6,6 +6,7 @@ using CodeBase.Infrastructure.Factories.Effects;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using VContainer;
 
 namespace CodeBase.Game.Systems
@@ -63,7 +64,7 @@ namespace CodeBase.Game.Systems
         {
             target.Health.CurrentHealth.Value -= bullet.Damage;
 
-            bullet.OnDestroy.Execute();
+            bullet.OnDestroy.Execute(Unit.Default);
 
             switch (target)
             {
@@ -85,7 +86,7 @@ namespace CodeBase.Game.Systems
 
                 if (isCollision)
                 {
-                    bullet.OnDestroy.Execute();
+                    bullet.OnDestroy.Execute(Unit.Default);
                     
                     _effectFactory.CreateEffect(EffectType.Explosion, bullet.Position).Forget();
                 }

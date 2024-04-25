@@ -2,7 +2,6 @@
 using CodeBase.Game.Components;
 using CodeBase.Infrastructure.Pool;
 using CodeBase.Utils;
-using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using VContainer;
@@ -32,7 +31,7 @@ namespace CodeBase.Game.Systems
 
             component.OnDestroy
                 .First()
-                .Subscribe(_ => ReturnToPool(component).Forget())
+                .Subscribe(_ => ReturnToPool(component))
                 .AddTo(component.LifetimeDisposable);
         }
 
@@ -42,15 +41,13 @@ namespace CodeBase.Game.Systems
 
             if (bullet.LifeTime < 0f)
             {
-                ReturnToPool(bullet).Forget();
+                ReturnToPool(bullet);
             }
         }
 
-        private async UniTaskVoid ReturnToPool(CBullet component)
+        private void ReturnToPool(CBullet component)
         {
-            await UniTask.Yield();
-            
-            _objectPoolService.ReleaseObject(component.Object);
+            _objectPoolService.ReleaseObject(component.gameObject);
         }
     }
 }
