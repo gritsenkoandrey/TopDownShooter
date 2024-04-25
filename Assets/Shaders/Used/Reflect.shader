@@ -54,9 +54,6 @@ Shader "Unlit/Reflect"
 
             #include "UnityCG.cginc"
 
-            #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
-            #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
-
             struct appdata_t
             {
                 float4 vertex : POSITION;
@@ -116,24 +113,16 @@ Shader "Unlit/Reflect"
 
             fixed4 frag(v2f IN) : SV_Target
             {
-                float time = _Time * _Speed + IN.texcoord.x;
+                const float time = _Time * _Speed + IN.texcoord.x;
                 half step = (sin(time) - 1) * _Duration + 1;
                 step = smoothstep(step, 0, 1);
                 step = 1 - step;
-                
-                half4 gradientColor = half4(step, step, step, step);
 
-                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * gradientColor;
+                const half4 gradientColor = half4(step, step, step, step);
+
+                const half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * gradientColor;
 
                 unity_rotate_degrees_float(IN.texcoord, float2(0.5, 0.5), _Rotation, IN.worldPosition.xy);
-
-                #ifdef UNITY_UI_CLIP_RECT
-                    color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
-                #endif
-
-                #ifdef UNITY_UI_ALPHACLIP
-                    clip (color.a - 0.001);
-                #endif
 
                 return color * IN.color;
             }
