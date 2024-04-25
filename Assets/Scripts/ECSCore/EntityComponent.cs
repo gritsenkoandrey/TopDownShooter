@@ -11,7 +11,7 @@
         {
             OnEntityEnable();
             
-            EntityContainer<T>.OnRegistered?.Invoke(this as T);
+            EntityContainer<T>.Registered(this);
         }
 
         private void OnDisable()
@@ -20,7 +20,7 @@
             
             LifetimeDisposable.Clear();
 
-            EntityContainer<T>.OnUnregistered?.Invoke(this as T);
+            EntityContainer<T>.Unregistered(this);
         }
     }
 }
