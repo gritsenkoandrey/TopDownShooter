@@ -21,8 +21,10 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            void SetLevelText(int level) => component.TextLevel.text = string.Format(FormatText.Level, level.ToString());
+
             _progressService.LevelData.Data
-                .Subscribe(level => component.TextLevel.text = string.Format(FormatText.Level, level.ToString()))
+                .Subscribe(SetLevelText)
                 .AddTo(component.LifetimeDisposable);
         }
     }

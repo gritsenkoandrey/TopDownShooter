@@ -35,29 +35,24 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            SetAlpha(component, 0f);
             SubscribeOnReloadingClip(component);
         }
 
-        protected override void OnDisableComponent(CWeaponReloadingView component)
-        {
-            base.OnDisableComponent(component);
-            
-            component.Tween?.Kill();
-        }
-
-        private void SetAlpha(CWeaponReloadingView component, float alpha) => component.CanvasGroup.alpha = alpha;
-
         private void SubscribeOnReloadingClip(CWeaponReloadingView component)
         {
+            void SetFillAmount(float value) => component.Fill.fillAmount = value;
+            void SetCanvasGroupAlphaOne() => component.CanvasGroup.alpha = 1f;
+            void SetCanvasGroupAlphaZero() => component.CanvasGroup.alpha = 0f;
+
             _inventoryModel.ReloadingWeapon
+                .DoOnSubscribe(SetCanvasGroupAlphaZero)
                 .Subscribe(delay =>
                 {
-                    SetAlpha(component, 1f);
-
-                    component.Tween = DOVirtual.Float(0f, 1f, delay, value => component.Fill.fillAmount = value)
+                    DOVirtual.Float(0f, 1f, delay, SetFillAmount)
                         .SetEase(Ease.Linear)
-                        .OnComplete(() => SetAlpha(component, 0f));
+                        .SetLink(component.gameObject)
+                        .OnStart(SetCanvasGroupAlphaOne)
+                        .OnComplete(SetCanvasGroupAlphaZero);
                 })
                 .AddTo(component.LifetimeDisposable);
         }

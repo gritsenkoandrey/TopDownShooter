@@ -20,7 +20,7 @@ namespace CodeBase.Game.Systems
             base.OnEnableComponent(component);
 
             component.Draw
-                .Subscribe(_ => DrawCircle(component, component.Radius))
+                .Subscribe(_ => DrawCircle(component))
                 .AddTo(component.LifetimeDisposable);
 
             component.Clear
@@ -28,7 +28,7 @@ namespace CodeBase.Game.Systems
                 .AddTo(component.LifetimeDisposable);
         }
 
-        private void DrawCircle(CRadar component, float radius)
+        private void DrawCircle(CRadar component)
         {
             float offset = 0f;
             int size = Mathf.RoundToInt(1f / component.Scale + 1f);
@@ -40,8 +40,8 @@ namespace CodeBase.Game.Systems
             {
                 offset += 2f * Mathf.PI * component.Scale;
                         
-                float x = radius * Mathf.Sin(offset);
-                float z = radius * Mathf.Cos(offset);
+                float x = component.Radius * Mathf.Sin(offset);
+                float z = component.Radius * Mathf.Cos(offset);
                         
                 component.LineRenderer.SetPosition(i, new Vector3(x, 0f, z));
             }

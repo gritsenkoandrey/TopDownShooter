@@ -59,46 +59,50 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnSelectInventory(CShopBuyButton component)
         {
-            _inventoryModel.SelectedWeapon
-                .Subscribe(weaponType =>
+            void SelectWeapon(WeaponType weaponType)
+            {
+                if (_shopModel.IsBuy(weaponType))
                 {
-                    if (_shopModel.IsBuy(weaponType))
+                    if (_inventoryModel.IndexWeapon.Value == _inventoryModel.GetWeaponIndex())
                     {
-                        if (_inventoryModel.IndexWeapon.Value == _inventoryModel.GetWeaponIndex())
-                        {
-                            SelectedState(component);
-                        }
-                        else
-                        {
-                            SelectState(component);
-                        }
+                        SelectedState(component);
                     }
                     else
                     {
-                        BuyState(component, _shopModel.CanBuy(weaponType));
+                        SelectState(component);
                     }
-                })
+                }
+                else
+                {
+                    BuyState(component, _shopModel.CanBuy(weaponType));
+                }
+            }
+
+            void SelectSkin(SkinType skinType)
+            {
+                if (_shopModel.IsBuy(skinType))
+                {
+                    if (_inventoryModel.IndexSkin.Value == _inventoryModel.GetSkinIndex())
+                    {
+                        SelectedState(component);
+                    }
+                    else
+                    {
+                        SelectState(component);
+                    }
+                }
+                else
+                {
+                    BuyState(component, _shopModel.CanBuy(skinType));
+                }
+            }
+            
+            _inventoryModel.SelectedWeapon
+                .Subscribe(SelectWeapon)
                 .AddTo(component.LifetimeDisposable);
 
             _inventoryModel.SelectedSkin
-                .Subscribe(skinType =>
-                {
-                    if (_shopModel.IsBuy(skinType))
-                    {
-                        if (_inventoryModel.IndexSkin.Value == _inventoryModel.GetSkinIndex())
-                        {
-                            SelectedState(component);
-                        }
-                        else
-                        {
-                            SelectState(component);
-                        }
-                    }
-                    else
-                    {
-                        BuyState(component, _shopModel.CanBuy(skinType));
-                    }
-                })
+                .Subscribe(SelectSkin)
                 .AddTo(component.LifetimeDisposable);
         }
 

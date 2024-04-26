@@ -156,31 +156,31 @@ namespace CodeBase.Game.SystemsUi
         private Tween ShowEquipmentFade(float from, float to)
         {
             CCharacterPreviewModel model = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
-            
-            return DOVirtual.Float(from, to, 0.25f, value =>
+
+            void EquipmentFade(float value)
+            {
+                for (int i = 0; i < model.EquipmentMaterials.Length; i++)
                 {
-                    for (int i = 0; i < model.EquipmentMaterials.Length; i++)
-                    {
-                        model.EquipmentMaterials[i].SetFloat(Shaders.Fade, value);
-                    }
-                })
-                .SetEase(Ease.Linear)
-                .SetLink(model.gameObject);
+                    model.EquipmentMaterials[i].SetFloat(Shaders.Fade, value);
+                }
+            }
+            
+            return DOVirtual.Float(from, to, 0.25f, EquipmentFade).SetEase(Ease.Linear).SetLink(model.gameObject);
         }
         
         private Tween ShowWeaponFade(float from, float to)
         {
             CCharacterPreviewModel model = _characterPreviewModel.CharacterPreview.CharacterPreviewModel;
 
-            return DOVirtual.Float(from, to, 0.25f, value =>
+            void WeaponFade(float value)
+            {
+                for (int i = 0; i < model.WeaponMaterials.Length; i++)
                 {
-                    for (int i = 0; i < model.WeaponMaterials.Length; i++)
-                    {
-                        model.WeaponMaterials[i].SetFloat(Shaders.Fade, value);
-                    }
-                })
-                .SetEase(Ease.Linear)
-                .SetLink(model.gameObject);
+                    model.WeaponMaterials[i].SetFloat(Shaders.Fade, value);
+                }
+            }
+
+            return DOVirtual.Float(from, to, 0.25f, WeaponFade).SetEase(Ease.Linear).SetLink(model.gameObject);
         }
         
         private TimeSpan DelayClick() => TimeSpan.FromSeconds(ButtonSettings.DelayClick);

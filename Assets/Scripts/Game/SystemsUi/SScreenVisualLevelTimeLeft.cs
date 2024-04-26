@@ -26,9 +26,11 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnUpdateTimeLeft(CLevelTimeLeft component)
         {
+            void SetTime(int time) => component.TimeLeftText.text = time.SecondsToTime();
+
             _levelModel.Level
                 .ObserveEveryValueChanged(level => level.Time)
-                .Subscribe(time => component.TimeLeftText.text = time.SecondsToTime())
+                .Subscribe(SetTime)
                 .AddTo(component.LifetimeDisposable);
         }
     }

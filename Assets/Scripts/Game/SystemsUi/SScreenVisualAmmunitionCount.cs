@@ -20,8 +20,10 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            void SetAmmunitionCountText(int count) => component.AmmunitionCount.text = count.ToString();
+
             _inventoryModel.ClipCount
-                .Subscribe(count => component.AmmunitionCount.text = count.ToString())
+                .Subscribe(SetAmmunitionCountText)
                 .AddTo(component.LifetimeDisposable);
         }
     }

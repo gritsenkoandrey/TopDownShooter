@@ -21,14 +21,16 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
             
+            void SetCanvasAlpha(float alpha) => component.CanvasGroup.alpha = alpha;
+
             _levelModel.Character.Health.CurrentHealth
                 .Pairwise()
                 .Where(pair => pair.Previous > pair.Current)
                 .Subscribe(_ =>
                 {
                     component.BloodTween?.Kill();
-                    component.BloodTween = DOVirtual.Float(1f, 0f, 0.75f, 
-                        alpha => component.CanvasGroup.alpha = alpha)
+                    component.BloodTween = DOVirtual.Float(1f, 0f, 0.75f, SetCanvasAlpha)
+                        .SetEase(Ease.Linear)
                         .SetLink(component.gameObject);
                 })
                 .AddTo(component.LifetimeDisposable);

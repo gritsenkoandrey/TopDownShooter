@@ -30,29 +30,31 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnUpdateTask(CTask component, Task task)
         {
-            task
-                .ObserveEveryValueChanged(t => t.Score)
-                .Subscribe(score =>
+            void UpdateTask(int score)
+            {
+                if (score >= task.MaxScore && task.IsDone == false)
                 {
-                    if (score >= task.MaxScore && task.IsDone == false)
-                    {
-                        component.GetButton.interactable = true;
-                    }
-                    else
-                    {
-                        component.GetButton.interactable = false;
-                    }
+                    component.GetButton.interactable = true;
+                }
+                else
+                {
+                    component.GetButton.interactable = false;
+                }
 
-                    if (task.IsDone)
-                    {
-                        TaskDone(component);
-                    }
-                    else
-                    {
-                        component.ProgressText.text = Format(task);
-                        component.FillProgress.fillAmount = Mathematics.Remap(0f, task.MaxScore, 0f, 1f, task.Score);
-                    }
-                })
+                if (task.IsDone)
+                {
+                    TaskDone(component);
+                }
+                else
+                {
+                    component.ProgressText.text = Format(task);
+                    component.FillProgress.fillAmount = Mathematics.Remap(0f, task.MaxScore, 0f, 1f, task.Score);
+                }
+            }
+            
+            task
+                .ObserveEveryValueChanged(select => select.Score)
+                .Subscribe(UpdateTask)
                 .AddTo(component.LifetimeDisposable);
 
             component.GetButton

@@ -25,26 +25,23 @@ namespace CodeBase.Game.SystemsUi
 
         private void SubscribeOnLevelGoal(CLevelGoal component)
         {
+            void SetStartValue() => component.TextLevelGoal.text = _levelModel.Enemies.Count.ToString();
+            
+            void UpdateLevelGoal(int count)
+            {
+                component.TextLevelGoal.text = count.ToString();
+
+                if (count <= 0)
+                {
+                    component.Background.SetActive(false);
+                }
+            }
+
             _levelModel.Enemies
                 .ObserveCountChanged()
-                .DoOnSubscribe(() => SetStartValue(component))
-                .Subscribe(count => UpdateLevelGoal(component, count))
+                .DoOnSubscribe(SetStartValue)
+                .Subscribe(UpdateLevelGoal)
                 .AddTo(component.LifetimeDisposable);
-        }
-
-        private void SetStartValue(CLevelGoal component)
-        {
-            component.TextLevelGoal.text = _levelModel.Enemies.Count.ToString();
-        }
-
-        private void UpdateLevelGoal(CLevelGoal component, int count)
-        {
-            component.TextLevelGoal.text = count.ToString();
-
-            if (count <= 0)
-            {
-                component.Background.SetActive(false);
-            }
         }
     }
 }

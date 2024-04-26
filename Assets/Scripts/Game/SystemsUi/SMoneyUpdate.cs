@@ -21,8 +21,10 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
+            void SetMoneyText(int money) => component.TextCountMoney.text = money.Trim();
+
             _progressService.MoneyData.Data
-                .Subscribe(money => component.TextCountMoney.text = money.Trim())
+                .Subscribe(SetMoneyText)
                 .AddTo(component.LifetimeDisposable);
         }
     }

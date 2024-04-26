@@ -1,5 +1,4 @@
 ﻿using CodeBase.ECSCore;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +13,5 @@ namespace CodeBase.Game.ComponentsUi
         public CanvasGroup CanvasGroup => _canvasGroup;
         public Image Fill => _fill;
         public Transform Transform => _transform;
-        public Tween Tween { get; set; }
     }
 }
