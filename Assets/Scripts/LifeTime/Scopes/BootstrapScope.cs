@@ -49,6 +49,9 @@ namespace CodeBase.LifeTime.Scopes
         {
             base.Configure(builder);
 
+            void CreateGameStateMachine(IObjectResolver container) => 
+                container.Resolve<IStateMachineFactory>().CreateGameStateMachine().Enter<StateBootstrap>();
+
             builder.RegisterComponentInNewPrefab(_loadingCurtain, Lifetime.Singleton).UnderTransform(transform).As<ILoadingCurtainService>();
             builder.RegisterComponentInNewPrefab(_cameraService, Lifetime.Singleton).UnderTransform(transform).As<ICameraService>();
             builder.RegisterComponentInNewPrefab(_guiService, Lifetime.Singleton).UnderTransform(transform).As<IGuiService>();
@@ -75,12 +78,7 @@ namespace CodeBase.LifeTime.Scopes
 
             builder.Register<IObjectPoolService, ObjectPoolService>(Lifetime.Singleton).WithParameter(transform).As<IDisposable>();
             
-            builder.RegisterBuildCallback(container =>
-            {
-                IStateMachineFactory stateMachineFactory = container.Resolve<IStateMachineFactory>();
-                
-                stateMachineFactory.CreateGameStateMachine().Enter<StateBootstrap>();
-            });
+            builder.RegisterBuildCallback(CreateGameStateMachine);
         }
     }
 } 

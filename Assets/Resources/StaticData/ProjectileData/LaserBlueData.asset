@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LaserBlueData
   m_EditorClassIdentifier: 
   ProjectileType: 3
-  CollisionRadius: 1.5
+  CollisionRadius: 1.25
   LifeTime: 2.5
   PrefabReference:
     m_AssetGUID: 4c41ec3ab37ac8b4c9490c39838a71d1

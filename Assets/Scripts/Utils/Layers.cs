@@ -4,7 +4,7 @@ namespace CodeBase.Utils
 {
     public static class Layers
     {
-        public static int Ground => LayerMask.GetMask(nameof(Ground));
-        public static int Wall => LayerMask.GetMask(nameof(Wall));
+        public static int Ground => 1 << LayerMask.NameToLayer(nameof(Ground));
+        public static int Wall => 1 << LayerMask.NameToLayer(nameof(Wall));
     }
 }
