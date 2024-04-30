@@ -2,6 +2,7 @@
 using CodeBase.App;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.Factories.UI;
+using CodeBase.Infrastructure.Progress;
 using CodeBase.UI.Screens;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -14,6 +15,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IGameStateMachine _gameStateMachine;
         private IUIFactory _uiFactory;
         private ILoadingCurtainService _loadingCurtainService;
+        private IProgressService _progressService;
 
         private IDisposable _transitionDisposable;
 
@@ -23,10 +25,11 @@ namespace CodeBase.Infrastructure.States
         }
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, ILoadingCurtainService loadingCurtainService)
+        private void Construct(IUIFactory uiFactory, ILoadingCurtainService loadingCurtainService, IProgressService progressService)
         {
             _uiFactory = uiFactory;
             _loadingCurtainService = loadingCurtainService;
+            _progressService = progressService;
         }
 
         void IEnterLoadState<bool>.Enter(bool isWin)
@@ -46,6 +49,8 @@ namespace CodeBase.Infrastructure.States
 
             if (isWin)
             {
+                _progressService.LevelData.Data.Value++;
+                
                 screen = await _uiFactory.CreateScreen(ScreenType.Win);
             }
             else

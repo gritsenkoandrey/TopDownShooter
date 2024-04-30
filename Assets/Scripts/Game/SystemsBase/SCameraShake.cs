@@ -21,16 +21,16 @@ namespace CodeBase.Game.SystemsBase
         {
             base.OnEnableSystem();
             
-            _damageCombatLog.OnCombatLog += DamageCombatLogOnOnCombatLog;
+            _damageCombatLog.OnCombatLog += OnCombatLog;
         }
 
         protected override void OnDisableSystem()
         {
             base.OnDisableSystem();
             
-            _damageCombatLog.OnCombatLog -= DamageCombatLogOnOnCombatLog;
+            _damageCombatLog.OnCombatLog -= OnCombatLog;
         }
 
-        private void DamageCombatLogOnOnCombatLog(CombatLog log) => _cameraService.Shake();
+        private void OnCombatLog(CombatLog log) => _cameraService.Shake();
     }
 }
