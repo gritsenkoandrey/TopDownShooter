@@ -14,13 +14,12 @@ namespace CodeBase.Infrastructure.States
             States = new Dictionary<Type, IExitState>
             {
                 {typeof(StateBootstrap), new StateBootstrap(this)},
-                {typeof(StateFail), new StateFail(this)},
+                {typeof(StateResult), new StateResult(this)},
                 {typeof(StateGame), new StateGame(this)},
                 {typeof(StateLoadLevel), new StateLoadLevel(this)},
                 {typeof(StateLoadProgress), new StateLoadProgress(this)},
                 {typeof(StateLobby), new StateLobby(this)},
-                {typeof(StatePreview), new StatePreview(this)},
-                {typeof(StateWin), new StateWin(this)},
+                {typeof(StatePreview), new StatePreview(this)}
             };
         }
 

@@ -83,20 +83,20 @@ namespace CodeBase.Infrastructure.States
 
         private void Win()
         {
-            _gameStateMachine.Enter<StateWin>();
+            _gameStateMachine.Enter<StateResult, bool>(true);
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
         }
 
         private void Lose()
         {
-            _gameStateMachine.Enter<StateFail>();
+            _gameStateMachine.Enter<StateResult, bool>(false);
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateDeath>();
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
         }
 
         private void TimeLeft()
         {
-            _gameStateMachine.Enter<StateFail>();
+            _gameStateMachine.Enter<StateResult, bool>(false);
             _levelModel.Character.StateMachine.StateMachine.Enter<CharacterStateNone>();
             _levelModel.Enemies.Foreach(SetEnemyStateNone);
         }
