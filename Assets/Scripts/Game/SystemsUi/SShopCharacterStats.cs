@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Enums;
@@ -18,9 +19,10 @@ namespace CodeBase.Game.SystemsUi
         private IProgressService _progressService;
         private InventoryModel _inventoryModel;
 
+        private const string FixedPoint = "F1";
+
         [Inject]
-        private void Construct(IStaticDataService staticDataService, IProgressService progressService, 
-            InventoryModel inventoryModel)
+        private void Construct(IStaticDataService staticDataService, IProgressService progressService, InventoryModel inventoryModel)
         {
             _staticDataService = staticDataService;
             _progressService = progressService;
@@ -31,46 +33,38 @@ namespace CodeBase.Game.SystemsUi
         {
             base.OnEnableComponent(component);
 
-            void UpdateHealthStat(SkinType type)
+            void UpdateHealthStat(SkinType type, int multiplier)
             {
                 SkinCharacteristicData data = _staticDataService.SkinCharacteristicData(type);
-                int healthMultiplier = _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Health];
-
-                string health = (data.SkinCharacteristic.BaseHealth * healthMultiplier).ToString();
+                string health = (data.SkinCharacteristic.BaseHealth * multiplier).ToString();
                 string hps = (data.SkinCharacteristic.RegenerationHealth / data.SkinCharacteristic.RegenearationInterval)
-                    .ToString("F1", CultureInfo.InvariantCulture);
-
+                    .ToString(FixedPoint, CultureInfo.InvariantCulture);
                 component.TextHealth.text = string.Format(FormatText.HealthStat, health, hps);
             }
 
-            void UpdateDamageStat(WeaponType type)
+            void UpdateDamageStat(WeaponType type, int multiplier)
             {
                 WeaponCharacteristicData data = _staticDataService.WeaponCharacteristicData(type);
-                int damageMultiplier = _progressService.StatsData.Data.Value.Data[UpgradeButtonType.Damage];
-
-                string damage = (data.WeaponCharacteristic.Damage * damageMultiplier).ToString();
+                string damage = (data.WeaponCharacteristic.Damage * multiplier).ToString();
                 string dps = (data.WeaponCharacteristic.Damage / data.WeaponCharacteristic.FireInterval)
-                    .ToString("F1", CultureInfo.InvariantCulture);
-
+                    .ToString(FixedPoint, CultureInfo.InvariantCulture);
                 component.TextDamage.text = string.Format(FormatText.DamageStat, damage, dps);
             }
 
+            IObservable<int> healthSubscribe = _progressService.StatsData.Data.Value.Data
+                .ObserveEveryValueChanged(data => data[UpgradeButtonType.Health]);
+
+            IObservable<int> damageSubscribe = _progressService.StatsData.Data.Value.Data
+                .ObserveEveryValueChanged(data => data[UpgradeButtonType.Damage]);
+            
             _inventoryModel.SelectedSkin
-                .Subscribe(UpdateHealthStat)
+                .CombineLatest(healthSubscribe, (skinType, multiplier) => (skinType, multiplier))
+                .Subscribe(tuple => UpdateHealthStat(tuple.skinType, tuple.multiplier))
                 .AddTo(component.LifetimeDisposable);
 
             _inventoryModel.SelectedWeapon
-                .Subscribe(UpdateDamageStat)
-                .AddTo(component.LifetimeDisposable);
-
-            _progressService.StatsData.Data.Value.Data
-                .ObserveEveryValueChanged(data => data[UpgradeButtonType.Health])
-                .Subscribe(_ => UpdateHealthStat(_inventoryModel.SelectedSkin.Value))
-                .AddTo(component.LifetimeDisposable);
-            
-            _progressService.StatsData.Data.Value.Data
-                .ObserveEveryValueChanged(data => data[UpgradeButtonType.Damage])
-                .Subscribe(_ => UpdateDamageStat(_inventoryModel.SelectedWeapon.Value))
+                .CombineLatest(damageSubscribe, (weaponType, multiplier) => (weaponType, multiplier))
+                .Subscribe(tuple => UpdateDamageStat(tuple.weaponType, tuple.multiplier))
                 .AddTo(component.LifetimeDisposable);
         }
     }
