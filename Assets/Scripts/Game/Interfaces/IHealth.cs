@@ -1,9 +1,9 @@
-﻿using CodeBase.Game.Models;
+﻿using CodeBase.Game.Components;
 
 namespace CodeBase.Game.Interfaces
 {
     public interface IHealth
     {
-        Health Health { get; }
+        CHealth Health { get; }
     }
 }

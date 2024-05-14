@@ -58,6 +58,9 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new STurretSpawner(),
                 new SMeleeWeaponSendCombatLog(),
                 new SDestroyMeshEffect(),
+                new SHealthRegeneration(),
+                new SRegenerationHealthProvider(),
+                new SRegenerationHealthUpdate(),
             };
 
             return systems;
@@ -82,6 +85,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SShopTaskUpdate(),
                 new SShopTaskProvider(),
                 new SDailyTaskUpdate(),
+                new SShopCharacterStats(),
             };
 
             return systems;

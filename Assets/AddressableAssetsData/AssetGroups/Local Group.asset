@@ -357,6 +357,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Texture
+  - m_GUID: 8d2201a8150fcd749a7f0aefd178fb36
+    m_Address: RegenerationHealth
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 607b679de20d4e74791845c7c74e512c, type: 2}
   m_SchemaSet:

@@ -37,6 +37,7 @@ namespace CodeBase.Game.Systems
             turret.Weapon.SetWeapon(_weaponFactory.CreateTurretWeapon(turret.Weapon, component.WeaponCharacteristic));
             turret.Health.SetMaxHealth(component.TurretStats.Health);
             turret.Health.CurrentHealth.SetValueAndForceNotify(component.TurretStats.Health);
+            turret.Health.SetRegenerationHealth(component.TurretStats.RegenerationHealth, component.TurretStats.RegenerationInterval);
             turret.Radar.SetRadius(component.WeaponCharacteristic.AttackDistance);
             turret.StateMachine.CreateStateMachine(_stateMachineFactory.CreateTurretStateMachine(turret));
         }

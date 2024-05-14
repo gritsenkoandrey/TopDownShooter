@@ -99,5 +99,13 @@ namespace CodeBase.Infrastructure.Factories.UI
             CTask task = Object.Instantiate(prefab, parent).GetComponent<CTask>();
             return task;
         }
+
+        async UniTask<CRegenerationHealth> IUIFactory.CreateRegenerationHealth(Transform parent)
+        {
+            UiData data = _staticDataService.UiData();
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.RegenerationHealthPrefabReference);
+            CRegenerationHealth regenerationHealth = Object.Instantiate(prefab, parent).GetComponent<CRegenerationHealth>();
+            return regenerationHealth;
+        }
     }
 }

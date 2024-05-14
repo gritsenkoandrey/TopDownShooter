@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Models;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
@@ -14,6 +13,7 @@ namespace CodeBase.Game.Components
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CBodyMediator _bodyMediator;
         [SerializeField] private CShadow _shadow;
+        [SerializeField] private CHealth _health;
 
         public CAgent Agent => _agent;
         public CAnimator Animator => _animator;
@@ -21,7 +21,7 @@ namespace CodeBase.Game.Components
         public CStateMachine StateMachine => _stateMachine;
         public CBodyMediator BodyMediator => _bodyMediator;
         public CShadow Shadow => _shadow;
-        public Health Health { get; } = new ();
+        public CHealth Health => _health;
         public UnitStats UnitStats { get; set; }
         public Vector3 Position => transform.position;
         public Vector3 Forward => transform.forward;

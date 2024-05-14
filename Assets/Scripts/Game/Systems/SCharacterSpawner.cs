@@ -43,7 +43,7 @@ namespace CodeBase.Game.Systems
 
         private async UniTaskVoid CreateCharacter(CCharacterSpawner component)
         {
-            CCharacter character = await _gameFactory.CreateCharacter(component.Position, component.transform.parent);
+            CCharacter character = await _gameFactory.CreateCharacter(_inventoryModel.SelectedSkin.Value, component.Position, component.transform.parent);
             CWeapon weapon = await _weaponFactory.CreateCharacterWeapon(_inventoryModel.SelectedWeapon.Value, character.WeaponMediator.Container);
 
             character.WeaponMediator.SetWeapon(weapon);

@@ -1,6 +1,5 @@
 ﻿using CodeBase.ECSCore;
 using CodeBase.Game.Interfaces;
-using CodeBase.Game.Models;
 using CodeBase.Infrastructure.StaticData.Data;
 using UnityEngine;
 
@@ -11,12 +10,13 @@ namespace CodeBase.Game.Components
         [SerializeField] private CRadar _radar;
         [SerializeField] private CStateMachine _stateMachine;
         [SerializeField] private CWeapon _weapon;
+        [SerializeField] private CHealth _health;
 
         public CRadar Radar => _radar;
         public CStateMachine StateMachine => _stateMachine;
         public CWeapon Weapon => _weapon;
         public Transform Rotate => _weapon.transform;
-        public Health Health { get; } = new ();
+        public CHealth Health => _health;
         public TurretStats Stats { get; set; }
         public Vector3 Position => transform.position;
         public float Height => Stats.Height;

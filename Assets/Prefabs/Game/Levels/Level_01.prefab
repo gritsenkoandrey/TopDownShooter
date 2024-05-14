@@ -49,7 +49,9 @@ MonoBehaviour:
   _unitStats:
     Money: 50
     Health: 20
+    RegenerationHealth: 0
     WalkSpeed: 2.5
+    RegenerationInterval: 0
     PursuitSpeed: 3
     StayDelay: 2
     PursuitRadius: 20
@@ -130,6 +132,8 @@ MonoBehaviour:
   _turretType: 1
   _turretStats:
     Health: 50
+    RegenerationHealth: 1
+    RegenerationInterval: 10
     Money: 150
     Height: 3.5
     Scale: 2.75
@@ -504,7 +508,9 @@ MonoBehaviour:
   _unitStats:
     Money: 50
     Health: 20
+    RegenerationHealth: 0
     WalkSpeed: 2.5
+    RegenerationInterval: 0
     PursuitSpeed: 3
     StayDelay: 2
     PursuitRadius: 20

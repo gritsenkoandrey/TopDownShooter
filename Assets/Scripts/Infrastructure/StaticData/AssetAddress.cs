@@ -10,7 +10,8 @@
         public const string TextureDataPath = "StaticData/TextureData/TextureData";
         public const string UiDataPath = "StaticData/UiData/UiData";
         public const string PoolDataPath = "StaticData/PoolData/PoolData";
-        public const string WeaponCharacteristicDataPath = "StaticData/WeaponCharacteristic";
+        public const string WeaponCharacteristicDataPath = "StaticData/WeaponCharacteristicData";
+        public const string SkinCharacteristicDataPath = "StaticData/SkinCharacteristicData";
         public const string EffectDataPath = "StaticData/EffectData";
         public const string UnitDataPath = "StaticData/UnitData/UnitData";
         public const string PreviewDataPath = "StaticData/PreviewData/PreviewData";

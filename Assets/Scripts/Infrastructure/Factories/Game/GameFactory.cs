@@ -44,13 +44,15 @@ namespace CodeBase.Infrastructure.Factories.Game
             return level;
         }
 
-        async UniTask<CCharacter> IGameFactory.CreateCharacter(Vector3 position, Transform parent)
+        async UniTask<CCharacter> IGameFactory.CreateCharacter(SkinType skinType, Vector3 position, Transform parent)
         {
-            CharacterData data = _staticDataService.CharacterData();
-            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(data.PrefabReference);
+            CharacterData characterData = _staticDataService.CharacterData();
+            SkinCharacteristicData data = _staticDataService.SkinCharacteristicData(skinType);
+            GameObject prefab = await _assetService.LoadFromAddressable<GameObject>(characterData.PrefabReference);
             CCharacter character = Object.Instantiate(prefab, position, Quaternion.identity, parent).GetComponent<CCharacter>();
-            character.Health.SetBaseHealth(data.Health);
-            character.CharacterController.SetBaseSpeed(data.Speed);
+            character.Health.SetBaseHealth(data.SkinCharacteristic.BaseHealth);
+            character.Health.SetRegenerationHealth(data.SkinCharacteristic.RegenerationHealth, data.SkinCharacteristic.RegenearationInterval);
+            character.CharacterController.SetBaseSpeed(data.SkinCharacteristic.BaseSpeed);
             _levelModel.SetCharacter(character);
             return character;
         }

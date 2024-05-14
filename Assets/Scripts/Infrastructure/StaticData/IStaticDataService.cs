@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.StaticData
         ScreenData ScreenData(ScreenType type);
         UpgradeButtonData UpgradeButtonData(UpgradeButtonType type);
         WeaponCharacteristicData WeaponCharacteristicData(WeaponType type);
+        SkinCharacteristicData SkinCharacteristicData(SkinType type);
         ProjectileData ProjectileData(ProjectileType type);
         EffectData EffectData(EffectType type);
         TaskData TaskData(DailyTaskType type);

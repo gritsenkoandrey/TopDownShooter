@@ -205,6 +205,8 @@ MonoBehaviour:
   _turretType: 0
   _turretStats:
     Health: 200
+    RegenerationHealth: 2
+    RegenerationInterval: 5
     Money: 150
     Height: 3.5
     Scale: 2.75

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8529333457237254515}
   - component: {fileID: 4065169360328207454}
   - component: {fileID: -2865529714156572076}
+  - component: {fileID: 4591235579522076049}
   - component: {fileID: 7899014452697899528}
   m_Layer: 8
   m_Name: TurretGatling
@@ -91,6 +92,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61058ea0a1214cbe9e8ad8c26dd0acba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4591235579522076049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706966341913556927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf80a4c35204bfabefbf13a7ef1ad6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7899014452697899528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +119,7 @@ MonoBehaviour:
   _radar: {fileID: 142124252333319164}
   _stateMachine: {fileID: 4065169360328207454}
   _weapon: {fileID: 4014704180443884108}
+  _health: {fileID: 4591235579522076049}
 --- !u!1 &3117682209925419597
 GameObject:
   m_ObjectHideFlags: 0

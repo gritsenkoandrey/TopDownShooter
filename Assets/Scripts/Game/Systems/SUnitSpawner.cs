@@ -41,6 +41,7 @@ namespace CodeBase.Game.Systems
             unit.UnitStats = component.UnitStats;
             unit.Health.SetMaxHealth(unit.UnitStats.Health);
             unit.Health.CurrentHealth.SetValueAndForceNotify(unit.UnitStats.Health);
+            unit.Health.SetRegenerationHealth(component.UnitStats.RegenerationHealth, component.UnitStats.RegenerationInterval);
             unit.Animator.Animator.runtimeAnimatorController = weapon.RuntimeAnimatorController;
             unit.StateMachine.CreateStateMachine(_stateMachineFactory.CreateUnitStateMachine(unit));
             

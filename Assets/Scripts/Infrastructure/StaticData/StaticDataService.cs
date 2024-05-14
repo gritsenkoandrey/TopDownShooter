@@ -17,6 +17,7 @@ namespace CodeBase.Infrastructure.StaticData
         private IDictionary<ScreenType, ScreenData> _screens;
         private IDictionary<UpgradeButtonType, UpgradeButtonData> _upgradeButtons;
         private IDictionary<WeaponType, WeaponCharacteristicData> _weaponCharacteristics;
+        private IDictionary<SkinType, SkinCharacteristicData> _skinCharacteristic;
         private IDictionary<ProjectileType, ProjectileData> _projectiles;
         private IDictionary<EffectType, EffectData> _effects;
         private IDictionary<DailyTaskType, TaskData> _tasks;
@@ -48,6 +49,10 @@ namespace CodeBase.Infrastructure.StaticData
             _weaponCharacteristics = _assetService
                 .LoadAllFromResources<WeaponCharacteristicData>(AssetAddress.WeaponCharacteristicDataPath)
                 .ToDictionary(data => data.WeaponType, data => data);
+
+            _skinCharacteristic = _assetService
+                .LoadAllFromResources<SkinCharacteristicData>(AssetAddress.SkinCharacteristicDataPath)
+                .ToDictionary(data => data.SkinType, data => data);
 
             _projectiles = _assetService
                 .LoadAllFromResources<ProjectileData>(AssetAddress.ProjectileDataPath)
@@ -83,6 +88,9 @@ namespace CodeBase.Infrastructure.StaticData
 
         WeaponCharacteristicData IStaticDataService.WeaponCharacteristicData(WeaponType type) => 
             _weaponCharacteristics.TryGetValue(type, out WeaponCharacteristicData staticData) ? staticData : null;
+
+        SkinCharacteristicData IStaticDataService.SkinCharacteristicData(SkinType type) =>
+            _skinCharacteristic.TryGetValue(type, out Data.SkinCharacteristicData staticData) ? staticData : null;
 
         ProjectileData IStaticDataService.ProjectileData(ProjectileType type) => 
             _projectiles.TryGetValue(type, out ProjectileData projectileData) ? projectileData : null;

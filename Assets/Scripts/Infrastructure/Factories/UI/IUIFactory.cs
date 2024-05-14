@@ -17,5 +17,6 @@ namespace CodeBase.Infrastructure.Factories.UI
         UniTask<CDamageCombatLogView> CreateDamageView(Transform parent);
         UniTask<CMoneyLoot> CreateMoneyLoot(Transform parent);
         UniTask<CTask> CreateDailyTask(Transform parent);
+        UniTask<CRegenerationHealth> CreateRegenerationHealth(Transform parent);
     }
 }

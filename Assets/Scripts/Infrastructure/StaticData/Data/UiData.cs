@@ -11,5 +11,6 @@ namespace CodeBase.Infrastructure.StaticData.Data
         public AssetReference DamageViewPrefabReference;
         public AssetReference MoneyLootPrefabReference;
         public AssetReference TaskPrefabReference;
+        public AssetReference RegenerationHealthPrefabReference;
     }
 }

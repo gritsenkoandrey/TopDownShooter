@@ -10,7 +10,7 @@ namespace CodeBase.Infrastructure.Factories.Game
     public interface IGameFactory
     {
         UniTask<ILevel> CreateLevel();
-        UniTask<CCharacter> CreateCharacter(Vector3 position, Transform parent);
+        UniTask<CCharacter> CreateCharacter(SkinType skinType, Vector3 position, Transform parent);
         UniTask<CUnit> CreateUnit(Vector3 position, Transform parent);
         UniTask<CTurret> CreateTurret(TurretType turretType, Vector3 position, Transform parent);
         UniTask<CCharacterPreview> CreateCharacterPreview();

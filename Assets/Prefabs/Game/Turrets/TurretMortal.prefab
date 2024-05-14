@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 8529333457237254515}
   - component: {fileID: 2399349193459979657}
   - component: {fileID: -6471072473932089652}
+  - component: {fileID: 8557326406284355976}
   - component: {fileID: 7899014452697899528}
   m_Layer: 8
   m_Name: TurretMortal
@@ -308,6 +309,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61058ea0a1214cbe9e8ad8c26dd0acba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8557326406284355976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706966341913556927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf80a4c35204bfabefbf13a7ef1ad6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7899014452697899528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +336,7 @@ MonoBehaviour:
   _radar: {fileID: 142124252333319164}
   _stateMachine: {fileID: 2399349193459979657}
   _weapon: {fileID: 3135740190692193050}
+  _health: {fileID: 8557326406284355976}
 --- !u!1 &3117682209925419597
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,3 +37,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  RegenerationHealthPrefabReference:
+    m_AssetGUID: 8d2201a8150fcd749a7f0aefd178fb36
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
