@@ -13,19 +13,31 @@ MonoBehaviour:
   m_Name: TextureData
   m_EditorClassIdentifier: 
   Textures:
-  - m_AssetGUID: 885385b89462696438fcf5d27478e97d
+  - m_AssetGUID: a56ffd7993a184a4ea39f4dd7bb03dd9
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: 093fc5b9d2a4e5a4cb16891b0b296f96
+  - m_AssetGUID: f83118b56e7dfbe4e940eb5333ca5710
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: bb581b97e3aaaa342b7302a1fdacc88d
+  - m_AssetGUID: 2adc1aca388586840b8f497c037dd8f9
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: 942132ab262c9ab4e88ac1dc818b754a
+  - m_AssetGUID: 3d1ace8b23e208c4a825c1f18edafd71
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: beb7ebf04562c444785feca131017cba
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 2f29e6532087b8541a716401fb69099e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 4827dcfa7eb56f24e8452ca1dcb9eac8
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
@@ -37,6 +49,6 @@ MonoBehaviour:
     Resolution: {x: 256, y: 256}
     TextureFormat: 4
     FilterMode: 1
-    TextureWrapMode: 0
+    WrapMode: 0
     IsMipChain: 1
     IsLiner: 0
