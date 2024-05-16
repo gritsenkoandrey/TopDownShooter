@@ -1,5 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
+﻿using System;
+using System.Text;
+using System.Threading;
+using CodeBase.Utils.CustomDebug;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -9,8 +12,17 @@ namespace CodeBase.Infrastructure.Curtain
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private TextMeshProUGUI _loadingText;
+        [SerializeField] private float _durationCanvas;
+        [SerializeField] private float _durationPrintText;
 
-        private int _index;
+        private readonly CancellationTokenSource _cancellationTokenSource = new ();
+        private readonly StringBuilder _stringBuilder = new ();
+
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
 
         void ILoadingCurtainService.Show()
         {
@@ -20,33 +32,52 @@ namespace CodeBase.Infrastructure.Curtain
             _canvasGroup.alpha = 1f;
         }
 
-        async UniTaskVoid ILoadingCurtainService.Hide()
-        {
-            await ShowLoadingText().AsyncWaitForCompletion().AsUniTask();
-            await FadeCanvas().AsyncWaitForCompletion().AsUniTask();
-            
-            gameObject.SetActive(false);
-        }
+        void ILoadingCurtainService.Hide() => ShowAnimation().Forget();
 
-        private Tween ShowLoadingText()
+        private async UniTaskVoid ShowAnimation()
         {
-            _index = 1;
-            _loadingText.text = string.Empty;
+            try
+            {
+                int index = 0;
+                float elapsed = 0f;
 
-            return DOVirtual.DelayedCall(0.3f, UpdateText).SetLoops(3).SetLink(gameObject);
-        }
-
-        private Tween FadeCanvas()
-        {
-            return _canvasGroup.DOFade(0f, 0.25f).From(1f).SetDelay(0.5f).SetEase(Ease.Linear).SetLink(gameObject);
-        }
-
-        private void UpdateText()
-        {
-            _loadingText.text = string.Empty;
-            _loadingText.text += (_index % 3) switch { 1 => ".", 2 => "..", _ => "..." };
+                while (index < 4)
+                {
+                    UpdateText(ref index);
                     
-            _index++;
+                    await UniTask.Delay(TimeSpan.FromSeconds(_durationPrintText), cancellationToken: _cancellationTokenSource.Token);
+                }
+
+                while (elapsed < _durationCanvas)
+                {
+                    elapsed += Time.deltaTime;
+                    _canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / _durationCanvas);
+                    
+                    await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: _cancellationTokenSource.Token);
+                }
+                
+                gameObject.SetActive(false);
+            }
+            catch (OperationCanceledException exception)
+            {
+                CustomDebug.Log(exception.Message);
+            }
+        }
+
+        private void UpdateText(ref int index)
+        {
+            _stringBuilder.Clear();
+            
+            int dotCount = index % 4;
+            
+            for (int i = 0; i < dotCount; i++)
+            {
+                _stringBuilder.Append('.');
+            }
+            
+            _loadingText.text = _stringBuilder.ToString();
+            
+            index++;
         }
     }
 }

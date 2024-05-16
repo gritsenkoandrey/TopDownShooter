@@ -32,6 +32,16 @@ namespace CodeBase.Utils
             collection.RemoveAt(index);
             return element;
         }
+        
+        public static T GetElementOrLast<T>(this IList<T> collection, int index)
+        {
+            return index >= collection.Count ? collection[^1] : collection[index];
+        }
+        
+        public static T GetElementOrFirst<T>(this IList<T> collection, int index)
+        {
+            return collection[index % collection.Count];
+        }
 
         public static T GetFirst<T>(this IList<T> collection)
         {

@@ -60,7 +60,7 @@ namespace CodeBase.Infrastructure.States
 
         void IExitState.Exit()
         {
-            _loadingCurtain.Hide().Forget();
+            _loadingCurtain.Hide();
         }
 
         private void Next()

@@ -2,11 +2,13 @@
 using CodeBase.ECSCore;
 using CodeBase.Game.ComponentsUi;
 using CodeBase.Game.Interfaces;
+using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.Factories.UI;
 using CodeBase.Infrastructure.Models;
 using CodeBase.Utils;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 using VContainer;
 
 namespace CodeBase.Game.SystemsUi
@@ -14,12 +16,14 @@ namespace CodeBase.Game.SystemsUi
     public sealed class SRegenerationHealthProvider : SystemComponent<CRegenerationHealthProvider>
     {
         private IUIFactory _uiFactory;
+        private ICameraService _cameraService;
         private LevelModel _levelModel;
 
         [Inject]
-        private void Construct(IUIFactory uiFactory, LevelModel levelModel)
+        private void Construct(IUIFactory uiFactory, ICameraService cameraService, LevelModel levelModel)
         {
             _uiFactory = uiFactory;
+            _cameraService = cameraService;
             _levelModel = levelModel;
         }
         
@@ -85,6 +89,9 @@ namespace CodeBase.Game.SystemsUi
             element.SetTarget(target);
             element.Text.text = string.Format(FormatText.AddHealth, health.Trim());
             element.CanvasGroup.alpha = 1f;
+            Vector3 worldPos = target.Position.AddY(target.Height / 2f);
+            Vector3 screenPos = _cameraService.Camera.WorldToScreenPoint(worldPos);
+            element.transform.position = screenPos;
             element.SetActive(true);
         }
     }

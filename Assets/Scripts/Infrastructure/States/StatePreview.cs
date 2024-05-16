@@ -36,7 +36,7 @@ namespace CodeBase.Infrastructure.States
         void IEnterLoadState<string>.Enter(string sceneName)
         {
             _sceneLoaderService.Load(sceneName, Next);
-            _loadingCurtainService.Hide().Forget();
+            _loadingCurtainService.Hide();
         }
 
         void IExitState.Exit()
