@@ -2,6 +2,7 @@
 using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.CheatService;
 using CodeBase.Infrastructure.Curtain;
 using CodeBase.Infrastructure.DailyTasks;
 using CodeBase.Infrastructure.Factories.Effects;
@@ -67,6 +68,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<IAssetService, AssetService>(Lifetime.Singleton);
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
             builder.Register<IDailyTaskService, DailyTaskService>(Lifetime.Singleton);
+            builder.Register<ICheatService, CheatService>(Lifetime.Singleton);
             
             builder.Register<IStateMachineFactory, StateMachineFactory>(Lifetime.Singleton);
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);

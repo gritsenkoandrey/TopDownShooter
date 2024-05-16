@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.Progress.Data
             PlayerPrefs.Save();
         }
 
-        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, 10000);
+        public int Load() => PlayerPrefs.GetInt(DataKeys.Money, 0);
 
         void IDisposable.Dispose() => _disposable?.Dispose();
     }

@@ -1,6 +1,7 @@
 ﻿using CodeBase.App;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
+using CodeBase.Infrastructure.CheatService;
 using CodeBase.Infrastructure.Haptic;
 using CodeBase.Infrastructure.Input;
 using CodeBase.Infrastructure.Loader;
@@ -23,6 +24,7 @@ namespace CodeBase.Infrastructure.States
         private ICameraService _cameraService;
         private IProgressService _progressService;
         private IHapticService _hapticService;
+        private ICheatService _cheatService;
 
         public StateBootstrap(IGameStateMachine gameStateMachine)
         {
@@ -38,7 +40,8 @@ namespace CodeBase.Infrastructure.States
             IAssetService assetService,
             ICameraService cameraService,
             IProgressService progressService,
-            IHapticService hapticService)
+            IHapticService hapticService,
+            ICheatService cheatService)
         {
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
@@ -48,6 +51,7 @@ namespace CodeBase.Infrastructure.States
             _cameraService = cameraService;
             _progressService = progressService;
             _hapticService = hapticService;
+            _cheatService = cheatService;
         }
 
         void IEnterState.Enter()
@@ -66,6 +70,7 @@ namespace CodeBase.Infrastructure.States
             InitCameraService();
             InitProgress();
             InitHaptic();
+            InitCheat();
 
             _sceneLoaderService.Load(SceneName.Bootstrap, Next);
         }
@@ -78,5 +83,6 @@ namespace CodeBase.Infrastructure.States
         private void InitCameraService() => _cameraService.Init();
         private void InitProgress() => _progressService.Init();
         private void InitHaptic() => _hapticService.Init();
+        private void InitCheat() => _cheatService.Init();
     }
 }
