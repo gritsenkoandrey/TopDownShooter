@@ -66,7 +66,14 @@ namespace CodeBase.Infrastructure.Progress.Data
         {
             if (Contains(type))
             {
-                _tasks[type].Score += score;
+                if (_tasks[type].Score + score < 0)
+                {
+                    _tasks[type].Score = int.MaxValue;
+                }
+                else
+                {
+                    _tasks[type].Score += score;
+                }
                 
                 Save?.Invoke(this);
             }
