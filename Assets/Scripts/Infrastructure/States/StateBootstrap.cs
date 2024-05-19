@@ -1,4 +1,5 @@
 ﻿using CodeBase.App;
+using CodeBase.Infrastructure.AppSettingsService;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.CheatService;
@@ -25,6 +26,7 @@ namespace CodeBase.Infrastructure.States
         private IProgressService _progressService;
         private IHapticService _hapticService;
         private ICheatService _cheatService;
+        private IAppSettingsService _appSettingsService;
 
         public StateBootstrap(IGameStateMachine gameStateMachine)
         {
@@ -41,7 +43,8 @@ namespace CodeBase.Infrastructure.States
             ICameraService cameraService,
             IProgressService progressService,
             IHapticService hapticService,
-            ICheatService cheatService)
+            ICheatService cheatService,
+            IAppSettingsService appSettingsService)
         {
             _sceneLoaderService = sceneLoaderService;
             _staticDataService = staticDataService;
@@ -52,6 +55,7 @@ namespace CodeBase.Infrastructure.States
             _progressService = progressService;
             _hapticService = hapticService;
             _cheatService = cheatService;
+            _appSettingsService = appSettingsService;
         }
 
         void IEnterState.Enter()
@@ -63,6 +67,8 @@ namespace CodeBase.Infrastructure.States
 
         private async UniTaskVoid Init()
         {
+            InitAppSettings();
+
             LoadResources();
             await InitAsset();
             await InitObjectPool();
@@ -76,6 +82,12 @@ namespace CodeBase.Infrastructure.States
         }
 
         private void Next() => _gameStateMachine.Enter<StateLoadProgress>();
+        private void InitAppSettings()
+        {
+            _appSettingsService.Init();
+            _appSettingsService.SetFrameRate(60);
+        }
+
         private void LoadResources() => _staticDataService.Load();
         private async UniTask InitAsset() => await _assetService.Init();
         private async UniTask InitObjectPool() => await _objectPoolService.Init();

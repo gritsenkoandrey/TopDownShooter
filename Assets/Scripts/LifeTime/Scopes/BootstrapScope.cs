@@ -1,5 +1,5 @@
 ﻿using System;
-using CodeBase.App;
+using CodeBase.Infrastructure.AppSettingsService;
 using CodeBase.Infrastructure.AssetData;
 using CodeBase.Infrastructure.CameraMain;
 using CodeBase.Infrastructure.CheatService;
@@ -38,10 +38,6 @@ namespace CodeBase.LifeTime.Scopes
         protected override void Awake()
         {
             base.Awake();
-
-            AppSettings app = new AppSettings();
-            
-            app.SetSettings();
             
             DontDestroyOnLoad(this);
         }
@@ -69,6 +65,7 @@ namespace CodeBase.LifeTime.Scopes
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
             builder.Register<IDailyTaskService, DailyTaskService>(Lifetime.Singleton);
             builder.Register<ICheatService, CheatService>(Lifetime.Singleton);
+            builder.Register<IAppSettingsService, AppSettingsService>(Lifetime.Singleton);
             
             builder.Register<IStateMachineFactory, StateMachineFactory>(Lifetime.Singleton);
             builder.Register<ITextureArrayFactory, TextureArrayFactory>(Lifetime.Singleton);
