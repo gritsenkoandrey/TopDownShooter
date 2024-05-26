@@ -1,7 +1,6 @@
 ﻿using CodeBase.Game.Components;
 using CodeBase.Game.Interfaces;
 using CodeBase.Infrastructure.StaticData.Data;
-using DG.Tweening;
 using UnityEngine;
 
 namespace CodeBase.Game.Weapon
@@ -13,16 +12,16 @@ namespace CodeBase.Game.Weapon
 
         private int _clipCount;
         private bool _canAttack;
-        private float _attackDistance;
-
-        private Tween _fireIntervalTween;
-        private Tween _rechargeTimeTween;
+        private float _rechargeDelay;
+        private float _fireIntervalDelay;
+        
+        protected float AttackDistance;
 
         protected BaseWeapon(CWeapon weapon, WeaponCharacteristic weaponCharacteristic) { }
 
         public virtual void Initialize()
         {
-            _attackDistance = Mathf.Pow(WeaponCharacteristic.AttackDistance, 2);
+            AttackDistance = Mathf.Pow(WeaponCharacteristic.AttackDistance, 2);
             
             ReadyAttack();
             ReloadClip();
@@ -40,12 +39,34 @@ namespace CodeBase.Game.Weapon
             }
         }
         
-        public bool CanAttack() => _clipCount > 0 && _canAttack;
-        public bool IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
-        public float AttackDistance() => _attackDistance;
-        public float DetectionDistance() => WeaponCharacteristic.DetectionDistance;
-        public float AimingSpeed() => WeaponCharacteristic.Aiming;
+        bool IWeapon.CanAttack() => _clipCount > 0 && _canAttack;
+        bool IWeapon.IsDetectThroughObstacle() => WeaponCharacteristic.IsDetectThroughObstacle;
+        float IWeapon.AttackDistance() => AttackDistance;
+        float IWeapon.DetectionDistance() => WeaponCharacteristic.DetectionDistance;
+        float IWeapon.AimingSpeed() => WeaponCharacteristic.Aiming;
+        void IWeapon.Execute()
+        {
+            if (ClipIsEmpty())
+            {
+                _rechargeDelay -= Time.deltaTime;
 
+                if (_rechargeDelay < 0f)
+                {
+                    ReloadClip();
+                }
+            }
+
+            if (_canAttack == false)
+            {
+                _fireIntervalDelay -= Time.deltaTime;
+
+                if (_fireIntervalDelay < 0f)
+                {
+                    ReadyAttack();
+                }
+            }
+        }
+        
         private protected virtual void ReloadClip() => _clipCount = WeaponCharacteristic.ClipCount;
         private protected virtual void ReduceClip() => _clipCount--;
         private protected virtual int GetDamage() => WeaponCharacteristic.Damage;
@@ -66,23 +87,11 @@ namespace CodeBase.Game.Weapon
         private void ReadyAttack() => _canAttack = true;
         private void NotReadyAttack() => _canAttack = false;
         private bool ClipIsEmpty() => _clipCount <= 0;
-
-        private void UpdateRechargeTime()
-        {
-            _rechargeTimeTween?.Kill();
-            _rechargeTimeTween = DOVirtual.DelayedCall(WeaponCharacteristic.RechargeTime, ReloadClip);
-        }
-
-        private void UpdateFireInterval()
-        {
-            _fireIntervalTween?.Kill();
-            _fireIntervalTween = DOVirtual.DelayedCall(WeaponCharacteristic.FireInterval, ReadyAttack);
-        }
+        private void UpdateRechargeTime() => _rechargeDelay = WeaponCharacteristic.RechargeTime;
+        private void UpdateFireInterval() => _fireIntervalDelay = WeaponCharacteristic.FireInterval;
 
         public virtual void Dispose()
         {
-            _fireIntervalTween?.Kill();
-            _rechargeTimeTween?.Kill();
         }
     }
 }

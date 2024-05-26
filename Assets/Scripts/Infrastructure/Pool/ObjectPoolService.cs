@@ -5,7 +5,6 @@ using CodeBase.Infrastructure.StaticData;
 using CodeBase.Infrastructure.StaticData.Data;
 using CodeBase.Utils.CustomDebug;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -19,6 +18,7 @@ namespace CodeBase.Infrastructure.Pool
 	    private bool _logStatus;
 	    private bool _dirty;
 	    private List<ObjectPoolItem> _poolItems;
+	    private List<ObjectPoolContainer<GameObject>> _release;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _prefabLookup;
 	    private IDictionary<GameObject, ObjectPool<GameObject>> _instanceLookup;
 	    private readonly IAssetService _assetService;
@@ -39,19 +39,35 @@ namespace CodeBase.Infrastructure.Pool
 		    
 		    _prefabLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
 		    _instanceLookup = new Dictionary<GameObject, ObjectPool<GameObject>>();
+		    _release = new List<ObjectPoolContainer<GameObject>>();
 
 		    await LoadPoolItems();
 		    
 		    FirstWarmPool();
 	    }
 	    
-	    void IObjectPoolService.Log()
+	    void IObjectPoolService.Execute()
 	    {
 		    if (_logStatus && _dirty)
 		    {
 			    PrintStatus();
 			    
 			    _dirty = false;
+		    }
+
+		    if (_release.Count > 0)
+		    {
+			    for (int i = 0; i < _release.Count; i++)
+			    {
+				    _release[i].Time -= Time.deltaTime;
+
+				    if (_release[i].Time < 0f)
+				    {
+					    Release(_release[i].Item);
+					    _release.Remove(_release[i]);
+					    return;
+				    }
+			    }
 		    }
 	    }
 
@@ -72,7 +88,9 @@ namespace CodeBase.Infrastructure.Pool
 
 	    void IObjectPoolService.ReleaseObjectAfterTime(GameObject clone, float time)
 	    {
-		    DOVirtual.DelayedCall(time, () => Release(clone)).SetLink(clone, LinkBehaviour.KillOnDisable);
+		    ObjectPoolContainer<GameObject> container = _instanceLookup[clone].GetContainer(clone);
+		    container.Time = time;
+		    _release.Add(container);
 	    }
 
 	    void IObjectPoolService.ReleaseAll()
@@ -83,6 +101,7 @@ namespace CodeBase.Infrastructure.Pool
 			    keyValuePair.Value.ReleaseAll();
 		    }
 		    
+		    _release.Clear();
 		    _instanceLookup.Clear();
 	    }
 
@@ -181,7 +200,7 @@ namespace CodeBase.Infrastructure.Pool
 	    {
 		    foreach (KeyValuePair<GameObject, ObjectPool<GameObject>> dictionary in _prefabLookup)
 		    {
-			    string message = $"Object Pool for Prefab: {dictionary.Key.name} In Use: {dictionary.Value.CountUsedItems} Total: {dictionary.Value.Count}";
+			    string message = $"Object Pool for Prefab: {dictionary.Key.name} In Use: {dictionary.Value.CountUsedItems.ToString()} Total: {dictionary.Value.Count.ToString()}";
 			    
 			    CustomDebug.Log(message, DebugColorType.Lime);
 		    }

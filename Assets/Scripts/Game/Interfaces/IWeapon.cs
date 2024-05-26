@@ -10,5 +10,6 @@ namespace CodeBase.Game.Interfaces
         float AttackDistance();
         float DetectionDistance();
         float AimingSpeed();
+        void Execute();
     }
 }

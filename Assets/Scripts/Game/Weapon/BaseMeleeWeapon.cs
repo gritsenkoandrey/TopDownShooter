@@ -50,7 +50,7 @@ namespace CodeBase.Game.Weapon
             {
                 float distance = (Weapon.SpawnPoints[i].position - _target.Position).sqrMagnitude;
 
-                if (distance < AttackDistance() && _target.Health.IsAlive)
+                if (distance < AttackDistance && _target.Health.IsAlive)
                 {
                     int damage = CalculateCriticalDamage(GetDamage());
                     _target.Health.CurrentHealth.Value -= damage;

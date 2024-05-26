@@ -77,6 +77,8 @@ namespace CodeBase.Infrastructure.Pool
             return container.Item;
         }
 
+        public ObjectPoolContainer<T> GetContainer(T item) => _lookup[item];
+
         public void ReleaseItem(T item)
         {
             if (_lookup.ContainsKey(item))

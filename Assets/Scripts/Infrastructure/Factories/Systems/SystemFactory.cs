@@ -61,6 +61,7 @@ namespace CodeBase.Infrastructure.Factories.Systems
                 new SHealthRegeneration(),
                 new SRegenerationHealthProvider(),
                 new SRegenerationHealthUpdate(),
+                new SExecuteWeaponAmmunition(),
             };
 
             return systems;

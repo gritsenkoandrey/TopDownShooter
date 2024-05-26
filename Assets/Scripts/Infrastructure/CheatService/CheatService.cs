@@ -43,10 +43,15 @@ namespace CodeBase.Infrastructure.CheatService
         [DisplayName("Add Money")]
         public void AddMoney() => _progressService.MoneyData.Data.Value += MoneyCount;
 
-        [Category("Enemy")]
+        [Category("Units")]
         [SROptions.Sort(0)]
         [DisplayName("Kill All Enemy")]
         public void KillAllEnemy() => _levelModel.Enemies.ToList().Foreach(enemy => enemy.Health.CurrentHealth.Value = 0);
+
+        [Category("Units")]
+        [SROptions.Sort(1)]
+        [DisplayName("Kill Player")]
+        public void KillPlayer() => _levelModel.Character.Health.CurrentHealth.Value = 0;
         
         [Category("Daily Task")]
         [SROptions.Sort(0)]

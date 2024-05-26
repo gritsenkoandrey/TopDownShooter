@@ -25,7 +25,7 @@ namespace CodeBase.Game.SystemsBase
         {
             base.OnUpdate();
             
-            _objectPoolService.Log();
+            _objectPoolService.Execute();
         }
     }
 }
