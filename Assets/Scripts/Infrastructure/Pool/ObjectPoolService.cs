@@ -57,15 +57,15 @@ namespace CodeBase.Infrastructure.Pool
 
 		    if (_release.Count > 0)
 		    {
-			    for (int i = 0; i < _release.Count; i++)
+			    for (int i = _release.Count - 1; i >= 0; i--)
 			    {
 				    _release[i].Time -= Time.deltaTime;
 
 				    if (_release[i].Time < 0f)
 				    {
 					    Release(_release[i].Item);
+					    
 					    _release.Remove(_release[i]);
-					    return;
 				    }
 			    }
 		    }

@@ -10,6 +10,11 @@ namespace CodeBase.Utils
             foreach (T element in collection) action.Invoke(element);
         }
 
+        public static void Foreach<T>(this IReadOnlyList<T> collection, Action<T> action)
+        {
+            for (int i = collection.Count - 1; i >= 0; i--) action.Invoke(collection[i]);
+        }
+
         public static bool HasIndex<T>(this IList<T> collection, int index)
         {
             return index >= 0 && collection.Count > index;

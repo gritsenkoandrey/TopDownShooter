@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
+using CodeBase.Utils.CustomDebug;
 
 namespace CodeBase.ECSCore
 {
     public abstract class SystemComponent<T> : SystemBase where T : Entity
     {
-        private readonly HashSet<T> _entities;
-
-        protected IReadOnlyCollection<T> Entities => _entities;
+        private readonly List<T> _entities;
+        protected IReadOnlyList<T> Entities => _entities;
 
         protected SystemComponent()
         {
-            _entities = new HashSet<T>();
+            _entities = new List<T>();
         }
 
         protected override void OnEnableSystem()
@@ -31,18 +31,19 @@ namespace CodeBase.ECSCore
 
         protected virtual void OnEnableComponent(T component)
         {
+            if (_entities.Contains(component))
+            {
+                CustomDebug.Log($"{component.name}");
+                
+                return;
+            }
+            
             _entities.Add(component);
         }
 
         protected virtual void OnDisableComponent(T component)
         {
-        }
-
-        protected override void OnRemoveDisableEntity()
-        {
-            base.OnRemoveDisableEntity();
-
-            _entities.RemoveWhere(entity => entity.IsEnabled == false);
+            _entities.Remove(component);
         }
 
         protected override void OnDispose()
