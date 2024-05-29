@@ -5,12 +5,11 @@ namespace CodeBase.ECSCore
 {
     public abstract class Entity : MonoBehaviour
     {
-        public readonly CompositeDisposable LifetimeDisposable = new();
-        
-        public bool IsEnabled { get; private set; }
+        public CompositeDisposable LifetimeDisposable { get; private set; }
 
-        protected virtual void OnEntityCreate() { }
-        protected virtual void OnEntityEnable() => IsEnabled = true;
-        protected virtual void OnEntityDisable() => IsEnabled = false;
+        protected virtual void OnEntityCreate() => LifetimeDisposable = new CompositeDisposable();
+        protected virtual void OnEntityEnable() { }
+        protected virtual void OnEntityDisable() => LifetimeDisposable?.Clear();
+        protected virtual void OnEntityDestroy() => LifetimeDisposable?.Dispose();
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Utils.CustomDebug;
 
 namespace CodeBase.ECSCore
 {
     public abstract class SystemComponent<T> : SystemBase where T : Entity
     {
         private readonly List<T> _entities;
+        
         protected IReadOnlyList<T> Entities => _entities;
 
         protected SystemComponent()
@@ -33,8 +33,6 @@ namespace CodeBase.ECSCore
         {
             if (_entities.Contains(component))
             {
-                CustomDebug.Log($"{component.name}");
-                
                 return;
             }
             

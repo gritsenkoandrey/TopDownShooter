@@ -17,10 +17,13 @@
         private void OnDisable()
         {
             OnEntityDisable();
-            
-            LifetimeDisposable.Clear();
 
             EntityContainer<T>.Unregistered(this);
+        }
+
+        private void OnDestroy()
+        {
+            OnEntityDestroy();
         }
     }
 }
