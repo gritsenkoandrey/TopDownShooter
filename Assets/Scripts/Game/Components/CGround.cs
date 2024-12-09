@@ -1,6 +1,6 @@
 ﻿using CodeBase.ECSCore;
+using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace CodeBase.Game.Components
 {
